@@ -1,7 +1,8 @@
 require 'sinatra'
+require 'haml'
 
 class Ollert < Sinatra::Base
   get '/' do
-    "Hello, Trello!"
+    haml :landing
   end
 end

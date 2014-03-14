@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    haml (4.0.5)
+      tilt
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
@@ -16,5 +18,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
+  haml
   rake
   sinatra
