@@ -4,5 +4,12 @@
     %title Ollert
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
     %meta{name: 'description', content: 'Ollert'}
+
+    %link{href:'/css/bootstrap.min.css', rel: 'stylesheet'}
+    %script{src: '/js/bootstrap.min.js'}
+
   %body
     Hello, Trello!
+    %form{id: 'connect', action: "/connect", method: "post", role: "form"}
+      %input{class: "btn btn-primary", type: "submit", value:"Connect With Trello"}
+
