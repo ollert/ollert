@@ -6,13 +6,12 @@ APP_NAME = "ollert"
 
 class Ollert < Sinatra::Base
   get '/' do
-    @connect_url = "https://trello.com/1/authorize?callback_method=postMessage&return_url=#{ret_url}&key=#{DEV_SECRET}&name=#{APP_NAME}&expiration=never&response_type=token"
     haml :landing
   end
 
-  post '/connect' do
+  get '/connect' do
     ret_url = request.url + "/trello"
-    redirect "https://trello.com/1/authorize?callback_method=postMessage&return_url=#{ret_url}&key=#{DEV_SECRET}&name=#{APP_NAME}&expiration=never&response_type=token"
+    redirect "https://trello.com/1/authorize?callback_method=fragment&return_url=#{ret_url}&key=#{DEV_SECRET}&name=#{APP_NAME}&expiration=never&response_type=token"
   end
 
   get '/connect/trello' do
