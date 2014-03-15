@@ -30,7 +30,7 @@ class Ollert < Sinatra::Base
 
     @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
 
-    haml_view_model :boards, locals => {logged_in: false}
+    haml_view_model :boards
   end
 
   get '/boards/:id' do |board_id|
@@ -43,6 +43,8 @@ class Ollert < Sinatra::Base
       @wip_data[k] = v.count
     end
 
+    @members_per_card = get_members_per_card_data(@board.cards)
+
     haml_view_model :analysis
   end
 
@@ -51,6 +53,6 @@ class Ollert < Sinatra::Base
   end
 
   get '/styles.css' do
-    haml_view_model :styles
+    scss :styles
   end
 end

@@ -6,6 +6,13 @@
       %div(id="WIP-Container" style="width: 400px; height: 300px; margin: 0 auto")
     .span5
       %div(id="CFD-Container" style="width: 600px; height: 500px; margin: 0 auto")
+  .row
+    .col-md-3
+      .single-stat
+        .single-stat-title
+          %h4 Members per Card
+        .single-stat-value
+          #{@members_per_card}
 
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/CFDChart.js"}
@@ -15,3 +22,6 @@
   wip_data.counts = [{name: "Cards in List", showInLegend: false, data: #{@wip_data.values.to_json}}];
   var wipChart = new wipChart(wip_data);
   wipChart.buildChart();
+  var data = new cfdChartData();
+  var cfdChart = new cfdChart({ data: data, boardName: "Ollert" });
+  cfdChart.buildChart();

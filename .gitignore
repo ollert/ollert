@@ -2,3 +2,4 @@
 .ruby-gemset
 .sass-cache
 .bundle
+*.swp

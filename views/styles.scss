@@ -7,6 +7,20 @@ $light-light: #F2F2F2;
   background: $light-light;
 }
 
+.single-stat {
+  background: $dark;
+  padding: 20px;
+}
+
+.single-stat-title {
+  color: $medium;
+}
+
+.single-stat-value {
+  color: $light-light;
+  font-size: 32pt;
+}
+
 footer {
   background: $light-light;
 }
