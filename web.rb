@@ -36,6 +36,10 @@ class Ollert < Sinatra::Base
   get '/styles.css' do
     scss :styles
   end
+  
+  get '/dashboard' do
+    haml :dashboard
+  end
 
   get '/fail' do
     "auth failed"
