@@ -1,12 +1,11 @@
-%body
-  .container
-    %h2
-      #{@board.name}
-    .row
-      .span5
-        %div(id="WIP-Container" style="width: 400px; height: 300px; margin: 0 auto")
-      .span5
-        %div(id="CFD-Container" style="width: 600px; height: 500px; margin: 0 auto")
+.container
+  %h2
+    #{@board.name}
+  .row
+    .span5
+      %div(id="WIP-Container" style="width: 400px; height: 300px; margin: 0 auto")
+    .span5
+      %div(id="CFD-Container" style="width: 600px; height: 500px; margin: 0 auto")
 
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/CFDChart.js"}
