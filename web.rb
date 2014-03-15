@@ -10,12 +10,16 @@ class Ollert < Sinatra::Base
     @secret = DEV_SECRET
     haml :landing
   end
-
+  
   get '/connect' do
     "Holy cow I received the following token: #{params[:token]}"
   end
 
   get '/styles.css' do
     scss :styles
+  
+  get '/dashboard' do
+    haml :dashboard
+
   end
 end
