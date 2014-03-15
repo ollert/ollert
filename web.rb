@@ -43,6 +43,8 @@ class Ollert < Sinatra::Base
       @wip_data[k] = v.count
     end
 
+    @members_per_card = get_members_per_card_data(@board.cards)
+
     haml :analysis
   end
 

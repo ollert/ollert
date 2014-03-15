@@ -6,4 +6,9 @@ module OllertHelpers
       :member_token => token
     )
   end
+
+  def get_members_per_card_data(cards)
+    counts = cards.map{ |card| card.members.count }
+    counts.reduce(:+).to_f / counts.size
+  end
 end
