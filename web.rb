@@ -6,15 +6,11 @@ APP_NAME = "ollert"
 
 class Ollert < Sinatra::Base
   get '/' do
+    @secret = DEV_SECRET
     haml :landing
   end
 
   get '/connect' do
-    ret_url = request.url + "/trello"
-    redirect "https://trello.com/1/authorize?callback_method=fragment&return_url=#{ret_url}&key=#{DEV_SECRET}&name=#{APP_NAME}&expiration=never&response_type=token"
-  end
-
-  get '/connect/trello' do
-    puts params[:id]
+    "Holy cow I received the following token: #{params[:token]}"
   end
 end

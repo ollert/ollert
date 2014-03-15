@@ -1,14 +1,24 @@
-!!! html
-%html{lang: 'en'}
-  %head
-    %title Ollert
-    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
-    %meta{name: 'description', content: 'Ollert'}
+:javascript
+  function AuthenticateTrello() {
+    Trello.authorize({
+      name: "_larryprice",
+      type: "popup",
+      interactive: true,
+      expiration: "never",
+      success: function () { onAuthorizeSuccessful(); },
+      error: function () { onFailedAuthorization(); },
+      scope: { write: true, read: true },
+    });
+  }
 
-    %link{href:'/css/bootstrap.min.css', rel: 'stylesheet'}
-    %script{src: '/js/bootstrap.min.js'}
+  function onAuthorizeSuccessful() {
+    var token = Trello.token();
+    window.location.replace("/connect?token=" + token);
+  }
 
-  %body
-    Hello, Trello!
-    %form{id: 'connect', action: "/connect", method: "get", role: "form"}
-      %input{class: "btn btn-primary", type: "submit", value:"Connect With Trello"}
+  function onFailedAuthorization() {
+  }
+
+Hello, Trello!
+/ %form{id: 'connect', action: "/connect", method: "get", role: "form"}
+%button{class: "btn btn-primary", type: "submit", value:"Connect With Trello", onClick: "AuthenticateTrello()"}
