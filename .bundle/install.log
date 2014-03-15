@@ -1,0 +1,14 @@
+# Logfile created on 2014-03-14 19:48:15 -0400 by logger.rb/44203
+I, [2014-03-14T19:48:15.631084 #10561]  INFO -- : 0:  rake (10.1.1) from /usr/local/rvm/gems/ruby-2.1.0/specifications/rake-10.1.1.gemspec
+I, [2014-03-14T19:48:17.127185 #10561]  INFO -- : 0:  rack (1.5.2) from /usr/local/rvm/gems/ruby-2.1.0/specifications/rack-1.5.2.gemspec
+I, [2014-03-14T19:48:18.239321 #10561]  INFO -- : 0:  rack-protection (1.5.2) from /usr/local/rvm/gems/ruby-2.1.0/specifications/rack-protection-1.5.2.gemspec
+I, [2014-03-14T19:48:18.986349 #10561]  INFO -- : 0:  tilt (1.4.1) from /usr/local/rvm/gems/ruby-2.1.0/specifications/tilt-1.4.1.gemspec
+I, [2014-03-14T19:48:19.888284 #10561]  INFO -- : 0:  sinatra (1.4.4) from /usr/local/rvm/gems/ruby-2.1.0/specifications/sinatra-1.4.4.gemspec
+I, [2014-03-14T19:48:19.890385 #10561]  INFO -- : 0:  bundler (1.5.0) from /usr/local/rvm/gems/ruby-2.1.0@global/specifications/bundler-1.5.0.gemspec
+I, [2014-03-14T20:30:11.113329 #10595]  INFO -- : 0:  rake (10.1.1) from /usr/local/rvm/gems/ruby-2.1.0/specifications/rake-10.1.1.gemspec
+I, [2014-03-14T20:30:11.114222 #10595]  INFO -- : 0:  tilt (1.4.1) from /usr/local/rvm/gems/ruby-2.1.0/specifications/tilt-1.4.1.gemspec
+I, [2014-03-14T20:30:12.521855 #10595]  INFO -- : 0:  haml (4.0.5) from /usr/local/rvm/gems/ruby-2.1.0/specifications/haml-4.0.5.gemspec
+I, [2014-03-14T20:30:12.523921 #10595]  INFO -- : 0:  rack (1.5.2) from /usr/local/rvm/gems/ruby-2.1.0/specifications/rack-1.5.2.gemspec
+I, [2014-03-14T20:30:12.525512 #10595]  INFO -- : 0:  rack-protection (1.5.2) from /usr/local/rvm/gems/ruby-2.1.0/specifications/rack-protection-1.5.2.gemspec
+I, [2014-03-14T20:30:12.526981 #10595]  INFO -- : 0:  sinatra (1.4.4) from /usr/local/rvm/gems/ruby-2.1.0/specifications/sinatra-1.4.4.gemspec
+I, [2014-03-14T20:30:12.528496 #10595]  INFO -- : 0:  bundler (1.5.0) from /usr/local/rvm/gems/ruby-2.1.0@global/specifications/bundler-1.5.0.gemspec
