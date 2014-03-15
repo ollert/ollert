@@ -1,18 +1,34 @@
 require 'sinatra'
 require 'haml'
 require 'sass'
+require 'trello'
+require 'active_support/inflector'
 
-DEV_SECRET = "0942956f9eeea22688d8717ec9e12955"
+PUBLIC_KEY = "0942956f9eeea22688d8717ec9e12955"
 APP_NAME = "ollert"
 
 class Ollert < Sinatra::Base
   get '/' do
-    @secret = DEV_SECRET
+    @secret = PUBLIC_KEY
     haml :landing
   end
 
   get '/connect' do
-    "Holy cow I received the following token: #{params[:token]}"
+    client = Trello::Client.new(
+      :developer_public_key => PUBLIC_KEY,
+      :member_token => params[:token]
+    )
+
+    token = client.find(:token, params[:token])
+    member = token.member
+    "Boards: #{member.boards.count}"
+
+    # Trello.configure do |config|
+    #   config.developer_public_key = PUBLIC_KEY
+    #   config.member_token = params[:token]
+    # end
+
+    # puts Trello::Member.find("_larryprice").boards.count
   end
 
   get '/styles.css' do
