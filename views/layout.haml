@@ -13,20 +13,27 @@
     %script{src: "https://api.trello.com/1/client.js?key=#{@secret}"}
 
     %body
-      .topbar
-        .fill
-          .container(style="margin-top:20px")
-            %h2 Ollert
-            .navbar
-              %ul(class="nav navbar-nav")
-                %li(class="active pull-left")
-                  %a(href = "/") Home
-                %li(class="pull-left")
-                  %a(href = "/") More Content
-                %li(class="pull-left")
-                  %a(href = "/") Why Pay
-              .pull-right
+      %nav{class: 'navbar navbar-default', role: 'navigation'}
+        .container
+          .navbar-header
+            %a{class: 'navbar-brand', style: 'left: 50%; margin-left: -100%;', href: '/'}
+              Ollert
+          .navbar-left.img-rounded
+            %ul{class: 'nav navbar-nav pull-right'}
+              %li
+                %a{href: "/"}
+                  Home
+              %li
+                %a{href: "/"}
+                  More Content
+              %li
+                %a{href: "/"}
+                  Why Pay
+          .navbar-right.img-rounded{style: "margin-top: 7px;"}
+            %ul{class: 'nav navbar-nav pull-right'}
+              %li
                 %button(type="submit" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="bottom") Sign up
+              %li
                 %button(type="submit" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom") Log in
 
       = yield
