@@ -39,7 +39,7 @@ class Ollert < Sinatra::Base
 
     @board = client.find :board, board_id
 
-    haml :dashboard
+    haml :analysis
   end
 
   get '/fail' do

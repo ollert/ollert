@@ -2,9 +2,8 @@
 %script{src: "/js/WIPChart.js"}
  
 .container
-  .content
-    .page-header
-      #{@board.name}
-    .row
-      .span10
-        %div(id="WIP-Container" style="width: 400px; height: 300px; margin: 0 auto")
+  %h4
+    #{@board.name}
+  .row
+    .span10
+      %div(id="WIP-Container" style="width: 400px; height: 300px; margin: 0 auto")
