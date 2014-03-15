@@ -13,10 +13,11 @@
 
   function onAuthorizeSuccessful() {
     var token = Trello.token();
-    window.location.replace("/connect?token=" + token);
+    window.location.replace("/boards?token=" + token);
   }
 
   function onFailedAuthorization() {
+    window.location.replace("/fail");
   }
           
 .container

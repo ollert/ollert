@@ -1,0 +1,9 @@
+.container
+  - @boards.each do |org_name, boards|
+    %h4
+      #{org_name}
+    %ul
+    - boards.each do |board|
+      %li
+        %a{class: "btn btn-link", href: "/boards/#{board.id}"}
+          #{board.name}

@@ -13,25 +13,31 @@ class Ollert < Sinatra::Base
     haml :landing
   end
 
-  get '/connect' do
+  get '/boards' do
+    session[:token] = params[:token]
     client = Trello::Client.new(
       :developer_public_key => PUBLIC_KEY,
-      :member_token => params[:token]
+      :member_token => session[:token]
     )
 
-    token = client.find(:token, params[:token])
+    token = client.find(:token, session[:token])
     member = token.member
-    "Boards: #{member.boards.count}"
+    session[:member_name] = member.id
 
-    # Trello.configure do |config|
-    #   config.developer_public_key = PUBLIC_KEY
-    #   config.member_token = params[:token]
-    # end
+    @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
 
-    # puts Trello::Member.find("_larryprice").boards.count
+    haml :boards
+  end
+
+  get '/boards/:id' do |board_id|
+    
   end
 
   get '/styles.css' do
     scss :styles
+  end
+
+  get '/fail' do
+    "auth failed"
   end
 end
