@@ -18,7 +18,18 @@
 
   function onFailedAuthorization() {
   }
-
-Hello, Trello!
-/ %form{id: 'connect', action: "/connect", method: "get", role: "form"}
-%button{class: "btn btn-primary", type: "submit", value:"Connect With Trello", onClick: "AuthenticateTrello()"}
+          
+.container
+  .content
+    .page-header
+      %h1
+        Page name <small>Supporting text or tagline</small>
+    .row
+      .span10
+        %h2
+          Main content
+        %a{class: "btn btn-primary", href: "javascript:void(0)", onClick: "AuthenticateTrello()"}
+          Connect With Trello
+      .span4
+        %h3
+          Secondary content

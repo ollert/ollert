@@ -7,6 +7,7 @@ gem 'rake'
 gem 'sinatra'
 gem 'haml'
 gem 'ruby-trello'
+gem 'sass'
 
 group :development, :test do
 end
