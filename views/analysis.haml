@@ -2,19 +2,14 @@
   %h2
     #{@board.name}
   .row
-    .span5
-      %div(id="WIP-Container" style="width: 400px; height: 300px; margin: 0 auto")
-    .span5
-      %div(id="CFD-Container" style="width: 600px; height: 500px; margin: 0 auto")
-  .row
     .col-md-3
-      .single-stat
+      %div(class="analysis-blocks med-analysis-blocks-container-stats ")
         .single-stat-title
           %h4 Average members per card
         .single-stat-value
           #{@members_per_card}
     .col-md-3
-      .single-stat
+      %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .single-stat-title
           %h4 Average cards per member
         .single-stat-value
@@ -28,14 +23,21 @@
         .single-stat-value
           #{@list_with_most_cards.cards.count} cards
     .col-md-3
-      .single-stat
+      %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .single-stat-title
           %h4 List with the least cards
         .single-stat-value
           #{@list_with_least_cards.name}
         .single-stat-value
           #{@list_with_least_cards.cards.count} cards
-
+  .row
+    .col-md-4
+      %div(class="analysis-blocks med-analysis-blocks-container")
+        %div(id="WIP-Container" class="med-chart" style="margin: 0 auto")
+    .col-md-6
+      %div(class="analysis-blocks lg-analysis-blocks-container")
+        %div(id="CFD-Container" class="lg-chart" style="margin: 0 auto")
+  
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/CFDChart.js"}
 %script
@@ -47,3 +49,6 @@
   var data = new cfdChartData();
   var cfdChart = new cfdChart({ data: data, boardName: "Ollert" });
   cfdChart.buildChart();
+
+
+

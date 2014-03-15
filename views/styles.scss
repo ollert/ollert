@@ -14,11 +14,13 @@ $light-light: #F2F2F2;
 
 .single-stat-title {
   color: $medium;
+  text-align: center;
 }
 
 .single-stat-value {
-  color: $light-light;
+  color:  $medium;
   font-size: 32pt;
+  text-align: center;
 }
 
 footer {
@@ -28,3 +30,53 @@ footer {
 .navbar {
   margin-bottom: 0px;
 }
+
+.analysis-blocks {
+    padding: 5px;
+    margin: 5px;
+    border-style: solid;
+    border-width: 1px;
+    -moz-border-radius-topleft: 18px;
+    -webkit-border-top-left-radius: 18px;
+     border-top-left-radius: 18px;
+    -moz-border-radius-topright: 15px;
+    -webkit-border-top-right-radius: 15px;
+    border-top-right-radius: 15px;
+    -moz-border-radius-bottomright: 22px;
+    -webkit-border-bottom-right-radius: 22px;
+    border-bottom-right-radius: 22px;
+    -moz-border-radius-bottomleft: 25px;
+    -webkit-border-bottom-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.med-analysis-blocks-container {
+    width: 365px;
+    height: 390px;
+}
+
+.lg-analysis-blocks-container {
+    width: 555px;
+    height: 390px;
+}
+
+.med-chart{
+    width: 350px; 
+    height: 380px;
+}
+
+.lg-chart{
+    width:  545px;
+    height: 370px;
+}
+
+.med-analysis-blocks-container-stats {
+    width: 265px;
+    height: 200px;
+}
+
+.lg-analysis-blocks-container-stats {
+    width: 380px;
+    height: 200px;
+}
+

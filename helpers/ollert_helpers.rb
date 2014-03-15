@@ -10,6 +10,7 @@ module OllertHelpers
 
   def get_members_per_card_data(cards)
     counts = cards.map{ |card| card.members.count }
+
     mpc = counts.reduce(:+).to_f / counts.size
     mpc.round(2)
   end
