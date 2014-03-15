@@ -29,6 +29,7 @@ GEM
       oauth (~> 0.4.5)
       rest-client (~> 1.6.7)
     sass (3.3.3)
+    sequel (4.8.0)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -44,4 +45,5 @@ DEPENDENCIES
   rake
   ruby-trello
   sass
+  sequel
   sinatra

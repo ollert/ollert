@@ -30,12 +30,13 @@
               %li
                 %a{href: "/"}
                   Why Pay
-          .navbar-right.img-rounded{style: "margin-top: 7px;"}
-            %ul{class: 'nav navbar-nav pull-right'}
-              %li
-                %button(type="submit" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="bottom") Sign up
-              %li
-                %button(type="submit" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom") Log in
+          - if !locals[:logged_in]
+            .navbar-right.img-rounded{style: "margin-top: 7px;"}
+              %ul{class: 'nav navbar-nav pull-right'}
+                %li
+                  %button(type="submit" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="bottom") Sign up
+                %li
+                  %button(type="submit" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom") Log in
 
       = yield
 
