@@ -1,9 +1,37 @@
-%script{src: "/js/highcharts.js"}
-%script{src: "/js/WIPChart.js"}
- 
-.container
-  %h4
-    #{@board.name}
-  .row
-    .span10
-      %div(id="WIP-Container" style="width: 400px; height: 300px; margin: 0 auto")
+!!! html
+%html{lang: 'en'}
+  %head
+    %title Ollert
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
+    %meta{name: 'description', content: 'Ollert'}
+
+    %link{href:'/css/bootstrap.min.css', rel: 'stylesheet'}
+    %script{src: '/js/bootstrap.min.js'}
+    %script{src: "http://code.jquery.com/jquery-1.11.0.min.js"}
+    %script{src: "/js/highcharts.js"}
+   
+
+  %body    
+    .container
+      .content
+        .page-header
+          <h1>Dashboard <small>Where analysis is done</small></h1>
+        .row
+          .span5
+            %div(id="WIP-Container" style="width: 400px; height: 300px; margin: 0 auto")
+          .span5
+            %div(id="CFD-Container" style="width: 600px; height: 500px; margin: 0 auto")
+          .span4
+            <h3>Secondary content</h3>
+
+      %footer
+        <p>&copy; Company 2011</p>
+    %script{src: "/js/WIPChart.js"}
+    %script{src: "/js/CFDChart.js"}
+    %script
+      var data = new wipChartData(); //TODO: Pass some data in here to convert
+      var wipChart = new wipChart({ data: data });
+      wipChart.buildChart()
+      
+
+
