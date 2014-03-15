@@ -10,9 +10,9 @@ PUBLIC_KEY = "0942956f9eeea22688d8717ec9e12955"
 APP_NAME = "ollert"
 
 class Ollert < Sinatra::Base
-  enable :sessions
-
   include OllertHelpers
+
+  enable :sessions
 
   get '/' do
     @secret = PUBLIC_KEY
@@ -36,6 +36,11 @@ class Ollert < Sinatra::Base
     client = get_client PUBLIC_KEY, session[:token]
 
     @board = client.find :board, board_id
+
+    @wip_data = Hash.new
+    @board.cards.group_by { |x| x.list.name }.each_pair do |k,v|
+      @wip_data[k] = v.count
+    end
 
     haml :analysis
   end
