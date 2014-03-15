@@ -7,101 +7,24 @@
 
     %link{href:'/css/bootstrap.min.css', rel: 'stylesheet'}
     %script{src: '/js/bootstrap.min.js'}
-    %script(src: "http://code.jquery.com/jquery-1.11.0.min.js")
-    %script(src: "/js/highcharts.js")
+    %script{src: "http://code.jquery.com/jquery-1.11.0.min.js"}
+    %script{src: "/js/highcharts.js"}
+   
 
-  %body
-    .topbar
-      .fill
-        .container(style="margin-top:20px")
-          %h2 Ollert
-          .navbar
-            %ul(class="nav navbar-nav")
-              %li(class="active pull-left")
-                %a(href = "/") Home
-              %li(class="pull-left")
-                %a(href = "/") More Content
-              %li(class="pull-left")
-                %a(href = "/") Why Pay
-            .pull-right
-              %button(type="submit" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="bottom") Sign up
-              %button(type="submit" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom") Log in
-              
+  %body    
     .container
       .content
         .page-header
           <h1>Dashboard <small>Where analysis is done</small></h1>
         .row
           .span10
-            %div(id="WIP-Container" style="min-width: 310px; height: 400px; margin: 0 auto")
+            %div(id="WIP-Container" style="width: 400px; height: 300px; margin: 0 auto")
           .span4
             <h3>Secondary content</h3>
 
       %footer
         <p>&copy; Company 2011</p>
-    %script
-      $(function () {
-        $('#container').highcharts({
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text: 'Historic World Population by Region'
-            },
-            subtitle: {
-                text: 'Source: Wikipedia.org'
-            },
-            xAxis: {
-                categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
-                title: {
-                    text: null
-                }
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Population (millions)',
-                    align: 'high'
-                },
-                labels: {
-                    overflow: 'justify'
-                }
-            },
-            tooltip: {
-                valueSuffix: ' millions'
-            },
-            plotOptions: {
-                bar: {
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -40,
-                y: 100,
-                floating: true,
-                borderWidth: 1,
-                backgroundColor: '#FFFFFF',
-                shadow: true
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'Year 1800',
-                data: [107, 31, 635, 203, 2]
-            }, {
-                name: 'Year 1900',
-                data: [133, 156, 947, 408, 6]
-            }, {
-                name: 'Year 2008',
-                data: [973, 914, 4054, 732, 34]
-            }]
-        });
-      });
+    %script{src: "/js/WIPChart.js"}
+      
 
 

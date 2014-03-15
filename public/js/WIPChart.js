@@ -1,13 +1,22 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Highcharts Example</title>
-
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<script type="text/javascript">
+ var wipChart = {
+    
+    getCategories: function(){
+        return ['Feature Ideas / Stretch Goals', 'To Do', 'Doing', 'Done'];
+    },
+    
+    getData: function(){
+        return [
+                { 
+                    name: "Card in List",
+                    data: [1, 2, 4, 7]
+                }
+               ];
+    }
+};
+var categories = wipChart.getCategories();
+var data = wipChart.getData();
 $(function () {
-        $('#container').highcharts({
+        $('#WIP-Container').highcharts({
             chart: {
                 type: 'bar'
             },
@@ -18,7 +27,7 @@ $(function () {
                 text: 'WIP'
             },
             xAxis: {
-                categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+                categories: categories,
                 title: {
                     text: null
                 }
@@ -26,7 +35,7 @@ $(function () {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Population (millions)',
+                    text: 'Cards',
                     align: 'high'
                 },
                 labels: {
@@ -34,7 +43,7 @@ $(function () {
                 }
             },
             tooltip: {
-                valueSuffix: ' millions'
+                valueSuffix: ' Cards'
             },
             plotOptions: {
                 bar: {
@@ -57,27 +66,6 @@ $(function () {
             credits: {
                 enabled: false
             },
-            series: [{
-                name: 'Year 1800',
-                data: [107, 31, 635, 203, 2]
-            }, {
-                name: 'Year 1900',
-                data: [133, 156, 947, 408, 6]
-            }, {
-                name: 'Year 2008',
-                data: [973, 914, 4054, 732, 34]
-            }]
+            series: data
         });
-    });
-    
-
-		</script>
-	</head>
-	<body>
-<script src="../../js/highcharts.js"></script>
-<script src="../../js/modules/exporting.js"></script>
-
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-	</body>
-</html>
+      });

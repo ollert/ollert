@@ -17,6 +17,7 @@ class Ollert < Sinatra::Base
 
   get '/styles.css' do
     scss :styles
+  end
   
   get '/dashboard' do
     haml :dashboard
