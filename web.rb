@@ -4,6 +4,7 @@ require 'sass'
 require 'trello'
 require 'active_support/inflector'
 require 'json'
+require 'rack-flash'
 
 require_relative 'helpers/ollert_helpers'
 
@@ -12,6 +13,7 @@ APP_NAME = "ollert"
 
 class Ollert < Sinatra::Base
   include OllertHelpers
+  use Rack::Flash, sweep: true
 
   enable :sessions
 
@@ -53,7 +55,23 @@ class Ollert < Sinatra::Base
   end
 
   post '/signup' do
-    "not implemented"
+    msg = validate_signup(params)
+    if msg.empty?
+      flash[:success] = "You're signed up! Unfortunately, this currently means nothing. :)"
+      redirect '/'
+    else
+      flash[:error] = msg
+      @email
+      haml_view_model :signup
+    end
+  end
+
+  get '/terms' do
+    "TBD"
+  end
+
+  get '/privacy' do
+    "TBD"
   end
 
   get '/fail' do

@@ -17,6 +17,8 @@ GEM
     multi_json (1.9.0)
     oauth (0.4.7)
     rack (1.5.2)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (1.5.2)
       rack
     rake (10.1.1)
@@ -42,6 +44,7 @@ PLATFORMS
 DEPENDENCIES
   bundler
   haml
+  rack-flash3
   rake
   ruby-trello
   sass

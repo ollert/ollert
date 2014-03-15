@@ -6,7 +6,7 @@
     %meta{name: 'description', content: 'Ollert'}
 
     %link{href: '/css/bootstrap.min.css', rel: 'stylesheet'}
-    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/styles.css'}
+    %link{rel: 'stylesheet', type: 'text/css', href: '/styles.css'}
 
     %script{src: 'http://code.jquery.com/jquery-1.11.0.min.js'}
     %script{src: '/js/bootstrap.min.js'}
@@ -37,10 +37,26 @@
                   %button(type="submit" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="bottom") Sign up
                 %li
                   %button(type="submit" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom") Log in
+      - if flash.has? :error
+        .row{id: 'flash', class: 'alert alert-danger'}
+          .container
+            #{flash[:error]}
+      - elsif flash.has? :warning
+        .row{id: 'flash', class: 'alert alert-warning'}
+          .container
+            #{flash[:warning]}
+      - elsif flash.has? :success
+        .row{id: 'flash', class: 'alert alert-success'}
+          .container
+            #{flash[:success]}
+      - elsif flash.has? :info
+        .row{id: 'flash', class: 'alert alert-info'}
+          .container
+            #{flash[:info]}
 
       = yield
 
-    %footer{id: 'footer'}
+    .footer{id: 'footer'}
       %hr
       .container
         Copyright 2014

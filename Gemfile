@@ -9,6 +9,7 @@ gem 'haml'
 gem 'ruby-trello'
 gem 'sass'
 gem 'sequel'
+gem 'rack-flash3'
 
 group :development, :test do
 end

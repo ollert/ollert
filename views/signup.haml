@@ -6,9 +6,9 @@
         .form-group
           .row{style: "margin-bottom: 10px;"}
             .col-md-4
-              %label{for: "email_address"} Email Address
+              %label{for: "email"} Email Address
             .col-md-8
-              %input{type: "email_address", id: "email_address", name: "email_address", class: "form-control", value: @email_address, required: "required"}
+              %input{type: "email", id: "email", name: "email", class: "form-control", value: @email, required: "required"}
           .row{style: "margin-bottom: 10px;"}
             .col-md-4
               %label{for: "password"} Password
@@ -20,13 +20,17 @@
                 %a{class: "btn btn-link", href: "/info", title: "Why should I pay?", style: "padding-left: 0; border-left: 0", target: "_blank"}
                   Membership Type
             .col-md-8
-              .btn-group
-                %button{type: "button", class: "btn btn-default active"}
-                  Free
-                %button{type: "button", class: "btn btn-default"}
-                  $3 per month
-                %button{type: "button", class: "btn btn-default"}
-                  $30 per year
+              .btn-group{"data-toggle" => "buttons"}
+                %label{class: "btn btn-default #{'active' if @membership == 'free'}"}
+                  %input{type: "radio", name: "options", class: "btn btn-default", id: "option-free"}
+                    Free
+                %label{class: "btn btn-default #{'active' if @membership.nil? || @membership == 'monthly'}"}
+                  %input{type: "radio", name: "options", class: "btn btn-default", id: "option-monthly"}
+                    $3 per month
+                %label{class: "btn btn-default #{'active' if @membership == 'yearly'}"}
+                  %input{type: "radio", name: "options", class: "btn btn-default", id: "option-yearly"}
+                    $30 per year
+
           .row{style: "margin-bottom: 10px;", class: "text-center"}
           .row{style: "margin-top: 10px;"}
             .checkbox{style: "font-size: 16px;"}
