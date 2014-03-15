@@ -7,9 +7,12 @@
     .span5
       %div(id="CFD-Container" style="width: 600px; height: 500px; margin: 0 auto")
   .row
-    .span5
-      %p
-        #{@members_per_card}
+    .col-md-3
+      .single-stat
+        .single-stat-title
+          %h4 Members per Card
+        .single-stat-value
+          #{@members_per_card}
 
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/CFDChart.js"}
