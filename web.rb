@@ -8,6 +8,8 @@ PUBLIC_KEY = "0942956f9eeea22688d8717ec9e12955"
 APP_NAME = "ollert"
 
 class Ollert < Sinatra::Base
+  enable :sessions
+
   get '/' do
     @secret = PUBLIC_KEY
     haml :landing
@@ -30,18 +32,21 @@ class Ollert < Sinatra::Base
   end
 
   get '/boards/:id' do |board_id|
-    
-  end
+    client = Trello::Client.new(
+      :developer_public_key => PUBLIC_KEY,
+      :member_token => session[:token]
+    )
 
-  get '/styles.css' do
-    scss :styles
-  end
-  
-  get '/dashboard' do
+    @board = client.find :board, board_id
+
     haml :dashboard
   end
 
   get '/fail' do
     "auth failed"
+  end
+
+  get '/styles.css' do
+    scss :styles
   end
 end
