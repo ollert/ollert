@@ -14,6 +14,12 @@ module OllertHelpers
     mpc.round(2)
   end
 
+  def get_avg_cards_per_member(board)
+    counts = board.cards.map{ |card| card.members.count }
+    cpm = counts.reduce(:+).to_f / board.members.size
+    cpm.round(2)
+  end
+
   def haml_view_model(view, locals = {})
     default_locals = {logged_in: false}
     locals = default_locals.merge locals
