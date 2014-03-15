@@ -6,3 +6,7 @@ gem 'bundler'
 gem 'rake'
 gem 'sinatra'
 gem 'haml'
+gem 'ruby-trello'
+
+group :development, :test do
+end
