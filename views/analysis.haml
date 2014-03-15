@@ -15,3 +15,6 @@
   wip_data.counts = [{name: "Cards in List", showInLegend: false, data: #{@wip_data.values.to_json}}];
   var wipChart = new wipChart(wip_data );
   wipChart.buildChart();
+  var data = new cfdChartData();
+  var cfdChart = new cfdChart({ data: data, boardName: "Ollert" });
+  cfdChart.buildChart();
