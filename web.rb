@@ -44,6 +44,7 @@ class Ollert < Sinatra::Base
     end
 
     @members_per_card = get_members_per_card_data(@board.cards)
+    @list_with_most_cards = get_list_with_most_cards(@board.lists)
 
     haml_view_model :analysis
   end

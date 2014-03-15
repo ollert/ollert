@@ -13,6 +13,14 @@
           %h4 Members per Card
         .single-stat-value
           #{@members_per_card}
+    .col-md-3
+      .single-stat
+        .single-stat-title
+          %h4 List with the most cards
+        .single-stat-value
+          "#{@list_with_most_cards.name}"
+        .single-stat-value
+          #{@list_with_most_cards.cards.count} cards
 
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/CFDChart.js"}

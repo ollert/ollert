@@ -17,4 +17,8 @@ module OllertHelpers
     locals = default_locals.merge locals
     haml view.to_sym, locals => locals
   end
+
+  def get_list_with_most_cards(lists)
+    lists.max_by{ |list| list.cards.count }
+  end
 end
