@@ -8,7 +8,8 @@ module OllertHelpers
 
   def get_members_per_card_data(cards)
     counts = cards.map{ |card| card.members.count }
-    counts.reduce(:+).to_f / counts.size
+    mpc = counts.reduce(:+).to_f / counts.size
+    mpc.round(2)
   end
 
   def haml_view_model(view, locals = {})
