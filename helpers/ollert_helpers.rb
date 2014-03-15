@@ -21,4 +21,8 @@ module OllertHelpers
   def get_list_with_most_cards(lists)
     lists.max_by{ |list| list.cards.count }
   end
+
+  def get_list_with_least_cards(lists)
+    lists.min_by{ |list| list.cards.count }
+  end
 end

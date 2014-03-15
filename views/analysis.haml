@@ -21,6 +21,14 @@
           "#{@list_with_most_cards.name}"
         .single-stat-value
           #{@list_with_most_cards.cards.count} cards
+    .col-md-3
+      .single-stat
+        .single-stat-title
+          %h4 List with the least cards
+        .single-stat-value
+          "#{@list_with_least_cards.name}"
+        .single-stat-value
+          #{@list_with_least_cards.cards.count} cards
 
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/CFDChart.js"}
