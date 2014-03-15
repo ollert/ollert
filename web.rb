@@ -3,6 +3,7 @@ require 'haml'
 require 'sass'
 require 'trello'
 require 'active_support/inflector'
+require 'json'
 
 require_relative 'helpers/ollert_helpers'
 

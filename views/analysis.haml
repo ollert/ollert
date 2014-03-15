@@ -10,6 +10,8 @@
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/CFDChart.js"}
 %script
-  var data = new wipChartData(); //TODO: Pass some data in here to convert
-  var wipChart = new wipChart({ data: data });
-  wipChart.buildChart()
+  var wip_data = new wipChartData();
+  wip_data.lists = #{@wip_data.keys.to_json};
+  wip_data.counts = [{name: "Cards in List", showInLegend: false, data: #{@wip_data.values.to_json}}];
+  var wipChart = new wipChart(wip_data );
+  wipChart.buildChart();

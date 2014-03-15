@@ -1,23 +1,11 @@
 function wipChartData() {
-    
-    this.getCategories = function (){
-        return ['Feature Ideas / Stretch Goals', 'To Do', 'Doing', 'Done'];
-    };
-    
-    this.getData = function () {
-        return [
-                {
-                    name: "Card in List",
-                    data: [1, 2, 4, 7]
-                }
-               ];
-    };
+    this.lists = [];
+    this.counts = [];
 }
 
-function wipChart(options) {
-
-    this.categories = options.data.getCategories();
-    this.data = options.data.getData();
+function wipChart(wip_data) {
+    this.categories = wip_data.lists;
+    this.data = wip_data.counts;
     
     this.buildChart = function() {
         var that = this;
@@ -56,17 +44,6 @@ function wipChart(options) {
                             enabled: true
                         }
                     }
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -40,
-                    y: 100,
-                    floating: true,
-                    borderWidth: 1,
-                    backgroundColor: '#FFFFFF',
-                    shadow: true
                 },
                 credits: {
                     enabled: false
