@@ -34,9 +34,11 @@
             .navbar-right.img-rounded{style: "margin-top: 7px;"}
               %ul{class: 'nav navbar-nav pull-right'}
                 %li
-                  %button(type="submit" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="bottom") Sign up
+                  %form{action: "/signup", method: "get"}
+                    %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
                 %li
-                  %button(type="submit" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom") Log in
+                  %button{type: "submit", class: "btn btn-default"}
+                    Log in
       - if flash.has? :error
         .row{id: 'flash', class: 'alert alert-danger'}
           .container
