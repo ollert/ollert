@@ -48,6 +48,14 @@ class Ollert < Sinatra::Base
     haml_view_model :analysis
   end
 
+  get '/signup' do
+    haml_view_model :signup
+  end
+
+  post '/signup' do
+    "not implemented"
+  end
+
   get '/fail' do
     "auth failed"
   end

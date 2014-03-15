@@ -1,4 +1,3 @@
-
 module OllertHelpers
   def get_client(public_key, token)
     Trello::Client.new(
