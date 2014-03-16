@@ -67,8 +67,8 @@ class Ollert < Sinatra::Base
     # create boards hash
     # id => name
 
-    boards_hash = @boards.map {|board| [board.id, board.name]}
-    puts boards_hash.to_h
+    # boards_hash = @boards.map {|board| [board.id, board.name]}
+    # puts boards_hash.to_h
 
     haml_view_model :boards, @user
   end
