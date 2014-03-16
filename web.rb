@@ -45,12 +45,11 @@ class Ollert < Sinatra::Base
     if !@user.nil? && !@user.member_token.nil?
       redirect '/boards'
     end
-
+    
     haml_view_model :landing, @user
   end
 
   get '/boards', :auth => :none do
-
     if !@user.nil? && !@user.member_token.nil?
       session[:token] = @user.member_token
     elsif !params[:token].nil? && !params[:token].empty?
@@ -61,6 +60,15 @@ class Ollert < Sinatra::Base
     end
 
     client = get_client ENV['PUBLIC_KEY'], session[:token]
+    token = client.find(:token, session[:token])
+    member = token.member
+
+    unless @user.nil?
+      @user.member_token = session[:token]
+      @user.trello_name = member.username
+      @user.save
+    end
+    
     @boards = get_user_boards(@user, session, client)
 
     haml_view_model :boards, @user

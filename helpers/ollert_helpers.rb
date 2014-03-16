@@ -142,13 +142,8 @@ module OllertHelpers
 
     data = { labels: label_counts.keys, counts: label_counts.values }
   
-  def get_user_boards(user, session, client)
-    if !user.nil? && !user.member_token.nil?
-      session[:token] = user.member_token
-    else
-      session[:token] = params[:token]
-    end
-    
+  def get_user_boards(user, session, client=nil)
+
     token = client.find(:token, session[:token])
     member = token.member
 
