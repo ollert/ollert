@@ -74,8 +74,6 @@ class Ollert < Sinatra::Base
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     @board = client.find :board, board_id
 
-    @stats = get_stats(@board)
-
     haml_view_model :analysis, @user
   end
   
@@ -101,9 +99,8 @@ class Ollert < Sinatra::Base
   get '/boards/:id/cfd' do |board_id|
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     board = client.find :board, board_id
-s
-    lists = @board.lists(filter: :all)
-    actions = @board.actions {limit: 999}
+    lists = board.lists(filter: :all)
+    actions = board.actions(limit: 999)
     closed_lists = Hash.new
     lists.select {|l| l.closed}.each do |l|
       closed_lists[l.id] = l.actions.first.date
@@ -115,8 +112,8 @@ s
     end
 
     cfd_data = get_cfd_data(actions, list_ids_to_names, closed_lists)
-    @dates = cfd_data.keys.sort
-    @cfd_values = Array.new
+    dates = cfd_data.keys.sort
+    cfd_values = Array.new
     lists.collect(&:name).uniq.each do |list|
       list_array = Array.new
       dates.each do |date|
@@ -133,8 +130,9 @@ s
   end
   
   get '/boards/:id/stats' do |board_id|
-
-    @stats = get_stats(@board)
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+    board = client.find :board, board_id
+    @stats = get_stats(board)
     
     # TODO: Move to own endpoint @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
     @stats.to_json
