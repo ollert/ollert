@@ -41,7 +41,7 @@ class Ollert < Sinatra::Base
     unless @user.nil? || @user.member_token.nil?
       redirect '/boards'
     end
-    
+
     haml_view_model :landing, @user
   end
 
@@ -126,6 +126,10 @@ class Ollert < Sinatra::Base
       session[:user] = user.id
       redirect '/'
     end
+  end
+
+  get '/settings', :auth => :authenticated do
+    "TBD"
   end
 
   get '/terms' do
