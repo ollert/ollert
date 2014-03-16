@@ -45,7 +45,7 @@ class Ollert < Sinatra::Base
     if !@user.nil? && !@user.member_token.nil?
       redirect '/boards'
     end
-
+    
     haml_view_model :landing, @user
   end
 
@@ -60,7 +60,6 @@ class Ollert < Sinatra::Base
     end
 
     client = get_client ENV['PUBLIC_KEY'], session[:token]
-
     token = client.find(:token, session[:token])
     member = token.member
 
@@ -69,9 +68,8 @@ class Ollert < Sinatra::Base
       @user.trello_name = member.username
       @user.save
     end
-
-    raw_boards = member.boards
-    @boards = raw_boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
+    
+    @boards = get_user_boards(@user, session, client)
 
     haml_view_model :boards, @user
   end
@@ -79,6 +77,7 @@ class Ollert < Sinatra::Base
   get '/boards/:id', :auth => :token do |board_id|
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     @board = client.find :board, board_id
+    @boards = get_user_boards(@user, session, client)
 
     haml_view_model :analysis, @user
   end
@@ -141,6 +140,15 @@ class Ollert < Sinatra::Base
     @stats = get_stats(board)
     @stats.to_json
     
+  end
+  
+  get '/boards/:id/labelcounts' do |board_id|
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+    @board = client.find :board, board_id
+
+    @label_count_data = get_label_count_data(@board.cards)
+    
+    @label_count_data.to_json
   end
 
   get '/signup' do

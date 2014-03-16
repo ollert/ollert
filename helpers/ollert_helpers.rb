@@ -130,4 +130,36 @@ module OllertHelpers
   	end
     results
   end
+
+  def get_label_count_data(cards)
+    labels_array = Array.new
+
+    cards.group_by{ |card| card.labels }.each do |labels,card|
+      labels.each do |label|
+          labels_array << label
+      end
+    end
+
+    label_counts = Hash.new
+
+    labels_array.group_by{ |label| label.name }.each do |label,v|
+      label_counts[label] = v.count
+    end
+
+    data = { labels: label_counts.keys, counts: label_counts.values }
+  end
+  
+  def get_user_boards(user, session, client=nil)
+
+    token = client.find(:token, session[:token])
+    member = token.member
+
+    unless user.nil?
+      user.member_token = session[:token]
+      user.trello_name = member.username
+      user.save
+    end
+
+    @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
+  end
 end
