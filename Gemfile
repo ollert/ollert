@@ -9,7 +9,12 @@ gem 'haml'
 gem 'ruby-trello'
 gem 'sass'
 gem 'sequel'
+gem 'sqlite3'
+gem 'dotenv'
 gem 'rack-flash3'
+
+group :development do
+end
 
 group :development, :test do
 end
