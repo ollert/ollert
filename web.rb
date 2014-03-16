@@ -186,6 +186,41 @@ class Ollert < Sinatra::Base
     redirect '/settings'
   end
 
+  post '/settings/password', :auth => :authenticated do
+    current_pw = params[:current_password]
+    new_password = params[:new_password]
+    confirm_password = params[:confirm_password]
+
+    if current_pw.nil_or_empty?
+      flash[:error] = "Enter your old password so I know it's really you."
+      redirect '/settings'
+    end
+
+    if !@user.authenticate? current_pw
+      flash[:error] = "The current password entered is incorrect. Try again."
+      redirect '/settings'
+    end
+
+    if new_password.nil_or_empty?
+      flash[:error] = "New password must be at least 1 character in length."
+      redirect '/settings'
+    end
+
+    if new_password != confirm_password
+      flash[:error] = "Could not confirm new password. Type more carefully."
+      redirect '/settings'
+    end
+
+    @user.password = new_password
+    if !@user.save
+      flash[:error] = "Password could not be changed. Do you mind trying again?"
+      redirect '/settings'
+    end
+
+    flash[:success] = "Password has been changed."
+    redirect '/settings'
+  end
+
   get '/settings/trello/connect', :auth => :authenticated do
     session[:token] = params[:token]
 
