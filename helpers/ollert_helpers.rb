@@ -1,5 +1,4 @@
 require_relative '../core_ext/string'
-require 'pry'
 
 module OllertHelpers
   def get_user
@@ -52,10 +51,16 @@ module OllertHelpers
     stats[:card_count] = cards.count
 
     oldest_create = createCardActions.min_by(&:date)
-    stats[:oldest_card_name] = oldest_create.data["card"]["name"]
+    name = oldest_create.data["card"]["name"]
+    stats[:oldest_card_name] = name.length > 24 ? name[0..21] << "..." : name 
     age = Date.today.mjd - oldest_create.date.to_date.mjd
     stats[:oldest_card_age] = age
     
+    newest_create = createCardActions.max_by(&:date)
+    name = newest_create.data["card"]["name"]
+    stats[:newest_card_name] = name.length > 24 ? name[0..21] << "..." : name 
+    age = Date.today.mjd - newest_create.date.to_date.mjd
+    stats[:newest_card_age] = age
     stats
   end
 
