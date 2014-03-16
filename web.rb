@@ -21,7 +21,6 @@ class Ollert < Sinatra::Base
     Sequel.connect ENV['DATABASE_URL']
 
     require_relative 'models/user'
-    require_relative 'models/board'
   end
 
   set(:auth) do |role|
@@ -61,11 +60,15 @@ class Ollert < Sinatra::Base
       @user.member_token = session[:token]
       @user.trello_name = member.username
       @user.save
-
-      # create and store boards?
     end
 
     @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
+    
+    # create boards hash
+    # id => name
+
+    # boards_hash = @boards.map {|board| [board.id, board.name]}
+    # puts boards_hash.to_h
 
     haml_view_model :boards, @user
   end
@@ -216,6 +219,41 @@ class Ollert < Sinatra::Base
     redirect '/settings'
   end
 
+  post '/settings/password', :auth => :authenticated do
+    current_pw = params[:current_password]
+    new_password = params[:new_password]
+    confirm_password = params[:confirm_password]
+
+    if current_pw.nil_or_empty?
+      flash[:error] = "Enter your old password so I know it's really you."
+      redirect '/settings'
+    end
+
+    if !@user.authenticate? current_pw
+      flash[:error] = "The current password entered is incorrect. Try again."
+      redirect '/settings'
+    end
+
+    if new_password.nil_or_empty?
+      flash[:error] = "New password must be at least 1 character in length."
+      redirect '/settings'
+    end
+
+    if new_password != confirm_password
+      flash[:error] = "Could not confirm new password. Type more carefully."
+      redirect '/settings'
+    end
+
+    @user.password = new_password
+    if !@user.save
+      flash[:error] = "Password could not be changed. Do you mind trying again?"
+      redirect '/settings'
+    end
+
+    flash[:success] = "Password has been changed."
+    redirect '/settings'
+  end
+
   get '/settings/trello/connect', :auth => :authenticated do
     session[:token] = params[:token]
 
@@ -274,16 +312,12 @@ class Ollert < Sinatra::Base
     haml_view_model :settings, @user
   end
 
-  get '/terms' do
-    "TBD"
+  get '/privacy', :auth => :none do
+    haml_view_model :privacy, @user
   end
 
-  get '/privacy' do
-    "TBD"
-  end
-
-  get '/fail' do
-    "auth failed"
+  get '/terms', :auth => :none do
+    haml_view_model :terms, @user
   end
 
   get '/styles.css' do

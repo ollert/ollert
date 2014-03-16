@@ -69,7 +69,19 @@
 
       = yield
 
-    .footer{id: 'footer'}
+    %footer{id: 'footer'}
       %hr
-      .container
-        Copyright 2014
+      .container.small
+        .row
+          .col-md-offset-9.col-md-3
+            .row
+              %strong
+                Legal
+            .row
+              %a{href: "/privacy"}
+                Privacy Policy
+            .row
+              %a{href: "/terms"}
+                Terms and Conditions
+        .row.pull-right
+          This site copyright &copy; 2014
