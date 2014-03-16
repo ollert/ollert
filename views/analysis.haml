@@ -66,9 +66,16 @@
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats ")
         .stat-title
-          %h4 Oldest Card (in days)
+          %h4 Oldest Card (age in days)
         .stat-subtitle{id: 'oldest_card_name'}
         .stat-value{id: 'oldest_card_age'}
+          %img{src: '/img/spinner.GIF', class: 'stats-spinner'}
+    .col-md-3
+      %div(class="analysis-blocks med-analysis-blocks-container-stats ")
+        .stat-title
+          %h4 Newest Card (age in days)
+        .stat-subtitle{id: 'newest_card_name'}
+        .stat-value{id: 'newest_card_age'}
           %img{src: '/img/spinner.GIF', class: 'stats-spinner'}
        
 %script{src: "/js/CFDChart.js"}
