@@ -49,7 +49,7 @@ class Ollert < Sinatra::Base
     haml_view_model :landing, @user
   end
 
-  get '/boards' do
+  get '/boards', :auth => :none do
     if !@user.nil? && !@user.member_token.nil?
       session[:token] = @user.member_token
     elsif !params[:token].nil? && !params[:token].empty?
