@@ -74,6 +74,16 @@ class Ollert < Sinatra::Base
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     @board = client.find :board, board_id
 
+    @stats = get_stats(@board)
+
+    haml_view_model :analysis, @user
+  end
+  
+   get '/boards/:id/data' do |board_id|
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+
+    @board = client.find :board, board_id
+
     @wip_data = Hash.new
     options = {limit: 999}
     cards = @board.cards options
@@ -84,13 +94,19 @@ class Ollert < Sinatra::Base
       @wip_data[k] = v.count
     end
 
-    @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
-
-    @label_count_data = get_label_count_data(cards)
-
+    data = { wipcategories: @wip_data.keys, wipdata: @wip_data.values }
+    
+    data.to_json
+  end
+  
+  get '/boards/:id/stats' do |board_id|
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+    @board = client.find :board, board_id
     @stats = get_stats(@board)
-
-    haml_view_model :analysis, @user
+    
+    # TODO: Move to own endpoint @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
+    @stats.to_json
+    
   end
 
   get '/signup' do

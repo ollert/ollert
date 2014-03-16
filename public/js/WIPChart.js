@@ -1,11 +1,11 @@
-function labelCountChartData() {
+function wipChartData() {
     this.lists = [];
     this.counts = [];
-}
+};
 
-function labelCountChart(lc_data) {
-    this.categories = lc_data.lists;
-    this.data = lc_data.counts;
+function wipChart(wip_data) {
+    this.categories = wip_data.lists;
+    this.data = wip_data.counts;
     
     this.buildChart = function() {
         var that = this;
@@ -51,4 +51,38 @@ function labelCountChart(lc_data) {
                 series: that.data
             });
           };
- }
+ };
+ 
+ var dataLoader = {
+    
+    loadWipChart: function(options){
+        var jqxhr = $.get( "/boards/" + options.boardId + "/data", function(data) {
+            $('#wip-spinner').hide();
+            $('#cfd-spinner').hide();
+            var theData = jQuery.parseJSON(data);
+            var wip_data = new wipChartData();
+            wip_data.lists = theData.wipcategories;
+            wip_data.counts = [{name: "Cards in List", showInLegend: false, data: theData.wipdata}];
+            var wc = new wipChart(wip_data);
+            wc.buildChart();
+            var cfdData = new cfdChartData();
+            var cc = new cfdChart({ data: cfdData, boardName: "Ollert" });
+            cc.buildChart();
+        })
+    },
+    
+    loadStats: function(options){
+        var jqxhr = $.get( "/boards/" + options.boardId + "/stats", function(data) {
+            $.each($('.stats-spinner'), function(i, item){$(item).hide();});
+        
+            var theData = jQuery.parseJSON(data);
+            $('#avg_members_per_card').text(theData.avg_members_per_card);
+            $('#avg_cards_per_member').text(theData.avg_cards_per_member);
+            $('#list_with_most_cards_name').text(theData.list_with_most_cards_name);
+            $('#list_with_most_cards_count').text(theData.list_with_most_cards_count);
+            $('#list_with_least_cards_name').text(theData.list_with_least_cards_name);
+            $('#list_with_least_cards_count').text(theData.list_with_least_cards_count);
+            
+        })
+    }
+}

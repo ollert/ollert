@@ -31,11 +31,21 @@ module OllertHelpers
     stats[:avg_cards_per_member] = get_avg_cards_per_member(card_members_total, board.members)
 
     lists = board.lists
-    stats[:list_with_most_cards] = get_list_with_most_cards(lists)
-    stats[:list_with_least_cards] = get_list_with_least_cards(lists)
+
+    lst_most_cards = get_list_with_most_cards(lists)
+    
+    lst_most_cards.name = lst_most_cards.name.length > 24 ? lst_most_cards.name[0..21] + "..." : lst_most_cards.name
+    stats[:list_with_most_cards_name] = lst_most_cards.name
+    stats[:list_with_most_cards_count] = lst_most_cards.cards.count
+    
+    lst_least_cards = get_list_with_least_cards(lists)
+    lst_least_cards.name = lst_least_cards.name.length > 24 ? lst_least_cards.name[0..21] + "..." : lst_least_cards.name
+    stats[:list_with_least_cards_name] = lst_least_cards.name
+    stats[:list_with_least_cards_count] = lst_least_cards.cards.count
     
     stats[:board_members_count] = board.members.count
     stats[:card_count] = board.cards.count
+
     stats
   end
 
@@ -96,23 +106,5 @@ module OllertHelpers
   	  end
   	end
     results
-  end
-
-  def get_label_count_data(cards)
-    labels_array = Array.new
-
-    cards.group_by{ |card| card.labels }.each do |labels,card|
-      labels.each do |label|
-          labels_array << label
-      end
-    end
-
-    label_counts = Hash.new
-
-    labels_array.group_by{ |label| label.name }.each do |label,v|
-      label_counts[label] = v.count
-    end
-
-    label_counts
   end
 end
