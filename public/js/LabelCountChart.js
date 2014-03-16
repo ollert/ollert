@@ -1,26 +1,28 @@
 function labelCountChartData() {
-    this.lists = [];
+    this.labels = [];
     this.counts = [];
+    this.colors = [];
 }
 
-function labelCountChart(lc_data) {
-    this.categories = lc_data.lists;
-    this.data = lc_data.counts;
+function labelCountChart(label_count_data) {
+    this.labels = label_count_data.labels;
+    this.counts = label_count_data.counts;
+    this.colors = label_count_data.colors;
     
     this.buildChart = function() {
         var that = this;
-            $('#WIP-Container').highcharts({
+            $('#LabelCount-Container').highcharts({
                 chart: {
                     type: 'bar'
                 },
                 title: {
-                    text: 'Work In Progress'
+                    text: 'Card count per label'
                 },
                 subtitle: {
-                    text: 'WIP'
+                    text: 'cards can have multiple labels'
                 },
                 xAxis: {
-                    categories: that.categories,
+                    categories: that.labels,
                     title: {
                         text: null
                     }
@@ -42,13 +44,15 @@ function labelCountChart(lc_data) {
                     bar: {
                         dataLabels: {
                             enabled: true
-                        }
+                        },
+                        colorByPoint: true,
+                        colors: ['#00FF00', '#00FF99', '#99FF00'] 
                     }
                 },
                 credits: {
                     enabled: false
                 },
-                series: that.data
+                series: that.counts
             });
           };
  }
