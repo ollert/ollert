@@ -110,6 +110,14 @@ class Ollert < Sinatra::Base
     end
   end
 
+  get '/login' do
+    haml_view_model :login
+  end
+
+  post '/login' do
+    'dddddddd'
+  end
+
   get '/terms' do
     "TBD"
   end

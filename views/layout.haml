@@ -37,8 +37,8 @@
                   %form{action: "/signup", method: "get"}
                     %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
                 %li
-                  %button{type: "submit", class: "btn btn-default"}
-                    Log in
+                  %form{action: "/login", method: "get"}
+                    %input{type: "submit", class: "btn btn-default", value: "Log in"}
       - if flash.has? :error
         .row{id: 'flash', class: 'alert alert-danger', style: 'margin: 0'}
           .container
