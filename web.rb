@@ -94,7 +94,7 @@ class Ollert < Sinatra::Base
 
       if user.save
         session[:user] = user.id
-        flash[:success] = "You're signed up! Unfortunately, this currently means nothing. :)"
+        flash[:success] = "You're signed up! Click below to connect with Trello for the first time."
         redirect '/'
       else
         flash[:error] = "Something's broken, please try again later."
