@@ -12,6 +12,7 @@ gem 'sequel'
 gem 'sqlite3'
 gem 'dotenv'
 gem 'rack-flash3'
+gem 'bcrypt'
 
 group :development do
 end

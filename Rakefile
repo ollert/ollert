@@ -20,7 +20,7 @@ end
 require 'sequel'
 require 'dotenv/tasks'
 
-task :load_db, :dotenv do
+task :load_db => :dotenv do
   DB = Sequel.connect ENV['DATABASE_URL']
 end
 
@@ -51,7 +51,7 @@ namespace :db do
   end
  
   desc "Perform migration reset (full rollback and migration)"
-  task :reset => [:rollback, :migrate, :load_app] do
+  task :reset => [:rollback, :migrate] do
   end
 
   desc "Dump schema"
