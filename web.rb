@@ -62,13 +62,8 @@ class Ollert < Sinatra::Base
       @user.save
     end
 
-    @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
-    
-    # create boards hash
-    # id => name
-
-    # boards_hash = @boards.map {|board| [board.id, board.name]}
-    # puts boards_hash.to_h
+    raw_boards = member.boards
+    @boards = raw_boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
 
     haml_view_model :boards, @user
   end
@@ -76,8 +71,6 @@ class Ollert < Sinatra::Base
   get '/boards/:id', :auth => :none do |board_id|
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     @board = client.find :board, board_id
-
-    @stats = get_stats(@board)
 
     haml_view_model :analysis, @user
   end
