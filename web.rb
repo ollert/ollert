@@ -41,8 +41,7 @@ class Ollert < Sinatra::Base
     unless @user.nil? || @user.member_token.nil?
       redirect '/boards'
     end
-
-    @secret = ENV['PUBLIC_KEY']
+    
     haml_view_model :landing, @user
   end
 
