@@ -4,9 +4,10 @@ $medium-light: #A0A0A0;
 $light: #CCCCCC;
 $light-light: #F2F2F2;
 
+/* Disabled for now, will need later if header goes to fixed pos
 body {
   padding-top: 70px;
-}
+} */
 
 .topbar {
   background: $light-light;
@@ -37,7 +38,20 @@ body {
 }
 
 footer {
+  padding: 20px 15px;
   margin-top: 60px;
+  background: #3E434A;
+  color: #ADB3BA;
+  border: none;
+  font-size: 1.3em;
+}
+
+footer a {
+  color: #ADB3BA;
+}
+
+footer a:hover {
+  color: #FFF;
 }
 
 hr {
@@ -277,4 +291,32 @@ $colHover       : #ffe6d1; /*/
   .navbar-nav.navbar-right:last-child {
     margin-right: 15px;
   }
+}
+
+ul.boards-list {
+  float:left;
+  list-style: none outside none;
+  margin-left: 0px;
+}
+
+.boards-list-item {
+  float:left;
+  background-color: #F9F9F9;
+  border-bottom: 1px solid #BBB;
+  margin: 20px;
+}
+
+.boards-list-item-link {
+  float: left;
+  display: block;
+  font-weight: bold;
+  padding: 15px;
+  width: 200px;
+  color: #555;
+}
+
+.boards-list-item-link:hover {
+  border-bottom: 1px solid #E74C3C;
+  color: #E74C3C;
+  text-decoration: none;
 }
