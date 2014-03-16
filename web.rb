@@ -139,8 +139,6 @@ class Ollert < Sinatra::Base
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     board = client.find :board, board_id
     @stats = get_stats(board)
-    
-    # TODO: Move to own endpoint @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
     @stats.to_json
     
   end
