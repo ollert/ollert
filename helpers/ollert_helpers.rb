@@ -7,24 +7,31 @@ module OllertHelpers
       :member_token => token
     )
   end
+  
+  def get_stats(board)
+    stats = Hash.new
 
-  def get_members_per_card_data(cards)
-    counts = cards.map{ |card| card.members.count }
+    card_members_counts = board.cards.map{ |card| card.members.count }
+    card_members_total = card_members_counts.reduce(:+).to_f
+    
+    stats[:avg_members_per_card] = get_avg_members_per_card(card_members_counts, card_members_total)
+    stats[:avg_cards_per_member] = get_avg_cards_per_member(card_members_total, board.members)
 
-    mpc = counts.reduce(:+).to_f / counts.size
+    lists = board.lists
+
+    stats[:list_with_most_cards] = get_list_with_most_cards(lists)
+    stats[:list_with_least_cards] = get_list_with_least_cards(lists)
+    stats
+  end
+
+  def get_avg_members_per_card(card_members_counts, card_members_total)
+    mpc = card_members_total / card_members_counts.size
     mpc.round(2)
   end
 
-  def get_avg_cards_per_member(board)
-    counts = board.cards.map{ |card| card.members.count }
-    cpm = counts.reduce(:+).to_f / board.members.size
+  def get_avg_cards_per_member(card_members_total, members)
+    cpm = card_members_total / members.size
     cpm.round(2)
-  end
-
-  def haml_view_model(view, locals = {})
-    default_locals = {logged_in: false}
-    locals = default_locals.merge locals
-    haml view.to_sym, locals => locals
   end
 
   def get_list_with_most_cards(lists)
@@ -33,6 +40,12 @@ module OllertHelpers
 
   def get_list_with_least_cards(lists)
     lists.min_by{ |list| list.cards.count }
+  end
+
+  def haml_view_model(view, locals = {})
+    default_locals = {logged_in: false}
+    locals = default_locals.merge locals
+    haml view.to_sym, locals => locals
   end
 
   def validate_signup(params)

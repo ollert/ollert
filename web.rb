@@ -49,10 +49,11 @@ class Ollert < Sinatra::Base
       @wip_data[k] = v.count
     end
 
-    @members_per_card = get_members_per_card_data(@board.cards)
-    @avg_cards_per_member = get_avg_cards_per_member(@board)
-    @list_with_most_cards = get_list_with_most_cards(@board.lists)
-    @list_with_least_cards = get_list_with_least_cards(@board.lists)
+    @stats = get_stats(@board)
+    #@members_per_card = get_members_per_card_data(@board.cards)
+    #@avg_cards_per_member = get_avg_cards_per_member(@board)
+    #@list_with_most_cards = get_list_with_most_cards(@board.lists)
+    #@list_with_least_cards = get_list_with_least_cards(@board.lists)
 
     haml_view_model :analysis
   end

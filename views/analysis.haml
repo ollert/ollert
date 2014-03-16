@@ -7,29 +7,29 @@
         .single-stat-title
           %h4 Average members per card
         .single-stat-value
-          #{@members_per_card}
+          #{@stats[:avg_members_per_card]}
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .single-stat-title
           %h4 Average cards per member
         .single-stat-value
-          #{@avg_cards_per_member}
+          #{@stats[:avg_cards_per_member]}
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .single-stat-title
           %h4 List with the most cards
         .single-stat-value
-          #{@list_with_most_cards.name}
+          "#{@stats[:list_with_most_cards].name}"
         .single-stat-value
-          #{@list_with_most_cards.cards.count} cards
+          #{@stats[:list_with_most_cards].cards.count} cards
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .single-stat-title
           %h4 List with the least cards
         .single-stat-value
-          #{@list_with_least_cards.name}
+          "#{@stats[:list_with_least_cards].name}"
         .single-stat-value
-          #{@list_with_least_cards.cards.count} cards
+          #{@stats[:list_with_least_cards].cards.count} cards
   .row
     .col-md-4
       %div(class="analysis-blocks med-analysis-blocks-container")
