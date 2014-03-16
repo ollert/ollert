@@ -60,6 +60,10 @@ namespace :db do
 
   desc "Dump schema"
   task :schema_dump => :dotenv do
-    puts `sequel -D #{ENV['DATABASE_URL']}`
+    if ENV['RACK_ENV'] == 'production'
+      puts `sequel -D #{ENV['HEROKU_POSTGRESQL_MAROON_URL']}`
+    else
+      puts `sequel -D #{ENV['DATABASE_URL']}`
+    end
   end
 end
