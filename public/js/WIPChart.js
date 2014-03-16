@@ -92,6 +92,7 @@ function wipChart(wip_data) {
             var cfdData = new cfdChartData();
             var cc = new cfdChart({ data: theData.cfddata, dates:theData.dates, boardName: "Ollert" });
             cc.buildChart();
+        })
     },
 
     loadLabelCount: function(options){

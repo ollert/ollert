@@ -51,6 +51,8 @@ function labelCountChart(label_count_data) {
                     enabled: false
                 },
                 series: [{
+                    name: "Cards in List",
+                    showInLegend: false,
                     data: that.counts
                 }]
             });
