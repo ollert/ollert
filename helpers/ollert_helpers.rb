@@ -57,10 +57,8 @@ module OllertHelpers
     lists.min_by{ |list| list.cards.count }
   end
 
-  def haml_view_model(view, locals = {})
-    default_locals = {logged_in: false}
-    locals = default_locals.merge locals
-    haml view.to_sym, locals => locals
+  def haml_view_model(view, user = nil)
+    haml view.to_sym, locals: {logged_in: !!user}
   end
 
   def validate_signup(params)

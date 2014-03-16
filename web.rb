@@ -43,7 +43,7 @@ class Ollert < Sinatra::Base
     end
 
     @secret = ENV['PUBLIC_KEY']
-    haml :landing
+    haml_view_model :landing, @user
   end
 
   get '/boards', :auth => :none do
@@ -56,7 +56,7 @@ class Ollert < Sinatra::Base
 
     @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
 
-    haml_view_model :boards
+    haml_view_model :boards, @user
   end
 
   get '/boards/:id', :auth => :none do |board_id|
@@ -77,11 +77,11 @@ class Ollert < Sinatra::Base
 
     @stats = get_stats(@board)
 
-    haml_view_model :analysis
+    haml_view_model :analysis, @user
   end
 
   get '/signup' do
-    haml_view_model :signup
+    haml_view_model :signup, @user
   end
 
   post '/signup' do
@@ -114,8 +114,19 @@ class Ollert < Sinatra::Base
     haml_view_model :login
   end
 
-  post '/login' do
-    'dddddddd'
+  post '/authenticate' do
+    user = User.find email: params['email']
+    if user.nil?
+      flash[:warning] = "Email address #{params['email_address']} does not appear to be registered."
+      redirect :login
+    elsif !user.authenticate? params['password']
+      flash[:warning] = "I didn't find that username/password combination. Check your spelling."
+      redirect :login
+    else
+      flash[:success] = "Welcome back."
+      session[:user] = user.id
+      redirect '/'
+    end
   end
 
   get '/terms' do
