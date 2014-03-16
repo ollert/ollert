@@ -7,19 +7,20 @@ $light-light: #F2F2F2;
   background: $light-light;
 }
 
-.single-stat {
-  background: $dark;
-  padding: 20px;
-}
-
-.single-stat-title {
+.stat-title {
   color: $medium;
   text-align: center;
 }
 
-.single-stat-value {
+.stat-value1 {
   color:  $medium;
   font-size: 32pt;
+  text-align: center;
+}
+
+.stat-value2 {
+  color: $medium;
+  font-size: 16pt;
   text-align: center;
 }
 
