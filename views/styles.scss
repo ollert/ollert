@@ -1,5 +1,6 @@
 $dark: #1A1A1A;
 $medium: #404040;
+$medium-light: #A0A0A0;
 $light: #CCCCCC;
 $light-light: #F2F2F2;
 
@@ -9,18 +10,25 @@ $light-light: #F2F2F2;
 
 .stat-title {
   color: $medium;
+  font-size: 12pt;
   text-align: center;
 }
 
-.stat-value1 {
-  color:  $medium;
-  font-size: 32pt;
-  text-align: center;
-}
-
-.stat-value2 {
+.stat-subtitle {
   color: $medium;
   font-size: 16pt;
+  text-align: center;
+}
+
+.stat-value {
+  color:  $medium-light;
+  font-size: 60pt;
+  text-align: center;
+}
+
+.stat-unit {
+  color: $medium;
+  font-size: 12pt;
   text-align: center;
 }
 
@@ -94,3 +102,16 @@ footer {
     
 }
 
+#login-box {
+  background: $light-light;
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+#login-box form {
+  margin: 30px 50px;
+}
+
+.tooltip-inner {
+  min-width: 100px;
+}

@@ -11,7 +11,11 @@
     %script{src: 'http://code.jquery.com/jquery-1.11.0.min.js'}
     %script{src: '/js/bootstrap.min.js'}
     %script{src: "/js/highcharts.js"}
-    %script{src: "https://api.trello.com/1/client.js?key=#{@secret}"}
+
+    :javascript
+      $(function () {
+          $("[data-toggle='tooltip']").tooltip();
+      });
 
     %body
       %nav{class: 'navbar navbar-default', role: 'navigation'}
@@ -31,30 +35,33 @@
                 %a{href: "/"}
                   Why Pay
           - if !locals[:logged_in]
-            .navbar-right.img-rounded{style: "margin-top: 7px;"}
+            .navbar-right{style: "margin-top: 7px;"}
               %ul{class: 'nav navbar-nav pull-right'}
                 %li
                   %form{action: "/signup", method: "get"}
                     %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
                 %li
-                  %button{type: "submit", class: "btn btn-default"}
-                    Log in
+                  %form{action: "/login", method: "get"}
+                    %input{type: "submit", class: "btn btn-default", value: "Log in"}
+          - else
+            .navbar-right
+              %ul{class: 'nav navbar-nav pull-right'}
+                %li
+                  %a{href: "/settings", class: "btn btn-link btn-lg", style: "padding: 13px 15px;", "data-toggle" => "tooltip", "data-placement" => "bottom", title: "Logged in as #{@user.email}", alt: "Settings"}
+                    %span{class: "glyphicon glyphicon-cog"}
+
       - if flash.has? :error
-        .row{id: 'flash', class: 'alert alert-danger'}
+        .row{id: 'flash', class: 'alert alert-danger', style: 'margin: 0'}
           .container
             #{flash[:error]}
       - elsif flash.has? :warning
-        .row{id: 'flash', class: 'alert alert-warning'}
+        .row{id: 'flash', class: 'alert alert-warning', style: 'margin: 0'}
           .container
             #{flash[:warning]}
       - elsif flash.has? :success
-        .row{id: 'flash', class: 'alert alert-success'}
+        .row{id: 'flash', class: 'alert alert-success', style: 'margin: 0'}
           .container
             #{flash[:success]}
-      - elsif flash.has? :info
-        .row{id: 'flash', class: 'alert alert-info'}
-          .container
-            #{flash[:info]}
 
       = yield
 

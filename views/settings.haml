@@ -1,0 +1,37 @@
+.container
+  %h2
+    Settings
+  %hr
+
+  .row{style: "margin-top: 40px;"}
+    %form{action: "/settings/email", method: "post", role: "form"}
+      .form-group
+        .row
+          .col-md-3
+            %label{for: "email_address"} Email
+        .row
+          .col-md-3
+            %input{type: "email", id: "email_address", name: "email_address", class: "form-control", value: "#{@user.email}", required: "required"}
+          .col-md-2
+            %input{class: "btn btn-primary", type: "submit", value:"Update Email"}
+
+    %hr
+
+    %form{action: "/settings/password", method: "post", role: "form"}
+      .form-group
+        .row
+          .col-md-3
+            %label{for: "current-password"} Current Password
+          .col-md-3
+            %label{for: "password"} New Password
+          .col-md-3
+            %label{for: "confirm-password"} Confirm New Password
+        .row
+          .col-md-3
+            %input{type: "password", id: "current-password", name: "current-password", class: "form-control", autocomplete: "off", required: "required"}
+          .col-md-3
+            %input{type: "password", id: "password", name: "password", class: "form-control", required: "required"}
+          .col-md-3
+            %input{type: "password", id: "confirm-password", name: "confirm-password", class: "form-control", required: "required"}
+          .col-md-3
+            %input{class: "btn btn-primary", type: "submit", value:"Change Password"}
