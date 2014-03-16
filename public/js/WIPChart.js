@@ -78,9 +78,11 @@ function wipChart(wip_data) {
             $('#list_with_most_cards_count').text(theData.list_with_most_cards_count);
             $('#list_with_least_cards_name').text(theData.list_with_least_cards_name);
             $('#list_with_least_cards_count').text(theData.list_with_least_cards_count);
-            
+            $('#board_members_count').text(theData.board_members_count);
+            $('#card_count').text(theData.card_count);
+            $('#oldest_card_name').text(theData.oldest_card_name);
+            $('#oldest_card_age').text(theData.oldest_card_age);
         })
-
     },
 
     loadCfdChart: function(options){
@@ -91,6 +93,21 @@ function wipChart(wip_data) {
             var cfdData = new cfdChartData();
             var cc = new cfdChart({ data: theData.cfddata, dates:theData.dates, boardName: "Ollert" });
             cc.buildChart();
+        })
+    },
+
+    loadLabelCount: function(options){
+        var jqxhr = $.get( "/boards/" + options.boardId + "/labelcounts", function(data) {
+            $('#label-count-spinner').hide();
+            
+            var theData = jQuery.parseJSON(data);
+
+            var lb_data = new labelCountChartData();
+            lb_data.labels = theData.labels;
+            lb_data.counts = theData.counts;
+            lb_data.colors = theData.colors;
+            var labelCount = new labelCountChart(lb_data);
+            labelCount.buildChart();
         })
     }
 }

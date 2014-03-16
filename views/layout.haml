@@ -53,6 +53,19 @@
             %li
               %a{href: "/"}
                 Why Pay
+            - if (!@boards.nil? && @boards.any?)
+              %li{class: "dropdown"}
+                %a{href: "#", class: "dropdown-toggle", "data-toggle" => "dropdown"}
+                  My Boards
+                  %b{class: "caret"}
+                %ul{class: "dropdown-menu left-align"}
+                  - @boards.each do |org_name, boards|
+                    %li{class: "divider divider-section"}
+                      #{org_name}
+                    - boards.each do |board|
+                      %li
+                        %a{class: "btn btn-link", href: "/boards/#{board.id}"}
+                          #{board.name}
       - if flash.has? :error
         .row{id: 'flash', class: 'alert alert-danger', style: 'margin: 0'}
           .container

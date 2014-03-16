@@ -24,14 +24,18 @@ module OllertHelpers
   end
   
   def get_stats(board)
+    members = board.members
+    cards = board.cards
+    lists = board.lists
+    createCardActions = board.actions(filter: :createCard)
+
     stats = Hash.new
 
-    card_members_counts = board.cards.map{ |card| card.members.count }
+    card_members_counts = cards.map{ |card| card.members.count }
     card_members_total = card_members_counts.reduce(:+).to_f
     stats[:avg_members_per_card] = get_avg_members_per_card(card_members_counts, card_members_total)
-    stats[:avg_cards_per_member] = get_avg_cards_per_member(card_members_total, board.members)
+    stats[:avg_cards_per_member] = get_avg_cards_per_member(card_members_total, members)
 
-    lists = board.lists
 
     lst_most_cards = get_list_with_most_cards(lists)
     
@@ -44,9 +48,14 @@ module OllertHelpers
     stats[:list_with_least_cards_name] = lst_least_cards.name
     stats[:list_with_least_cards_count] = lst_least_cards.cards.count
     
-    stats[:board_members_count] = board.members.count
-    stats[:card_count] = board.cards.count
+    stats[:board_members_count] = members.count
+    stats[:card_count] = cards.count
 
+    oldest_create = createCardActions.min_by(&:date)
+    stats[:oldest_card_name] = oldest_create.data["card"]["name"]
+    age = Date.today.mjd - oldest_create.date.to_date.mjd
+    stats[:oldest_card_age] = age
+    
     stats
   end
 
@@ -123,5 +132,56 @@ module OllertHelpers
   	  end
   	end
     results
+  end
+
+  def get_label_count_data(cards)
+    labels_array = Array.new
+
+    cards.group_by{ |card| card.labels }.each do |labels,card|
+      labels.each do |label|
+          labels_array << label
+      end
+    end
+
+    label_counts = Hash.new
+
+    labels_array.group_by{ |label| label.name }.each do |label,v|
+      hexcolor = convert_color(v.first.color)
+
+      label_counts[label] = { count: v.count, color: hexcolor }
+    end
+
+    data = { labels: label_counts.keys, counts: label_counts.values.map{ |x| x[:count] }, colors: label_counts.values.map{ |x| x[:color] } }
+  end
+
+  def convert_color(color)
+    case color
+      when "green"
+       '#34b27d'
+      when "yellow"
+        '#dbdb57'
+      when "orange"
+        '#e09952'
+      when "red"
+        '#cb4d4d'
+      when "purple"
+        '#93c'
+      when "blue"
+        '#4d77cb'
+      end
+  end
+  
+  def get_user_boards(user, session, client=nil)
+
+    token = client.find(:token, session[:token])
+    member = token.member
+
+    unless user.nil?
+      user.member_token = session[:token]
+      user.trello_name = member.username
+      user.save
+    end
+
+    @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
   end
 end
