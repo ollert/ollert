@@ -1,5 +1,4 @@
 require_relative '../core_ext/string'
-require 'pry'
 
 module OllertHelpers
   def get_user
