@@ -279,16 +279,12 @@ class Ollert < Sinatra::Base
     haml_view_model :settings, @user
   end
 
-  get '/terms' do
-    "TBD"
+  get '/privacy', :auth => :none do
+    haml_view_model :privacy, @user
   end
 
-  get '/privacy' do
-    "TBD"
-  end
-
-  get '/fail' do
-    "auth failed"
+  get '/terms', :auth => :none do
+    haml_view_model :terms, @user
   end
 
   get '/styles.css' do
