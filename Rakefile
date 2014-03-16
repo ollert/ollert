@@ -11,10 +11,9 @@ end
 
 task :default => [:start]
 
-desc 'Starts the application on specified port (default 4000)'
-task :start, [:port] do |t, args|
-  args.with_defaults(:port => 4000)
-  exec "rackup -p #{args[:port]}"
+desc "Start application based on environment"
+task :start do
+  exec("foreman start -p 4000")
 end
 
 require 'sequel'

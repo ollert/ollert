@@ -13,9 +13,11 @@ gem 'sqlite3'
 gem 'dotenv'
 gem 'rack-flash3'
 gem 'bcrypt'
-gem 'pry'
+gem 'foreman'
+gem 'unicorn'
 
 group :development do
+  gem 'pry'
 end
 
 group :development, :test do
