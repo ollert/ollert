@@ -221,6 +221,25 @@ class Ollert < Sinatra::Base
     end
   end
 
+  post '/settings/delete', :auth => :authenticated do
+    if params[:iamsure] == "on"
+      email = @user.email
+
+      session[:user] = nil
+      session[:token] = nil
+      if @user.delete
+        flash[:success] = "User with login of #{email} has been deleted. Come back and sign up again one day!"
+        redirect '/'
+      else
+        flash[:error] = "I wasn't able to delete that user. Do you mind trying again?"
+        redirect '/settings'
+      end
+    else
+      flash[:warning] = "You must check the 'I am sure' checkbox to delete your account."
+      redirect '/settings'
+    end
+  end
+
   get '/settings', :auth => :authenticated do
     haml_view_model :settings, @user
   end
