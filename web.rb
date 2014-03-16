@@ -79,13 +79,12 @@ class Ollert < Sinatra::Base
     client = get_client ENV['PUBLIC_KEY'], session[:token]
 
     @board = client.find :board, board_id
-
     @wip_data = Hash.new
     options = {limit: 999}
     cards = @board.cards options
-    lists = @board.lists options
+    lists = @board.lists(filter: :all)
     actions = @board.actions options
-
+    
     cards.group_by { |x| x.list.name }.each_pair do |k,v|
       @wip_data[k] = v.count
     end
@@ -94,11 +93,44 @@ class Ollert < Sinatra::Base
     
     data.to_json
   end
+
+  get '/boards/:id/cfd' do |board_id|
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+    board = client.find :board, board_id
+    lists = board.lists(filter: :all)
+    actions = board.actions(limit: 999)
+    closed_lists = Hash.new
+    lists.select {|l| l.closed}.each do |l|
+      closed_lists[l.id] = l.actions.first.date
+    end
+
+    list_ids_to_names = Hash.new
+    lists.each do |list|
+      list_ids_to_names[list.id] = list.name
+    end
+
+    cfd_data = get_cfd_data(actions, list_ids_to_names, closed_lists)
+    dates = cfd_data.keys.sort
+    cfd_values = Array.new
+    lists.collect(&:name).uniq.each do |list|
+      list_array = Array.new
+      dates.each do |date|
+        list_array << cfd_data[date][list]
+      end
+      cfd_values << { name: list, data: list_array}
+    end
+
+    dates.map! {|date| date.strftime("%b %-d")}
+
+    data = { dates: dates, cfddata: cfd_values}
+
+    data.to_json
+  end
   
   get '/boards/:id/stats' do |board_id|
     client = get_client ENV['PUBLIC_KEY'], session[:token]
-    @board = client.find :board, board_id
-    @stats = get_stats(@board)
+    board = client.find :board, board_id
+    @stats = get_stats(board)
     
     # TODO: Move to own endpoint @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
     @stats.to_json
