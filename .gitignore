@@ -4,4 +4,3 @@
 .bundle
 *.swp
 *.db
-*.env
