@@ -12,20 +12,20 @@
             %input{type: "submit", class: "btn btn-default pull-right", value: "Log Out"}
     %hr
 
-    %form{action: "/settings/email", method: "put", role: "form"}
+    %form{action: "/settings/email", method: "post", role: "form"}
       .form-group
         .row
           .col-md-3
-            %label{for: "email_address"} Email
+            %label{for: "email"} Email
         .row
           .col-md-3
-            %input{type: "email", id: "email_address", name: "email_address", class: "form-control", value: "#{@user.email}", required: "required"}
+            %input{type: "email", id: "email", name: "email", class: "form-control", value: "#{@user.email}", required: "required"}
           .col-md-2
             %input{class: "btn btn-primary", type: "submit", value:"Update Email"}
 
     %hr
 
-    %form{action: "/settings/password", method: "put", role: "form"}
+    %form{action: "/settings/password", method: "post", role: "form"}
       .form-group
         .row
           .col-md-3
