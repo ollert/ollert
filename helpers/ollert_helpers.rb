@@ -1,4 +1,5 @@
 require_relative '../core_ext/string'
+require 'pry'
 
 module OllertHelpers
   def get_user
@@ -93,24 +94,32 @@ module OllertHelpers
     msg
   end
 
-  def get_cfd_data(actions, cards, lists)
+  def get_cfd_data(actions, lists, closed_lists)
   	results = Hash.new do |hsh, key|
-  		hsh[key] = Hash[lists.collect { |list| [list, 0] }] 
+  		hsh[key] = Hash[lists.values.collect { |list| [list, 0] }] 
   	end
+
     actions.reject! {|a| a.type != "updateCard" && a.type != "createCard"}
-    cards = actions.group_by {|a| a.data["card"]["name"]}
+    cards = actions.group_by {|a| a.data["card"]["id"]}
     cards.each do |card, actions|
-      actions.sort_by! {|a| a.date}
-  	  30.days.ago.to_date.upto(Date.today).reverse_each do |date|
-        actions.reject! {|a| a.date.to_date > date}
-        break if actions.empty?
-        data = actions.last.data
-        if data.keys.include? "listBefore"
-          list = data["listBefore"]
-        else
-          list = data["list"]
-        end
-        results[date][list["name"]] += 1 unless list.nil?
+      30.days.ago.to_date.upto(Date.today).reverse_each do |date|
+        my_actions = actions.reject {|a| a.date.to_date > date}
+        my_actions.sort_by! {|a| a.date}
+        my_actions.reverse.each do |action|
+          data = action.data
+          if data.keys.include? "listAfter"
+            list = data["listAfter"]
+          else
+            list = data["list"]
+          end
+          unless list.nil?
+            name = lists[list["id"]]
+            break if name.nil?
+            break if !closed_lists[list["id"]].nil? && closed_lists[list["id"]].to_date < date
+            results[date][name] += 1
+            break
+          end
+        end  
   	  end
   	end
     results

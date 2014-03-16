@@ -58,16 +58,12 @@ function wipChart(wip_data) {
     loadWipChart: function(options){
         var jqxhr = $.get( "/boards/" + options.boardId + "/data", function(data) {
             $('#wip-spinner').hide();
-            $('#cfd-spinner').hide();
             var theData = jQuery.parseJSON(data);
             var wip_data = new wipChartData();
             wip_data.lists = theData.wipcategories;
             wip_data.counts = [{name: "Cards in List", showInLegend: false, data: theData.wipdata}];
             var wc = new wipChart(wip_data);
             wc.buildChart();
-            var cfdData = new cfdChartData();
-            var cc = new cfdChart({ data: cfdData, boardName: "Ollert" });
-            cc.buildChart();
         })
     },
     
@@ -83,6 +79,18 @@ function wipChart(wip_data) {
             $('#list_with_least_cards_name').text(theData.list_with_least_cards_name);
             $('#list_with_least_cards_count').text(theData.list_with_least_cards_count);
             
+        })
+
+    },
+
+    loadCfdChart: function(options){
+        var jqxhr = $.get( "/boards/" + options.boardId + "/cfd", function(data) {
+            $('#cfd-spinner').hide();
+  
+            var theData = jQuery.parseJSON(data);
+            var cfdData = new cfdChartData();
+            var cc = new cfdChart({ data: theData.cfddata, dates:theData.dates, boardName: "Ollert" });
+            cc.buildChart();
         })
     }
 }
