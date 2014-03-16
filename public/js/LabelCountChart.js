@@ -1,23 +1,23 @@
 function labelCountChartData() {
-    this.lists = [];
+    this.labels = [];
     this.counts = [];
 }
 
-function labelCountChart(lc_data) {
-    this.categories = lc_data.lists;
-    this.data = lc_data.counts;
+function labelCountChart(label_count_data) {
+    this.categories = label_count_data.labels;
+    this.data = label_count_data.counts;
     
     this.buildChart = function() {
         var that = this;
-            $('#WIP-Container').highcharts({
+            $('#LabelCount-Container').highcharts({
                 chart: {
                     type: 'bar'
                 },
                 title: {
-                    text: 'Work In Progress'
+                    text: 'Card count per label'
                 },
                 subtitle: {
-                    text: 'WIP'
+                    text: 'cards can have multiple labels'
                 },
                 xAxis: {
                     categories: that.categories,

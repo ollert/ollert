@@ -97,4 +97,16 @@ module OllertHelpers
   	end
     results
   end
+
+  def get_label_count_data(cards)
+    label_count = Hash.new
+
+    cards.group_by{ |card| card.labels }.each do |label,card|
+      unless label.nil?
+        label_count[label.color] = card.count
+      end
+    end
+
+    label_count
+  end
 end

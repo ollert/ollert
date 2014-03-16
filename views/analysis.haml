@@ -62,9 +62,14 @@
           &nbsp;
         .stat-value
           #{@stats[:card_count]}
+    .col-md-6
+      %div(class="analysis-blocks lg-analysis-blocks-container")
+        %div(id="LabelCount-Container" class="lg-chart" style="margin: 0 auto")
+#{@label_count_data}
   
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/CFDChart.js"}
+%script{src: "/js/LabelCountChart.js"}
 %script
   var wip_data = new wipChartData();
   wip_data.lists = #{@wip_data.keys.to_json};
@@ -74,6 +79,7 @@
   var data = new cfdChartData();
   var cfdChart = new cfdChart({ data: data, boardName: "Ollert" });
   cfdChart.buildChart();
+
 
 
 
