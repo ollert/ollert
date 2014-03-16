@@ -12,9 +12,6 @@ require_relative 'helpers/ollert_helpers'
 
 class Ollert < Sinatra::Base
   include OllertHelpers
-  use Rack::Flash, sweep: true
-
-  enable :sessions
 
   configure do
     Dotenv.load!
@@ -26,6 +23,9 @@ class Ollert < Sinatra::Base
 
     require_relative 'models/user'
   end
+
+  use Rack::Session::Cookie, secret: ENV['SESSION_SECRET'], expire_after: 30 * (60*60*24) # 30 days in seconds
+  use Rack::Flash, sweep: true
 
   set(:auth) do |role|
     condition do
