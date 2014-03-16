@@ -35,15 +35,20 @@ class Ollert < Sinatra::Base
 
   get '/boards/:id' do |board_id|
     client = get_client PUBLIC_KEY, session[:token]
-
     @board = client.find :board, board_id
 
     @wip_data = Hash.new
-    @board.cards.group_by { |x| x.list.name }.each_pair do |k,v|
+    options = {limit: 999}
+    cards = @board.cards options
+    lists = @board.lists options
+    actions = @board.actions options
+
+    cards.group_by { |x| x.list.name }.each_pair do |k,v|
       @wip_data[k] = v.count
     end
 
-    @members_per_card = get_members_per_card_data(@board.cards)
+    @members_per_card = get_members_per_card_data(cards)
+    @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
 
     haml :analysis
   end
