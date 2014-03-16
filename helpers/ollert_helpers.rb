@@ -51,7 +51,10 @@ module OllertHelpers
     stats[:board_members_count] = members.count
     stats[:card_count] = cards.count
 
-    stats[:oldest_card] = createCardActions.min_by(&:date).data["card"]["name"]
+    oldest_create = createCardActions.min_by(&:date)
+    stats[:oldest_card_name] = oldest_create.data["card"]["name"]
+    age = Date.today.mjd - oldest_create.date.to_date.mjd
+    stats[:oldest_card_age] = age
     
     stats
   end
