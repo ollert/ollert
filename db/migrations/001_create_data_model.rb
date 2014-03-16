@@ -12,5 +12,5 @@ Sequel.migration do
       foreign_key :user_id, :users, :null=>false, :key=>[:id]
       String :trello_id
     end
-  end 
+  end
 end

@@ -51,7 +51,13 @@ class Ollert < Sinatra::Base
 
     token = client.find(:token, session[:token])
     member = token.member
-    session[:member_name] = member.id
+
+    unless @user.nil?
+      @user.member_token = params[:token]
+      @user.trello_name = member.name
+
+      # create and store boards?
+    end
 
     @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
 
@@ -96,6 +102,9 @@ class Ollert < Sinatra::Base
       if user.save
         session[:user] = user.id
         flash[:success] = "You're signed up! Click below to connect with Trello for the first time."
+        if user.membership_type != "free"
+          flash[:info] = "Thanks for signing up for a paid membership! We're not accepting payments at this time, so please enjoy the free membership."
+        end
         redirect '/'
       else
         flash[:error] = "Something's broken, please try again later."
@@ -115,6 +124,13 @@ class Ollert < Sinatra::Base
     haml_view_model :login
   end
 
+  get '/logout' do
+    session[:user] = nil
+    session[:token] = nil
+    flash[:success] = "Come see us again soon!"
+    redirect '/'
+  end
+
   post '/authenticate' do
     user = User.find email: params['email']
     if user.nil?
@@ -131,7 +147,7 @@ class Ollert < Sinatra::Base
   end
 
   get '/settings', :auth => :authenticated do
-    haml :settings
+    haml_view_model :settings, @user
   end
 
   get '/terms' do

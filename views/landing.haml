@@ -1,26 +1,5 @@
 %script{src: "https://api.trello.com/1/client.js?key=#{ENV['PUBLIC_KEY']}"}
-
-:javascript
-  function AuthenticateTrello() {
-    Trello.authorize({
-      name: "Ollert",
-      type: "popup",
-      interactive: true,
-      expiration: "never",
-      success: function () { onAuthorizeSuccessful(); },
-      error: function () { onFailedAuthorization(); },
-      scope: { write: true, read: true },
-    });
-  }
-
-  function onAuthorizeSuccessful() {
-    var token = Trello.token();
-    window.location.replace("/boards?token=" + token);
-  }
-
-  function onFailedAuthorization() {
-    window.location.replace("/fail");
-  }
+%script{src: "/js/trello.js"}
           
 .container
   %h2{class: "text-center"}
@@ -28,5 +7,5 @@
   %h3{class: "text-center"}
     Graphs and Charts! Numbers and words! And more!
   .row{class: "text-center"}
-    %a{class: "btn btn-primary btn-lg", href: "javascript:void(0)", onClick: "AuthenticateTrello()"}
+    %a{class: "btn btn-primary btn-lg", href: "javascript:void(0)", onClick: "AuthenticateTrelloOneHour()"}
       Connect With Trello
