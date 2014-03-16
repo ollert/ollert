@@ -131,7 +131,7 @@ class Ollert < Sinatra::Base
   end
 
   get '/settings', :auth => :authenticated do
-    "TBD"
+    haml :settings
   end
 
   get '/terms' do
