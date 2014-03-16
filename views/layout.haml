@@ -40,21 +40,17 @@
                   %button{type: "submit", class: "btn btn-default"}
                     Log in
       - if flash.has? :error
-        .row{id: 'flash', class: 'alert alert-danger'}
+        .row{id: 'flash', class: 'alert alert-danger', style: 'margin: 0'}
           .container
             #{flash[:error]}
       - elsif flash.has? :warning
-        .row{id: 'flash', class: 'alert alert-warning'}
+        .row{id: 'flash', class: 'alert alert-warning', style: 'margin: 0'}
           .container
             #{flash[:warning]}
       - elsif flash.has? :success
-        .row{id: 'flash', class: 'alert alert-success'}
+        .row{id: 'flash', class: 'alert alert-success', style: 'margin: 0'}
           .container
             #{flash[:success]}
-      - elsif flash.has? :info
-        .row{id: 'flash', class: 'alert alert-info'}
-          .container
-            #{flash[:info]}
 
       = yield
 
