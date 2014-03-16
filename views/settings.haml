@@ -12,7 +12,7 @@
             %input{type: "submit", class: "btn btn-default pull-right", value: "Log Out"}
     %hr
 
-    %form{action: "/settings/email", method: "post", role: "form"}
+    %form{action: "/settings/email", method: "put", role: "form"}
       .form-group
         .row
           .col-md-3
@@ -25,7 +25,7 @@
 
     %hr
 
-    %form{action: "/settings/password", method: "post", role: "form"}
+    %form{action: "/settings/password", method: "put", role: "form"}
       .form-group
         .row
           .col-md-3
@@ -47,14 +47,14 @@
   %hr
 
   - unless @user.member_token.nil?
-    %form{action: "/settings/trello/disconnect", method: "post"}
+    %form{action: "/settings/trello/disconnect", method: "put"}
       %input{type: "submit", class: "btn btn-default btn-warning", value: "Disconnect #{@user.trello_name} from Trello"}
   - else
     %a{class: "btn btn-primary btn-lg", href: "javascript:void(0)", onClick: "AuthenticateTrelloFromSettings()"}
       Connect with Trello
 
   %hr
-    %form{action: "/delete", method: "post"}
+    %form{action: "/delete", method: "delete"}
       .checkbox{style: "font-size: 16px;"}
         %label
           %input{type: "checkbox", name: "iamsure"}

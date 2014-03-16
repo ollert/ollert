@@ -153,6 +153,19 @@ class Ollert < Sinatra::Base
     redirect '/settings'
   end
 
+  put '/settings/email', :auth => :authenticated do
+    if !params[:email].nil_or_empty?
+      @user.email = params[:email]
+      if @user.save
+        flash[:success] = "Your new email is #{@user.email}. Use this to log in!"
+      else
+        flash[:error] = "I couldn't quite update your email. Do you mind trying again?"
+      end
+    else
+      flash[:error] = "Hey! Your email can't just be empty, it's how you log in!"
+    end
+  end
+
   get '/settings/trello/connect', :auth => :authenticated do
     session[:token] = params[:token]
 
