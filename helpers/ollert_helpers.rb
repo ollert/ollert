@@ -24,14 +24,18 @@ module OllertHelpers
   end
   
   def get_stats(board)
+    members = board.members
+    cards = board.cards
+    lists = board.lists
+    createCardActions = board.actions(filter: :createCard)
+
     stats = Hash.new
 
-    card_members_counts = board.cards.map{ |card| card.members.count }
+    card_members_counts = cards.map{ |card| card.members.count }
     card_members_total = card_members_counts.reduce(:+).to_f
     stats[:avg_members_per_card] = get_avg_members_per_card(card_members_counts, card_members_total)
-    stats[:avg_cards_per_member] = get_avg_cards_per_member(card_members_total, board.members)
+    stats[:avg_cards_per_member] = get_avg_cards_per_member(card_members_total, members)
 
-    lists = board.lists
 
     lst_most_cards = get_list_with_most_cards(lists)
     
@@ -44,9 +48,11 @@ module OllertHelpers
     stats[:list_with_least_cards_name] = lst_least_cards.name
     stats[:list_with_least_cards_count] = lst_least_cards.cards.count
     
-    stats[:board_members_count] = board.members.count
-    stats[:card_count] = board.cards.count
+    stats[:board_members_count] = members.count
+    stats[:card_count] = cards.count
 
+    stats[:oldest_card] = createCardActions.min_by(&:date).data["card"]["name"]
+    
     stats
   end
 
