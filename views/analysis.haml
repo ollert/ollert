@@ -41,6 +41,15 @@
       %div(class="analysis-blocks lg-analysis-blocks-container")
         %img{src: '/img/spinner.GIF', id: 'cfd-spinner'}
         %div(id="CFD-Container" class="lg-chart" style="margin: 0 auto")
+
+  .row
+    .col-md-3
+      %div(class="analysis-blocks med-analysis-blocks-container-stats ")
+        .stat-title
+          %h4 Oldest Card (in days)
+        .stat-subtitle{id: 'oldest_card_name'}
+        .stat-value{id: 'oldest_card_age'}
+          %img{src: '/img/spinner.GIF', class: 'stats-spinner'}
         
 %script{src: "/js/CFDChart.js"}
 %script{src: "/js/WIPChart.js"}

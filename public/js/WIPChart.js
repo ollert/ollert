@@ -78,7 +78,8 @@ function wipChart(wip_data) {
             $('#list_with_most_cards_count').text(theData.list_with_most_cards_count);
             $('#list_with_least_cards_name').text(theData.list_with_least_cards_name);
             $('#list_with_least_cards_count').text(theData.list_with_least_cards_count);
-            
+            $('#oldest_card_name').text(theData.oldest_card_name);
+            $('#oldest_card_age').text(theData.oldest_card_age);
         })
 
     },
