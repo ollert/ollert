@@ -21,7 +21,6 @@ class Ollert < Sinatra::Base
     Sequel.connect ENV['DATABASE_URL']
 
     require_relative 'models/user'
-    require_relative 'models/board'
   end
 
   set(:auth) do |role|
@@ -61,11 +60,15 @@ class Ollert < Sinatra::Base
       @user.member_token = session[:token]
       @user.trello_name = member.username
       @user.save
-
-      # create and store boards?
     end
 
     @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
+    
+    # create boards hash
+    # id => name
+
+    boards_hash = @boards.map {|board| [board.id, board.name]}
+    puts boards_hash.to_h
 
     haml_view_model :boards, @user
   end
