@@ -7,12 +7,12 @@ module OllertHelpers
 
   def get_membership_type(params)
     if params[:yearly] == "on"
-        "yearly"
-      elsif params[:monthly] == "on"
-        "monthly"
-      else
-        "free"
-      end
+      "yearly"
+    elsif params[:free] == "on"
+      "free"
+    else
+      "monthly"
+    end
   end
 
   def get_client(public_key, token)

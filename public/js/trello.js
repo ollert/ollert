@@ -22,6 +22,23 @@ function AuthenticateTrelloOneHour() {
   });
 }
 
+function AuthenticateTrelloFromSettings() {
+  Trello.authorize({
+    name: "Ollert",
+    type: "popup",
+    interactive: true,
+    expiration: "never",
+    persist: false,
+    success: function () { onAuthorizeSuccessfulFromSettings(); },
+    scope: { write: true, read: true },
+  });
+}
+
+function onAuthorizeSuccessfulFromSettings() {
+  var token = Trello.token();
+  window.location.replace("/settings/trello/connect?token=" + token);
+}
+
 function onAuthorizeSuccessful() {
   var token = Trello.token();
   window.location.replace("/boards?token=" + token);

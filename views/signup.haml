@@ -21,14 +21,14 @@
                   Membership Type
             .col-md-8
               .btn-group{"data-toggle" => "buttons"}
-                %label{class: "btn btn-default #{'active' if @membership == 'free'}"}
-                  %input{type: "radio", name: "free", class: "btn btn-default", id: "option-free"}
+                %label{class: "btn btn-default"}
+                  %input{type: "radio", name: "free", class: "btn btn-default"}
                     Free
-                %label{class: "btn btn-default #{'active' if @membership.nil? || @membership == 'monthly'}"}
-                  %input{type: "radio", name: "monthly", class: "btn btn-default", id: "option-monthly"}
+                %label{class: "btn btn-default active"}
+                  %input{type: "radio", name: "monthly", class: "btn btn-default"}
                     $3 per month
-                %label{class: "btn btn-default #{'active' if @membership == 'yearly'}"}
-                  %input{type: "radio", name: "yearly", class: "btn btn-default", id: "option-yearly"}
+                %label{class: "btn btn-default"}
+                  %input{type: "radio", name: "yearly", class: "btn btn-default"}
                     $30 per year
 
           .row{style: "margin-bottom: 10px;", class: "text-center"}

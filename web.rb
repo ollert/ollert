@@ -38,7 +38,7 @@ class Ollert < Sinatra::Base
   end
 
   get '/', :auth => :none do
-    unless @user.nil? || @user.member_token.nil?
+    if !@user.nil? && !@user.member_token.nil?
       redirect '/boards'
     end
 
@@ -46,15 +46,21 @@ class Ollert < Sinatra::Base
   end
 
   get '/boards', :auth => :none do
-    session[:token] = params[:token]
-    client = get_client ENV['PUBLIC_KEY'], params[:token]
+    if !@user.nil? && !@user.member_token.nil?
+      session[:token] = @user.member_token
+    else
+      session[:token] = params[:token]
+    end
+
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
 
     token = client.find(:token, session[:token])
     member = token.member
 
     unless @user.nil?
-      @user.member_token = params[:token]
-      @user.trello_name = member.name
+      @user.member_token = session[:token]
+      @user.trello_name = member.username
+      @user.save
 
       # create and store boards?
     end
@@ -99,6 +105,8 @@ class Ollert < Sinatra::Base
       user.password = params[:password]
       user.membership_type = get_membership_type params
 
+      puts user.membership_type
+
       if user.save
         session[:user] = user.id
         flash[:success] = "You're signed up! Click below to connect with Trello for the first time."
@@ -124,11 +132,45 @@ class Ollert < Sinatra::Base
     haml_view_model :login
   end
 
-  get '/logout' do
+  post '/logout', :auth => :authenticated do
     session[:user] = nil
     session[:token] = nil
     flash[:success] = "Come see us again soon!"
+
     redirect '/'
+  end
+
+  post '/settings/trello/disconnect', :auth => :authenticated do
+    @user.member_token = nil
+    @user.trello_name = nil
+
+    if !@user.save
+      flash[:error] = "I couldn't quite disconnect you from Trello. Do you mind trying again?"
+    else
+      flash[:success] = "Disconnected from Trello."
+    end
+
+    redirect '/settings'
+  end
+
+  get '/settings/trello/connect', :auth => :authenticated do
+    session[:token] = params[:token]
+
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+
+    token = client.find(:token, session[:token])
+    member = token.member
+
+    @user.member_token = session[:token]
+    @user.trello_name = member.username
+
+    if !@user.save
+      flash[:error] = "I couldn't quite connect you to Trello. Do you mind trying again?"
+    else
+      flash[:success] = "Connected you to the Trello user #{@user.trello_name}"
+    end
+
+    redirect '/settings'
   end
 
   post '/authenticate' do
