@@ -32,6 +32,11 @@ class Ollert < Sinatra::Base
           flash[:warning] = "Hey! You should log in to do that action."
           redirect '/'
         end
+      elsif role == :token
+        if session[:token].nil? || session[:token].empty?
+          flash[:info] = "Connect with Trello to analyze your boards."
+          redirect '/'
+        end
       end
     end
   end
@@ -44,11 +49,14 @@ class Ollert < Sinatra::Base
     haml_view_model :landing, @user
   end
 
-  get '/boards', :auth => :none do
+  get '/boards' do
     if !@user.nil? && !@user.member_token.nil?
       session[:token] = @user.member_token
-    else
+    elsif !params[:token].nil? && !params[:token].empty?
       session[:token] = params[:token]
+    else
+      flash[:info] = "Connect with Trello to analyze your boards."
+      redirect '/'
     end
 
     client = get_client ENV['PUBLIC_KEY'], session[:token]
@@ -68,7 +76,7 @@ class Ollert < Sinatra::Base
     haml_view_model :boards, @user
   end
 
-  get '/boards/:id', :auth => :none do |board_id|
+  get '/boards/:id', :auth => :token do |board_id|
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     @board = client.find :board, board_id
 
