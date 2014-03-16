@@ -7,12 +7,12 @@ module OllertHelpers
 
   def get_membership_type(params)
     if params[:yearly] == "on"
-        "yearly"
-      elsif params[:monthly] == "on"
-        "monthly"
-      else
-        "free"
-      end
+      "yearly"
+    elsif params[:free] == "on"
+      "free"
+    else
+      "monthly"
+    end
   end
 
   def get_client(public_key, token)
@@ -72,15 +72,23 @@ module OllertHelpers
   end
 
   def validate_signup(params)
+    msg = validate_email(params[:email])
+    if msg.empty?
+      if params[:password].nil_or_empty?
+        msg = "Please enter a valid password."
+      elsif !params[:agreed]
+        msg = "Please agree to our terms."
+      end
+    end
+    msg
+  end
+
+  def validate_email(email)
     msg = ""
-    if params[:email].nil_or_empty?
+    if email.nil_or_empty?
       msg = "Please enter a valid email."
-    elsif !User.find(email: params[:email]).nil?
+    elsif !User.find(email: email).nil?
       msg = "User with that email already exists."
-    elsif params[:password].nil_or_empty?
-      msg = "Please enter a valid password."
-    elsif !params[:agreed]
-      msg = "Please agree to our terms."
     end
     msg
   end

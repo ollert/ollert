@@ -21,7 +21,6 @@ class Ollert < Sinatra::Base
     Sequel.connect ENV['DATABASE_URL']
 
     require_relative 'models/user'
-    require_relative 'models/board'
   end
 
   set(:auth) do |role|
@@ -38,7 +37,7 @@ class Ollert < Sinatra::Base
   end
 
   get '/', :auth => :none do
-    unless @user.nil? || @user.member_token.nil?
+    if !@user.nil? && !@user.member_token.nil?
       redirect '/boards'
     end
 
@@ -46,14 +45,30 @@ class Ollert < Sinatra::Base
   end
 
   get '/boards', :auth => :none do
-    session[:token] = params[:token]
-    client = get_client ENV['PUBLIC_KEY'], params[:token]
+    if !@user.nil? && !@user.member_token.nil?
+      session[:token] = @user.member_token
+    else
+      session[:token] = params[:token]
+    end
+
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
 
     token = client.find(:token, session[:token])
     member = token.member
-    session[:member_name] = member.id
+
+    unless @user.nil?
+      @user.member_token = session[:token]
+      @user.trello_name = member.username
+      @user.save
+    end
 
     @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
+    
+    # create boards hash
+    # id => name
+
+    # boards_hash = @boards.map {|board| [board.id, board.name]}
+    # puts boards_hash.to_h
 
     haml_view_model :boards, @user
   end
@@ -109,9 +124,14 @@ class Ollert < Sinatra::Base
       user.password = params[:password]
       user.membership_type = get_membership_type params
 
+      puts user.membership_type
+
       if user.save
         session[:user] = user.id
         flash[:success] = "You're signed up! Click below to connect with Trello for the first time."
+        if user.membership_type != "free"
+          flash[:info] = "Thanks for signing up for a paid membership! We're not accepting payments at this time, so please enjoy the free membership."
+        end
         redirect '/'
       else
         flash[:error] = "Something's broken, please try again later."
@@ -131,6 +151,99 @@ class Ollert < Sinatra::Base
     haml_view_model :login
   end
 
+  post '/logout', :auth => :authenticated do
+    session[:user] = nil
+    session[:token] = nil
+    flash[:success] = "Come see us again soon!"
+
+    redirect '/'
+  end
+
+  post '/settings/trello/disconnect', :auth => :authenticated do
+    @user.member_token = nil
+    @user.trello_name = nil
+
+    if !@user.save
+      flash[:error] = "I couldn't quite disconnect you from Trello. Do you mind trying again?"
+    else
+      flash[:success] = "Disconnected from Trello."
+    end
+
+    redirect '/settings'
+  end
+
+  post '/settings/email', :auth => :authenticated do
+    msg = validate_email params[:email]
+    if msg.empty?
+      @user.email = params[:email]
+
+      if @user.save
+        flash[:success] = "Your new email is #{@user.email}. Use this to log in!"
+      else
+        flash[:error] = "I couldn't quite update your email. Do you mind trying again?"
+      end
+    else
+      flash[:error] = msg
+    end
+
+    redirect '/settings'
+  end
+
+  post '/settings/password', :auth => :authenticated do
+    current_pw = params[:current_password]
+    new_password = params[:new_password]
+    confirm_password = params[:confirm_password]
+
+    if current_pw.nil_or_empty?
+      flash[:error] = "Enter your old password so I know it's really you."
+      redirect '/settings'
+    end
+
+    if !@user.authenticate? current_pw
+      flash[:error] = "The current password entered is incorrect. Try again."
+      redirect '/settings'
+    end
+
+    if new_password.nil_or_empty?
+      flash[:error] = "New password must be at least 1 character in length."
+      redirect '/settings'
+    end
+
+    if new_password != confirm_password
+      flash[:error] = "Could not confirm new password. Type more carefully."
+      redirect '/settings'
+    end
+
+    @user.password = new_password
+    if !@user.save
+      flash[:error] = "Password could not be changed. Do you mind trying again?"
+      redirect '/settings'
+    end
+
+    flash[:success] = "Password has been changed."
+    redirect '/settings'
+  end
+
+  get '/settings/trello/connect', :auth => :authenticated do
+    session[:token] = params[:token]
+
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+
+    token = client.find(:token, session[:token])
+    member = token.member
+
+    @user.member_token = session[:token]
+    @user.trello_name = member.username
+
+    if !@user.save
+      flash[:error] = "I couldn't quite connect you to Trello. Do you mind trying again?"
+    else
+      flash[:success] = "Connected you to the Trello user #{@user.trello_name}"
+    end
+
+    redirect '/settings'
+  end
+
   post '/authenticate' do
     user = User.find email: params['email']
     if user.nil?
@@ -146,20 +259,35 @@ class Ollert < Sinatra::Base
     end
   end
 
+  post '/settings/delete', :auth => :authenticated do
+    if params[:iamsure] == "on"
+      email = @user.email
+
+      session[:user] = nil
+      session[:token] = nil
+      if @user.delete
+        flash[:success] = "User with login of #{email} has been deleted. Come back and sign up again one day!"
+        redirect '/'
+      else
+        flash[:error] = "I wasn't able to delete that user. Do you mind trying again?"
+        redirect '/settings'
+      end
+    else
+      flash[:warning] = "You must check the 'I am sure' checkbox to delete your account."
+      redirect '/settings'
+    end
+  end
+
   get '/settings', :auth => :authenticated do
-    haml :settings
+    haml_view_model :settings, @user
   end
 
-  get '/terms' do
-    "TBD"
+  get '/privacy', :auth => :none do
+    haml_view_model :privacy, @user
   end
 
-  get '/privacy' do
-    "TBD"
-  end
-
-  get '/fail' do
-    "auth failed"
+  get '/terms', :auth => :none do
+    haml_view_model :terms, @user
   end
 
   get '/styles.css' do

@@ -37,7 +37,11 @@ body {
 }
 
 footer {
-  background: $light-light;
+  margin-top: 60px;
+}
+
+hr {
+  border-top: 1px solid $light;
 }
 
 .navbar {

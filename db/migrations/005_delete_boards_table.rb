@@ -1,12 +1,9 @@
 Sequel.migration do
-  change do
-    create_table(:users) do
-      primary_key :id
-      String :email
-      String :password
-      String :member_token
-    end
+  up do
+    drop_table :boards
+  end
 
+  down do
     create_table(:boards) do
       primary_key :id
       foreign_key :user_id, :users, :null=>false, :key=>[:id]
