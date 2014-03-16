@@ -141,6 +141,7 @@ module OllertHelpers
     end
 
     data = { labels: label_counts.keys, counts: label_counts.values }
+  end
   
   def get_user_boards(user, session, client=nil)
 
