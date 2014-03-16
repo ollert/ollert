@@ -99,14 +99,20 @@ module OllertHelpers
   end
 
   def get_label_count_data(cards)
-    label_count = Hash.new
+    labels_array = Array.new
 
-    cards.group_by{ |card| card.labels }.each do |label,card|
-      unless label.nil?
-        label_count[label.color] = card.count
+    cards.group_by{ |card| card.labels }.each do |labels,card|
+      labels.each do |label|
+          labels_array << label
       end
     end
 
-    label_count
+    label_counts = Hash.new
+
+    labels_array.group_by{ |label| label.name }.each do |label,v|
+      label_counts[label] = v.count
+    end
+
+    label_counts
   end
 end

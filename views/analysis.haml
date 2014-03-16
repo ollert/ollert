@@ -80,6 +80,11 @@
   var cfdChart = new cfdChart({ data: data, boardName: "Ollert" });
   cfdChart.buildChart();
 
-
+%script
+  var lb_data = new labelCountChartData();
+  lb_data.labels = #{@label_count_data.keys.to_json};
+  lb_data.counts = [{name: "Label counts", showInLegend: false, data: #{@label_count_data.values.to_json}}];
+  var labelCountChart = new labelCountChart(lb_data);
+  labelCountChart.buildChart();
 
 
