@@ -19,6 +19,20 @@ class Ollert < Sinatra::Base
   configure do
     Dotenv.load!
     Sequel.connect ENV['DATABASE_URL']
+
+    require_relative 'models/user'
+    require_relative 'models/board'
+  end
+
+  set(:auth) do
+    condition do
+      @user = get_user
+      if @user.nil?
+        session[:user] = nil
+        flash[:warning] = "Hey! You should log in to do that action."
+        redirect '/'
+      end
+    end
   end
 
   get '/' do
@@ -67,11 +81,24 @@ class Ollert < Sinatra::Base
   post '/signup' do
     msg = validate_signup(params)
     if msg.empty?
-      flash[:success] = "You're signed up! Unfortunately, this currently means nothing. :)"
-      redirect '/'
+      user = User.new
+      user.email = params[:email]
+      user.password = params[:password]
+      user.membership_type = get_membership_type params
+
+      if user.save
+        flash[:success] = "You're signed up! Unfortunately, this currently means nothing. :)"
+        redirect '/'
+      else
+        flash[:error] = "Something's broken, please try again later."
+        @email = params[:email]
+        @membership = get_membership_type params
+        haml_view_model :signup
+      end
     else
       flash[:error] = msg
-      @email
+      @email = params[:email]
+      @membership = get_membership_type params
       haml_view_model :signup
     end
   end
