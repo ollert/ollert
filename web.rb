@@ -44,18 +44,32 @@ class Ollert < Sinatra::Base
 
     @board = client.find :board, board_id
 
+    @stats = get_stats(@board)
+
+    haml_view_model :analysis
+  end
+  
+   get '/boards/:id/data' do |board_id|
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+
+    @board = client.find :board, board_id
+
     @wip_data = Hash.new
     @board.cards.group_by { |x| x.list.name }.each_pair do |k,v|
       @wip_data[k] = v.count
     end
-
+    
+    data = { wipcategories: @wip_data.keys, wipdata: @wip_data.values }
+    
+    data.to_json
+  end
+  
+  get '/boards/:id/stats' do |board_id|
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+    @board = client.find :board, board_id
     @stats = get_stats(@board)
-    #@members_per_card = get_members_per_card_data(@board.cards)
-    #@avg_cards_per_member = get_avg_cards_per_member(@board)
-    #@list_with_most_cards = get_list_with_most_cards(@board.lists)
-    #@list_with_least_cards = get_list_with_least_cards(@board.lists)
-
-    haml_view_model :analysis
+    
+    @stats.to_json
   end
 
   get '/signup' do
