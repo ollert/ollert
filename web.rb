@@ -144,6 +144,15 @@ class Ollert < Sinatra::Base
     @stats.to_json
     
   end
+  
+  get '/boards/:id/labelcounts' do |board_id|
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+    @board = client.find :board, board_id
+
+    @label_count_data = get_label_count_data(@board.cards)
+    
+    @label_count_data.to_json
+  end
 
   get '/signup' do
     haml_view_model :signup, @user

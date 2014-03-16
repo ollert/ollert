@@ -41,14 +41,37 @@
       %div(class="analysis-blocks lg-analysis-blocks-container")
         %img{src: '/img/spinner.GIF', id: 'cfd-spinner'}
         %div(id="CFD-Container" class="lg-chart" style="margin: 0 auto")
-        
+  .row
+    .col-md-3
+      %div(class="analysis-blocks med-analysis-blocks-container-stats ")
+        .stat-title
+          Board members
+        .stat-subtitle
+          &nbsp;
+        .stat-value{id: 'board_members_count'}
+          %img{src: '/img/spinner.GIF', class: 'stats-spinner'}
+    .col-md-3
+      %div(class="analysis-blocks med-analysis-blocks-container-stats ")
+        .stat-title
+          Total cards
+        .stat-subtitle
+          &nbsp;
+        .stat-value{id: 'card_count'}
+          %img{src: '/img/spinner.GIF', class: 'stats-spinner'}
+    .col-md-6
+      %div(class="analysis-blocks lg-analysis-blocks-container")
+        %img{src: '/img/spinner.GIF', id: 'label-count-spinner'}
+        %div(id="LabelCount-Container" class="med-chart" style="margin: 0 auto")
+       
 %script{src: "/js/CFDChart.js"}
 %script{src: "/js/WIPChart.js"}
+%script{src: "/js/LabelCountChart.js"}
 
 %script
   dataLoader.loadWipChart({boardId: '#{@board.id}' });
   dataLoader.loadCfdChart({boardId: '#{@board.id}' });
   dataLoader.loadStats({boardId: '#{@board.id}' });
+  dataLoader.loadLabelCount({boardId: '#{@board.id}' });
   
 
 
