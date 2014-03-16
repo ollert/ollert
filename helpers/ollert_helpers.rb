@@ -42,8 +42,6 @@ module OllertHelpers
       msg = "Please enter a valid password."
     elsif !params[:agreed]
       msg = "Please agree to our terms."
-    elsif !params[:membership].nil?
-      msg = "Please select a membership type."
     end
     msg
   end

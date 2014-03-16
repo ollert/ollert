@@ -68,7 +68,16 @@ class Ollert < Sinatra::Base
       redirect '/'
     else
       flash[:error] = msg
-      @email
+      puts params
+      @email = params[:email]
+      if params[:free] == "on"
+        @membership = "free"
+      elsif params[:monthly] == "on"
+        @membership = "monthly"
+      elsif params[:yearly] == "on"
+        @membership = "yearly"
+      end
+
       haml_view_model :signup
     end
   end
