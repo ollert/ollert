@@ -21,11 +21,6 @@ require 'sequel'
 require 'dotenv/tasks'
 require 'dotenv'
 
-task :load_db, :dotenv do
-  Dotenv.load!
-  DB = Sequel.connect ENV['DATABASE_URL']
-end
-
 task :load_db => :dotenv do
   DB = Sequel.connect ENV['DATABASE_URL']
 end
