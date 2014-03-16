@@ -9,15 +9,19 @@ gem 'haml'
 gem 'ruby-trello'
 gem 'sass'
 gem 'sequel'
-gem 'sqlite3'
 gem 'dotenv'
 gem 'rack-flash3'
 gem 'bcrypt'
 gem 'foreman'
 gem 'unicorn'
 
+group :production do
+  gem 'pg'
+end
+
 group :development do
   gem 'pry'
+  gem 'sqlite3'
 end
 
 group :development, :test do
