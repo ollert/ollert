@@ -5,31 +5,48 @@
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats ")
         .stat-title
-          %h4 Average members per card
-        .stat-value1
+          Average members per card
+        .stat-subtitle
+          &nbsp;
+        .stat-value
           #{@stats[:avg_members_per_card]}
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .stat-title
-          %h4 Average cards per member
-        .stat-value1
+          Average cards per member
+        .stat-subtitle
+          &nbsp;
+        .stat-value
           #{@stats[:avg_cards_per_member]}
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .stat-title
-          %h4 List with the most cards
-        .stat-value2
+          List with the most cards
+        .stat-subtitle
           "#{@stats[:list_with_most_cards].name.length > 24 ? @stats[:list_with_most_cards].name[0..21] + "..." : @stats[:list_with_most_cards].name}"
-        .stat-value1
-          #{@stats[:list_with_most_cards].cards.count} cards
+        .stat-value
+          #{@stats[:list_with_most_cards].cards.count}
+        .stat-unit
+          cards
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .stat-title
-          %h4 List with the least cards
-        .stat-value2
+          List with the least cards
+        .stat-subtitle
           "#{@stats[:list_with_least_cards].name.length > 24 ? @stats[:list_with_least_cards].name[0..21] + "..." : @stats[:list_with_least_cards].name}"
-        .stat-value1
-          #{@stats[:list_with_least_cards].cards.count} cards
+        .stat-value
+          #{@stats[:list_with_least_cards].cards.count}
+        .stat-unit
+          cards
+  .row
+    .col-md-3
+      %div(class="analysis-blocks med-analysis-blocks-container-stats ")
+        .stat-title
+          Board members
+        .stat-subtitle
+          &nbsp;
+        .stat-value
+          #{@stats[:board_members_count]}
   .row
     .col-md-4
       %div(class="analysis-blocks med-analysis-blocks-container")
