@@ -141,5 +141,23 @@ module OllertHelpers
     end
 
     data = { labels: label_counts.keys, counts: label_counts.values }
+  
+  def get_user_boards(user, session, client)
+    if !user.nil? && !user.member_token.nil?
+      session[:token] = user.member_token
+    else
+      session[:token] = params[:token]
+    end
+    
+    token = client.find(:token, session[:token])
+    member = token.member
+
+    unless user.nil?
+      user.member_token = session[:token]
+      user.trello_name = member.username
+      user.save
+    end
+
+    @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
   end
 end

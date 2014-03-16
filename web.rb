@@ -50,6 +50,7 @@ class Ollert < Sinatra::Base
   end
 
   get '/boards', :auth => :none do
+
     if !@user.nil? && !@user.member_token.nil?
       session[:token] = @user.member_token
     elsif !params[:token].nil? && !params[:token].empty?
@@ -60,18 +61,7 @@ class Ollert < Sinatra::Base
     end
 
     client = get_client ENV['PUBLIC_KEY'], session[:token]
-
-    token = client.find(:token, session[:token])
-    member = token.member
-
-    unless @user.nil?
-      @user.member_token = session[:token]
-      @user.trello_name = member.username
-      @user.save
-    end
-
-    raw_boards = member.boards
-    @boards = raw_boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
+    @boards = get_user_boards(@user, session, client)
 
     haml_view_model :boards, @user
   end
@@ -79,6 +69,7 @@ class Ollert < Sinatra::Base
   get '/boards/:id', :auth => :token do |board_id|
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     @board = client.find :board, board_id
+    @boards = get_user_boards(@user, session, client)
 
     haml_view_model :analysis, @user
   end
@@ -140,7 +131,6 @@ class Ollert < Sinatra::Base
     board = client.find :board, board_id
     @stats = get_stats(board)
     
-    # TODO: Move to own endpoint @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
     @stats.to_json
     
   end
