@@ -14,13 +14,27 @@
     %script{src: "https://api.trello.com/1/client.js?key=#{@secret}"}
 
     %body
-      %nav{class: 'navbar navbar-default', role: 'navigation'}
+      %nav{class: 'navbar navbar-default navbar-fixed-top', role: 'navigation'}
         .container
           .navbar-header
-            %a{class: 'navbar-brand', style: 'left: 50%; margin-left: -100%;', href: '/'}
+            %button{ type: "button", class: "navbar-toggle collapsed", "data-toggle" => "collapse", "data-target" => ".navbar-collapse" }
+              %span{ class: "sr-only" }
+                Toggle navigation
+              %span{ class: "icon-bar" }
+              %span{ class: "icon-bar" }
+              %span{ class: "icon-bar" }
+            %a{class: 'navbar-brand', href: '/'}
               Ollert
-          .navbar-left.img-rounded
-            %ul{class: 'nav navbar-nav pull-right'}
+          .navbar-collapse.collapse
+            - if !locals[:logged_in]
+              %ul{class: 'nav navbar-nav'}
+                %li
+                  %form{action: "/signup", method: "get"}
+                    %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
+                %li
+                  %button{type: "submit", class: "btn btn-default"}
+                    Log in
+            %ul{class: 'nav navbar-nav'}
               %li
                 %a{href: "/"}
                   Home
@@ -30,15 +44,6 @@
               %li
                 %a{href: "/"}
                   Why Pay
-          - if !locals[:logged_in]
-            .navbar-right.img-rounded{style: "margin-top: 7px;"}
-              %ul{class: 'nav navbar-nav pull-right'}
-                %li
-                  %form{action: "/signup", method: "get"}
-                    %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
-                %li
-                  %button{type: "submit", class: "btn btn-default"}
-                    Log in
       - if flash.has? :error
         .row{id: 'flash', class: 'alert alert-danger'}
           .container
