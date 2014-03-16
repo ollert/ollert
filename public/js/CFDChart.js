@@ -72,7 +72,7 @@ function cfdChart(options) {
                 text: 'Source: Trello'
             },
             xAxis: {
-                categories: options.data.categories(),
+                categories: options.categories,
                 tickmarkPlacement: 'on',
                 title: {
                     enabled: false
@@ -100,7 +100,7 @@ function cfdChart(options) {
                     }
                 }
             },
-            series: options.data.data()
+            series: options.data
         });
     }
  }

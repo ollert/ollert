@@ -62,12 +62,20 @@ class Ollert < Sinatra::Base
     cards = @board.cards options
     lists = @board.lists options
     actions = @board.actions options
-
     cards.group_by { |x| x.list.name }.each_pair do |k,v|
       @wip_data[k] = v.count
     end
 
-    @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
+    cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
+    @dates = cfd_data.keys.sort
+    @cfd_values = Array.new
+    lists.collect(&:name).each do |list|
+      list_array = Array.new
+      @dates.each do |date|
+        list_array << cfd_data[date][list]
+      end
+      @cfd_values << { name: list, data: list_array}
+    end
 
     @stats = get_stats(@board)
 

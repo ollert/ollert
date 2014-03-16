@@ -1,4 +1,5 @@
 require_relative '../core_ext/string'
+require 'pry'
 
 module OllertHelpers
   def get_user
@@ -86,14 +87,19 @@ module OllertHelpers
       actions.sort_by! {|a| a.date}
   	  30.days.ago.to_date.upto(Date.today).reverse_each do |date|
         actions.reject! {|a| a.date.to_date > date}
-        break if actions.empty?
-        data = actions.last.data
-        if data.keys.include? "listBefore"
-          list = data["listBefore"]
-        else
-          list = data["list"]
-        end
-        results[date][list["name"]] += 1 unless list.nil?
+        daily_actions = actions.reject{|a| a.date.to_date == date}
+        daily_actions.reverse.each do |action|
+          data = action.data
+          if data.keys.include? "listAfter"
+            list = data["listAfter"]
+          else
+            list = data["list"]
+          end
+          unless list.nil?
+            results[date][list["name"]] += 1
+            break
+          end
+        end  
   	  end
   	end
     results

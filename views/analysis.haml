@@ -47,7 +47,7 @@
   var wipChart = new wipChart(wip_data);
   wipChart.buildChart();
   var data = new cfdChartData();
-  var cfdChart = new cfdChart({ data: data, boardName: "Ollert" });
+  var cfdChart = new cfdChart({ data: #{@cfd_values.to_json}, categories: #{@dates.to_json}, boardName: "Ollert" });
   cfdChart.buildChart();
 
 
