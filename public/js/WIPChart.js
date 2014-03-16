@@ -1,11 +1,11 @@
-function labelCountChartData() {
+function wipChartData() {
     this.lists = [];
     this.counts = [];
 }
 
-function labelCountChart(lc_data) {
-    this.categories = lc_data.lists;
-    this.data = lc_data.counts;
+function wipChart(wip_data) {
+    this.categories = wip_data.lists;
+    this.data = wip_data.counts;
     
     this.buildChart = function() {
         var that = this;

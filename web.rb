@@ -74,8 +74,6 @@ class Ollert < Sinatra::Base
 
     @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
 
-    @label_count_data = get_label_count_data(cards)
-
     @stats = get_stats(@board)
 
     haml_view_model :analysis, @user
