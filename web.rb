@@ -74,8 +74,6 @@ class Ollert < Sinatra::Base
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     @board = client.find :board, board_id
 
-    @stats = get_stats(@board)
-
     haml_view_model :analysis, @user
   end
   
@@ -107,6 +105,15 @@ class Ollert < Sinatra::Base
     # TODO: Move to own endpoint @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
     @stats.to_json
     
+  end
+  
+  get '/boards/:id/labelcounts' do |board_id|
+    client = get_client ENV['PUBLIC_KEY'], session[:token]
+    @board = client.find :board, board_id
+
+    @label_count_data = get_label_count_data(@board.cards)
+    
+    @label_count_data.to_json
   end
 
   get '/signup' do
