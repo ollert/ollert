@@ -27,15 +27,15 @@ module OllertHelpers
 
     card_members_counts = board.cards.map{ |card| card.members.count }
     card_members_total = card_members_counts.reduce(:+).to_f
-    
-    stats[:board_members_count] = board.members.count
     stats[:avg_members_per_card] = get_avg_members_per_card(card_members_counts, card_members_total)
     stats[:avg_cards_per_member] = get_avg_cards_per_member(card_members_total, board.members)
 
     lists = board.lists
-
     stats[:list_with_most_cards] = get_list_with_most_cards(lists)
     stats[:list_with_least_cards] = get_list_with_least_cards(lists)
+    
+    stats[:board_members_count] = board.members.count
+    stats[:card_count] = board.cards.count
     stats
   end
 
