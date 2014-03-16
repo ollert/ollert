@@ -56,20 +56,29 @@ class Ollert < Sinatra::Base
   get '/boards/:id' do |board_id|
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     @board = client.find :board, board_id
-
     @wip_data = Hash.new
     options = {limit: 999}
     cards = @board.cards options
-    lists = @board.lists options
+    lists = @board.lists(filter: :all)
     actions = @board.actions options
+    
     cards.group_by { |x| x.list.name }.each_pair do |k,v|
       @wip_data[k] = v.count
     end
 
-    cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
+    closed_lists = Hash.new
+    lists.select {|l| l.closed}.each do |l|
+      closed_lists[l.id] = l.actions.first.date
+    end
+
+    list_ids_to_names = Hash.new
+    lists.each do |list|
+      list_ids_to_names[list.id] = list.name
+    end
+    cfd_data = get_cfd_data(actions, list_ids_to_names, closed_lists)
     @dates = cfd_data.keys.sort
     @cfd_values = Array.new
-    lists.collect(&:name).each do |list|
+    lists.collect(&:name).uniq.each do |list|
       list_array = Array.new
       @dates.each do |date|
         list_array << cfd_data[date][list]
@@ -77,6 +86,7 @@ class Ollert < Sinatra::Base
       @cfd_values << { name: list, data: list_array}
     end
 
+    @dates.map! {|date| date.strftime("%b %-d")}
     @stats = get_stats(@board)
 
     haml_view_model :analysis
