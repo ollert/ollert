@@ -39,6 +39,13 @@
         .stat-unit
           cards
   .row
+    .col-md-4
+      %div(class="analysis-blocks med-analysis-blocks-container")
+        %div(id="WIP-Container" class="med-chart" style="margin: 0 auto")
+    .col-md-8
+      %div(class="analysis-blocks lg-analysis-blocks-container")
+        %div(id="CFD-Container" class="lg-chart" style="margin: 0 auto")
+  .row
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats ")
         .stat-title
@@ -47,13 +54,14 @@
           &nbsp;
         .stat-value
           #{@stats[:board_members_count]}
-  .row
-    .col-md-4
-      %div(class="analysis-blocks med-analysis-blocks-container")
-        %div(id="WIP-Container" class="med-chart" style="margin: 0 auto")
-    .col-md-8
-      %div(class="analysis-blocks lg-analysis-blocks-container")
-        %div(id="CFD-Container" class="lg-chart" style="margin: 0 auto")
+    .col-md-3
+      %div(class="analysis-blocks med-analysis-blocks-container-stats ")
+        .stat-title
+          Total cards
+        .stat-subtitle
+          &nbsp;
+        .stat-value
+          #{@stats[:card_count]}
   
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/CFDChart.js"}
