@@ -29,41 +29,29 @@
               %span{ class: "icon-bar" }
             %a{class: 'navbar-brand', href: '/'}
               Ollert
-          .navbar-collapse.collapse
-            - if !locals[:logged_in]
-              %ul{class: 'nav navbar-nav'}
-                %li
-                  %form{action: "/signup", method: "get"}
-                    %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
-                %li
-                  %button{type: "submit", class: "btn btn-default"}
-                    Log in
-            %ul{class: 'nav navbar-nav'}
-              %li
-                %a{href: "/"}
-                  Home
-              %li
-                %a{href: "/"}
-                  More Content
-              %li
-                %a{href: "/"}
-                  Why Pay
           - if !locals[:logged_in]
-            .navbar-right{style: "margin-top: 7px;"}
-              %ul{class: 'nav navbar-nav pull-right'}
-                %li
-                  %form{action: "/signup", method: "get"}
-                    %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
-                %li
-                  %form{action: "/login", method: "get"}
-                    %input{type: "submit", class: "btn btn-default", value: "Log in"}
+            %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
+              %li
+                %form{action: "/signup", method: "get"}
+                  %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
+              %li{style: 'margin-left:10px;'}
+                %form{action: "/login", method: "get"}
+                  %input{type: "submit", class: "btn btn-default", value: "Log in"}
           - else
-            .navbar-right
-              %ul{class: 'nav navbar-nav pull-right'}
-                %li
-                  %a{href: "/settings", class: "btn btn-link btn-lg", style: "padding: 13px 15px;", "data-toggle" => "tooltip", "data-placement" => "bottom", title: "Logged in as #{@user.email}", alt: "Settings"}
-                    %span{class: "glyphicon glyphicon-cog"}
-
+            %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
+              %li
+                %a{href: "/settings", class: "btn btn-link btn-lg", style: "padding: 13px 15px;", "data-toggle" => "tooltip", "data-placement" => "bottom", title: "Logged in as #{@user.email}", alt: "Settings"}
+                  %span{class: "glyphicon glyphicon-cog"}
+          %ul{class: 'collapse navbar-collapse nav navbar-nav'}
+            %li
+              %a{href: "/"}
+                Home
+            %li
+              %a{href: "/"}
+                More Content
+            %li
+              %a{href: "/"}
+                Why Pay
       - if flash.has? :error
         .row{id: 'flash', class: 'alert alert-danger', style: 'margin: 0'}
           .container
