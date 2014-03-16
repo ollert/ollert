@@ -53,23 +53,32 @@ hr {
 }
 
 .analysis-blocks {
+    background-color: #F8F8F8;
     padding: 5px;
     margin: 5px;
     border-style: solid;
     border-width: 1px;
-    -moz-border-radius-topleft: 18px;
-    -webkit-border-top-left-radius: 18px;
-     border-top-left-radius: 18px;
-    -moz-border-radius-topright: 15px;
-    -webkit-border-top-right-radius: 15px;
-    border-top-right-radius: 15px;
-    -moz-border-radius-bottomright: 22px;
-    -webkit-border-bottom-right-radius: 22px;
-    border-bottom-right-radius: 22px;
-    -moz-border-radius-bottomleft: 25px;
-    -webkit-border-bottom-left-radius: 25px;
-    border-bottom-left-radius: 25px;
+    border-color: #DDD;
+    border-bottom: 2px solid #BBB;
+    -moz-border-radius-topleft: 3px;
+    -webkit-border-top-left-radius: 3px;
+     border-top-left-radius: 3px;
+    -moz-border-radius-topright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
     text-align: center;
+}
+
+.analysis-blocks:hover,
+.analysis-blocks:focus,
+.analysis-blocks:active {
+  border-bottom: 3px solid #E74C3C;
 }
 
 .med-analysis-blocks-container {
