@@ -142,7 +142,6 @@ class Ollert < Sinatra::Base
     client = get_client ENV['PUBLIC_KEY'], session[:token]
     board = client.find :board, board_id
     @stats = get_stats(board)
-    
     @stats.to_json
     
   end
