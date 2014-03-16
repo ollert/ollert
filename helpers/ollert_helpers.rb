@@ -27,14 +27,25 @@ module OllertHelpers
 
     card_members_counts = board.cards.map{ |card| card.members.count }
     card_members_total = card_members_counts.reduce(:+).to_f
-    
     stats[:avg_members_per_card] = get_avg_members_per_card(card_members_counts, card_members_total)
     stats[:avg_cards_per_member] = get_avg_cards_per_member(card_members_total, board.members)
 
     lists = board.lists
 
-    stats[:list_with_most_cards] = get_list_with_most_cards(lists)
-    stats[:list_with_least_cards] = get_list_with_least_cards(lists)
+    lst_most_cards = get_list_with_most_cards(lists)
+    
+    lst_most_cards.name = lst_most_cards.name.length > 24 ? lst_most_cards.name[0..21] + "..." : lst_most_cards.name
+    stats[:list_with_most_cards_name] = lst_most_cards.name
+    stats[:list_with_most_cards_count] = lst_most_cards.cards.count
+    
+    lst_least_cards = get_list_with_least_cards(lists)
+    lst_least_cards.name = lst_least_cards.name.length > 24 ? lst_least_cards.name[0..21] + "..." : lst_least_cards.name
+    stats[:list_with_least_cards_name] = lst_least_cards.name
+    stats[:list_with_least_cards_count] = lst_least_cards.cards.count
+    
+    stats[:board_members_count] = board.members.count
+    stats[:card_count] = board.cards.count
+
     stats
   end
 
@@ -56,10 +67,8 @@ module OllertHelpers
     lists.min_by{ |list| list.cards.count }
   end
 
-  def haml_view_model(view, locals = {})
-    default_locals = {logged_in: false}
-    locals = default_locals.merge locals
-    haml view.to_sym, locals => locals
+  def haml_view_model(view, user = nil)
+    haml view.to_sym, locals: {logged_in: !!user}
   end
 
   def validate_signup(params)

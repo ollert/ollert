@@ -1,3 +1,5 @@
+%script{src: "https://api.trello.com/1/client.js?key=#{ENV['PUBLIC_KEY']}"}
+
 :javascript
   function AuthenticateTrello() {
     Trello.authorize({

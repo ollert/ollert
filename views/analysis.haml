@@ -1,54 +1,54 @@
 .container
-  %h2
-    #{@board.name}
+  %div{class: "row", style: "padding-left: 10px"}
+    %h2
+      #{@board.name}
   .row
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats ")
         .stat-title
           %h4 Average members per card
-        .stat-value1
-          #{@stats[:avg_members_per_card]}
+        .stat-value{id: 'avg_members_per_card'}
+          %img{src: '/img/Spinner.GIF', class: 'stats-spinner'}
+         
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .stat-title
           %h4 Average cards per member
-        .stat-value1
-          #{@stats[:avg_cards_per_member]}
+        .stat-value{id: 'avg_cards_per_member'}
+          %img{src: '/img/Spinner.GIF', class: 'stats-spinner'}
+          
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .stat-title
           %h4 List with the most cards
-        .stat-value2
-          "#{@stats[:list_with_most_cards].name.length > 24 ? @stats[:list_with_most_cards].name[0..21] + "..." : @stats[:list_with_most_cards].name}"
-        .stat-value1
-          #{@stats[:list_with_most_cards].cards.count} cards
+        .stat-subtitle{id: 'list_with_most_cards_name'}
+        .stat-value{id: 'list_with_most_cards_count'}
+          %img{src: '/img/Spinner.GIF', class: 'stats-spinner'}
+         
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats")
         .stat-title
           %h4 List with the least cards
-        .stat-value2
-          "#{@stats[:list_with_least_cards].name.length > 24 ? @stats[:list_with_least_cards].name[0..21] + "..." : @stats[:list_with_least_cards].name}"
-        .stat-value1
-          #{@stats[:list_with_least_cards].cards.count} cards
+        .stat-subtitle{id: 'list_with_least_cards_name'}
+        .stat-value{id: 'list_with_least_cards_count'}
+          %img{src: '/img/Spinner.GIF', class: 'stats-spinner'}
   .row
     .col-md-4
       %div(class="analysis-blocks med-analysis-blocks-container")
+        %img{src: '/img/Spinner.GIF', id: 'wip-spinner'}
         %div(id="WIP-Container" class="med-chart" style="margin: 0 auto")
     .col-md-8
       %div(class="analysis-blocks lg-analysis-blocks-container")
+        %img{src: '/img/Spinner.GIF', id: 'cfd-spinner'}
         %div(id="CFD-Container" class="lg-chart" style="margin: 0 auto")
-  
-%script{src: "/js/WIPChart.js"}
+        
 %script{src: "/js/CFDChart.js"}
+%script{src: "/js/WIPChart.js"}
+
 %script
-  var wip_data = new wipChartData();
-  wip_data.lists = #{@wip_data.keys.to_json};
-  wip_data.counts = [{name: "Cards in List", showInLegend: false, data: #{@wip_data.values.to_json}}];
-  var wipChart = new wipChart(wip_data);
-  wipChart.buildChart();
-  var data = new cfdChartData();
-  var cfdChart = new cfdChart({ data: data, boardName: "Ollert" });
-  cfdChart.buildChart();
+  dataLoader.loadWipChart({boardId: '#{@board.id}' });
+  dataLoader.loadStats({boardId: '#{@board.id}' });
+  
 
 
 
