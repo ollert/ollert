@@ -5,6 +5,7 @@
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
     %meta{name: 'description', content: 'Ollert'}
 
+    %link{rel: 'shortcut icon', href:'/images/favicon.ico'}
     %link{href: '/css/bootstrap.min.css', rel: 'stylesheet'}
     %link{rel: 'stylesheet', type: 'text/css', href: '/styles.css'}
 
@@ -18,7 +19,7 @@
       });
 
     %body
-      %nav{class: 'navbar navbar-default navbar-fixed-top', role: 'navigation'}
+      %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
         .container
           .navbar-header
             %button{ type: "button", class: "navbar-toggle collapsed", "data-toggle" => "collapse", "data-target" => ".navbar-collapse" }
@@ -85,18 +86,26 @@
       = yield
 
     %footer{id: 'footer'}
-      %hr
-      .container.small
+      .container
         .row
-          .col-md-offset-9.col-md-3
+          .col-md-4
             .row
-              %strong
-                Legal
+              Ollert is a SEP Startup Weekend project
             .row
-              %a{href: "/privacy"}
-                Privacy Policy
-            .row
-              %a{href: "/terms"}
-                Terms and Conditions
-        .row.pull-right
-          This site copyright &copy; 2014
+              %img{src: '/images/ollert-logo-white.svg', height: '70'}
+          .col-md-8
+            .container
+              .row
+                .col-md-4
+                  %ul
+                    %li
+                      %a{href: "http://www.sep.com/labs/startupweekend/"}
+                        SEP Startup Weekend
+                    %li
+                      %a{href: "/privacy"}
+                        Privacy Policy
+                    %li
+                      %a{href: "/terms"}
+                        Terms and Conditions
+                .col-md-4
+                  %img{src: '/images/sep-labs-logo-white.png'}
