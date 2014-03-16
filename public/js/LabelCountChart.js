@@ -11,6 +11,12 @@ function labelCountChart(label_count_data) {
     
     this.buildChart = function() {
         var that = this;
+        var green = '#34b27d';
+        var yellow = '#dbdb57';
+        var orange = '#e09952';
+        var red = '#cb4d4d';
+        var purple = '#93c';
+        var blue = '#4d77cb';
             $('#LabelCount-Container').highcharts({
                 chart: {
                     type: 'bar'
@@ -44,7 +50,9 @@ function labelCountChart(label_count_data) {
                     bar: {
                         dataLabels: {
                             enabled: true
-                        } 
+                        },
+                        colorByPoint: true,
+                        colors: that.colors
                     }
                 },
                 credits: {

@@ -136,10 +136,29 @@ module OllertHelpers
     label_counts = Hash.new
 
     labels_array.group_by{ |label| label.name }.each do |label,v|
-      label_counts[label] = v.count
+      hexcolor = convert_color(v.first.color)
+
+      label_counts[label] = { count: v.count, color: hexcolor }
     end
 
-    data = { labels: label_counts.keys, counts: label_counts.values }
+    data = { labels: label_counts.keys, counts: label_counts.values.map{ |x| x[:count] }, colors: label_counts.values.map{ |x| x[:color] } }
+  end
+
+  def convert_color(color)
+    case color
+      when "green"
+       '#34b27d'
+      when "yellow"
+        '#dbdb57'
+      when "orange"
+        '#e09952'
+      when "red"
+        '#cb4d4d'
+      when "purple"
+        '#93c'
+      when "blue"
+        '#4d77cb'
+      end
   end
   
   def get_user_boards(user, session, client=nil)
