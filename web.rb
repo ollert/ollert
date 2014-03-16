@@ -53,7 +53,6 @@ class Ollert < Sinatra::Base
       @wip_data[k] = v.count
     end
 
-    @members_per_card = get_members_per_card_data(cards)
     @cfd_data = get_cfd_data(actions, cards, lists.collect(&:name))
 
     @stats = get_stats(@board)
