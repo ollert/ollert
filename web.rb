@@ -24,23 +24,29 @@ class Ollert < Sinatra::Base
     require_relative 'models/board'
   end
 
-  set(:auth) do
+  set(:auth) do |role|
     condition do
       @user = get_user
-      if @user.nil?
-        session[:user] = nil
-        flash[:warning] = "Hey! You should log in to do that action."
-        redirect '/'
+      if role == :authenticated
+        if @user.nil?
+          session[:user] = nil
+          flash[:warning] = "Hey! You should log in to do that action."
+          redirect '/'
+        end
       end
     end
   end
 
-  get '/' do
+  get '/', :auth => :none do
+    unless @user.nil? || @user.member_token.nil?
+      redirect '/boards'
+    end
+
     @secret = ENV['PUBLIC_KEY']
     haml :landing
   end
 
-  get '/boards' do
+  get '/boards', :auth => :none do
     session[:token] = params[:token]
     client = get_client ENV['PUBLIC_KEY'], params[:token]
 
@@ -53,7 +59,7 @@ class Ollert < Sinatra::Base
     haml_view_model :boards
   end
 
-  get '/boards/:id' do |board_id|
+  get '/boards/:id', :auth => :none do |board_id|
     client = get_client ENV['PUBLIC_KEY'], session[:token]
 
     @board = client.find :board, board_id
@@ -63,7 +69,7 @@ class Ollert < Sinatra::Base
       @wip_data[k] = v.count
     end
 
-    @stats = get_stats(@board)
+    @stats = get_stats @board
 
     haml_view_model :analysis
   end
@@ -81,6 +87,7 @@ class Ollert < Sinatra::Base
       user.membership_type = get_membership_type params
 
       if user.save
+        session[:user] = user.id
         flash[:success] = "You're signed up! Unfortunately, this currently means nothing. :)"
         redirect '/'
       else
