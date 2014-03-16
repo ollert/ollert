@@ -104,6 +104,7 @@ function wipChart(wip_data) {
             var lb_data = new labelCountChartData();
             lb_data.labels = theData.labels;
             lb_data.counts = theData.counts;
+            lb_data.colors = theData.colors;
             var labelCount = new labelCountChart(lb_data);
             labelCount.buildChart();
         })

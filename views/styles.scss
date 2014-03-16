@@ -81,46 +81,6 @@ hr {
   border-bottom: 3px solid #E74C3C;
 }
 
-.med-analysis-blocks-container {
-    width: 365px;
-    height: 390px;
-}
-
-.lg-analysis-blocks-container {
-    width: 750px;
-    height: 390px;
-}
-
-.med-chart{
-    width: 350px; 
-    height: 380px;
-}
-
-.lg-chart{
-    width:  730px;
-    height: 370px;
-}
-
-.med-analysis-blocks-container-stats {
-    width: 265px;
-    height: 200px;
-}
-
-.lg-analysis-blocks-container-stats {
-    width: 380px;
-    height: 200px;
-}
-
-.col-md-3{
-    padding-bottom: 10px;
-}
-
-
-
-
-
-
-
 
 
 /* Red */
@@ -299,33 +259,39 @@ $colHover       : #ffe6d1; /*/
     text-align: center;
 }
 
-.med-analysis-blocks-container {
-    width: 365px;
-    height: 390px;
-}
 
 .lg-analysis-blocks-container {
-    width: 750px;
-    height: 390px;
+    width: 950px;
+    height: 440px;
 }
 
 .med-chart{
-    width: 350px; 
+    width: 560px; 
     height: 380px;
 }
 
 .lg-chart{
-    width:  730px;
-    height: 370px;
+    width:  1130px;
+    height: 420px;
+}
+
+.med-analysis-blocks-container {
+    width: 575px;
+    height: 390px;
+}
+
+.lg-analysis-blocks-container {
+    width: 1150px;
+    height: 440px;
 }
 
 .med-analysis-blocks-container-stats {
-    width: 265px;
+    width: 280px;
     height: 200px;
 }
 
 .lg-analysis-blocks-container-stats {
-    width: 380px;
+    width: 320px;
     height: 200px;
 }
 
