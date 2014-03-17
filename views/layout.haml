@@ -17,7 +17,7 @@
       $(function () {
           $("[data-toggle='tooltip']").tooltip();
       });
-      
+
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-48982092-1']);
       _gaq.push(['_trackPageview']);
@@ -51,7 +51,7 @@
           - else
             %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
               %li
-                %a{href: "/settings", class: "btn btn-link btn-lg", style: "padding: 13px 15px;", "data-toggle" => "tooltip", "data-placement" => "bottom", title: "Logged in as #{@user.email}", alt: "Settings"}
+                %a{href: "/settings", class: "btn btn-link btn-lg", style: "padding: 5px 15px;", "data-toggle" => "tooltip", "data-placement" => "bottom", title: "Logged in as #{@user.email}", alt: "Settings"}
                   %span{class: "glyphicon glyphicon-cog"}
           %ul{class: 'collapse navbar-collapse nav navbar-nav'}
             %li
