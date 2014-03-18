@@ -1,7 +1,7 @@
 .container
   %div{class: "row", style: "padding-left: 10px"}
     %h2
-      #{@board.name}
+      #{@board_name}
   .row
     .col-md-3
       %div(class="analysis-blocks med-analysis-blocks-container-stats ")
@@ -83,10 +83,10 @@
 %script{src: "/js/LabelCountChart.js"}
 
 %script
-  dataLoader.loadWipChart({boardId: '#{@board.id}' });
-  dataLoader.loadCfdChart({boardId: '#{@board.id}' });
-  dataLoader.loadStats({boardId: '#{@board.id}' });
-  dataLoader.loadLabelCount({boardId: '#{@board.id}' });
+  dataLoader.loadWipChart({boardId: '#{@board_id}' });
+  dataLoader.loadCfdChart({boardId: '#{@board_id}' });
+  dataLoader.loadStats({boardId: '#{@board_id}' });
+  dataLoader.loadLabelCount({boardId: '#{@board_id}' });
   
 
 
