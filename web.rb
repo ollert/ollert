@@ -80,8 +80,11 @@ class Ollert < Sinatra::Base
 
   get '/boards/:id', :auth => :token do |board_id|
     client = get_client ENV['PUBLIC_KEY'], session[:token]
-    @board = client.find :board, board_id
     @boards = get_user_boards(@user, session, client)
+
+    board = client.find :board, board_id
+    @board_name = board.name
+    @board_id = board_id
 
     haml_view_model :analysis, @user
   end

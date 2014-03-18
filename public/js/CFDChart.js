@@ -66,10 +66,10 @@ function cfdChart(options) {
                 type: 'area'
             },
             title: {
-                text: 'Cumulative Flow Diagram for ' + options.boardName
+                text: 'Cumulative Flow Diagram'
             },
             subtitle: {
-                text: 'Source: Trello'
+                text: 'CFD'
             },
             xAxis: {
                 categories: options.dates,
