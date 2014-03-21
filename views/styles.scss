@@ -4,10 +4,41 @@ $medium-light: #A0A0A0;
 $light: #CCCCCC;
 $light-light: #F2F2F2;
 
-/* Disabled for now, will need later if header goes to fixed pos
+
+//  begin sticky footer
+
+html,
 body {
-  padding-top: 70px;
-} */
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -150px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+  min-height: 150px;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+// end sticky footer
 
 .topbar {
   background: $light-light;
@@ -37,20 +68,20 @@ body {
   text-align: center;
 }
 
-footer {
+#footer {
   padding: 20px 15px 10px 15px;
-  margin-top: 60px;
+  // margin-top: 60px;
   background: #3E434A;
   color: #ADB3BA;
   border: none;
   font-size: 1.3em;
 }
 
-footer a {
+#footer a {
   color: #ADB3BA;
 }
 
-footer a:hover {
+#footer a:hover {
   color: #FFF;
 }
 

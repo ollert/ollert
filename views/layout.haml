@@ -29,67 +29,70 @@
       })();
 
     %body
-      %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
-        .container
-          .navbar-header
-            %button{ type: "button", class: "navbar-toggle collapsed", "data-toggle" => "collapse", "data-target" => ".navbar-collapse" }
-              %span{ class: "sr-only" }
-                Toggle navigation
-              %span{ class: "icon-bar" }
-              %span{ class: "icon-bar" }
-              %span{ class: "icon-bar" }
-            %a{class: 'navbar-brand', href: '/'}
-              Ollert
-          - if !locals[:logged_in]
-            %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
+      %div{id: 'wrap'}
+        %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
+          .container
+            .navbar-header
+              %button{ type: "button", class: "navbar-toggle collapsed", "data-toggle" => "collapse", "data-target" => ".navbar-collapse" }
+                %span{ class: "sr-only" }
+                  Toggle navigation
+                %span{ class: "icon-bar" }
+                %span{ class: "icon-bar" }
+                %span{ class: "icon-bar" }
+              %a{class: 'navbar-brand', href: '/'}
+                Ollert
+            - if !locals[:logged_in]
+              %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
+                %li
+                  %form{action: "/signup", method: "get"}
+                    %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
+                %li{style: 'margin-left:10px;'}
+                  %form{action: "/login", method: "get"}
+                    %input{type: "submit", class: "btn btn-default", value: "Log in"}
+            - else
+              %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
+                %li
+                  %a{href: "/settings", class: "btn btn-link btn-lg", style: "padding: 5px 15px;", "data-toggle" => "tooltip", "data-placement" => "bottom", title: "Logged in as #{@user.email}", alt: "Settings"}
+                    %span{class: "glyphicon glyphicon-cog"}
+            %ul{class: 'collapse navbar-collapse nav navbar-nav'}
               %li
-                %form{action: "/signup", method: "get"}
-                  %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
-              %li{style: 'margin-left:10px;'}
-                %form{action: "/login", method: "get"}
-                  %input{type: "submit", class: "btn btn-default", value: "Log in"}
-          - else
-            %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
-              %li
-                %a{href: "/settings", class: "btn btn-link btn-lg", style: "padding: 5px 15px;", "data-toggle" => "tooltip", "data-placement" => "bottom", title: "Logged in as #{@user.email}", alt: "Settings"}
-                  %span{class: "glyphicon glyphicon-cog"}
-          %ul{class: 'collapse navbar-collapse nav navbar-nav'}
-            %li
-              %a{href: "/"}
-                Home
-            - if (!@boards.nil? && @boards.any?)
-              %li{class: "dropdown"}
-                %a{href: "#", class: "dropdown-toggle", "data-toggle" => "dropdown"}
-                  My Boards
-                  %b{class: "caret"}
-                %ul{class: "dropdown-menu left-align"}
-                  - @boards.each do |org_name, boards|
-                    %li{class: "divider divider-section"}
-                      #{org_name}
-                    - boards.each do |board|
-                      %li
-                        %a{class: "btn btn-link", href: "/boards/#{board.id}"}
-                          #{board.name}
-      - if flash.has? :error
-        .row{id: 'flash', class: 'alert alert-danger', style: 'margin: 0'}
-          .container
-            #{flash[:error]}
-      - if flash.has? :warning
-        .row{id: 'flash', class: 'alert alert-warning', style: 'margin: 0'}
-          .container
-            #{flash[:warning]}
-      - if flash.has? :success
-        .row{id: 'flash', class: 'alert alert-success', style: 'margin: 0'}
-          .container
-            #{flash[:success]}
-      - if flash.has? :info
-        .row{id: 'flash', class: 'alert alert-info', style: 'margin: 0'}
-          .container
-            #{flash[:info]}
+                %a{href: "/"}
+                  Home
+              - if (!@boards.nil? && @boards.any?)
+                %li{class: "dropdown"}
+                  %a{href: "#", class: "dropdown-toggle", "data-toggle" => "dropdown"}
+                    My Boards
+                    %b{class: "caret"}
+                  %ul{class: "dropdown-menu left-align"}
+                    - @boards.each do |org_name, boards|
+                      %li{class: "divider divider-section"}
+                        #{org_name}
+                      - boards.each do |board|
+                        %li
+                          %a{class: "btn btn-link", href: "/boards/#{board.id}"}
+                            #{board.name}
+        - if flash.has? :error
+          .row{id: 'flash', class: 'alert alert-danger', style: 'margin: 0'}
+            .container
+              #{flash[:error]}
+        - if flash.has? :warning
+          .row{id: 'flash', class: 'alert alert-warning', style: 'margin: 0'}
+            .container
+              #{flash[:warning]}
+        - if flash.has? :success
+          .row{id: 'flash', class: 'alert alert-success', style: 'margin: 0'}
+            .container
+              #{flash[:success]}
+        - if flash.has? :info
+          .row{id: 'flash', class: 'alert alert-info', style: 'margin: 0'}
+            .container
+              #{flash[:info]}
 
-      = yield
+        = yield
 
-    %footer{id: 'footer'}
+        %div{id: 'push'}
+
+    %div{id: 'footer', style: 'margin-bottom: 50px;'}
       .container
         .row
           .col-md-4
