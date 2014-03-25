@@ -63,26 +63,32 @@ class Ollert < Sinatra::Base
       redirect '/'
     end
 
-    client = get_client ENV['PUBLIC_KEY'], session[:token]
-    token = client.find(:token, session[:token])
+    token, _ = get_trello_object session[:token], :token, session[:token], nil, @user
+
     member = token.member
 
+    # this logic needs to be fixed - why does this belong here?
     unless @user.nil?
       @user.member_token = session[:token]
       @user.trello_name = member.username
       @user.save
     end
     
-    @boards = get_user_boards(@user, session, client)
+    # change this to be async
+    @boards = get_user_boards member
 
     haml_view_model :boards, @user
   end
 
   get '/boards/:id', :auth => :token do |board_id|
-    client = get_client ENV['PUBLIC_KEY'], session[:token]
-    @boards = get_user_boards(@user, session, client)
+    # this call should be able to be pared down to just a call to get the boards
+    token, @client = get_trello_object session[:token], :token, session[:token], nil, @user
+    @boards = get_user_boards token.member
 
-    board = client.find :board, board_id
+    # this and the previous call are somewhat redundant
+    # would like to remove previous call
+    board, _ = get_trello_object session[:token], :board, board_id, @client, @user
+
     @board_name = board.name
     @board_id = board_id
 
@@ -90,9 +96,8 @@ class Ollert < Sinatra::Base
   end
   
    get '/boards/:id/data' do |board_id|
-    client = get_client ENV['PUBLIC_KEY'], session[:token]
+    @board, _ = get_trello_object session[:token], :board, board_id, @client, @user
 
-    @board = client.find :board, board_id
     @wip_data = Hash.new
     options = {limit: 999}
     cards = @board.cards options
@@ -109,8 +114,9 @@ class Ollert < Sinatra::Base
   end
 
   get '/boards/:id/cfd' do |board_id|
-    client = get_client ENV['PUBLIC_KEY'], session[:token]
-    board = client.find :board, board_id
+    board, _ = get_trello_object session[:token], :board, board_id, @client, @user
+
+    # might be faster to just get lists and actions without getting the board
     lists = board.lists(filter: :all)
     actions = board.actions(limit: 999)
     closed_lists = Hash.new
@@ -142,19 +148,14 @@ class Ollert < Sinatra::Base
   end
   
   get '/boards/:id/stats' do |board_id|
-    client = get_client ENV['PUBLIC_KEY'], session[:token]
-    board = client.find :board, board_id
+    board, _ = get_trello_object session[:token], :board, board_id, @client, @user
     @stats = get_stats(board)
     @stats.to_json
-    
   end
   
   get '/boards/:id/labelcounts' do |board_id|
-    client = get_client ENV['PUBLIC_KEY'], session[:token]
-    @board = client.find :board, board_id
-
+    @board, _ = get_trello_object session[:token], :board, board_id, @client, @user
     @label_count_data = get_label_count_data(@board.cards)
-    
     @label_count_data.to_json
   end
 

@@ -21,6 +21,30 @@ module OllertHelpers
       :member_token => token
     )
   end
+
+  def get_trello_object(token, object, identifier, client = nil, user = nil)
+    if client.nil?
+      client = get_client ENV['PUBLIC_KEY'], token
+    end
+    
+    begin
+      trello_object = client.find(object.to_sym, identifier)
+    rescue Trello::Error => e
+      flash[:warning] = "Looks like your Trello token has expired. Hit the 'Connect' button below to reconnect."
+      if !user.nil?
+        user.member_token = nil
+        user.save
+      end
+      redirect '/'
+    end
+
+    return trello_object, client
+  end
+
+  
+  def get_user_boards(member)
+    @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
+  end
   
   def get_stats(board)
     members = board.members
@@ -174,19 +198,5 @@ module OllertHelpers
       when "blue"
         '#4d77cb'
       end
-  end
-  
-  def get_user_boards(user, session, client=nil)
-
-    token = client.find(:token, session[:token])
-    member = token.member
-
-    unless user.nil?
-      user.member_token = session[:token]
-      user.trello_name = member.username
-      user.save
-    end
-
-    @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
   end
 end
