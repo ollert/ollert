@@ -12,6 +12,9 @@
     %script{src: '//code.jquery.com/jquery-1.11.0.min.js'}
     %script{src: '/js/bootstrap.min.js'}
     %script{src: "/js/highcharts.js"}
+    
+    %script{src: "//api.trello.com/1/client.js?key=#{ENV['PUBLIC_KEY']}"}
+    %script{src: "/js/trello.js"}
 
     :javascript
       $(function () {
