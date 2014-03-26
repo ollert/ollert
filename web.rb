@@ -206,7 +206,7 @@ class Ollert < Sinatra::Base
     redirect '/'
   end
 
-  post '/settings/trello/disconnect', :auth => :authenticated do
+  get '/settings/trello/disconnect', :auth => :authenticated do
     @user.member_token = nil
     @user.trello_name = nil
 
