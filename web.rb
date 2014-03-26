@@ -169,27 +169,19 @@ class Ollert < Sinatra::Base
       user = User.new
       user.email = params[:email]
       user.password = params[:password]
-      user.membership_type = get_membership_type params
-
-      puts user.membership_type
 
       if user.save
         session[:user] = user.id
         flash[:success] = "You're signed up! Click below to connect with Trello for the first time."
-        if user.membership_type != "free"
-          flash[:info] = "Thanks for signing up for a paid membership! We're not accepting payments at this time, so please enjoy the free membership."
-        end
         redirect '/'
       else
         flash[:error] = "Something's broken, please try again later."
         @email = params[:email]
-        @membership = get_membership_type params
         haml_view_model :signup
       end
     else
       flash[:error] = msg
       @email = params[:email]
-      @membership = get_membership_type params
       haml_view_model :signup
     end
   end

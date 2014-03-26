@@ -51,9 +51,10 @@
       Connect with Trello
 
   %hr
-    %form{action: "/settings/delete", method: "post"}
-      .checkbox{style: "font-size: 16px;"}
-        %label
-          %input{type: "checkbox", name: "iamsure"}
-            This box verifies that you would like to delete your account when clicking the link below.
-      %input{type: "submit", class: "btn btn-defualt btn-danger", value: "Delete Account"}
+
+  %form{action: "/settings/delete", method: "post"}
+    .checkbox{style: "font-size: 16px;"}
+      %label
+        %input{type: "checkbox", name: "iamsure"}
+          This box verifies that you would like to delete your account when clicking the link below.
+    %input{type: "submit", class: "btn btn-defualt btn-danger", value: "Delete Account"}

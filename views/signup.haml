@@ -14,27 +14,9 @@
               %label{for: "password"} Password
             .col-md-8
               %input{type: "password", id: "password", name: "password", class: "form-control", autocomplete: "off", required: "required"}
-          .row{style: "margin-bottom: 10px;"}
-            .col-md-4
-              %label
-                %a{class: "btn btn-link", href: "/info", title: "Why should I pay?", style: "padding-left: 0; border-left: 0", target: "_blank"}
-                  Membership Type
-            .col-md-8
-              .btn-group{"data-toggle" => "buttons"}
-                %label{class: "btn btn-default"}
-                  %input{type: "radio", name: "free", class: "btn btn-default"}
-                    Free
-                %label{class: "btn btn-default active"}
-                  %input{type: "radio", name: "monthly", class: "btn btn-default"}
-                    $3 per month
-                %label{class: "btn btn-default"}
-                  %input{type: "radio", name: "yearly", class: "btn btn-default"}
-                    $30 per year
 
-          .row{style: "margin-bottom: 10px;", class: "text-center"}
-          .row{style: "margin-top: 10px;"}
-            .checkbox{style: "font-size: 16px;"}
-              %label
-                %input{type: "checkbox", name: "agreed"}
-                I have read and agree to the <a href="/legal">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
+          .checkbox{style: "font-size: 16px; margin-top: 10px;"}
+            %label
+              %input{type: "checkbox", name: "agreed"}
+              I have read and agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
     %input{class: "btn btn-primary btn-lg", type: "submit", value:"Sign Me Up!"}
