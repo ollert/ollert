@@ -15,9 +15,12 @@ class Ollert < Sinatra::Base
 
   configure do
     Dotenv.load!
+
     if ENV['RACK_ENV'] == 'production'
       Sequel.connect ENV['HEROKU_POSTGRESQL_MAROON_URL']
     else
+      require 'sinatra/reloader'
+      register Sinatra::Reloader
       Sequel.connect ENV['DATABASE_URL']
     end
 
@@ -63,14 +66,13 @@ class Ollert < Sinatra::Base
       redirect '/'
     end
 
-    token, _ = get_trello_object session[:token], :token, session[:token], nil, @user
-
+    token, client = get_trello_object session[:token], :token, session[:token], nil, @user
     member = token.member
 
     # this logic needs to be fixed - why does this belong here?
     unless @user.nil?
       @user.member_token = session[:token]
-      @user.trello_name = member.username
+      @user.trello_name = member.attributes[:username]
       @user.save
     end
     
@@ -85,11 +87,7 @@ class Ollert < Sinatra::Base
     token, @client = get_trello_object session[:token], :token, session[:token], nil, @user
     @boards = get_user_boards token.member
 
-    # this and the previous call are somewhat redundant
-    # would like to remove previous call
-    board, _ = get_trello_object session[:token], :board, board_id, @client, @user
-
-    @board_name = board.name
+    @board_name = @boards.values.flatten.select {|x| x.id == board_id}.first.attributes[:name]
     @board_id = board_id
 
     haml_view_model :analysis, @user
@@ -272,7 +270,7 @@ class Ollert < Sinatra::Base
     member = token.member
 
     @user.member_token = session[:token]
-    @user.trello_name = member.username
+    @user.trello_name = member.attributes[:username]
 
     if !@user.save
       flash[:error] = "I couldn't quite connect you to Trello. Do you mind trying again?"

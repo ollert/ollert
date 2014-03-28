@@ -22,6 +22,7 @@ end
 group :development do
   gem 'pry'
   gem 'sqlite3'
+  gem 'sinatra-reloader'
 end
 
 group :development, :test do

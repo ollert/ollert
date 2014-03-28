@@ -40,10 +40,9 @@ module OllertHelpers
 
     return trello_object, client
   end
-
   
   def get_user_boards(member)
-    @boards = member.boards.group_by {|board| board.organization_id.nil? ? "Unassociated Boards" : board.organization.name}
+    member.boards.group_by {|board| board.attributes[:organization_id].nil? ? "Unassociated Boards" : board.organization.attributes[:display_name]}
   end
   
   def get_stats(board)
@@ -58,7 +57,6 @@ module OllertHelpers
     card_members_total = card_members_counts.reduce(:+).to_f
     stats[:avg_members_per_card] = get_avg_members_per_card(card_members_counts, card_members_total)
     stats[:avg_cards_per_member] = get_avg_cards_per_member(card_members_total, members)
-
 
     lst_most_cards = get_list_with_most_cards(lists)
     

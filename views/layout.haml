@@ -52,13 +52,13 @@
                     My Boards
                     %b{class: "caret"}
                   %ul{class: "dropdown-menu left-align"}
-                    - @boards.each do |org_name, boards|
+                    - @boards.each do |org_id, boards|
                       %li{class: "divider divider-section"}
-                        #{org_name}
+                        #{org_id}
                       - boards.each do |board|
                         %li
-                          %a{class: "btn btn-link", href: "/boards/#{board.id}"}
-                            #{board.name}
+                          %a{class: "btn btn-link", href: "/boards/#{board.attributes[:id]}"}
+                            #{board.attributes[:name]}
         - if flash.has? :error
           .row{id: 'flash', class: 'alert alert-danger', style: 'margin: 0'}
             .container
@@ -83,26 +83,19 @@
     %div{id: 'footer'}
       .container
         .row
-          .col-md-4
-            .row
-              Ollert is a SEP Startup Weekend project
-            .row
-              %img{src: '/images/ollert-logo-white.svg', height: '70'}
           .col-md-8
-            .row
-              .col-md-4
-                %ul
-                  %li
-                    %a{href: "http://www.sep.com/labs/startupweekend/"}
-                      SEP Startup Weekend
-                  %li
-                    %a{href: "/privacy"}
-                      Privacy Policy
-                  %li
-                    %a{href: "/terms"}
-                      Terms and Conditions
-              .col-md-4
-                %img{src: '/images/sep-labs-logo-white.png'}              
+            %ul
+              %li
+                %a{href: "http://www.sep.com/labs/startupweekend/"}
+                  SEP Startup Weekend
+              %li
+                %a{href: "/privacy"}
+                  Privacy Policy
+              %li
+                %a{href: "/terms"}
+                  Terms and Conditions
+          .col-md-4
+            %img{src: '/images/sep-labs-logo-white.png', height: '85px'}
         .row
-          .small.text-center
+          .small.text-center{style: 'margin-top: 10px;'}
             Ollert is currently in beta. If you are interested in the future of Ollert, contact <a href="mailto:ollertapp@gmail.com"/>ollertapp@gmail.com</a>.
