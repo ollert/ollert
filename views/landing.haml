@@ -40,7 +40,7 @@
 .landing-hook
   .container
     .row.h1.text-center{style: 'margin-bottom: 20px;'}
-      What are you waiting for? It's free to try.
+      What are you waiting for? It's free.
     .row.text-center
       .col-md-offset-2.col-md-3
         %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'AuthenticateTrelloOneHour()' : 'AuthenticateTrelloAlways()'}"}
@@ -53,3 +53,7 @@
         Connect to Trello, choose a board, and view your stats. No strings attached.
       .col-md-offset-2.col-md-3
         Just supply an email and password. We'll remember your Trello information after the first time you authenticate. More benefits coming soon.
+    .row.h2.text-center
+      .small.text-center{style: 'margin-top: 10px;'}
+        Want more information? Contact <a href="mailto:ollertapp@gmail.com"/>ollertapp@gmail.com</a>.
+

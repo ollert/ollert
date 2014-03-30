@@ -4,26 +4,31 @@ $medium-light: #A0A0A0;
 $light: #CCCCCC;
 $light-light: #F2F2F2;
 
+$ollertPurple         : #9b59b6;
+$ollertDarkPurple     : #8e44ad;
+$ollertLightPurple    : #ecdbff;
+$ollertLighterPurple    : #f1e4ff;
+
 /* Red */
 $bgDefault      : #e74c3c;
 $bgHighlight    : #a4251c;
 $colDefault     : #ecf0f1;
 $colHover       : #ffbbbc; 
-/* Green */
-$greenBgDefault      : #2ecc71;
-$greenBgHighlight    : #27ae60;
-$greenColDefault     : #ecf0f1;
-$greenColHover       : #d1ffed;
-/* Purple */
-$ollertPurple         : #9b59b6;
-$ollertDarkPurple     : #8e44ad;
-$ollertLightPurple    : #ecdbff;
-$ollertLighterPurple    : #f1e4ff;
-/* Orange */
-$orangeBgDefault      : #e67e22;
-$orangeBgHighlight    : #d35400;
-$orangeColDefault     : #ecf0f1;
-$orangeColHover       : #ffe6d1;
+/* Green * /
+$bgDefault      : #2ecc71;
+$bgHighlight    : #27ae60;
+$colDefault     : #ecf0f1;
+$colHover       : #d1ffed;
+/* Purple * /
+$bgDefault      : #9b59b6;
+$bgHighlight    : #8e44ad;
+$colDefault     : #ecf0f1;
+$colHover       : #ecdbff;
+/* Orange * /
+$bgDefault      : #e67e22;
+$bgHighlight    : #d35400;
+$colDefault     : #ecf0f1;
+$colHover       : #ffe6d1; /**/
 
 body {
   font-family: 'Muli', sans-serif;
@@ -42,13 +47,13 @@ html,body {
   height: auto !important;
   height: 100%;
   /* Negative indent footer by it's height */
-  margin: 0 auto -150px;
+  margin: 0 auto -120px;
 }
 
 /* Set the fixed height of the footer here */
 #push,
 #footer {
-  min-height: 150px;
+  min-height: 120px;
 }
 
 /* Lastly, apply responsive CSS fixes as necessary */
