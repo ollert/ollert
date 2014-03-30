@@ -8,6 +8,7 @@
     %link{rel: 'shortcut icon', href:'/images/favicon.ico'}
     %link{href: '/css/bootstrap.min.css', rel: 'stylesheet'}
     %link{rel: 'stylesheet', type: 'text/css', href: '/styles.css'}
+    %link{href: 'http://fonts.googleapis.com/css?family=Muli', rel: 'stylesheet', type: 'text/css'}
 
     %script{src: '//code.jquery.com/jquery-1.11.0.min.js'}
     %script{src: '/js/bootstrap.min.js'}
@@ -52,9 +53,9 @@
                     My Boards
                     %b{class: "caret"}
                   %ul{class: "dropdown-menu left-align"}
-                    - @boards.each do |org_id, boards|
+                    - @boards.each do |org_name, boards|
                       %li{class: "divider divider-section"}
-                        #{org_id}
+                        #{org_name}
                       - boards.each do |board|
                         %li
                           %a{class: "btn btn-link", href: "/boards/#{board.attributes[:id]}"}

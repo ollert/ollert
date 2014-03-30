@@ -4,6 +4,30 @@ $medium-light: #A0A0A0;
 $light: #CCCCCC;
 $light-light: #F2F2F2;
 
+/* Red */
+$bgDefault      : #e74c3c;
+$bgHighlight    : #a4251c;
+$colDefault     : #ecf0f1;
+$colHover       : #ffbbbc; 
+/* Green */
+$greenBgDefault      : #2ecc71;
+$greenBgHighlight    : #27ae60;
+$greenColDefault     : #ecf0f1;
+$greenColHover       : #d1ffed;
+/* Purple */
+$ollertPurple         : #9b59b6;
+$ollertDarkPurple     : #8e44ad;
+$ollertLightPurple    : #ecdbff;
+$ollertLighterPurple    : #f1e4ff;
+/* Orange */
+$orangeBgDefault      : #e67e22;
+$orangeBgHighlight    : #d35400;
+$orangeColDefault     : #ecf0f1;
+$orangeColHover       : #ffe6d1;
+
+body {
+  font-family: 'Muli', sans-serif;
+}
 
 //  begin sticky footer
 
@@ -125,30 +149,6 @@ hr {
   border-bottom: 3px solid #E74C3C;
 }
 
-
-
-/* Red */
-$bgDefault      : #e74c3c;
-$bgHighlight    : #a4251c;
-$colDefault     : #ecf0f1;
-$colHover       : #ffbbbc; 
-/* Green * /
-$bgDefault      : #2ecc71;
-$bgHighlight    : #27ae60;
-$colDefault     : #ecf0f1;
-$colHover       : #d1ffed; /*/
-/* Purple * /
-$bgDefault      : #9b59b6;
-$bgHighlight    : #8e44ad;
-$colDefault     : #ecf0f1;
-$colHover       : #ecdbff; /*/
-/* Orange * /
-$bgDefault      : #e67e22;
-$bgHighlight    : #d35400;
-$colDefault     : #ecf0f1;
-$colHover       : #ffe6d1; /*/
-
-
 /* --- Style --- */
 
 .navbar-default {
@@ -199,7 +199,7 @@ $colHover       : #ffe6d1; /*/
 }
 
 .navbar-brand {
-  background: url(../images/ollert-logo-white-sm.png) no-repeat;
+  background: url(/images/ollert-logo-white-sm.png) no-repeat;
   height: 34px;
   width: 101px;
   text-indent: -99999px;
@@ -208,12 +208,33 @@ $colHover       : #ffe6d1; /*/
   margin-top: 18px;
 }
 
+.landing-connect {
+  background: $ollertPurple;
+  padding-bottom: 40px;
+  padding-top: 20px;
+  color: whitesmoke;
+}
+
+.landing-info {
+  background: $ollertLightPurple;
+  padding-bottom: 20px;
+}
+
+.landing-hook {
+  background: $ollertLighterPurple;
+  padding-bottom: 20px;
+}
+
+.landing-info .row {
+  padding-bottom: 10px;
+}
+
 .container {
   .margin-left: auto;
   .margin-right: auto;
 }
 .spinner {
-    background-image: url('/img/Spinner.GIF');
+    background-image: url('/images/spinner.gif');
     width: 35px;
     height: 45px;
     text-align: center;
@@ -232,6 +253,10 @@ $colHover       : #ffe6d1; /*/
 
 .tooltip-inner {
   min-width: 100px;
+}
+
+.btn-xl {
+  font-size: 24px;
 }
 
 
@@ -371,7 +396,7 @@ ul.boards-list {
 }
 
 .spinner {
-    background-image: url('/img/Spinner.GIF');
+    background-image: url('/images/spinner.gif');
     width: 35px;
     height: 45px;
     text-align: center;

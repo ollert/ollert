@@ -1,8 +1,55 @@
-.container
-  %h2{class: "text-center"}
-    Ollert gives you the real scoop on your Trello boards!
-  %h3{class: "text-center"}
-    Graphs and Charts! Numbers and words! And more!
-  .row{class: "text-center"}
-    %a{class: "btn btn-primary btn-lg", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'AuthenticateTrelloOneHour()' : 'AuthenticateTrelloAlways()'}"}
-      Connect With Trello
+.landing-connect
+  .container
+    .text-center
+      %img{src: '/images/ollert-logo-white.png'}
+    .h1{class: "text-center"}
+      Learn what your Trello boards can't tell you.
+    .row{class: "text-center", style: 'margin-top: 40px;'}
+      %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'AuthenticateTrelloOneHour()' : 'AuthenticateTrelloAlways()'}"}
+        Connect to Get Started
+.landing-info
+  .container
+    .row.text-center.h1
+      Why should you use Ollert?
+
+    .row.text-center.h3
+      .col-md-3
+        Your Trello boards do a great job telling you the state of today.
+      .col-md-offset-1.col-md-4
+        But how do you know what's happened during the past week, month, or year?
+      .col-md-offset-1.col-md-3
+        That's where Ollert comes in.
+    .row
+      .col-md-3
+        %img{src: '/images/landing-trello.png', style: 'width: 100%;'}
+      .col-md-offset-1.col-md-4.text-center
+        %img{src: '/images/landing-question.png', style: 'width: 75%;'}
+      .col-md-offset-1.col-md-3
+        %img{src: '/images/landing-ollert.png', style: 'width: 100%;'}
+    .row.text-center.h3
+      .col-md-offset-1.col-md-4
+        Use Ollert to visualize the progress of your boards.
+      .col-md-offset-2.col-md-4
+        Instantly see the numbers behind the cards.
+    .row
+      .col-md-offset-1.col-md-4
+        %img{src: '/images/landing-visualize.png', style: 'width: 100%;'}
+      .col-md-offset-2.col-md-4
+        %img{src: '/images/landing-instantly.png', style: 'width: 100%;'}
+
+.landing-hook
+  .container
+    .row.h1.text-center{style: 'margin-bottom: 20px;'}
+      What are you waiting for? It's free to try.
+    .row.text-center
+      .col-md-offset-2.col-md-3
+        %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'AuthenticateTrelloOneHour()' : 'AuthenticateTrelloAlways()'}"}
+          Get Started Now
+      .col-md-offset-2.col-md-3
+        %a{class: "btn btn-primary btn-xl", href: "/signup"}
+          Create an Account
+    .row.text-center.h4
+      .col-md-offset-2.col-md-3
+        Connect to Trello, choose a board, and view your stats. No strings attached.
+      .col-md-offset-2.col-md-3
+        Just supply an email and password. We'll remember your Trello information after the first time you authenticate. More benefits coming soon.

@@ -1,9 +1,9 @@
 .container
   %h3
     Select a board to view its statistics.
-  - @boards.each do |org_id, boards|
+  - @boards.each do |org_name, boards|
     %h4
-      #{org_id}
+      #{org_name}
     %ul{class: 'boards-list'}
       - boards.each do |board|
         %li{class: 'boards-list-item'}
