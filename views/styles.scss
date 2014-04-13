@@ -25,6 +25,13 @@ $bgHighlight    : #d35400;
 $colDefault     : #ecf0f1;
 $colHover       : #ffe6d1; /**/
 
+@font-face {
+  font-family: 'Muli';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Muli'), url(../fonts/muli.woff) format('woff');
+}
+
 body {
   font-family: 'Muli', sans-serif;
 }
