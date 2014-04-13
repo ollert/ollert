@@ -215,18 +215,24 @@ hr {
   color: whitesmoke;
 }
 
+.landing-section {
+  padding-bottom: 20px;
+}
+
+.landing-section .row {
+  padding-bottom: 10px;
+}
+
 .landing-info {
   background: $light-light;
-  padding-bottom: 20px;
+}
+
+.landing-victory {
+  background: $light;
 }
 
 .landing-hook {
-  background: $light;
-  padding-bottom: 20px;
-}
-
-.landing-info .row {
-  padding-bottom: 10px;
+  background: $light-light;
 }
 
 .container {

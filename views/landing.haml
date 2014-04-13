@@ -1,16 +1,16 @@
 .landing-connect
   .container
     .text-center
-      %img{src: '/images/ollert-logo-white.png'}
+      %img{src: '/images/ollert-logo-white.svg', width: '360px'}
     .h1{class: "text-center"}
-      Learn what your Trello boards can't tell you.
+      Learn what your Trello boards aren't telling you.
     .row{class: "text-center", style: 'margin-top: 40px;'}
       %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'AuthenticateTrelloOneHour()' : 'AuthenticateTrelloAlways()'}"}
         Connect to Get Started
-.landing-info
+.landing-info.landing-section
   .container
     .row.text-center.h1
-      Why should you use Ollert?
+      Why Ollert?
 
     .row.text-center.h3
       .col-md-3
@@ -26,18 +26,24 @@
         %img{src: '/images/landing-question.png', style: 'width: 75%;'}
       .col-md-offset-1.col-md-3
         %img{src: '/images/landing-ollert.png', style: 'width: 100%;'}
+
+.landing-victory.landing-section
+  .container
+    .row.text-center.h1
+      A new way to think about Trello boards.
+
     .row.text-center.h3
-      .col-md-offset-1.col-md-4
+      .col-md-5
         Use Ollert to visualize the progress of your boards.
-      .col-md-offset-2.col-md-4
+      .col-md-offset-2.col-md-5
         Instantly see the numbers behind the cards.
     .row
-      .col-md-offset-1.col-md-4
+      .col-md-5
         %img{src: '/images/landing-visualize.png', style: 'width: 100%;'}
-      .col-md-offset-2.col-md-4
+      .col-md-offset-2.col-md-5
         %img{src: '/images/landing-instantly.png', style: 'width: 100%;'}
 
-.landing-hook
+.landing-hook.landing-section
   .container
     .row.h1.text-center{style: 'margin-bottom: 20px;'}
       What are you waiting for? It's free.
