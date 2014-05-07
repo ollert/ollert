@@ -21,11 +21,7 @@ require 'dotenv/tasks'
 require 'dotenv'
 
 task :load_db => :dotenv do
-  if ENV['RACK_ENV'] == 'production'
-    DB = Sequel.connect ENV['HEROKU_POSTGRESQL_MAROON_URL']
-  else
-    DB = Sequel.connect ENV['DATABASE_URL']
-  end
+  DB = Sequel.connect ENV['DATABASE_URL']
 end
 
 namespace :db do
@@ -60,10 +56,6 @@ namespace :db do
 
   desc "Dump schema"
   task :schema_dump => :dotenv do
-    if ENV['RACK_ENV'] == 'production'
-      puts `sequel -D #{ENV['HEROKU_POSTGRESQL_MAROON_URL']}`
-    else
-      puts `sequel -D #{ENV['DATABASE_URL']}`
-    end
+    puts `sequel -D #{ENV['DATABASE_URL']}`
   end
 end

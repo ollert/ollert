@@ -14,15 +14,12 @@ class Ollert < Sinatra::Base
   include OllertHelpers
 
   configure do
-    Dotenv.load!
-
-    if ENV['RACK_ENV'] == 'production'
-      Sequel.connect ENV['HEROKU_POSTGRESQL_MAROON_URL']
-    else
+    if ENV['RACK_ENV'] == 'development'
       require 'sinatra/reloader'
       register Sinatra::Reloader
-      Sequel.connect ENV['DATABASE_URL']
     end
+
+    Sequel.connect ENV['DATABASE_URL']
 
     require_relative 'models/user'
   end
