@@ -6,7 +6,7 @@ function AuthenticateTrelloAlways() {
     expiration: "never",
     persist: false,
     success: function () { onAuthorizeSuccessful(); },
-    scope: { write: true, read: true },
+    scope: { read: true },
   });
 }
 
@@ -18,7 +18,7 @@ function AuthenticateTrelloOneHour() {
     expiration: "1hour",
     persist: false,
     success: function () { onAuthorizeSuccessful(); },
-    scope: { write: true, read: true },
+    scope: { read: true },
   });
 }
 
@@ -30,7 +30,7 @@ function AuthenticateTrelloFromSettings() {
     expiration: "never",
     persist: false,
     success: function () { onAuthorizeSuccessfulFromSettings(); },
-    scope: { write: true, read: true },
+    scope: { read: true },
   });
 }
 
