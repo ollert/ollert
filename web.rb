@@ -6,7 +6,7 @@ require 'active_support/inflector'
 require 'json'
 require 'rack-flash'
 require 'sequel'
-require 'dotenv'
+require 'rack/ssl'
 
 require_relative 'helpers/ollert_helpers'
 
@@ -26,6 +26,7 @@ class Ollert < Sinatra::Base
 
   use Rack::Session::Cookie, secret: ENV['SESSION_SECRET'], expire_after: 30 * (60*60*24) # 30 days in seconds
   use Rack::Flash, sweep: true
+  use Rack::SSL if ENV['RACK_ENV'] == 'production'
 
   set(:auth) do |role|
     condition do

@@ -35,6 +35,8 @@ GEM
       rack
     rack-protection (1.5.2)
       rack
+    rack-ssl (1.4.1)
+      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     raindrops (0.13.0)
@@ -77,12 +79,12 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   bundler
-  dotenv
   foreman
   haml
   pg
   pry
   rack-flash3
+  rack-ssl
   rake
   ruby-trello
   sass

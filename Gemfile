@@ -9,11 +9,11 @@ gem 'haml'
 gem 'ruby-trello'
 gem 'sass'
 gem 'sequel'
-gem 'dotenv'
 gem 'rack-flash3'
 gem 'bcrypt'
 gem 'foreman'
 gem 'unicorn'
+gem 'rack-ssl'
 
 group :production do
   gem 'pg'
