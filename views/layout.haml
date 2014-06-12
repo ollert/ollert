@@ -17,6 +17,9 @@
     %script{src: "//api.trello.com/1/client.js?key=#{ENV['PUBLIC_KEY']}"}
     %script{src: "/js/trello.js"}
 
+    - if ENV['RACK_ENV'] == "production"
+      %script{src: "/js/analytics.js"}
+
     %body
       %div{id: 'wrap'}
         %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
