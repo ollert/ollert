@@ -81,13 +81,8 @@
 %script{src: "/js/CFDChart.js"}
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/LabelCountChart.js"}
+%script{src: "/js/analyzer.js"}
 
 %script
-  dataLoader.loadWipChart({boardId: '#{@board_id}' });
-  dataLoader.loadCfdChart({boardId: '#{@board_id}' });
-  dataLoader.loadStats({boardId: '#{@board_id}' });
-  dataLoader.loadLabelCount({boardId: '#{@board_id}' });
-  
-
-
-
+  var analyzer = new Analyzer("#{@board_id}");
+  analyzer.loadCharts();
