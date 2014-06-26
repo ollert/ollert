@@ -1,0 +1,27 @@
+development:
+  sessions:
+    default:
+      database: ollert-dev
+      hosts:
+        - localhost
+  options:
+    raise_not_found_error: false
+
+test:
+  sessions:
+    default:
+      database: ollert-test
+      hosts:
+        - localhost
+  options:
+    raise_not_found_error: false
+
+production:
+  sessions:
+    default:
+      uri: <%= ENV['MONGOLAB_URI'] %>
+      options:
+        skip_version_check: true
+        safe: true
+  options:
+    raise_not_found_error: false

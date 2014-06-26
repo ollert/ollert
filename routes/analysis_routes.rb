@@ -1,3 +1,5 @@
+require 'json'
+
 class Ollert
   get '/boards/:board_id/analysis/wip' do |board_id|
     @board, _ = get_trello_object session[:token], :board, board_id, @client, @user

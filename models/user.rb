@@ -1,9 +1,13 @@
-require 'sequel'
 require 'bcrypt'
+require 'mongoid'
 
-class User < Sequel::Model
-  set_primary_key [:id]
-  one_to_many :board
+class User
+  include Mongoid::Document
+
+  field :email, type: String
+  field :password_hash, type: String
+  field :member_token, type: String
+  field :trello_name, type: String
 
   def password=(new_password)
     if new_password.nil? || new_password.empty?

@@ -1,8 +1,10 @@
+require 'trello'
+
 class Ollert
   post '/authenticate' do
-    user = User.find email: params['email']
+    user = User.find_by email: params['email']
     if user.nil?
-      flash[:warning] = "Email address #{params['email_address']} does not appear to be registered."
+      flash[:warning] = "Email address #{params['email']} does not appear to be registered."
       redirect :login
     elsif !user.authenticate? params['password']
       flash[:warning] = "I didn't find that username/password combination. Check your spelling."

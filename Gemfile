@@ -8,20 +8,18 @@ gem 'sinatra'
 gem 'haml'
 gem 'ruby-trello'
 gem 'sass'
-gem 'sequel'
 gem 'rack-flash3'
 gem 'bcrypt'
 gem 'foreman'
 gem 'unicorn'
 gem 'rack-ssl'
+gem 'mongoid'
 
 group :production do
-  gem 'pg'
 end
 
 group :development do
   gem 'pry'
-  gem 'sqlite3'
   gem 'sinatra-reloader'
 end
 

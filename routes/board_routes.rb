@@ -1,3 +1,5 @@
+require 'trello'
+
 class Ollert
   get '/boards', :auth => :none do
     if !@user.nil? && !@user.member_token.nil?

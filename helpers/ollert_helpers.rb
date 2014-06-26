@@ -2,7 +2,7 @@ require_relative '../core_ext/string'
 
 module OllertHelpers
   def get_user
-    return session[:user].nil? ? nil : User.find(id: session[:user])
+    return session[:user].nil? ? nil : User.find(session[:user])
   end
 
   def get_membership_type(params)
@@ -124,7 +124,7 @@ module OllertHelpers
     msg = ""
     if email.nil_or_empty?
       msg = "Please enter a valid email."
-    elsif !User.find(email: email).nil?
+    elsif !User.find_by(email: email).nil?
       msg = "User with that email already exists."
     end
     msg

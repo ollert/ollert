@@ -16,46 +16,16 @@ task :start do
   exec("foreman start -p 4000")
 end
 
-require 'sequel'
-require 'dotenv/tasks'
-require 'dotenv'
+require 'mongoid'
 
-task :load_db => :dotenv do
-  DB = Sequel.connect ENV['DATABASE_URL']
-end
+task :console do
+  Mongoid.load! "#{File.dirname(__FILE__)}/mongoid.yml", ENV['RACK_ENV'] || "development"
 
-namespace :db do
-  Sequel.extension :migration
-  
-  desc "Prints current schema version"
-  task :version => :load_db do
-    version = if DB.tables.include?(:schema_info)
-      DB[:schema_info].first[:version]
-    end || 0
- 
-    puts "Schema Version: #{version}"
-  end
- 
-  desc "Perform migration up to latest migration available"
-  task :migrate => :load_db do
-    Sequel::Migrator.run(DB, "db/migrations")
-    Rake::Task['db:version'].execute
-  end
-    
-  desc "Perform migration to specified target or full rollback as default"
-  task :rollback, [:target] => :load_db do |t, args|
-    args.with_defaults(:target => 0)
- 
-    Sequel::Migrator.run(DB, "db/migrations", :target => args[:target].to_i)
-    Rake::Task['db:version'].execute
-  end
- 
-  desc "Perform migration reset (full rollback and migration)"
-  task :reset => [:rollback, :migrate] do
+  Dir.glob("#{File.dirname(__FILE__)}/models/*.rb").each do |file|
+    require file.chomp(File.extname(file))
   end
 
-  desc "Dump schema"
-  task :schema_dump => :dotenv do
-    puts `sequel -D #{ENV['DATABASE_URL']}`
-  end
+  require 'irb'
+  ARGV.clear
+  IRB.start
 end

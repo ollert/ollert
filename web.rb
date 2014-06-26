@@ -1,11 +1,8 @@
-require 'sinatra'
 require 'haml'
-require 'sass'
-require 'trello'
-require 'json'
+require 'mongoid'
 require 'rack-flash'
-require 'sequel'
 require 'rack/ssl'
+require 'sinatra/base'
 
 require_relative 'helpers/ollert_helpers'
 
@@ -18,7 +15,7 @@ class Ollert < Sinatra::Base
       register Sinatra::Reloader
     end
 
-    Sequel.connect ENV['DATABASE_URL']
+    Mongoid.load! "#{File.dirname(__FILE__)}/mongoid.yml"
   end
 
   use Rack::Session::Cookie, secret: ENV['SESSION_SECRET'], expire_after: 30 * (60*60*24) # 30 days in seconds
@@ -31,7 +28,7 @@ class Ollert < Sinatra::Base
       if role == :authenticated
         if @user.nil?
           session[:user] = nil
-          flash[:warning] = "Hey! You should log in to do that action."
+          flash[:warning] = "Hey! You should log in to do that."
           redirect '/'
         end
       elsif role == :token
