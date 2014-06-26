@@ -41,7 +41,9 @@ class Ollert < Sinatra::Base
   end
 end
 
-require_relative 'models/user'
+Dir.glob("#{File.dirname(__FILE__)}/models/*.rb").each do |file|
+  require file.chomp(File.extname(file))
+end
 
 Dir.glob("#{File.dirname(__FILE__)}/routes/*.rb").each do |file|
   require file.chomp(File.extname(file))
