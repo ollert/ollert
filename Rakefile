@@ -18,6 +18,7 @@ end
 
 require 'mongoid'
 
+desc "Open irb with an open connection to the database"
 task :console do
   Mongoid.load! "#{File.dirname(__FILE__)}/mongoid.yml", ENV['RACK_ENV'] || "development"
 
@@ -28,4 +29,17 @@ task :console do
   require 'irb'
   ARGV.clear
   IRB.start
+end
+
+unless ENV['RACK_ENV'] == 'production'
+  require 'rspec/core/rake_task'
+
+  namespace :test do
+    RSpec::Core::RakeTask.new(:spec) do |r|
+      r.pattern = "test/**/*_spec.rb"
+      r.rspec_opts = []
+      r.rspec_opts << '--color'
+      r.rspec_opts << '--format documentation'
+    end
+  end
 end

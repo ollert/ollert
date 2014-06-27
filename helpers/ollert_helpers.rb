@@ -2,17 +2,9 @@ require_relative '../core_ext/string'
 
 module OllertHelpers
   def get_user
-    return session[:user].nil? ? nil : User.find(session[:user])
-  end
-
-  def get_membership_type(params)
-    if params[:yearly] == "on"
-      "yearly"
-    elsif params[:free] == "on"
-      "free"
-    else
-      "monthly"
-    end
+    return session[:user].nil? ?
+              nil
+              : User.find(session[:user])
   end
 
   def get_client(public_key, token)
@@ -106,28 +98,6 @@ module OllertHelpers
 
   def haml_view_model(view, user = nil)
     haml view.to_sym, locals: {logged_in: !!user}
-  end
-
-  def validate_signup(params)
-    msg = validate_email(params[:email])
-    if msg.empty?
-      if params[:password].nil_or_empty?
-        msg = "Please enter a valid password."
-      elsif !params[:agreed]
-        msg = "Please agree to our terms."
-      end
-    end
-    msg
-  end
-
-  def validate_email(email)
-    msg = ""
-    if email.nil_or_empty?
-      msg = "Please enter a valid email."
-    elsif !User.find_by(email: email).nil?
-      msg = "User with that email already exists."
-    end
-    msg
   end
 
   def get_cfd_data(actions, lists, closed_lists)
