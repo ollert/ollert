@@ -27,4 +27,6 @@ group :development, :test do
   gem 'rspec'
   gem 'capybara'
   gem 'cucumber'
+  gem 'selenium-webdriver'
+  gem 'dotenv'
 end
