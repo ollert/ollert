@@ -41,5 +41,15 @@ unless ENV['RACK_ENV'] == 'production'
       r.rspec_opts << '--color'
       r.rspec_opts << '--format documentation'
     end
+
+    desc "Run all Cucumber tests"
+    task :cukes do
+      ruby "-S cucumber #{File.dirname(__FILE__)}/test/features"
+    end
+
+    desc "Run a single Cuke test"
+    task :cuke, :feature do |t, args|
+      ruby "-S cucumber -v -r #{File.dirname(__FILE__)}/test/features #{args[:feature]}"
+    end
   end
 end
