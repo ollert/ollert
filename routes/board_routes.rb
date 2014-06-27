@@ -7,7 +7,7 @@ class Ollert
     elsif !params[:token].nil? && !params[:token].empty?
       session[:token] = params[:token]
     else
-      flash[:info] = "Connect with Trello to analyze your boards."
+      flash[:info] = "Log in or connect with Trello to analyze your boards."
       redirect '/'
     end
 

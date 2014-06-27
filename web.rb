@@ -33,7 +33,7 @@ class Ollert < Sinatra::Base
         end
       elsif role == :token
         if session[:token].nil? || session[:token].empty?
-          flash[:info] = "Connect with Trello to analyze your boards."
+          flash[:info] = "Log in or connect with Trello to analyze your boards."
           redirect '/'
         end
       end
