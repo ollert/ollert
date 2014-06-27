@@ -1,4 +1,5 @@
 ENV['RACK_ENV'] = 'test'
+ENV['SESSION_SECRET'] = "Quiet, you"
 
 require_relative '../../../web'
 

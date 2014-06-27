@@ -10,8 +10,12 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
-    when /the home\s?page/
+    when /the landing page/
       '/'
+    when /the login page/
+      '/login'
+    when /the register page/
+      '/signup'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
