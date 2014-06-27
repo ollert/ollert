@@ -5,8 +5,12 @@ function AuthenticateTrelloAlways() {
     interactive: true,
     expiration: "never",
     persist: false,
-    success: function () { onAuthorizeSuccessful(); },
-    scope: { read: true },
+    success: function () {
+      onAuthorizeSuccessful();
+    },
+    scope: {
+      read: true
+    },
   });
 }
 
@@ -17,8 +21,12 @@ function AuthenticateTrelloOneHour() {
     interactive: true,
     expiration: "1hour",
     persist: false,
-    success: function () { onAuthorizeSuccessful(); },
-    scope: { read: true },
+    success: function () {
+      onAuthorizeSuccessful();
+    },
+    scope: {
+      read: true
+    },
   });
 }
 
@@ -29,8 +37,12 @@ function AuthenticateTrelloFromSettings() {
     interactive: true,
     expiration: "never",
     persist: false,
-    success: function () { onAuthorizeSuccessfulFromSettings(); },
-    scope: { read: true },
+    success: function () {
+      onAuthorizeSuccessfulFromSettings();
+    },
+    scope: {
+      read: true
+    },
   });
 }
 
@@ -42,8 +54,4 @@ function onAuthorizeSuccessfulFromSettings() {
 function onAuthorizeSuccessful() {
   var token = Trello.token();
   window.location.replace("/boards?token=" + token);
-}
-
-function onFailedAuthorization() {
-  window.location.replace("/fail");
 }
