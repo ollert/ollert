@@ -1,10 +1,6 @@
 require_relative '../../../models/user'
 
 describe User do
-  before :all do
-
-  end
-
   describe '#password=' do
     before :each do
       @password = 'valid password'
@@ -64,6 +60,54 @@ describe User do
 
     it 'returns true for correct password' do
       expect(@user.authenticate?(@password)).to be true
+    end
+  end
+
+  describe '#change_password' do
+    it 'returns true on success' do
+      user = User.new :email => "me@email.com"
+      user.password = "current"
+      old_hash = user.password_hash
+      expect(old_hash).not_to be_nil
+
+      expect(user.change_password("current", "new", "new")[:status]).to be true
+      expect(user.password_hash).not_to be old_hash
+    end
+
+    it 'returns false on bad current password' do
+      user = User.new :email => "me@email.com"
+      user.password = "good"
+      old_hash = user.password_hash
+      expect(old_hash).not_to be_nil
+
+      result = user.change_password("bad", "new", "new")
+      expect(result[:status]).to be false
+      expect(result[:message]).to eq "Current password entered incorrectly."
+      expect(user.password_hash).to be old_hash
+    end
+
+    it 'returns false on bad new password' do
+      user = User.new :email => "me@email.com"
+      user.password = "current"
+      old_hash = user.password_hash
+      expect(old_hash).not_to be_nil
+
+      result = user.change_password("current", "", "")
+      expect(result[:status]).to be false
+      expect(result[:message]).to eq "Password must contain at least 1 character."
+      expect(user.password_hash).to be old_hash
+    end
+
+    it 'returns false on non-matching new password' do
+      user = User.new :email => "me@email.com"
+      user.password = "current"
+      old_hash = user.password_hash
+      expect(old_hash).not_to be_nil
+
+      result = user.change_password("current", "good", "bad")
+      expect(result[:status]).to be false
+      expect(result[:message]).to eq "New password fields do not match."
+      expect(user.password_hash).to be old_hash
     end
   end
 

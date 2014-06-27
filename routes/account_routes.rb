@@ -88,14 +88,25 @@ class Ollert
   end
 
   post '/settings/password', :auth => :authenticated do
-    msg = @user.change_password params[:current_password],
+    result = @user.change_password params[:current_password],
                                params[:new_password],
                                params[:confirm_password]
-    if msg.nil?
-      flash[:success] = "Password has been changed."
+    if result[:status]
+      if !@user.save
+        if @user.errors.any?
+          error_list = ""
+          user.errors.full_messages.each { |x| error_list << "<li>#{x}</li>" }
+          flash[:error] = "Could not update password: <ul>#{error_list}</ul>"
+        else
+          flash[:error] = "Password could not be updated."
+        end
+      else
+        flash[:success] = "Password has been changed."
+      end
     else
-      flash[:error] = msg
+      flash[:error] = result[:message]
     end
+
     redirect '/settings'
   end
 

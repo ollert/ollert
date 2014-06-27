@@ -1,6 +1,8 @@
 require 'bcrypt'
 require 'mongoid'
 
+require_relative '../core_ext/string.rb'
+
 class User
   include Mongoid::Document
 
@@ -27,26 +29,18 @@ class User
 
   def change_password(current, proposed, confirmed)
     if !authenticate? current
-      return "Current password entered incorrectly. Try again."
+      return {status: false, message: "Current password entered incorrectly."}
     end
 
     if proposed.nil_or_empty?
-      return "Password must contain at least 1 character."
+      return {status: false, message: "Password must contain at least 1 character."}
     end
 
     if proposed != confirmed
-      return "New password fields do not match."
+      return {status: false, message: "New password fields do not match."}
     end
 
     self.password = proposed
-    if !save
-      if user.errors.any?
-        error_list = ""
-        user.errors.full_messages.each { |x| error_list << "<li>#{x}</li>" }
-        return "Could not update password: <ul>#{error_list}</ul>"
-      else
-        return "Password could not be updated."
-      end
-    end
+    return {status: true}
   end
 end
