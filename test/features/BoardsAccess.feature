@@ -1,4 +1,4 @@
-Feature: Boards
+Feature: Boards Access
 
 Scenario: Visiting boards page without a token
   When I go to the boards page

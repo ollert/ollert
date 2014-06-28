@@ -36,7 +36,7 @@ module OllertHelpers
   def get_user_boards(member)
     member.boards.group_by { |board|
       board.attributes[:organization_id].nil? ?
-          "Unassociated Boards"
+          "My Boards"
           : board.organization.attributes[:display_name]
     }
   end

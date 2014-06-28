@@ -53,5 +53,9 @@ unless ENV['RACK_ENV'] == 'production'
     task :cuke, [:feature] => :dotenv do |t, args|
       ruby "-S cucumber -v -r #{File.dirname(__FILE__)}/test/features #{args[:feature]}"
     end
+
+    desc "Run spec tests and cukes"
+    task :all => [:spec, :cukes] do
+    end
   end
 end
