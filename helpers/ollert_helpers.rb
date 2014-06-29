@@ -35,9 +35,13 @@ module OllertHelpers
   
   def get_user_boards(member)
     member.boards.group_by { |board|
-      board.attributes[:organization_id].nil? ?
-          "My Boards"
-          : board.organization.attributes[:display_name]
+      # Check if baord is associated with an organization
+      # If so, make sure member has access to this organization
+      if member.organizations.any? {|org| org.id == board.organization_id}
+        board.organization.display_name
+      else
+        "My Boards"
+      end
     }
   end
   
