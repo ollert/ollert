@@ -29,4 +29,5 @@ group :development, :test do
   gem 'cucumber'
   gem 'selenium-webdriver'
   gem 'dotenv'
+  gem 'rack_session_access'
 end
