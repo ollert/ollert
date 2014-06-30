@@ -20,3 +20,21 @@ When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |
   # focus back to Ollert
   page.driver.browser.switch_to.window page.driver.browser.window_handles.last
 end
+
+Given(/^the test user has connected to Trello$/) do
+  page.set_rack_session token: "44988fd666c5c51542bc400e5d6515c2bc896eb3e370dc1622fe3c0f484e413a"
+end
+
+Given(/^the test user is in the system$/) do
+  user = User.new
+  user.email = "ollertapp@gmail.com"
+  user.member_token = "44988fd666c5c51542bc400e5d6515c2bc896eb3e370dc1622fe3c0f484e413a"
+  user.password = "testing ollert"
+  user.trello_name = "Ollert User"
+
+  user.save!
+end
+
+Given(/^the test user is logged in$/) do
+  page.set_rack_session user: User.find_by(email: "ollertapp@gmail.com").id
+end
