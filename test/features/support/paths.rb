@@ -18,6 +18,8 @@ module NavigationHelpers
       '/signup'
     when /the boards page/
       '/boards'
+    when /the settings page/
+      '/settings'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

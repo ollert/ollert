@@ -28,7 +28,7 @@ class Ollert < Sinatra::Base
       if role == :authenticated
         if @user.nil?
           session[:user] = nil
-          flash[:warning] = "Hey! You should log in to do that."
+          flash[:warning] = "Hey! You should create an account to do that."
           redirect '/'
         end
       elsif role == :token
