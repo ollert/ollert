@@ -400,34 +400,8 @@ ul.boards-list {
 }
 
 .lg-analysis-blocks-container-stats {
-    width: 320px;
-    height: 200px;
-}
-
-.col-md-3{
-    padding-bottom: 10px;
-}
-
-.spinner {
-    background-image: url('/img/spinner.gif');
-    width: 35px;
-    height: 45px;
-    text-align: center;
-    
-}
-
-#login-box {
-  background: $light-light;
-  margin-top: 60px;
-  margin-bottom: 60px;
-}
-
-#login-box form {
-  margin: 30px 50px;
-}
-
-.tooltip-inner {
-  min-width: 100px;
+  width: 320px;
+  height: 200px;
 }
 
 .dropdown-menu .divider-section{
@@ -451,6 +425,22 @@ ul.left-align li a{
   margin-bottom: 10px;
 }
 
-#trelloDisconnect, #trelloConnect, #trelloConnectStatus {
+#trelloDisconnect, #trelloConnect {
   display: none;
+}
+
+.loading-indicator {
+  margin-left: 15px;
+}
+
+.loading-indicator img {
+  margin-right: 15px;
+}
+
+.loading-indicator.loading-error {
+  color: red;
+}
+
+.loading-indicator.loading-success {
+  color: green;
 }

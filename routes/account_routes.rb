@@ -79,10 +79,11 @@ class Ollert
     @user.trello_name = member.attributes[:username]
 
     if !@user.save
-      return 500
+      status 500
+      body "Failed to save connection."
     else
-      @trello_name = @user.trello_name
-      return 200
+      status 200
+      body @user.trello_name
     end
   end
 
@@ -147,7 +148,6 @@ class Ollert
   end
 
   get '/settings', :auth => :authenticated do
-    @trello_name = @user.trello_name
     haml_view_model :settings, @user
   end
 end

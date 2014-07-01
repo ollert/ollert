@@ -17,6 +17,8 @@
     %script{src: "//api.trello.com/1/client.js?key=#{ENV['PUBLIC_KEY']}"}
     %script{src: "/js/trello.js"}
 
+    %script{src: "/js/plugins.js"}
+
     - if ENV['RACK_ENV'] == "production"
       %script{src: "/js/google-analytics.js"}
 
