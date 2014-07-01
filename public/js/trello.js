@@ -1,35 +1,3 @@
-function AuthenticateTrelloAlways() {
-  Trello.authorize({
-    name: "Ollert",
-    type: "popup",
-    interactive: true,
-    expiration: "never",
-    persist: false,
-    success: function () {
-      onAuthorizeSuccessful();
-    },
-    scope: {
-      read: true
-    },
-  });
-}
-
-function AuthenticateTrelloOneHour() {
-  Trello.authorize({
-    name: "Ollert",
-    type: "popup",
-    interactive: true,
-    expiration: "1hour",
-    persist: false,
-    success: function () {
-      onAuthorizeSuccessful();
-    },
-    scope: {
-      read: true
-    },
-  });
-}
-
 function AuthorizeTrello(expires, onSuccess) {
   Trello.authorize({
     name: "Ollert",

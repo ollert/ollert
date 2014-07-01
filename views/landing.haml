@@ -5,7 +5,7 @@
     .h1{class: "text-center"}
       Learn what your Trello boards aren't telling you.
     .row{class: "text-center", style: 'margin-top: 40px;'}
-      %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'AuthenticateTrelloOneHour()' : 'AuthenticateTrelloAlways()'}"}
+      %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'AuthorizeTrello(\'1hour\', onAuthorizeSuccessful)' : 'AuthenticateTrelloAlways(\'never\', onAuthorizeSuccessful)'}"}
         Connect to Get Started
 .landing-info.landing-section
   .container
