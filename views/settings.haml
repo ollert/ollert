@@ -11,17 +11,16 @@
     %hr
 
   .row
-    %form{action: "/settings/email", method: "post", role: "form", class: "form-horizontal"}
+    %form{id: "updateEmail", role: "form", class: "form-horizontal"}
       .form-group
         %label{for: "email", class: "control-label col-sm-1"}
           .text-left
             Email
-        .col-sm-5
+        .col-sm-6
           %input{type: "email", id: "email", name: "email", class: "form-control", value: "#{@user.email}", required: "required"}
       .form-group
-        .col-sm-3.col-sm-offset-1
+        .col-sm-11.col-sm-offset-1
           %input{class: "btn btn-primary", type: "submit", value:"Update Email"}
-        .col-sm-3
           %span{id: "emailStatus"}
 
   .row

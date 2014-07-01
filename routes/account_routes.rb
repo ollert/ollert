@@ -61,10 +61,10 @@ class Ollert
     @user.trello_name = nil
 
     if !@user.save
-      return 500
+      status 500
     end
 
-    return 200
+    status 200
   end
 
   put '/settings/trello/connect', :auth => :authenticated do
@@ -87,22 +87,20 @@ class Ollert
     end
   end
 
-  post '/settings/email', :auth => :authenticated do
+  put '/settings/email', :auth => :authenticated do
     @user.email = params[:email]
 
     if @user.save
-      flash[:success] = "Your new email is #{@user.email}. Use this to log in!"
+      body @user.email
+      status 200
     else
+      status 500
       if @user.errors.any?
-        error_list = ""
-        @user.errors.full_messages.each { |x| error_list << "<li>#{x}</li>" }
-        flash[:error] = "Could not update email: <ul>#{error_list}</ul>"
+        body "Save failed: #{@user.errors.full_messages.join(", ")}"
       else
-        flash[:error] = "Something's broken, please try again later."
+        body "Save failed."
       end
     end
-
-    redirect '/settings'
   end
 
   post '/settings/password', :auth => :authenticated do

@@ -8,6 +8,41 @@ var SettingsController = function () {
 
     $("#trelloDisconnect").on("click", disconnectFromTrello);
     $("#trelloConnect").on("click", connectToTrello);
+
+    $("#updateEmail").on("submit", updateEmail);
+  }
+
+  function updateEmail(e) {
+    e.preventDefault();
+
+    var ind = new LoadingIndicator($("#emailStatus"));
+    ind.show("Saving...");
+
+    $("#updateEmail input").disable();
+
+    $.ajax({
+      url: "/settings/email",
+      data: {
+        email: $("#email").val()
+      },
+      method: "PUT",
+      success: function (email) {
+        ind.success("Your new email is <b>" + email + "</b>. Use this to log in.");
+      },
+      error: function (xhr) {
+        ind.error(
+          xhr.responseText +
+          " (" +
+          xhr.status +
+          ": " +
+          xhr.statusText +
+          ")"
+        );
+      },
+      complete: function () {
+        $("#updateEmail input").enable();
+      }
+    });
   }
 
   function disconnectFromTrello() {
