@@ -43,12 +43,13 @@
 
   %hr
 
-  - unless @user.member_token.nil?
-    %form{action: "/settings/trello/disconnect", method: "put"}
-      %input{type: "submit", class: "btn btn-default btn-warning", value: "Disconnect #{@user.trello_name} from Trello"}
-  - else
-    %a{class: "btn btn-primary btn-lg", href: "javascript:void(0)", onClick: "AuthenticateTrelloFromSettings()"}
-      Connect with Trello
+
+  %a{id: "trelloDisconnect", class: "btn btn-lg btn-warning", onClick: "disconnect()"}
+    Disconnect #{@trello_name} from Trello
+  %a{id: "trelloConnect", class: "btn btn-primary btn-lg", href: "javascript:void(0)", onClick: "connect()"}
+    Connect with Trello
+  %span{id: "trelloConnectStatus"}
+    %image{src: '../img/loading.gif'}
 
   %hr
 
@@ -58,3 +59,45 @@
         %input{type: "checkbox", name: "iamsure"}
           This box verifies that you would like to delete your account when clicking the link below.
     %input{type: "submit", id: "deleteAccountButton", class: "btn btn-defualt btn-danger", value: "Delete Account"}
+
+:javascript
+  $(document).ready(function() {
+    if (#{@user.member_token.nil?}) {
+      $("#trelloConnect").show();
+    } else {
+      $("#trelloDisconnect").show();
+    }
+  })
+
+  function disconnect() {
+    $.ajax({
+      url: "/settings/trello/disconnect",
+      method: "PUT",
+      success: function() {
+        $("#trelloDisconnect").hide();
+        $("#trelloConnect").show();
+      },
+      done: function() {
+        // stop showing spinner
+      }
+    });
+  }
+
+  function connect() {
+    var onSuccess = function() {
+      $.ajax({
+        url: "/settings/trello/connect",
+        data: {token: Trello.token()},
+        method: "PUT",
+        success: function() {
+          $("#trelloConnect").hide();
+          $("#trelloDisconnect").show();
+        },
+        done: function() {
+          // stop showing spinner
+        }
+      });
+    }
+    AuthorizeTrello("never", onSuccess)
+  }
+  

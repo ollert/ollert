@@ -30,25 +30,18 @@ function AuthenticateTrelloOneHour() {
   });
 }
 
-function AuthenticateTrelloFromSettings() {
+function AuthorizeTrello(expires, onSuccess) {
   Trello.authorize({
     name: "Ollert",
     type: "popup",
     interactive: true,
-    expiration: "never",
+    expiration: expires,
     persist: false,
-    success: function () {
-      onAuthorizeSuccessfulFromSettings();
-    },
+    success: onSuccess,
     scope: {
       read: true
     },
   });
-}
-
-function onAuthorizeSuccessfulFromSettings() {
-  var token = Trello.token();
-  window.location.replace("/settings/trello/connect?token=" + token);
 }
 
 function onAuthorizeSuccessful() {
