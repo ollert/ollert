@@ -10,6 +10,7 @@ var SettingsController = function () {
     $("#trelloConnect").on("click", connectToTrello);
 
     $("#updateEmail").on("submit", updateEmail);
+    $("#updatePassword").on("submit", updatePassword);
   }
 
   function updateEmail(e) {
@@ -41,6 +42,45 @@ var SettingsController = function () {
       },
       complete: function () {
         $("#updateEmail input").enable();
+      }
+    });
+  }
+
+  function updatePassword(e) {
+    e.preventDefault();
+
+    var ind = new LoadingIndicator($("#passwordStatus"));
+    ind.show("Saving...");
+
+    $("#updatePassword input").disable();
+
+    $.ajax({
+      url: "/settings/password",
+      data: {
+        current_password: $("#current_password").val(),
+        new_password: $("#new_password").val(),
+        confirm_password: $("#confirm_password").val()
+      },
+      method: "PUT",
+      success: function (email) {
+        ind.success("Password updated.");
+
+        $("#current_password").val("");
+        $("#new_password").val("");
+        $("#confirm_password").val("");
+      },
+      error: function (xhr) {
+        ind.error(
+          xhr.responseText +
+          " (" +
+          xhr.status +
+          ": " +
+          xhr.statusText +
+          ")"
+        );
+      },
+      complete: function () {
+        $("#updatePassword input").enable();
       }
     });
   }

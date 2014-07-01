@@ -27,7 +27,7 @@
     %hr
 
   .row
-    %form{action: "/settings/password", method: "post", role: "form", class: "form-horizontal"}
+    %form{id: "updatePassword", role: "form", class: "form-horizontal"}
       .form-group
         %label{for: "current_password", class: "control-label col-sm-2"}
           .text-left
@@ -47,9 +47,8 @@
         .col-sm-5
           %input{type: "password", id: "confirm_password", name: "confirm_password", class: "form-control", required: "required"}
       .form-group
-        .col-sm-3.col-sm-offset-2
+        .col-sm-10.col-sm-offset-2
           %input{class: "btn btn-primary", type: "submit", value:"Update Password"}
-        .col-sm-3
           %span{id: "passwordStatus"}
 
   .row

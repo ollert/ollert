@@ -103,27 +103,27 @@ class Ollert
     end
   end
 
-  post '/settings/password', :auth => :authenticated do
+  put '/settings/password', :auth => :authenticated do
     result = @user.change_password params[:current_password],
                                params[:new_password],
                                params[:confirm_password]
     if result[:status]
       if !@user.save
         if @user.errors.any?
-          error_list = ""
-          user.errors.full_messages.each { |x| error_list << "<li>#{x}</li>" }
-          flash[:error] = "Could not update password: <ul>#{error_list}</ul>"
+          body "Save failed: #{user.errors.full_messages.join(", ")}"
+          status 500
         else
-          flash[:error] = "Password could not be updated."
+          body "Save failed."
+          status 500
         end
       else
-        flash[:success] = "Password has been changed."
+        body "Password updated."
+        status 200
       end
     else
-      flash[:error] = result[:message]
+      body result[:message]
+      status 500
     end
-
-    redirect '/settings'
   end
 
   post '/settings/delete', :auth => :authenticated do
