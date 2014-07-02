@@ -30,7 +30,15 @@ Given(/^the test user is in the system$/) do
   user.email = "ollertapp@gmail.com"
   user.member_token = "44988fd666c5c51542bc400e5d6515c2bc896eb3e370dc1622fe3c0f484e413a"
   user.password = "testing ollert"
-  user.trello_name = "Ollert User"
+  user.trello_name = "ollerttest"
+
+  user.save!
+end
+
+Given(/^the doppelganger user is in the system$/) do
+  user = User.new
+  user.email = "doppelganger@gmail.com"
+  user.password = "password"
 
   user.save!
 end

@@ -309,7 +309,6 @@ hr {
   margin-top: 19px;
 }
 
-
 @media (min-width: 768px) {
   .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
     margin-left: 15px;
@@ -443,4 +442,8 @@ ul.left-align li a{
 
 .loading-indicator.loading-success {
   color: green;
+}
+
+.no-padding {
+  padding: 0 !important;
 }

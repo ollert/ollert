@@ -22,4 +22,59 @@ Scenario: Updating email
   When I fill in "email" with "ollertapp@gmail.co.uk"
   And I press "Update Email"
   Then I should see "Your new email is ollertapp@gmail.co.uk. Use this to log in."
-  And the test user email should be "ollertapp@gmail.co.uk"
+  And the test user "email" should be "ollertapp@gmail.co.uk"
+
+@javascript
+Scenario: Updating email to email already in use
+  Given the test user is in the system
+  And the doppelganger user is in the system
+  And the test user is logged in
+  And I go to the settings page
+  And the "email" field contains "ollertapp@gmail.com"
+  When I fill in "email" with "doppelganger@gmail.com"
+  And I press "Update Email"
+  Then I should see "Save failed: Email is already taken"
+  And the test user "email" should be "ollertapp@gmail.com"
+
+@javascript
+Scenario: Updating password
+  Given the test user is in the system
+  And the test user is logged in
+  And I go to the settings page
+  When I fill in "current_password" with "testing ollert"
+  And I fill in "new_password" with "new password"
+  And I fill in "confirm_password" with "new password"
+  And I press "Update Password"
+  Then I should see "Password updated."
+
+@javascript
+Scenario: Updating password with wrong current password
+  Given the test user is in the system
+  And the test user is logged in
+  And I go to the settings page
+  When I fill in "current_password" with "bad password"
+  And I fill in "new_password" with "new password"
+  And I fill in "confirm_password" with "new password"
+  And I press "Update Password"
+  Then I should see "Save failed: Current password entered incorrectly."
+
+@javascript
+Scenario: Updating password with non-matching new password
+  Given the test user is in the system
+  And the test user is logged in
+  And I go to the settings page
+  When I fill in "current_password" with "testing ollert"
+  And I fill in "new_password" with "new password"
+  And I fill in "confirm_password" with "different password"
+  And I press "Update Password"
+  Then I should see "Save failed: New password fields do not match."
+
+@javascript
+Scenario: Disconnecting from Trello
+  Given the test user is in the system
+  And the test user is logged in
+  And I go to the settings page
+  When I follow "Disconnect Trello user ollerttest"
+  Then I should see "Successfully disconnected."
+  And I should see "Connect with Trello"
+  And I should not see "Disconnect Trello user ollerttest"

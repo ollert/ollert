@@ -117,7 +117,7 @@ class Ollert
         status 200
       end
     else
-      body result[:message]
+      body "Save failed: " + result[:message]
       status 500
     end
   end

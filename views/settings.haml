@@ -13,13 +13,12 @@
   .row
     %form{id: "updateEmail", role: "form", class: "form-horizontal"}
       .form-group
-        %label{for: "email", class: "control-label col-sm-1"}
-          .text-left
-            Email
-        .col-sm-6
+        %label{for: "email", class: "control-label col-sm-2"}
+          Email
+        .col-sm-5
           %input{type: "email", id: "email", name: "email", class: "form-control", value: "#{@user.email}", required: "required"}
       .form-group
-        .col-sm-11.col-sm-offset-1
+        .col-sm-10.col-sm-offset-2
           %input{class: "btn btn-primary", type: "submit", value:"Update Email"}
           %span{id: "emailStatus"}
 
@@ -30,20 +29,17 @@
     %form{id: "updatePassword", role: "form", class: "form-horizontal"}
       .form-group
         %label{for: "current_password", class: "control-label col-sm-2"}
-          .text-left
-            Current Password
+          Current Password
         .col-sm-5
           %input{type: "password", id: "current_password", name: "current_password", class: "form-control", autocomplete: "off", required: "required"}
       .form-group
         %label{for: "new_password", class: "control-label col-sm-2"}
-          .text-left
-            New Password
+          New Password
         .col-sm-5
           %input{type: "password", id: "new_password", name: "new_password", class: "form-control", required: "required"}
       .form-group
         %label{for: "confirm_password", class: "control-label col-sm-2"}
-          .text-left
-            Confirm New
+          Confirm New
         .col-sm-5
           %input{type: "password", id: "confirm_password", name: "confirm_password", class: "form-control", required: "required"}
       .form-group
@@ -55,22 +51,24 @@
     %hr
 
   .row
-    %a{id: "trelloDisconnect", class: "btn btn-lg btn-warning", href: "javascript:void(0)"}
-      Disconnect Trello user <b>#{@user.trello_name}</b>
-    %a{id: "trelloConnect", class: "btn btn-primary btn-lg", href: "javascript:void(0)"}
-      Connect with Trello
-    %span{id: "trelloConnectStatus"}
+    .col-sm-10.col-sm-offset-2.no-padding
+      %a{id: "trelloDisconnect", class: "btn btn-lg btn-warning", href: "javascript:void(0)"}
+        Disconnect Trello user <b>#{@user.trello_name}</b>
+      %a{id: "trelloConnect", class: "btn btn-primary btn-lg", href: "javascript:void(0)"}
+        Connect with Trello
+      %span{id: "trelloConnectStatus"}
 
   .row
     %hr
 
   .row
-    %form{action: "/settings/delete", method: "post"}
-      .checkbox{style: "font-size: 16px;"}
-        %label
-          %input{type: "checkbox", name: "iamsure"}
-            This box verifies that you would like to delete your account when clicking the link below.
-      %input{type: "submit", id: "deleteAccountButton", class: "btn btn-defualt btn-danger", value: "Delete Account"}
+    .col-sm-10.col-sm-offset-2.no-padding
+      %form{action: "/settings/delete", method: "post"}
+        .checkbox{style: "font-size: 16px;"}
+          %label
+            %input{type: "checkbox", name: "iamsure"}
+              This box verifies that you would like to delete your account when clicking the link below.
+        %input{type: "submit", id: "deleteAccountButton", class: "btn btn-defualt btn-danger", value: "Delete Account"}
 
 %script{src: "/js/loading-indicator.js"}
 %script{src: "/js/settings-controller.js"}
