@@ -127,7 +127,7 @@ class Ollert
       if @user.delete
         session[:user] = nil
         session[:token] = nil
-        
+
         status 200
       else
         if @user.errors.any?
@@ -138,7 +138,7 @@ class Ollert
         status 500
       end
     else
-      body "You must check the 'I am sure' checkbox to delete your account."
+      body "Delete failed: Check the 'I am sure' checkbox to confirm deletion."
       status 500
     end
   end
