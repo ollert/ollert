@@ -246,22 +246,23 @@ hr {
   .margin-left: auto;
   .margin-right: auto;
 }
+
 .spinner {
     background-image: url('/img/spinner.gif');
     width: 35px;
     height: 45px;
     text-align: center;
-    
 }
 
 #login-box {
-  background: $light-light;
-  margin-top: 60px;
-  margin-bottom: 60px;
+  border: 1px solid $light;
+  padding: 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 #login-box form {
-  margin: 30px 50px;
+  margin: 20px 30px 5px 30px !important;
 }
 
 .tooltip-inner {
@@ -271,7 +272,6 @@ hr {
 .btn-xl {
   font-size: 24px;
 }
-
 
 /* Blue buttons (not used yet) */
 .btn-primary {

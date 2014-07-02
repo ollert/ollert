@@ -15,6 +15,7 @@ class Ollert < Sinatra::Base
       register Sinatra::Reloader
     end
 
+    I18n.enforce_available_locales = true
     Mongoid.load! "#{File.dirname(__FILE__)}/mongoid.yml"
   end
 

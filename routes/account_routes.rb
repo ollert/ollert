@@ -4,19 +4,19 @@ class Ollert
   post '/authenticate' do
     user = User.find_by email: params['email']
     if user.nil?
-      flash[:warning] = "Email address #{params['email']} does not appear to be registered."
-      redirect :login
+      body "Login failed: Incorrect email."
+      status 500
     elsif !user.authenticate? params['password']
-      flash[:warning] = "I didn't find that username/password combination. Check your spelling."
-      redirect :login
+      body "Login failed: Incorrect password."
+      status 500
     else
-      flash[:success] = "Welcome back."
       session[:user] = user.id
-      redirect '/'
+      status 200
     end
   end
 
   get '/signup' do
+    @signing_up = true
     haml_view_model :signup, @user
   end
 
@@ -41,6 +41,7 @@ class Ollert
   end
 
   get '/login' do
+    @signing_up = false
     haml_view_model :login
   end
 

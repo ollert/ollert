@@ -1,0 +1,47 @@
+.container
+  .row
+    .col-md-offset-2.col-md-8.img-rounded{id: 'login-box'}
+      .row
+        .col-md-12
+          %ul{class: "nav nav-tabs", role: "tablist"}
+            %li{id: "loginTab"}
+              %a{href: "javascript:void(0)", "data-toggle" => "tab"}
+                Log In
+            %li{id: "signupTab"}
+              %a{href: "javascript:void(0)", "data-toggle" => "tab"}
+                Sign Up
+      .row
+        %form{id: "signup", role: "form", class: "form-horizontal"}
+          .form-group
+            %label{for: "email", class: "col-md-2 control-label"}
+              Email
+            .col-md-10
+              %input{type: "email", id: "email", name: "email", class: "form-control", value: @email, required: "required", autofocus: "true"}
+          .form-group
+            %label{for: "password", class: "col-md-2 control-label"}
+              Password
+            .col-md-10
+              %input{type: "password", id: "password", name: "password", class: "form-control", autocomplete: "off", required: "required"}
+          .form-group.signup-content
+            .col-md-10.col-md-offset-2
+              .checkbox{id: "agreedCheckbox", style: "font-size: 16px; margin-top: 10px;"}
+                %label
+                  %input{id: "agreed", type: "checkbox", name: "agreed"}
+                  I have read and agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
+          .form-group.signup-content
+            .col-md-10.col-md-offset-2
+              %input{id: "signupButton", class: "btn btn-primary btn-lg", type: "submit", value: "Sign Me Up!"}
+              %span{id: "signupStatus"}
+          .form-group.signup-content
+            %a{id: "already", class: "btn btn-link pull-right", href: "javascript:void(0)"}
+              Already have an account? Sign in.
+          .form-group.login-content
+            .col-md-10.col-md-offset-2
+              %input{id: "loginButton", class: "btn btn-primary btn-lg", type: "submit", value: "Log In"}
+              %span{id: "loginStatus"}
+          .form-group.login-content
+            %a{id: "newUser", class: "btn btn-link pull-right", href: "javascript:void(0)"}
+              New User? Create an account.
+
+%script{src: "/js/loading-indicator.js"}
+%script{src: "/js/signup-login-controller.js"}

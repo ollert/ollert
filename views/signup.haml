@@ -1,31 +1,7 @@
-.container
-  .row{style: "margin-top: 25px;"}
-    %form{id: "signup", role: "form", class: "form-horizontal"}
-      .form-group
-        %label{for: "email", class: "col-md-2 control-label"}
-          Email Address
-        .col-md-6
-          %input{type: "email", id: "email", name: "email", class: "form-control", value: @email, required: "required", autofocus: "true"}
-      .form-group
-        %label{for: "password", class: "col-md-2 control-label"}
-          Password
-        .col-md-6
-          %input{type: "password", id: "password", name: "password", class: "form-control", autocomplete: "off", required: "required"}
-      .form-group
-        .col-md-6.col-md-offset-2
-          .checkbox{style: "font-size: 16px; margin-top: 10px;"}
-            %label
-              %input{id: "agreed", type: "checkbox", name: "agreed"}
-              I have read and agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
-      .form-group
-        .col-md-6.col-md-offset-2
-          %input{class: "btn btn-primary btn-lg", type: "submit", value:"Sign Me Up!"}
-          %span{id: "signupStatus"}
-
-%script{src: "/js/loading-indicator.js"}
-%script{src: "/js/signup-controller.js"}
+= haml :signup_login_partial, :layout => false
 
 :javascript
   $(document).ready(function() {
-    SignupController.init();
+    SignupLoginController.init();
+    SignupLoginController.showSignupContent();
   });

@@ -1,13 +1,7 @@
-.container
-  .row
-    .col-md-offset-3.col-md-6.img-rounded{id: 'login-box'}
-      %form{id: 'login-form', action: "/authenticate", method: "post", role: "form"}
-        .form-group
-          %label{for: "email"} Email Address
-          %input{class: "form-control", type: "email", id: "email", name: "email", required: "required", autofocus: "autofocus"}
-        .form-group
-          %label{for: "password"} Password
-          %input{class: "form-control", type: "password", id: "password", name: "password", required: "required"}
-        %input{class: "btn btn-primary", type: "submit", value:"Log In"}
-        %a{class: "btn btn-link pull-right", href: "/signup"}
-          New User? Create an account.
+= haml :signup_login_partial, :layout => false
+
+:javascript
+  $(document).ready(function() {
+    SignupLoginController.init();
+    SignupLoginController.showLoginContent();
+  });

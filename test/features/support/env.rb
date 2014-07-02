@@ -13,7 +13,5 @@ Capybara.app.use RackSessionAccess::Middleware
 World do
   Ollert.new
 
-  I18n.enforce_available_locales = true
-
   Mongoid.purge!
 end
