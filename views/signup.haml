@@ -1,5 +1,5 @@
 .container
-  %form{action: "/signup", method: "post", style: "margin-top: 25px;"}
+  %form{id: "signup",style: "margin-top: 25px;"}
     %fieldset
     .row
       .col-md-6
@@ -17,6 +17,15 @@
 
           .checkbox{style: "font-size: 16px; margin-top: 10px;"}
             %label
-              %input{type: "checkbox", name: "agreed"}
+              %input{id: "agreed", type: "checkbox", name: "agreed"}
               I have read and agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
     %input{class: "btn btn-primary btn-lg", type: "submit", value:"Sign Me Up!"}
+    %span{id: "signupStatus"}
+
+%script{src: "/js/loading-indicator.js"}
+%script{src: "/js/signup-controller.js"}
+
+:javascript
+  $(document).ready(function() {
+    SignupController.init();
+  });

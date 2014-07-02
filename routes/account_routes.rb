@@ -24,23 +24,19 @@ class Ollert
     user = User.new :email => params[:email]
     user.password = params[:password]
 
-    if params[:agreed] && user.save
+    if params[:agreed] != "true"
+      status 500
+      body "Registration failed: Please agree to the terms of service."
+    elsif user.save
       session[:user] = user.id
-      flash[:success] = "You're signed up! Click below to connect with Trello for the first time."
-      redirect '/'
+      status 200
     else
-      @email = params[:email]
-      if !params[:agreed]
-        flash[:error] = "Please agree to the terms of service."
-      elsif user.errors.any?
-        error_list = ""
-        user.errors.full_messages.each { |x| error_list << "<li>#{x}</li>" }
-        flash[:error] = "Registration failed: <ul>#{error_list}</ul>"
+      status 500
+      if user.errors.any?
+        body "Registration failed: #{user.errors.full_messages.join(", ")}"
       else
-        flash[:error] = "Something's broken, please try again later."
+        body "Registration failed."
       end
-      
-      haml_view_model :signup
     end
   end
 

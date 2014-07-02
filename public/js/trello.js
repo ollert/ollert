@@ -14,5 +14,5 @@ function AuthorizeTrello(expires, onSuccess) {
 
 function onAuthorizeSuccessful() {
   var token = Trello.token();
-  window.location.replace("/boards?token=" + token);
+  self.location = "/boards?token=" + token;
 }

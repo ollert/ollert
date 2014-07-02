@@ -154,5 +154,5 @@ var SettingsController = function () {
 
   return {
     init: initialize
-  }
+  };
 }();
