@@ -78,3 +78,32 @@ Scenario: Disconnecting from Trello
   Then I should see "Successfully disconnected."
   And I should see "Connect with Trello"
   And I should not see "Disconnect Trello user ollerttest"
+  And the test user "trello_name" should be nil
+  And the test user "member_token" should be nil
+
+@javascript
+Scenario: Connecting to Trello
+  Given the test user is in the system
+  And the test user "trello_name" is nil
+  And the test user "member_token" is nil
+  And the test user is logged in
+  And I go to the settings page
+  When I follow "Connect with Trello"
+  And I authorize with Trello with username "ollerttest" and password "testing ollert"
+  Then I should see "Successfully connected."
+  And I should see "Disconnect Trello user ollerttest"
+  And I should not see "Connect with Trello"
+  And the test user "trello_name" should be "ollerttest"
+
+@javascript
+Scenario: Deny connecting to Trello
+  Given the test user is in the system
+  And the test user "trello_name" is nil
+  And the test user "member_token" is nil
+  And the test user is logged in
+  And I go to the settings page
+  When I follow "Connect with Trello"
+  And I focus on the most recent window
+  And I press "Deny"
+  And I focus on the most recent window
+  Then I should see "Connect with Trello"
