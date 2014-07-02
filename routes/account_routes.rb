@@ -122,22 +122,24 @@ class Ollert
     end
   end
 
-  post '/settings/delete', :auth => :authenticated do
-    if params[:iamsure] == "on"
-      email = @user.email
-
-      session[:user] = nil
-      session[:token] = nil
+  delete '/settings/delete', :auth => :authenticated do
+    if params[:iamsure] == "true"
       if @user.delete
-        flash[:success] = "User with login of #{email} has been deleted. Come back and sign up again one day!"
-        redirect '/'
+        session[:user] = nil
+        session[:token] = nil
+        
+        status 200
       else
-        flash[:error] = "I wasn't able to delete that user. Do you mind trying again?"
-        redirect '/settings'
+        if @user.errors.any?
+          body "Delete failed: #{@user.errors.full_messages.join(", ")}"
+        else
+          body "Delete failed."
+        end
+        status 500
       end
     else
-      flash[:warning] = "You must check the 'I am sure' checkbox to delete your account."
-      redirect '/settings'
+      body "You must check the 'I am sure' checkbox to delete your account."
+      status 500
     end
   end
 

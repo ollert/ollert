@@ -11,6 +11,8 @@ var SettingsController = function () {
 
     $("#updateEmail").on("submit", updateEmail);
     $("#updatePassword").on("submit", updatePassword);
+
+    $("#deleteAccount").on("submit", deleteAccount);
   }
 
   function updateEmail(e) {
@@ -150,6 +152,40 @@ var SettingsController = function () {
       });
     }
     AuthorizeTrello("never", onSuccess);
+  }
+
+  function deleteAccount(e) {
+    e.preventDefault();
+
+    var ind = new LoadingIndicator($("#deleteAccountStatus"));
+    ind.show("Deleting...");
+
+    $("#deleteAccount input").disable();
+
+    $.ajax({
+      url: "/settings/delete",
+      data: {
+        iamsure: $("#iamsure")[0].checked
+      },
+      method: "DELETE",
+      success: function () {
+        ind.success("Account deleted. Redirecting...");
+        self.location = "/";
+      },
+      error: function (xhr) {
+        ind.error(
+          xhr.responseText +
+          " (" +
+          xhr.status +
+          ": " +
+          xhr.statusText +
+          ")"
+        );
+      },
+      complete: function () {
+        $("#deleteAccount input").enable();
+      }
+    });
   }
 
   return {

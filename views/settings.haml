@@ -63,12 +63,13 @@
 
   .row
     .col-sm-10.col-sm-offset-2.no-padding
-      %form{action: "/settings/delete", method: "post"}
+      %form{id: "deleteAccount"}
         .checkbox{style: "font-size: 16px;"}
           %label
-            %input{type: "checkbox", name: "iamsure"}
+            %input{type: "checkbox", name: "iamsure", id: "iamsure"}
               This box verifies that you would like to delete your account when clicking the link below.
         %input{type: "submit", id: "deleteAccountButton", class: "btn btn-defualt btn-danger", value: "Delete Account"}
+        %span{id: "deleteAccountStatus"}
 
 %script{src: "/js/loading-indicator.js"}
 %script{src: "/js/settings-controller.js"}
