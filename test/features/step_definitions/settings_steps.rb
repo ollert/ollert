@@ -19,7 +19,3 @@ end
 Then(/^the test user "(.*?)" should be nil$/) do |field|
   User.first[field.to_sym].should be_nil
 end
-
-Then(/^there should be no users in the system$/) do
-  User.count.should eq 0
-end

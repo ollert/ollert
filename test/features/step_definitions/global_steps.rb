@@ -46,3 +46,7 @@ end
 Given(/^the test user is logged in$/) do
   page.set_rack_session user: User.find_by(email: "ollertapp@gmail.com").id
 end
+
+Then(/^there should be (\d+) user(?:s?) in the system$/) do |num_users|
+  User.count.should eq num_users.to_i
+end

@@ -46,6 +46,9 @@ Scenario: Updating password
   And I fill in "confirm_password" with "new password"
   And I press "Update Password"
   Then I should see "Password updated."
+  And the "current_password" field should be ""
+  And the "new_password" field should be ""
+  And the "confirm_password" field should be ""
 
 @javascript
 Scenario: Updating password with wrong current password
@@ -116,7 +119,7 @@ Scenario: Delete account
   When I check "This box verifies that you would like to delete your account when clicking the link below."
   And I press "Delete Account"
   Then I should be on the landing page
-  And there should be no users in the system
+  And there should be 0 users in the system
 
 @javascript
 Scenario: Delete account without checking box

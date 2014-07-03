@@ -29,6 +29,7 @@ class Ollert
       body "Registration failed: Please agree to the terms of service."
     elsif user.save
       session[:user] = user.id
+      flash[:success] = "You're signed up! Connect to Trello to get started."
       status 200
     else
       status 500

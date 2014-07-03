@@ -18,12 +18,14 @@ var SignupLoginController = function () {
   }
 
   function activateSignupTab() {
+    $("#email").focus();
     $(".signup-content").show();
     $("#signupStatus").html("");
     $("#signupTab").addClass("active");
   }
 
   function activateLoginTab() {
+    $("#email")[0].focus();
     $(".login-content").show();
     $("#loginStatus").html("");
     $("#loginTab").addClass("active");
