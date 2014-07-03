@@ -10,9 +10,8 @@
     %link{href: '/css/bootstrap.min.css', rel: 'stylesheet'}
     %link{rel: 'stylesheet', type: 'text/css', href: '/styles.css'}
 
-    %script{src: '/js/jquery-1.11.0.min.js'}
+    %script{src: '/js/jquery-2.1.1.min.js'}
     %script{src: '/js/bootstrap.min.js'}
-    %script{src: "/js/highcharts.js"}
 
     %script{src: "//api.trello.com/1/client.js?key=#{ENV['PUBLIC_KEY']}"}
     %script{src: "/js/trello.js"}
@@ -21,10 +20,6 @@
 
     - if ENV['RACK_ENV'] == "production"
       %script{src: "/js/google-analytics.js"}
-
-    <!--[if lt IE 9 ]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.1.0/respond.min.js"></script>
-    <![endif]-->
 
   %body
     %div{id: 'wrap'}

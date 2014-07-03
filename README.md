@@ -10,6 +10,15 @@ Website: [ollertapp.com](https://ollertapp.com)
 
 Ollert is a data analysis tool for Trello.
 
+####Browser Support
+
+Since Ollert depends entirely on Trello for users, Ollert will support only browsers supported by Trello. [Trello officially supports](//help.trello.com/customer/portal/articles/940690) the following browsers:
+
+* Chrome - Current stable release
+* Safari - Version 6.0 or higher
+* Firefox - Current stable release
+* Internet Explorer - Version 10.0 or higher
+
 ####Development
 
 Requirements
