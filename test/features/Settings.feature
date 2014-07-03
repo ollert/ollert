@@ -46,9 +46,9 @@ Scenario: Updating password
   And I fill in "confirm_password" with "new password"
   And I press "Update Password"
   Then I should see "Password updated."
-  And the "current_password" field should be ""
-  And the "new_password" field should be ""
-  And the "confirm_password" field should be ""
+  And the "current_password" field should contain ""
+  And the "new_password" field should contain ""
+  And the "confirm_password" field should contain ""
 
 @javascript
 Scenario: Updating password with wrong current password
