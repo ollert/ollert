@@ -12,6 +12,7 @@ class User
   field :trello_name, type: String
 
   validates_uniqueness_of :email
+  validates_length_of :email, minimum: 1
   validates_length_of :password_hash, minimum: 1
 
   def password=(new_password)
