@@ -3,17 +3,18 @@ source 'https://rubygems.org'
 ruby '2.1.2'
 
 gem 'bundler'
+gem 'foreman'
 gem 'rake'
+gem 'unicorn'
 gem 'sinatra'
 gem 'haml'
-gem 'ruby-trello'
 gem 'sass'
 gem 'rack-flash3'
-gem 'bcrypt'
-gem 'foreman'
-gem 'unicorn'
 gem 'rack-ssl'
+gem 'pony'
 gem 'mongoid'
+gem 'ruby-trello'
+gem 'bcrypt'
 
 group :production do
 end
@@ -24,10 +25,10 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec'
-  gem 'capybara'
-  gem 'cucumber'
-  gem 'selenium-webdriver'
   gem 'dotenv'
+  gem 'rspec'
+  gem 'cucumber'
+  gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'rack_session_access'
 end

@@ -7,6 +7,20 @@ var SignupLoginController = function () {
     $("#already").on("click", login);
 
     $("#signup").on("submit", submit);
+
+    setupResetPasswordModal();
+  }
+
+  function setupResetPasswordModal() {
+    $("#resetPasswordModal").on("shown.bs.modal", function () {
+      $("#username").focus();
+    });
+
+    $("#resetPasswordModal").on("hidden.bs.modal", function () {
+      $("#email").focus();
+    });
+
+    $("#resetPassword").on("submit", resetPassword);
   }
 
   function submit(e) {
@@ -120,6 +134,14 @@ var SignupLoginController = function () {
         $("#signup input").enable();
       }
     });
+  }
+
+  function resetPassword(e) {
+    e.preventDefault();
+    $("#resetPasswordModal").modal('hide');
+    $("#signupLoginContainer").prepend(
+      "<div class='row alert alert-warning' style='margin: 0;'><div class='container'>Not implemented</div></div>"
+    );
   }
 
   return {

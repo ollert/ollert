@@ -447,3 +447,17 @@ ul.left-align li a{
 .no-padding {
   padding: 0 !important;
 }
+
+.modal-footer {
+  padding: 5px;
+  margin-top: 0;
+}
+
+.modal-header {
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.modal {
+  overflow-y: auto;
+}
