@@ -8,7 +8,7 @@ function AuthorizeTrello(expires, onSuccess) {
     success: onSuccess,
     scope: {
       read: true
-    },
+    }
   });
 }
 
