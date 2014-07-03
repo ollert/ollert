@@ -1,4 +1,6 @@
 function AuthorizeTrello(expires, onSuccess) {
+  Trello.deauthorize();
+
   Trello.authorize({
     name: "Ollert",
     type: "popup",
