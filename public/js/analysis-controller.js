@@ -1,15 +1,15 @@
-var Analyzer = (function() {
-  var loadCharts = function(boardId, boardName) {
+var AnalysisController = (function () {
+  var loadCharts = function (boardId, boardName) {
     loadWipChart(boardId);
     loadCfdChart(boardId, boardName);
     loadStats(boardId);
     loadLabelCount(boardId);
   }
 
-  var loadWipChart = function(boardId) {
+  var loadWipChart = function (boardId) {
     $.ajax({
       url: "/boards/" + boardId + "/analysis/wip",
-      success: function(data) {
+      success: function (data) {
         $('#wip-spinner').hide();
         var theData = jQuery.parseJSON(data);
         var wip_data = new wipChartData();
@@ -25,10 +25,10 @@ var Analyzer = (function() {
     });
   }
 
-  var loadCfdChart = function(boardId, boardName) {
+  var loadCfdChart = function (boardId, boardName) {
     $.ajax({
       url: "/boards/" + boardId + "/analysis/cfd",
-      success: function(data) {
+      success: function (data) {
         $('#cfd-spinner').hide();
 
         var theData = jQuery.parseJSON(data);
@@ -43,11 +43,11 @@ var Analyzer = (function() {
     });
   }
 
-  var loadStats = function(boardId) {
+  var loadStats = function (boardId) {
     $.ajax({
       url: "/boards/" + boardId + "/analysis/stats",
-      success: function(data) {
-        $.each($('.stats-spinner'), function(i, item) {
+      success: function (data) {
+        $.each($('.stats-spinner'), function (i, item) {
           $(item).hide();
         });
 
@@ -68,10 +68,10 @@ var Analyzer = (function() {
     });
   }
 
-  var loadLabelCount = function(boardId) {
+  var loadLabelCount = function (boardId) {
     $.ajax({
       url: "/boards/" + boardId + "/analysis/labelcounts",
-      success: function(data) {
+      success: function (data) {
         $('#label-count-spinner').hide();
 
         var theData = jQuery.parseJSON(data);
@@ -87,6 +87,6 @@ var Analyzer = (function() {
   }
 
   return {
-    loadCharts: loadCharts
+    init: loadCharts
   }
 }());

@@ -82,7 +82,7 @@
 %script{src: "/js/CFDChart.js"}
 %script{src: "/js/WIPChart.js"}
 %script{src: "/js/LabelCountChart.js"}
-%script{src: "/js/analyzer.js"}
+%script{src: "/js/analysis-controller.js"}
 
 %script
-  Analyzer.loadCharts("#{@board_id}", "#{@board_name}");
+  AnalysisController.init("#{@board_id}", "#{@board_name}");
