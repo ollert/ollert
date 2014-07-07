@@ -94,8 +94,7 @@ var SignupLoginController = function () {
           xhr.statusText +
           ")"
         );
-      },
-      complete: function () {
+
         $("#signup input").enable();
       }
     });
@@ -129,8 +128,7 @@ var SignupLoginController = function () {
           xhr.statusText +
           ")"
         );
-      },
-      complete: function () {
+
         $("#signup input").enable();
       }
     });
@@ -139,9 +137,23 @@ var SignupLoginController = function () {
   function resetPassword(e) {
     e.preventDefault();
     $("#resetPasswordModal").modal('hide');
-    $("#signupLoginContainer").prepend(
-      "<div class='row alert alert-warning' style='margin: 0;'><div class='container'>Not implemented</div></div>"
-    );
+    $.ajax({
+      url: "/account/reset",
+      method: "PUT",
+      data: {
+        username: $("#username").val()
+      },
+      success: function () {
+        $("#signupLoginContainer").prepend(
+          "<div class='row alert alert-success' style='margin: 0;'><div class='container'>Email sent</div></div>"
+        );
+      },
+      error: function () {
+        $("#signupLoginContainer").prepend(
+          "<div class='row alert alert-danger' style='margin: 0;'><div class='container'>Email not sent</div></div>"
+        );
+      }
+    });
   }
 
   return {

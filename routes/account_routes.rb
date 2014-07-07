@@ -124,6 +124,75 @@ class Ollert
     end
   end
 
+  put '/account/reset' do
+    if !params[:username].nil? && !params[:username].empty?
+      user = User.find_by(email: params[:username])
+      if !user.nil?
+        url = "#{request.base_url}/account/reset/#{user.reset_password}"
+        Pony.mail(
+          to: params[:username],
+          from: "Ollert Help Desk <noreply@ollertapp.com>",
+          subject: "Ollert Password Reset Notification",
+          body: "A request has been made to reset password for your Ollert account (https://ollertapp.com)." +
+                "If you made this request, go to " + url + ". If you did not make this request, ignore this email.",
+          html_body: haml(
+            :reset_password_email,
+            layout: false,
+            locals: {
+              email: params[:username],
+              date: DateTime.now.strftime("%H:%M:%S%P %B %d, %Y"),
+              ip: request.ip,
+              reset_url: url
+            }
+          )
+        )
+
+        status 200
+      else
+        body "User not found"
+        status 500
+      end
+    else
+      body "Invalid username."
+      status 500
+    end
+  end
+
+  get '/account/reset/:secret' do |secret|
+    user = User.find_by("password_reset.reset_hash" => secret)
+    if user.nil? || user.password_reset.expired?
+      user.password_reset = nil
+      user.save!
+
+      flash[:error] = "Password reset time period has expired. Please try again."
+      redirect :login
+    else
+      @email = user.email
+      haml :reset_password
+    end
+  end
+
+  post '/account/reset/:secret' do |secret|
+    user = User.find_by("password_reset.reset_hash" => secret)
+    if user.nil? || user.password_reset.expired?
+      user.password_reset = nil
+      user.save!
+
+      body "Password reset time period has expired. Please try again."
+      status 500
+    else
+      user.password = params[:password]
+      user.password_reset = nil
+      if !user.save
+        body "Save failed: #{user.errors.full_messages.join(", ")}"
+        status 500
+      else
+        session[:user] = user.id
+        status 200
+      end
+    end
+  end
+
   delete '/settings/delete', :auth => :authenticated do
     if params[:iamsure] == "true"
       if @user.delete

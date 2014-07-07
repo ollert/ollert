@@ -1,10 +1,13 @@
 require 'bcrypt'
 require 'mongoid'
 
-require_relative '../core_ext/string.rb'
+require_relative 'password_reset'
+require_relative '../core_ext/string'
 
 class User
   include Mongoid::Document
+
+  embeds_one :password_reset
 
   field :email, type: String
   field :password_hash, type: String
@@ -43,5 +46,12 @@ class User
 
     self.password = proposed
     return {status: true}
+  end
+
+  def reset_password
+    self.password_reset = PasswordReset.generate email
+    save!
+
+    password_reset.reset_hash
   end
 end

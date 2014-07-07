@@ -131,5 +131,18 @@ describe User do
         expect(user2.errors.full_messages).to match_array(["Email is already taken"])
       end
     end
+
+    describe '#reset_password' do
+      it 'creates new password reset with correct expiration' do
+        now = DateTime.now
+        expect(DateTime).to receive(:now).and_return(now)
+
+        user = User.new :email => "abc@def", :password_hash => "456"
+        expect(user.reset_password).to_not be_nil
+
+        expect(user.password_reset).to_not be_nil
+        expect(user.password_reset.expiration_date).to eq (now + 1.days)
+      end
+    end
   end
 end

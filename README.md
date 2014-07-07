@@ -37,6 +37,14 @@ Create a file called `.env` in the root project folder. Environment variables:
 * SESSION_SECRET
     * optional
     * Any string.
+* SENDGRID_USERNAME
+    * optional
+    * Sign up for [a free SendGrid account](https://sendgrid.com/user/signup)
+    * On the Account Overview, find the "Username" field
+* SENDGRID_PASSWORD
+    * optional
+    * Sign up for [a free SendGrid account](https://sendgrid.com/user/signup)
+    * Whatever your password is when signing up
 
 Run `rake` to start the application on `localhost:4000`.
 
