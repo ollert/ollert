@@ -144,14 +144,12 @@ var SignupLoginController = function () {
         username: $("#username").val()
       },
       success: function () {
-        $("#signupLoginContainer").prepend(
-          "<div class='row alert alert-success' style='margin: 0;'><div class='container'>Email sent</div></div>"
-        );
+        FlashMessage.success(
+          "You should receive an email containing a link to reset your password within the a few minutes."
+        )
       },
       error: function () {
-        $("#signupLoginContainer").prepend(
-          "<div class='row alert alert-danger' style='margin: 0;'><div class='container'>Email not sent</div></div>"
-        );
+        FlashMessage.error("An error has occurred. Try again later.")
       }
     });
   }
