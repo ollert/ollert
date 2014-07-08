@@ -64,24 +64,24 @@
                       %li
                         %a{class: "btn btn-link", href: "/boards/#{board.attributes[:id]}"}
                           #{board.attributes[:name]}
-      - if flash.has? :error
-        .row{id: 'flash', class: 'alert alert-danger'}
-          .container
-            #{flash[:error]}
-      - if flash.has? :warning
-        .row{id: 'flash', class: 'alert alert-warning'}
-          .container
-            #{flash[:warning]}
-      - if flash.has? :success
-        .row{id: 'flash', class: 'alert alert-success'}
-          .container
-            #{flash[:success]}
-      - if flash.has? :info
-        .row{id: 'flash', class: 'alert alert-info'}
-          .container
-            #{flash[:info]}
 
       #mainContent
+        - if flash.has? :error
+          .row{id: 'flash', class: 'alert alert-danger'}
+            .container
+              #{flash[:error]}
+        - if flash.has? :warning
+          .row{id: 'flash', class: 'alert alert-warning'}
+            .container
+              #{flash[:warning]}
+        - if flash.has? :success
+          .row{id: 'flash', class: 'alert alert-success'}
+            .container
+              #{flash[:success]}
+        - if flash.has? :info
+          .row{id: 'flash', class: 'alert alert-info'}
+            .container
+              #{flash[:info]}
         = yield
 
       %div{id: 'push'}
