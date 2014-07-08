@@ -149,7 +149,7 @@ class Ollert
 
         status 200
       else
-        body "User not found"
+        body "No matching user for #{params[:username]}. Sign up to create an account."
         status 500
       end
     else
@@ -160,7 +160,10 @@ class Ollert
 
   get '/account/reset/:secret' do |secret|
     user = User.find_by("password_reset.reset_hash" => secret)
-    if user.nil? || user.password_reset.expired?
+    if user.nil?
+      flash[:error] = "Invalid reset hash. Please try again."
+      redirect :login
+    elsif user.password_reset.nil? || user.password_reset.expired?
       user.password_reset = nil
       user.save!
 
@@ -168,27 +171,31 @@ class Ollert
       redirect :login
     else
       @email = user.email
+      @secret = params[:secret]
       haml :reset_password
     end
   end
 
   post '/account/reset/:secret' do |secret|
     user = User.find_by("password_reset.reset_hash" => secret)
-    if user.nil? || user.password_reset.expired?
+    if user.nil?
+      flash[:error] = "Password reset time period has expired. Please try again."
+      redirect :login
+    elsif user.password_reset.nil? || user.password_reset.expired?
       user.password_reset = nil
       user.save!
 
-      body "Password reset time period has expired. Please try again."
-      status 500
+      flash[:error] = "Password reset time period has expired. Please try again."
+      redirect :login
     else
       user.password = params[:password]
       user.password_reset = nil
       if !user.save
-        body "Save failed: #{user.errors.full_messages.join(", ")}"
-        status 500
+        flash[:error] = "Save failed: #{user.errors.full_messages.join(", ")}"
+        redirect :login
       else
         session[:user] = user.id
-        status 200
+        redirect '/'
       end
     end
   end

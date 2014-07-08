@@ -12,7 +12,7 @@ class PasswordReset
   field :expiration_date, type: DateTime
 
   def self.generate(email)
-    PasswordReset.new reset_hash: Digest::MD5.hexdigest("#{Time.now.nsec}#{email}"),
+    PasswordReset.new reset_hash: Digest::MD5.hexdigest("#{DateTime.now}#{email}"),
                       expiration_date: DateTime.now + 1.days
   end
 

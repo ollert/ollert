@@ -50,3 +50,7 @@ end
 Then(/^there should be (\d+) user(?:s?) in the system$/) do |num_users|
   User.count.should eq num_users.to_i
 end
+
+When(/^the val of "(.*?)" is "(.*?)"$/) do |selector, value|
+  expect(page.find(selector)[:value]).to eq value
+end

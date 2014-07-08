@@ -15,3 +15,6 @@ World do
 
   Mongoid.purge!
 end
+
+require 'email_spec'
+require 'email_spec/cucumber'

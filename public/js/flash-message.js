@@ -1,26 +1,26 @@
 var FlashMessage = function () {
   function error(msg) {
-    flash("alert-danger");
+    flash("alert-danger", msg);
   }
 
   function success(msg) {
-    flash("alert-success");
+    flash("alert-success", msg);
   }
 
   function info(msg) {
-    flash("alert-info");
+    flash("alert-info", msg);
   }
 
   function warning(msg) {
-    flash("alert-warning");
+    flash("alert-warning", msg);
   }
 
-  function flash(classes) {
+  function flash(classes, msg) {
     $("#flash").remove();
 
     $("#mainContent").prepend(
       "<div id='flash' class='row alert " + classes +
-      "''><div class='container'>Email sent</div></div>"
+      "''><div class='container'>" + msg + "</div></div>"
     );
   }
 

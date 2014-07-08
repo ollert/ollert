@@ -145,11 +145,18 @@ var SignupLoginController = function () {
       },
       success: function () {
         FlashMessage.success(
-          "You should receive an email containing a link to reset your password within the a few minutes."
+          "You should receive an email containing a link to reset your password within a few minutes."
         )
       },
-      error: function () {
-        FlashMessage.error("An error has occurred. Try again later.")
+      error: function (xhr) {
+        FlashMessage.error(
+          xhr.responseText +
+          " (" +
+          xhr.status +
+          ": " +
+          xhr.statusText +
+          ")"
+        );
       }
     });
   }

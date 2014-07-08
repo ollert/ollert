@@ -135,7 +135,7 @@ describe User do
     describe '#reset_password' do
       it 'creates new password reset with correct expiration' do
         now = DateTime.now
-        expect(DateTime).to receive(:now).and_return(now)
+        expect(DateTime).to receive(:now).and_return(now).twice
 
         user = User.new :email => "abc@def", :password_hash => "456"
         expect(user.reset_password).to_not be_nil

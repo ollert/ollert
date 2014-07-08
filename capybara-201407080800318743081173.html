@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Ollert</title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <meta content="Your Trello boards do a great job telling you the state of today. But how do you know what's happened during the past week, month, or year? That's where Ollert comes in." name='description'>
+    <meta content='Larry Price &lt;larry@ollertapp.com&gt;' name='author'>
+    <link href='/img/favicon.ico' rel='shortcut icon'>
+    <link href='/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='/styles.css' rel='stylesheet' type='text/css'>
+    <script src='/js/jquery-2.1.1.min.js'></script>
+    <script src='/js/bootstrap.min.js'></script>
+    <script src='//api.trello.com/1/client.js?key=0942956f9eeea22688d8717ec9e12955'></script>
+    <script src='/js/trello.js'></script>
+    <script src='/js/plugins.js'></script>
+  </head>
+  <body>
+    <div id='wrap'>
+      <nav class='navbar navbar-default navbar-static-top' role='navigation'>
+        <div class='container'>
+          <div class='navbar-header'>
+            <button class='navbar-toggle collapsed' data-target='.navbar-collapse' data-toggle='collapse' type='button'>
+              <span class='sr-only'>
+                Toggle navigation
+              </span>
+              <span class='icon-bar'></span>
+              <span class='icon-bar'></span>
+              <span class='icon-bar'></span>
+            </button>
+            <a class='navbar-brand' href='/'>
+              Ollert
+            </a>
+          </div>
+          <ul class='signup-login-group nav navbar-nav navbar-right'>
+            <li>
+              <form action='/signup' method='get'>
+                <input class='btn btn-primary' type='submit' value='Sign Up'>
+              </form>
+            </li>
+            <li style='margin-left:10px;'>
+              <form action='/login' method='get'>
+                <input class='btn btn-default' type='submit' value='Log in'>
+              </form>
+            </li>
+          </ul>
+          <ul class='collapse navbar-collapse nav navbar-nav'>
+            <li>
+              <a href='/'>
+                Home
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div id='mainContent'>
+        <div aria-hidden='true' class='modal fade' id='resetPasswordModal' role='dialog' tabindex='-1'>
+          <div class='modal-dialog modal-sm'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <button class='close' data-dismiss='modal' type='button'>
+                  <span aria-hidden='true'>
+                    &times;
+                  </span>
+                  <span class='sr-only'>
+                    Close
+                  </span>
+                </button>
+                <h4 class='modal-title'>
+                  Forgot password
+                </h4>
+              </div>
+              <form id='resetPassword' role='form'>
+                <div class='modal-body'>
+                  <label for='username'>
+                    Email
+                  </label>
+                  <input class='form-control' id='username' name='username' required='true' type='email'>
+                </div>
+                <div class='modal-footer'>
+                  <input class='btn btn-primary' id='resetPasswordSubmit' type='submit' value='Submit'>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-offset-2 col-md-8 img-rounded' id='login-box'>
+              <div class='row'>
+                <div class='col-md-12'>
+                  <ul class='nav nav-tabs' role='tablist'>
+                    <li id='signupTab'>
+                      <a data-toggle='tab' href='javascript:void(0)'>
+                        Sign Up
+                      </a>
+                    </li>
+                    <li id='loginTab'>
+                      <a data-toggle='tab' href='javascript:void(0)'>
+                        Log In
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class='row'>
+                <form class='form-horizontal' id='signup' role='form'>
+                  <div class='form-group'>
+                    <label class='col-md-2 control-label' for='email'>
+                      Email
+                    </label>
+                    <div class='col-md-10'>
+                      <input autofocus='true' class='form-control' id='email' name='email' required='required' type='email'>
+                    </div>
+                  </div>
+                  <div class='form-group'>
+                    <label class='col-md-2 control-label' for='password'>
+                      Password
+                    </label>
+                    <div class='col-md-10'>
+                      <input autocomplete='off' class='form-control' id='password' name='password' required='required' type='password'>
+                    </div>
+                  </div>
+                  <div class='form-group signup-content'>
+                    <div class='col-md-10 col-md-offset-2'>
+                      <div class='checkbox' id='agreedCheckbox' style='font-size: 16px; margin-top: 10px;'>
+                        <label>
+                          <input id='agreed' name='agreed' type='checkbox'>
+                          I have read and agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='form-group signup-content'>
+                    <div class='col-md-10 col-md-offset-2'>
+                      <input class='btn btn-primary btn-lg' id='signupButton' type='submit' value='Sign Me Up!'>
+                    </div>
+                  </div>
+                  <div class='form-group signup-content'>
+                    <div class='col-md-10 col-md-offset-2'>
+                      <span id='signupStatus'></span>
+                    </div>
+                  </div>
+                  <div class='form-group signup-content'>
+                    <a class='btn btn-link pull-right' href='javascript:void(0)' id='already'>
+                      Already have an account? Log in.
+                    </a>
+                  </div>
+                  <div class='form-group login-content'>
+                    <div class='col-md-10 col-md-offset-2'>
+                      <input class='btn btn-primary btn-lg' id='loginButton' type='submit' value='Log In'>
+                    </div>
+                  </div>
+                  <div class='form-group login-content'>
+                    <div class='col-md-10 col-md-offset-2'>
+                      <span id='loginStatus'></span>
+                    </div>
+                  </div>
+                  <div class='form-group login-content'>
+                    <a class='btn btn-link' data-toggle='modal' href='#resetPasswordModal'>
+                      Forgot password?
+                    </a>
+                    <a class='btn btn-link pull-right' href='javascript:void(0)' id='newUser'>
+                      New user? Create an account.
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script src='/js/loading-indicator.js'></script>
+        <script src='/js/flash-message.js'></script>
+        <script src='/js/signup-login-controller.js'></script>
+        <script>
+          $(document).ready(function() {
+            SignupLoginController.init();
+            SignupLoginController.showLoginContent();
+          });
+        </script>
+      </div>
+      <div id='push'></div>
+    </div>
+    <div id='footer'>
+      <div class='container'>
+        <div class='row'>
+          <div class='col-md-8'>
+            <ul>
+              <li>
+                <a href='http://www.sep.com/labs/startupweekend/'>
+                  SEP Startup Weekend
+                </a>
+              </li>
+              <li>
+                <a href='/privacy'>
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href='/terms'>
+                  Terms and Conditions
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class='col-md-4'>
+            <img height='85px' src='/img/sep-labs-logo-white.png'>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

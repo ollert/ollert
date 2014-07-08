@@ -22,6 +22,8 @@ module NavigationHelpers
       '/settings'
     when /the signup page/
       '/signup'
+    when /the password reset page/
+      '/account/reset/*'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
