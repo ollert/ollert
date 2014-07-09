@@ -23,9 +23,10 @@ Since Ollert depends entirely on Trello for users, Ollert will support only brow
 
 Requirements
 
-* ruby 2.1.2
+* ruby-2.1.2
 * mongodb
 * bundler
+* libqtwebkit-dev
 
 Use `bundle install` to install required gems.
 
@@ -59,3 +60,9 @@ To run the `spec` tests, use `rake test:spec`.
 To run the cukes, use `rake test:cukes`.
 
 To run all tests, use `rake test:all`.
+
+####CI
+
+(http://jenkins/job/Ollert)[http://jenkins/job/Ollert]
+
+Runs all tests. If your tests don't pass on the build server, they don't pass. No exceptions.
