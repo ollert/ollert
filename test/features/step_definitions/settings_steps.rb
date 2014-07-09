@@ -8,6 +8,12 @@ Given(/^the test user "(.*?)" is nil$/) do |field|
   user.save!
 end
 
+Given(/^the test user "(.*?)" is "(.*?)"$/) do |field, value|
+  user = User.first
+  user[field.to_sym] = value
+  user.save!
+end
+
 Then(/^the test user email should be "(.*?)"$/) do |new_email|
   User.first.email.should eq new_email
 end
