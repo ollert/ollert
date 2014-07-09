@@ -10,12 +10,14 @@ require_relative 'helpers/ollert_helpers'
 class Ollert < Sinatra::Base
   include OllertHelpers
 
-  configure do
-    if ENV['RACK_ENV'] == 'development'
-      require 'sinatra/reloader'
-      register Sinatra::Reloader
-    end
+  configure :development do
+    require 'sinatra/reloader'
+    register Sinatra::Reloader
+  end
 
+  configure do
+    use Rack::MethodOverride
+    
     Pony.options = {
       :via => :smtp,
       :via_options => {

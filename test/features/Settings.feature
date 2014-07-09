@@ -106,9 +106,7 @@ Scenario: Deny connecting to Trello
   And the test user is logged in
   And I go to the settings page
   When I follow "Connect with Trello"
-  And I focus on the most recent window
-  And I press "Deny"
-  And I focus on the most recent window
+  And I press "Deny" on the Trello popup
   Then I should see "Connect with Trello"
 
 @javascript
@@ -118,7 +116,9 @@ Scenario: Delete account
   And I go to the settings page
   When I check "This box verifies that you would like to delete your account when clicking the link below."
   And I press "Delete Account"
-  Then I should be on the landing page
+  Then I should not see "Account deleted. Redirecting..."
+  And I should see "Connect to Get Started"
+  And I should be on the landing page
   And there should be 0 users in the system
 
 @javascript

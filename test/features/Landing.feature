@@ -14,9 +14,7 @@ Scenario: Navigate to the registration page
 @javascript
 Scenario: Deny connecting to Trello
   Given I follow "Connect to Get Started"
-  When I focus on the most recent window
-  And I press "Deny"
-  And I focus on the most recent window
+  And I press "Deny" on the Trello popup
   Then I should be on the landing page
 
 @javascript

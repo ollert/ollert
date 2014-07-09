@@ -2,31 +2,6 @@ Then /^I should be redirected to (.*)$/ do |page|
   current_path.should eql path_to page
 end
 
-When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |username, password|
-  # focus on Trello window
-  trello_popup = page.driver.window_handles.last
-  page.within_window trello_popup do
-    fake_chrome_drivers
-    if page.has_content? "Switch Accounts"
-      click_link "Switch Accounts"
-    else
-      click_link "Log in"
-    end
-    
-    fill_in "email-login", with: username
-    fill_in "password-login", with: password
-    click_button "Log In"
-    click_button "Allow"
-  end
-end
-
-def fake_chrome_drivers
-  page.driver.header(
-    "User-Agent",
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/34.0.1847.116 Chrome/34.0.1847.116 Safari/537.36"
-    )
-end
-
 Given(/^the test user has connected to Trello$/) do
   page.set_rack_session token: "44988fd666c5c51542bc400e5d6515c2bc896eb3e370dc1622fe3c0f484e413a"
 end
@@ -59,4 +34,9 @@ end
 
 When(/^the val of "(.*?)" is "(.*?)"$/) do |selector, value|
   expect(page.find(selector)[:value]).to eq value
+end
+
+# TODO: Once Boards load asynchronously, please remove this step
+When(/^I wait (\d+) seconds$/) do |seconds|
+  sleep(seconds.to_i)
 end

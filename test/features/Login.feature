@@ -7,9 +7,8 @@ Scenario: Logging in - user has boards
   When I fill in "email" with "ollertapp@gmail.com"
   And I fill in "password" with "testing ollert"
   And I press "Log In"
-  Then I should not see "Logging in..."
-  And I should not see "Successfully logged in. Redirecting..."
-  And I should be redirected to the boards page
+  And I wait 3 seconds
+  Then I should be on the boards page
 
 @javascript
 Scenario: Logging in - user has no boards
@@ -19,9 +18,8 @@ Scenario: Logging in - user has no boards
   When I fill in "email" with "ollertapp@gmail.com"
   And I fill in "password" with "testing ollert"
   And I press "Log In"
-  Then I should not see "Logging in..."
-  And I should not see "Successfully logged in. Redirecting..."
-  And I should be redirected to the landing page
+  Then I should see "Connect to Get Started"
+  And I should be on the landing page
 
 @javascript
 Scenario: Missing username

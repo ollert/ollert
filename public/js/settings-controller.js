@@ -165,9 +165,10 @@ var SettingsController = function () {
     $.ajax({
       url: "/settings/delete",
       data: {
-        iamsure: $("#iamsure")[0].checked
+        iamsure: $("#iamsure")[0].checked,
+        _method: "DELETE"
       },
-      method: "DELETE",
+      method: "POST",
       success: function () {
         ind.success("Account deleted. Redirecting...");
         self.location = "/";
