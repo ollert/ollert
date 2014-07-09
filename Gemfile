@@ -32,4 +32,6 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'rack_session_access'
   gem 'email_spec'
+
+  gem 'capybara-webkit'
 end

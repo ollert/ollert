@@ -4,21 +4,27 @@ end
 
 When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |username, password|
   # focus on Trello window
-  page.driver.browser.switch_to.window page.driver.browser.window_handles.last
-
-  if page.has_content? "Switch Accounts"
-    click_link "Switch Accounts"
-  else
-    click_link "Log in"
+  trello_popup = page.driver.window_handles.last
+  page.within_window trello_popup do
+    fake_chrome_drivers
+    if page.has_content? "Switch Accounts"
+      click_link "Switch Accounts"
+    else
+      click_link "Log in"
+    end
+    
+    fill_in "email-login", with: username
+    fill_in "password-login", with: password
+    click_button "Log In"
+    click_button "Allow"
   end
-  
-  fill_in "email-login", with: username
-  fill_in "password-login", with: password
-  click_button "Log In"
-  click_button "Allow"
+end
 
-  # focus back to Ollert
-  page.driver.browser.switch_to.window page.driver.browser.window_handles.last
+def fake_chrome_drivers
+  page.driver.header(
+    "User-Agent",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/34.0.1847.116 Chrome/34.0.1847.116 Safari/537.36"
+    )
 end
 
 Given(/^the test user has connected to Trello$/) do

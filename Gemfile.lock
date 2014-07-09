@@ -21,6 +21,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-webkit (1.2.0)
+      capybara (>= 2.0.2, < 2.4.0)
+      json
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
@@ -154,6 +157,7 @@ DEPENDENCIES
   bcrypt
   bundler
   capybara
+  capybara-webkit
   cucumber
   dotenv
   email_spec

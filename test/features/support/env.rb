@@ -7,8 +7,12 @@ require 'rspec'
 require 'rack_session_access'
 require 'rack_session_access/capybara'
 
+require 'capybara/webkit'
+
 Capybara.app = Ollert
 Capybara.app.use RackSessionAccess::Middleware
+
+Capybara.javascript_driver = :webkit
 
 World do
   Ollert.new
