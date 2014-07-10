@@ -2,11 +2,11 @@ require 'sass'
 
 class Ollert
   get '/privacy', :auth => :none do
-    haml_view_model :privacy, @user
+    haml :privacy
   end
 
   get '/terms', :auth => :none do
-    haml_view_model :terms, @user
+    haml :terms
   end
 
   get '/styles.css' do

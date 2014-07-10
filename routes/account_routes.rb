@@ -18,7 +18,7 @@ class Ollert
 
   get '/signup' do
     @signing_up = true
-    haml_view_model :signup, @user
+    haml :signup
   end
 
   post '/signup' do
@@ -44,7 +44,7 @@ class Ollert
 
   get '/login' do
     @signing_up = false
-    haml_view_model :login
+    haml :login
   end
 
   post '/logout', :auth => :authenticated do
@@ -226,6 +226,6 @@ class Ollert
   end
 
   get '/settings', :auth => :authenticated do
-    haml_view_model :settings, @user
+    haml :settings
   end
 end

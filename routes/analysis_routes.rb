@@ -16,7 +16,13 @@ class Ollert
       :member_token => session[:token]
     )
 
-    WipAnalyzer.analyze(WipFetcher.fetch(client, board_id)).to_json
+    begin
+      status 200
+      body WipAnalyzer.analyze(WipFetcher.fetch(client, board_id)).to_json
+    rescue Trello::Error => e
+      body "Connection broken."
+      status 500
+    end
   end
 
   get '/boards/:id/analysis/cfd' do |board_id|
@@ -25,7 +31,13 @@ class Ollert
       :member_token => session[:token]
     )
 
-    CfdAnalyzer.analyze(CfdFetcher.fetch(client, board_id)).to_json
+    begin
+      status 200
+      body CfdAnalyzer.analyze(CfdFetcher.fetch(client, board_id)).to_json
+    rescue Trello::Error => e
+      body "Connection broken."
+      status 500
+    end
   end
   
   get '/boards/:id/analysis/stats' do |board_id|
@@ -34,11 +46,13 @@ class Ollert
       :member_token => session[:token]
     )
 
-    now = Time.now
-    data = StatsAnalyzer.analyze(StatsFetcher.fetch(client, board_id)).to_json
-    puts Time.now - now
-
-    data
+    begin
+      status 200
+      body StatsAnalyzer.analyze(StatsFetcher.fetch(client, board_id)).to_json
+    rescue Trello::Error => e
+      body "Connection broken."
+      status 500
+    end
   end
   
   get '/boards/:id/analysis/labelcounts' do |board_id|
@@ -47,6 +61,12 @@ class Ollert
       :member_token => session[:token]
     )
 
-    LabelCountAnalyzer.analyze(LabelCountFetcher.fetch(client, board_id)).to_json
+    begin
+      status 200
+      body LabelCountAnalyzer.analyze(LabelCountFetcher.fetch(client, board_id)).to_json
+    rescue Trello::Error => e
+      body "Connection broken."
+      status 500
+    end
   end
 end

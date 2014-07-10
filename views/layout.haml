@@ -39,7 +39,7 @@
               %span{ class: "icon-bar" }
             %a{class: 'navbar-brand', href: '/'}
               Ollert
-          - if !locals[:logged_in]
+          - if @user.nil?
             %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
               %li
                 %form{action: "/signup", method: "get"}

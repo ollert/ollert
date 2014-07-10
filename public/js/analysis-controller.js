@@ -21,6 +21,10 @@ var AnalysisController = (function () {
         }];
         var wc = new wipChart(wip_data);
         wc.buildChart();
+      },
+      error: function (xhr) {
+        $("#wip-spinner").hide();
+        $("#WIP-Container").text(xhr.responseText);
       }
     });
   }
@@ -39,6 +43,10 @@ var AnalysisController = (function () {
           boardName: boardName
         });
         cc.buildChart();
+      },
+      error: function (xhr) {
+        $("#cfd-spinner").hide();
+        $("#CFD-Container").text(xhr.responseText);
       }
     });
   }
@@ -64,6 +72,10 @@ var AnalysisController = (function () {
         $('#oldest_card_age').text(theData.oldest_card_age);
         $('#newest_card_name').text(theData.newest_card_name);
         $('#newest_card_age').text(theData.newest_card_age);
+      },
+      error: function (xhr) {
+        $(".stats-spinner").hide();
+        $(".med-analysis-blocks-container-stats").text(xhr.responseText);
       }
     });
   }
@@ -82,6 +94,10 @@ var AnalysisController = (function () {
         lb_data.colors = theData.colors;
         var labelCount = new labelCountChart(lb_data);
         labelCount.buildChart();
+      },
+      error: function (xhr) {
+        $("#label-count-spinner").hide();
+        $("#LabelCount-Container").text(xhr.responseText);
       }
     });
   }

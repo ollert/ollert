@@ -18,21 +18,31 @@ class Ollert
       :developer_public_key => ENV['PUBLIC_KEY'],
       :member_token => session[:token]
     )
-    token = client.find(:token, session[:token])
+
+    begin
+      token = client.find(:token, session[:token])
+    rescue Trello::Error => e
+      flash[:error] = "There's something wrong with the Trello connection. Please re-establish the connection."
+      redirect '/'
+    end
 
     member = token.member
 
-    # this logic needs to be fixed - why does this belong here?
+    # this logic needs to be (re)moved - why does this belong here?
     unless @user.nil?
       @user.member_token = session[:token]
       @user.trello_name = member.attributes[:username]
       @user.save
     end
-    
-    # change this to be async
-    @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, client.find(:token, session[:token])))
 
-    haml_view_model :boards, @user
+    begin
+      @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, client.find(:token, session[:token])))
+    rescue Trello::Error => e
+      flash[:error] = "There's something wrong with the Trello connection. Please re-establish the connection."
+      redirect '/'
+    end
+
+    haml :boards
   end
 
   get '/boards/:id', :auth => :token do |board_id|
@@ -41,11 +51,16 @@ class Ollert
       :member_token => session[:token]
     )
 
-    @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, client.find(:token, session[:token])))
+    begin
+      @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, client.find(:token, session[:token])))
+    rescue Trello::Error => e
+      flash[:error] = "There's something wrong with the Trello connection. Please re-establish the connection."
+      redirect '/'
+    end
 
     @board_name = @boards.values.flatten.select {|x| x["id"] == board_id}.first["name"]
     @board_id = board_id
 
-    haml_view_model :analysis, @user
+    haml :analysis
   end
 end

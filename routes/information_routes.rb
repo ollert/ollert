@@ -4,7 +4,7 @@ class Ollert
       redirect '/boards'
     end
     
-    haml_view_model :landing, @user
+    haml :landing
   end
 
   not_found do

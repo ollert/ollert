@@ -5,11 +5,7 @@ require 'rack-flash'
 require 'rack/ssl'
 require 'sinatra/base'
 
-require_relative 'helpers/ollert_helpers'
-
 class Ollert < Sinatra::Base
-  include OllertHelpers
-
   configure :development do
     require 'sinatra/reloader'
     register Sinatra::Reloader
