@@ -9,7 +9,7 @@ class Ollert
       session[:token] = @user.member_token
     elsif !params[:token].nil? && !params[:token].empty?
       session[:token] = params[:token]
-    else
+    elsif session[:token].nil?
       flash[:info] = "Log in or connect with Trello to analyze your boards."
       redirect '/'
     end

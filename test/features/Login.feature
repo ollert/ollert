@@ -3,12 +3,13 @@ Feature: Login
 @javascript
 Scenario: Logging in - user has boards
   Given the test user is in the system
-  And the test user manually connects to Trello
+  And the test user has connected to Trello
   And I am on the login page
   When I fill in "email" with "ollertapp@gmail.com"
   And I fill in "password" with "testing ollert"
   And I press "Log In"
-  Then I should see "My Boards"
+  Then I should not see "Redirecting..."
+  And I should see "My Boards"
   And I should be on the boards page
 
 @javascript
