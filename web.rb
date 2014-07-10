@@ -41,7 +41,7 @@ class Ollert < Sinatra::Base
 
   set(:auth) do |role|
     condition do
-      @user = get_user
+      @user = session[:user].nil? ? nil : User.find(session[:user])
       if role == :authenticated
         if @user.nil?
           session[:user] = nil

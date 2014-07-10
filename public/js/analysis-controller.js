@@ -1,9 +1,9 @@
 var AnalysisController = (function () {
   var loadCharts = function (boardId, boardName) {
     loadWipChart(boardId);
+    loadLabelCount(boardId);
     loadCfdChart(boardId, boardName);
     loadStats(boardId);
-    loadLabelCount(boardId);
   }
 
   var loadWipChart = function (boardId) {

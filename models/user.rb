@@ -2,7 +2,6 @@ require 'bcrypt'
 require 'mongoid'
 
 require_relative 'password_reset'
-require_relative '../core_ext/string'
 
 class User
   include Mongoid::Document
@@ -36,7 +35,7 @@ class User
       return {status: false, message: "Current password entered incorrectly."}
     end
 
-    if proposed.nil_or_empty?
+    if proposed.nil? || proposed.empty?
       return {status: false, message: "Password must contain at least 1 character."}
     end
 

@@ -67,8 +67,8 @@
                       #{org_name}
                     - boards.each do |board|
                       %li
-                        %a{class: "btn btn-link", href: "/boards/#{board.attributes[:id]}"}
-                          #{board.attributes[:name]}
+                        %a{class: "btn btn-link", href: "/boards/#{board["id"]}"}
+                          #{board["name"]}
 
       #mainContent
         - if flash.has? :error

@@ -11,6 +11,7 @@ class Ollert
       status 500
     else
       session[:user] = user.id
+      session[:token] = user.member_token
       status 200
     end
   end
@@ -68,7 +69,10 @@ class Ollert
   put '/settings/trello/connect', :auth => :authenticated do
     session[:token] = params[:token]
 
-    client = get_client ENV['PUBLIC_KEY'], session[:token]
+    client = Trello::Client.new(
+      :developer_public_key => ENV['PUBLIC_KEY'],
+      :member_token => session[:token]
+    )
 
     token = client.find(:token, session[:token])
     member = token.member

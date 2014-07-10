@@ -59,8 +59,3 @@ end
 When(/^the val of "(.*?)" is "(.*?)"$/) do |selector, value|
   expect(page.find(selector)[:value]).to eq value
 end
-
-# TODO: Once Boards load asynchronously, please remove this step
-When(/^I wait (\d+) seconds$/) do |seconds|
-  sleep(seconds.to_i)
-end

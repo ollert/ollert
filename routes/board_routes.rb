@@ -1,5 +1,8 @@
 require 'trello'
 
+require_relative '../utils/fetchers/board_fetcher'
+require_relative '../utils/analyzers/board_analyzer'
+
 class Ollert
   get '/boards', :auth => :none do
     if !@user.nil? && !@user.member_token.nil?
@@ -11,7 +14,12 @@ class Ollert
       redirect '/'
     end
 
-    token, client = get_trello_object session[:token], :token, session[:token], nil, @user
+    client = Trello::Client.new(
+      :developer_public_key => ENV['PUBLIC_KEY'],
+      :member_token => session[:token]
+    )
+    token = client.find(:token, session[:token])
+
     member = token.member
 
     # this logic needs to be fixed - why does this belong here?
@@ -22,17 +30,20 @@ class Ollert
     end
     
     # change this to be async
-    @boards = get_user_boards member
+    @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, client.find(:token, session[:token])))
 
     haml_view_model :boards, @user
   end
 
   get '/boards/:id', :auth => :token do |board_id|
-    # this call should be able to be pared down to just a call to get the boards
-    token, @client = get_trello_object session[:token], :token, session[:token], nil, @user
-    @boards = get_user_boards token.member
+    client = Trello::Client.new(
+      :developer_public_key => ENV['PUBLIC_KEY'],
+      :member_token => session[:token]
+    )
 
-    @board_name = @boards.values.flatten.select {|x| x.id == board_id}.first.attributes[:name]
+    @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, client.find(:token, session[:token])))
+
+    @board_name = @boards.values.flatten.select {|x| x["id"] == board_id}.first["name"]
     @board_id = board_id
 
     haml_view_model :analysis, @user

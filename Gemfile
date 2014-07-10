@@ -29,9 +29,7 @@ group :development, :test do
   gem 'rspec'
   gem 'cucumber'
   gem 'capybara'
-  gem 'selenium-webdriver'
   gem 'rack_session_access'
   gem 'email_spec'
-
   gem 'capybara-webkit'
 end
