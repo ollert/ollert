@@ -12,13 +12,26 @@ Scenario: Navigate to the registration page
   Then I should be on the register page
 
 @javascript
-Scenario: Deny connecting to Trello
+Scenario: Deny connecting to Trello - Top of Page
   Given I follow "Connect to Get Started"
   And I press "Deny" on the Trello popup
   Then I should be on the landing page
 
 @javascript
-Scenario: Allow connecting to Trello
+Scenario: Allow connecting to Trello - Top of Page
   Given I follow "Connect to Get Started"
   When I authorize with Trello with username "ollerttest" and password "testing ollert"
   Then I should be on the boards page
+
+@javascript
+Scenario: Deny connecting to Trello - Bottom of Page
+  Given I follow "Get Started Now"
+  And I press "Deny" on the Trello popup
+  Then I should be on the landing page
+
+@javascript
+Scenario: Allow connecting to Trello - Bottom of Page
+  Given I follow "Get Started Now"
+  When I authorize with Trello with username "ollerttest" and password "testing ollert"
+  Then I should be on the boards page
+
