@@ -3,7 +3,7 @@ Feature: Login
 @javascript
 Scenario: Logging in - user has boards
   Given the test user is in the system
-  And the test user has connected to Trello
+  And the test user manually connects to Trello
   And I am on the login page
   When I fill in "email" with "ollertapp@gmail.com"
   And I fill in "password" with "testing ollert"

@@ -4,13 +4,31 @@ end
 
 Given(/^the test user has connected to Trello$/) do
   page.set_rack_session token: "44988fd666c5c51542bc400e5d6515c2bc896eb3e370dc1622fe3c0f484e413a"
+end
 
-  user = User.find_by(email: "ollertapp@gmail.com")
-  if !user.nil?
-    user.member_token = "44988fd666c5c51542bc400e5d6515c2bc896eb3e370dc1622fe3c0f484e413a"
-    user.trello_name = "ollerttest"
-    user.save!
+Given(/^the test user manually connects to Trello$/) do
+  page.set_rack_session user: User.find_by(email: "ollertapp@gmail.com").id
+  visit path_to("the settings page")
+
+  click_link("Connect with Trello")
+
+  trello_popup = page.driver.window_handles.last
+  page.within_window trello_popup do
+    fake_chrome_drivers
+    if page.has_content? "Switch Accounts"
+      click_link "Switch Accounts"
+    else
+      click_link "Log in"
+    end
+
+    fill_in "email-login", with: "ollerttest"
+    fill_in "password-login", with: "testing ollert"
+    click_button "Log In"
+    click_button "Allow"
   end
+
+  page.set_rack_session token: nil
+  page.set_rack_session user: nil
 
 end
 
