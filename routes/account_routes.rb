@@ -226,20 +226,6 @@ class Ollert
   end
 
   get '/settings', :auth => :authenticated do
-    client = Trello::Client.new(
-      :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => session[:token]
-    )
-
-    begin
-      @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, client.find(:token, session[:token])))
-    rescue Trello::Error => e
-      flash[:error] = "There's something wrong with the Trello connection. Please re-establish the connection."
-      @user.member_token = nil
-      @user.trello_name = nil
-      @user.save
-    end
-
     haml :settings
   end
 end
