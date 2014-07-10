@@ -25,3 +25,7 @@ end
 Then(/^the test user "(.*?)" should be nil$/) do |field|
   User.first[field.to_sym].should be_nil
 end
+
+When(/^I see the HTML$/) do
+  puts page.html
+end
