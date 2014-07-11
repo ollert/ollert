@@ -151,7 +151,7 @@ var SettingsController = function () {
         }
       });
     }
-    AuthorizeTrello("never", onSuccess);
+    TrelloController.authorizeUser(onSuccess);
   }
 
   function deleteAccount(e) {

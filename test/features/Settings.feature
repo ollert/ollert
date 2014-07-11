@@ -79,7 +79,8 @@ Scenario: Disconnecting from Trello
   And the test user is logged in
   And I go to the settings page
   When I follow "Disconnect Trello user ollerttest"
-  Then I should see "Successfully disconnected."
+  Then I should not see "Saving..."
+  And I should see "Successfully disconnected."
   And I should see "Connect with Trello"
   And I should not see "Disconnect Trello user ollerttest"
   And the test user "trello_name" should be nil
