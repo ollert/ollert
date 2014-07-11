@@ -23,6 +23,12 @@ class Ollert
       token = client.find(:token, session[:token])
     rescue Trello::Error => e
       flash[:error] = "There's something wrong with the Trello connection. Please re-establish the connection."
+      if !@user.nil?
+        @user.member_token = nil
+        @user.trello_name = nil
+        @user.save
+      end
+
       redirect '/'
     end
 
@@ -39,6 +45,12 @@ class Ollert
       @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, client.find(:token, session[:token])))
     rescue Trello::Error => e
       flash[:error] = "There's something wrong with the Trello connection. Please re-establish the connection."
+      if !@user.nil?
+        @user.member_token = nil
+        @user.trello_name = nil
+        @user.save
+      end
+
       redirect '/'
     end
 
@@ -55,6 +67,12 @@ class Ollert
       @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, client.find(:token, session[:token])))
     rescue Trello::Error => e
       flash[:error] = "There's something wrong with the Trello connection. Please re-establish the connection."
+      if !@user.nil?
+        @user.member_token = nil
+        @user.trello_name = nil
+        @user.save
+      end
+
       redirect '/'
     end
 

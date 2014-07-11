@@ -2,16 +2,10 @@ Then /^I should be redirected to (.*)$/ do |page|
   current_path.should eql path_to page
 end
 
-Given(/^the test user has connected to Trello$/) do
-  page.set_rack_session token: "37f9f5baf86b99e50cecf02b66d363ab642138d7188e580fce4243cd0f101df2"
-end
-
 Given(/^the test user is in the system$/) do
   user = User.new
   user.email = "ollertapp@gmail.com"
   user.password = "testing ollert"
-  user.trello_name = "ollerttest"
-  user.member_token = "37f9f5baf86b99e50cecf02b66d363ab642138d7188e580fce4243cd0f101df2"
 
   user.save!
 end

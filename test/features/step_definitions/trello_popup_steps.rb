@@ -42,6 +42,8 @@ Given(/^the test user manually connects to Trello$/) do
     click_button "Log In"
     click_button "Allow"
   end
+
+  page.should have_content("Successfully connected")
 end
 
 def fake_chrome_drivers

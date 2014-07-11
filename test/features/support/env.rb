@@ -22,3 +22,15 @@ end
 
 require 'email_spec'
 require 'email_spec/cucumber'
+
+After("@token") do
+  user = User.find_by(email: "ollertapp@gmail.com")
+  if !user.nil? && !user.member_token.nil?
+    client = Trello::Client.new(
+      developer_public_key: ENV['PUBLIC_KEY'],
+      member_token: user.member_token
+    )
+
+    client.delete("/tokens/#{page.get_rack_session_key('token')}")
+  end
+end

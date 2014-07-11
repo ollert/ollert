@@ -9,7 +9,8 @@ function AuthorizeTrello(expires, onSuccess) {
     persist: false,
     success: onSuccess,
     scope: {
-      read: true
+      read: true,
+      write: true
     }
   });
 }
