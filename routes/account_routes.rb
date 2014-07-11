@@ -79,25 +79,34 @@ class Ollert
   end
 
   put '/settings/trello/connect', :auth => :authenticated do
-    session[:token] = params[:token]
-
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => session[:token]
+      :member_token => params[:token]
     )
 
-    token = client.find(:token, session[:token])
-    member = token.member
+    begin
+      member = client.get("/tokens/#{params[:token]}/member",
+        {
+          fields: :username
+        }
+      )
 
-    @user.member_token = session[:token]
-    @user.trello_name = member.attributes[:username]
+      session[:token] = params[:token]
+      session[:trello_name] = JSON.parse(member)["username"]
 
-    if !@user.save
+      @user.member_token = session[:token]
+      @user.trello_name = session[:trello_name]
+
+      if !@user.save
+        status 500
+        body "Failed to save connection."
+      else
+        body @user.trello_name
+        status 200
+      end
+    rescue Trello::Error => e
+      body "There's something wrong with the Trello connection. Please re-establish the connection."
       status 500
-      body "Failed to save connection."
-    else
-      status 200
-      body @user.trello_name
     end
   end
 

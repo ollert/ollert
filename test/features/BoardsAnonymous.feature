@@ -5,7 +5,9 @@ Background:
   Given I am on the landing page
   And I follow "Connect to Get Started"
   When I authorize with Trello with username "ollerttest" and password "testing ollert"
-  Then I should be on the boards page
+  Then I should not see "Connecting..."
+  And I should not see "Redirecting..."
+  And I should be on the boards page
 
 Scenario: View names of all available boards
   Then I should see the following boards:
