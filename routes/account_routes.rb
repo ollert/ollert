@@ -85,14 +85,10 @@ class Ollert
     )
 
     begin
-      member = client.get("/tokens/#{params[:token]}/member",
-        {
-          fields: :username
-        }
-      )
+      member = MemberAnalyzer.analyze(MemberFetcher.fetch(client, params[:token]))
 
       session[:token] = params[:token]
-      session[:trello_name] = JSON.parse(member)["username"]
+      session[:trello_name] = member["username"]
 
       @user.member_token = session[:token]
       @user.trello_name = session[:trello_name]

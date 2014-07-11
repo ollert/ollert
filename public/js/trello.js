@@ -30,7 +30,7 @@ function onSuccessfulAuthorization(url) {
 
   $.ajax({
     url: url,
-    method: "post",
+    method: "put",
     data: {
       token: Trello.token()
     },

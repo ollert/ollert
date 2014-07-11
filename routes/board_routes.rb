@@ -2,6 +2,8 @@ require 'trello'
 
 require_relative '../utils/fetchers/board_fetcher'
 require_relative '../utils/analyzers/board_analyzer'
+require_relative '../utils/fetchers/member_fetcher'
+require_relative '../utils/analyzers/member_analyzer'
 
 class Ollert
   get '/boards', :auth => :none do
@@ -52,5 +54,24 @@ class Ollert
     @board_id = board_id
 
     haml :analysis
+  end
+
+  put '/trello/connect' do
+    client = Trello::Client.new(
+      :developer_public_key => ENV['PUBLIC_KEY'],
+      :member_token => params[:token]
+    )
+
+    begin
+      member = MemberAnalyzer.analyze(MemberFetcher.fetch(client, params[:token]))
+
+      session[:token] = params[:token]
+      session[:trello_name] = member["username"]
+
+      status 200
+    rescue Trello::Error => e
+      body "There's something wrong with the Trello connection. Please re-establish the connection."
+      status 500
+    end
   end
 end
