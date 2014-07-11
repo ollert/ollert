@@ -39,3 +39,12 @@ Scenario: Allow connecting to Trello - Bottom of Page
   And I should not see "Redirecting..."
   And I should be on the boards page
 
+@javascript
+Scenario: Allow connecting to Trello after Deny
+  Given I follow "Connect to Get Started"
+  And I press "Deny" on the Trello popup
+  And I follow "Connect to Get Started"
+  When I authorize with Trello with username "ollerttest" and password "testing ollert"
+  Then I should not see "Connecting..."
+  And I should not see "Redirecting..."
+  And I should be on the boards page
