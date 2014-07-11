@@ -75,9 +75,8 @@ Scenario: Updating password with non-matching new password
 @javascript
 Scenario: Disconnecting from Trello
   Given the test user is in the system
+  And the test user manually connects to Trello
   And the test user is logged in
-  And the test user "member_token" is "not nil"
-  And the test user "trello_name" is "ollerttest"
   And I go to the settings page
   When I follow "Disconnect Trello user ollerttest"
   Then I should see "Successfully disconnected."

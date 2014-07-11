@@ -56,6 +56,18 @@ class Ollert
   end
 
   put '/settings/trello/disconnect', :auth => :authenticated do
+    client = Trello::Client.new(
+      :developer_public_key => ENV['PUBLIC_KEY'],
+      :member_token => @user.member_token
+    )
+
+    begin
+      client.delete("/tokens/#{@user.member_token}")
+    rescue Trello::Error => e
+      # this probably means the token was revoked on Trello
+      # which is fine and we don't need to do anything about it
+    end
+
     @user.member_token = nil
     @user.trello_name = nil
 
