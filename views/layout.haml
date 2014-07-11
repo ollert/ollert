@@ -18,7 +18,7 @@
 
     :javascript
       $(document).ready(function() {
-        TrelloClient.init("#{ENV['PUBLIC_KEY']}")
+        Trello.setKey("#{ENV['PUBLIC_KEY']}")
       });
 
     %script{src: "/js/plugins.js"}

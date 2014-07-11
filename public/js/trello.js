@@ -1,5 +1,6 @@
 function AuthorizeTrello(expires, onSuccess) {
   Trello.deauthorize();
+  Trello.clearReady();
 
   Trello.authorize({
     name: "Ollert",
@@ -26,8 +27,6 @@ function onUserAuthorization() {
 function onSuccessfulAuthorization(url) {
   $(".connect-btn").text("Connecting...");
 
-  var token = Trello.token();
-
   $.ajax({
     url: url,
     method: "put",
@@ -40,7 +39,7 @@ function onSuccessfulAuthorization(url) {
     },
     error: function (xhr) {
       FlashMessage.error(xhr.responseText);
-      $(".connect-btn").text("Conneciton failed. Try again.");
+      $(".connect-btn").text("Connection failed. Try again.");
     }
   });
 }
