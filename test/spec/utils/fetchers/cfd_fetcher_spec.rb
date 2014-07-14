@@ -2,6 +2,18 @@ require_relative '../../../../utils/fetchers/cfd_fetcher'
 
 describe CfdFetcher do
   describe '#fetch' do
+    it 'raises error on nil client' do
+      expect {CfdFetcher.fetch(nil, "ori0kf34rf34jfjfrej")}.to raise_error(Trello::Error)
+    end
+
+    it 'raises error on nil board id' do
+      expect {CfdFetcher.fetch(double(Trello::Client), nil)}.to raise_error(Trello::Error)
+    end
+
+    it 'raises error on empty board id' do
+      expect {CfdFetcher.fetch(double(Trello::Client), "")}.to raise_error(Trello::Error)
+    end
+
     it 'uses client to get board' do
       board_id = "ori0kf34rf34jfjfrej"
       options =
