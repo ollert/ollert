@@ -2,20 +2,6 @@ require_relative '../../../../utils/fetchers/stats_fetcher'
 
 describe StatsFetcher do
   describe '#fetch' do
-    it 'returns empty object string for nil client' do
-      expect(StatsFetcher.fetch(nil, "fsadfj823w")).to eq "{}"
-    end
-
-    it 'returns empty object for nil token' do
-      client = double(Trello::Client)
-      expect(StatsFetcher.fetch(client, nil)).to eq "{}"
-    end
-
-    it 'returns empty object for empty token' do
-      client = double(Trello::Client)
-      expect(StatsFetcher.fetch(client, "")).to eq "{}"
-    end
-
     it 'uses client to get member' do
       board_id = "fsadfj823w"
       options =
