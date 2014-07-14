@@ -1,20 +1,30 @@
 class LabelCountAnalyzer
   def self.analyze(raw)
+    return {} if raw.nil? || raw.empty?
+
     data = JSON.parse(raw)
 
-    label_counts = {}
+    return {} if data.empty?
 
-    data["cards"].each do |card|
-      card["labels"].each do |label|
-        label_counts[label] ||= 0
-        label_counts[label] += 1
+    label_hash = {}
+    data["labelNames"].each do |color, name|
+      unless name.nil? || name.empty?
+        label_hash[color] = {name: name, count: 0}
       end
     end
 
+    data["cards"].each do |card|
+      card["labels"].each do |label|
+        label_hash[label["color"]][:count] += 1
+      end
+    end
+
+    sorted_labels = label_hash.sort_by {|k, v| v[:count]}.reverse
+
     {
-      labels: label_counts.keys.map {|label| label["name"]},
-      counts: label_counts.values,
-      colors: data["labelNames"].keys.map {|color| convert_color(color)}
+      labels: sorted_labels.map {|label| label[1][:name]},
+      counts: sorted_labels.map {|label| label[1][:count]},
+      colors: sorted_labels.map {|label| convert_color(label[0])}
     }
   end
 
