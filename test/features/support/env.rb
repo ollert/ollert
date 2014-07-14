@@ -10,7 +10,7 @@ require 'rack_session_access/capybara'
 require 'capybara/webkit'
 
 Capybara.app = Ollert
-Capybara.default_wait_time = 5
+Capybara.default_wait_time = 10
 Capybara.app.use RackSessionAccess::Middleware
 
 Capybara.javascript_driver = :webkit
