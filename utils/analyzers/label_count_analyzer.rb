@@ -6,12 +6,7 @@ class LabelCountAnalyzer
 
     return {} if data.empty?
 
-    label_hash = {}
-    data["labelNames"].each do |color, name|
-      unless name.nil? || name.empty?
-        label_hash[color] = {name: name, count: 0}
-      end
-    end
+    label_hash = Hash[ data["labelNames"].map {|k, v| [k, {name: v.empty? ? k : v, count: 0}] } ]
 
     data["cards"].each do |card|
       card["labels"].each do |label|
