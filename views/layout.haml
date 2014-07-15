@@ -94,10 +94,10 @@
     %div{id: 'footer'}
       .container
         .row
-          .col-md-8
+          .col-md-8.col-xs-6
             %ul
               %li
-                %a{href: "http://www.sep.com/labs/startupweekend/"}
+                %a{href: "http://www.sep.com/labs/startupweekend/", alt: "SEP Startup Weekend"}
                   SEP Startup Weekend
               %li
                 %a{href: "/privacy"}
@@ -105,6 +105,9 @@
               %li
                 %a{href: "/terms"}
                   Terms and Conditions
-          .col-md-4
+              %li
+                %a{href: "mailto:connect@ollertapp.com", alt: "Contact Us"}
+                  Contact Us
+          .col-md-4.col-xs-6
             %a{href: "http://www.sep.com/labs/", alt: "SEP Labs", target: "blank", title: "Danger! Experimental"}
-              %img{src: '/img/sep-labs-logo-white.png', height: '85px'}
+              %img{src: '/img/sep-labs-logo-white.png', width: '100%'}

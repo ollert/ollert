@@ -58,16 +58,6 @@ html,body {
   min-height: 120px;
 }
 
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-  #footer {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
 // end sticky footer
 
 .topbar {
@@ -99,8 +89,7 @@ html,body {
 }
 
 #footer {
-  padding: 20px 15px 10px 15px;
-  // margin-top: 60px;
+  padding: 10px 15px 0 15px;
   background: #3E434A;
   color: #ADB3BA;
   border: none;
@@ -464,4 +453,12 @@ ul.left-align li a{
 
 #flash {
   margin: 0;
+}
+
+a.btn {
+  white-space: normal;
+}
+
+.landing-connect a.btn {
+  margin-top: 20px;
 }
