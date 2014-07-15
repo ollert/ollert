@@ -1,9 +1,9 @@
 .container
   .row
     %h2
-      .col-md-4
+      .col-xs-4
         Settings
-      .col-md-8
+      .col-xs-8
         %form{action: "/logout", method: "post"}
           %input{type: "submit", class: "btn btn-default pull-right", value: "Log Out"}
 
@@ -13,12 +13,13 @@
   .row
     %form{id: "updateEmail", role: "form", class: "form-horizontal"}
       .form-group
-        %label{for: "email", class: "control-label col-sm-2"}
-          Email
-        .col-sm-5
+        .col-sm-3.col-xs-4.col-lg-2
+          %label{for: "email", class: "control-label col-sm-2"}
+            Email
+        .col-sm-5.col-xs-8.col-lg-5
           %input{type: "email", id: "email", name: "email", class: "form-control", value: "#{@user.email}", required: "required"}
       .form-group
-        .col-sm-10.col-sm-offset-2
+        .col-sm-offset-3.col-sm-5.col-xs-offset-4.col-xs-8.col-lg-offset-2.col-lg-5
           %input{class: "btn btn-primary", type: "submit", value:"Update Email"}
           %span{id: "emailStatus"}
 
@@ -28,22 +29,25 @@
   .row
     %form{id: "updatePassword", role: "form", class: "form-horizontal"}
       .form-group
-        %label{for: "current_password", class: "control-label col-sm-2"}
-          Current Password
-        .col-sm-5
+        .col-sm-3.col-xs-5.col-lg-2
+          %label{for: "current_password", class: "control-label"}
+            Current Password
+        .col-sm-5.col-xs-7.col-lg-5
           %input{type: "password", id: "current_password", name: "current_password", class: "form-control", autocomplete: "off", required: "required"}
       .form-group
-        %label{for: "new_password", class: "control-label col-sm-2"}
-          New Password
-        .col-sm-5
+        .col-sm-3.col-xs-5.col-lg-2
+          %label{for: "new_password", class: "control-label"}
+            New Password
+        .col-sm-5.col-xs-7.col-lg-5
           %input{type: "password", id: "new_password", name: "new_password", class: "form-control", required: "required"}
       .form-group
-        %label{for: "confirm_password", class: "control-label col-sm-2"}
-          Confirm New
-        .col-sm-5
+        .col-sm-3.col-xs-5.col-lg-2
+          %label{for: "confirm_password", class: "control-label"}
+            Confirm New
+        .col-sm-5.col-xs-7.col-lg-5
           %input{type: "password", id: "confirm_password", name: "confirm_password", class: "form-control", required: "required"}
       .form-group
-        .col-sm-10.col-sm-offset-2
+        .col-sm-offset-3.col-sm-5.col-xs-offset-5.col-xs-7.col-lg-offset-2.col-lg-5
           %input{class: "btn btn-primary", type: "submit", value:"Update Password"}
           %span{id: "passwordStatus"}
 
@@ -51,7 +55,7 @@
     %hr
 
   .row
-    .col-sm-10.col-sm-offset-2.no-padding
+    .col-sm-offset-3.col-sm-9.col-xs-12.col-lg-offset-2.col-lg-10.no-padding
       %a{id: "trelloDisconnect", class: "btn btn-lg btn-warning", href: "javascript:void(0)"}
         Disconnect Trello user <b>#{@user.trello_name}</b>
       %a{id: "trelloConnect", class: "btn btn-primary btn-lg", href: "javascript:void(0)"}
@@ -62,7 +66,7 @@
     %hr
 
   .row
-    .col-sm-10.col-sm-offset-2.no-padding
+    .col-sm-offset-3.col-sm-9.col-xs-12.col-lg-offset-2.col-lg-10.no-padding
       %form{id: "deleteAccount"}
         .checkbox{style: "font-size: 16px;"}
           %label
