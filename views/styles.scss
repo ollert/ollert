@@ -251,7 +251,7 @@ hr {
 }
 
 #login-box form {
-  margin: 20px 30px 5px 30px !important;
+  margin: 20px 15px 5px !important;
 }
 
 .tooltip-inner {
@@ -461,4 +461,13 @@ a.btn {
 
 .landing-connect a.btn {
   margin-top: 20px;
+}
+
+#settingsCog {
+  padding: 5px 15px;
+}
+
+#agreedCheckbox {
+  font-size: 16px;
+  margin-top: 10px;
 }

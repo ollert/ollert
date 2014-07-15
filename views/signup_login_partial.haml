@@ -16,56 +16,55 @@
           %input{type: "email", id: "username", name: "username", class: "form-control", required: "true"}
         .modal-footer
           %input{id: "resetPasswordSubmit", type: "submit", class: "btn btn-primary", value: "Submit"}
-              
 
 .container
   .row
-    .col-md-offset-2.col-md-8.img-rounded{id: 'login-box'}
-      .row
-        .col-md-12
-          %ul{class: "nav nav-tabs", role: "tablist"}
-            %li{id: "signupTab"}
-              %a{href: "javascript:void(0)", "data-toggle" => "tab"}
-                Sign Up
-            %li{id: "loginTab"}
-              %a{href: "javascript:void(0)", "data-toggle" => "tab"}
-                Log In
-      .row
-        %form{id: "signup", role: "form", class: "form-horizontal"}
-          .form-group
-            %label{for: "email", class: "col-md-2 control-label"}
-              Email
-            .col-md-10
-              %input{type: "email", id: "email", name: "email", class: "form-control", value: @email, required: "required", autofocus: "true"}
-          .form-group
-            %label{for: "password", class: "col-md-2 control-label"}
-              Password
-            .col-md-10
-              %input{type: "password", id: "password", name: "password", class: "form-control", autocomplete: "off", required: "required"}
-          .form-group.signup-content
-            .col-md-10.col-md-offset-2
-              .checkbox{id: "agreedCheckbox", style: "font-size: 16px; margin-top: 10px;"}
-                %label
-                  %input{id: "agreed", type: "checkbox", name: "agreed"}
-                  I have read and agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
-          .form-group.signup-content
-            .col-md-10.col-md-offset-2
-              %input{id: "signupButton", class: "btn btn-primary btn-lg", type: "submit", value: "Sign Me Up!"}
-          .form-group.signup-content
-            .col-md-10.col-md-offset-2
-              %span{id: "signupStatus"}
-          .form-group.signup-content
+    .col-md-offset-2.col-md-8.col-xs-12.img-rounded{id: 'login-box'}
+      %ul{class: "nav nav-tabs", role: "tablist"}
+        %li{id: "signupTab"}
+          %a{href: "javascript:void(0)", "data-toggle" => "tab"}
+            Sign Up
+        %li{id: "loginTab"}
+          %a{href: "javascript:void(0)", "data-toggle" => "tab"}
+            Log In
+      %form{id: "signup", role: "form", class: "form-horizontal"}
+        .form-group
+          %label{for: "email", class: "col-sm-2 col-xs-3 control-label"}
+            Email
+          .col-sm-10.col-xs-9
+            %input{type: "email", id: "email", name: "email", class: "form-control", value: @email, required: "required", autofocus: "true"}
+        .form-group
+          %label{for: "password", class: "col-sm-2 col-xs-3 control-label"}
+            Password
+          .col-sm-10.col-xs-9
+            %input{type: "password", id: "password", name: "password", class: "form-control", autocomplete: "off", required: "required"}
+        .form-group.signup-content
+          .col-sm-10.col-sm-offset-2.col-xs-12
+            .checkbox{id: "agreedCheckbox"}
+              %label
+                %input{id: "agreed", type: "checkbox", name: "agreed"}
+                I have read and agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
+        .form-group.signup-content
+          .col-sm-10.col-sm-offset-2.col-xs-12
+            %input{id: "signupButton", class: "btn btn-primary btn-lg", type: "submit", value: "Sign Me Up!"}
+        .form-group.signup-content
+          .col-sm-10.col-sm-offset-2.col-xs-12
+            %span{id: "signupStatus"}
+        .form-group.signup-content
+          .col-xs-12
             %a{id: "already", class: "btn btn-link pull-right", href: "javascript:void(0)"}
               Already have an account? Log in.
-          .form-group.login-content
-            .col-md-10.col-md-offset-2
-              %input{id: "loginButton", class: "btn btn-primary btn-lg", type: "submit", value: "Log In"}
-          .form-group.login-content
-            .col-md-10.col-md-offset-2
-              %span{id: "loginStatus"}
-          .form-group.login-content
-            %a{class: "btn btn-link", "data-toggle" => "modal", href: "#resetPasswordModal"}
+        .form-group.login-content
+          .col-sm-10.col-sm-offset-2
+            %input{id: "loginButton", class: "btn btn-primary btn-lg", type: "submit", value: "Log In"}
+        .form-group.login-content
+          .col-sm-10.col-sm-offset-2
+            %span{id: "loginStatus"}
+        .form-group.login-content
+          .col-xs-6
+            %a{class: "btn btn-link pull-left", "data-toggle" => "modal", href: "#resetPasswordModal"}
               Forgot password?
+          .col-xs-6
             %a{id: "newUser", class: "btn btn-link pull-right", href: "javascript:void(0)"}
               New user? Create an account.
 
