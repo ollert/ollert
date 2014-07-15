@@ -1,6 +1,9 @@
 class StatsAnalyzer
   def self.analyze(raw)
+    return {} if raw.nil? || raw.empty?
     data = JSON.parse(raw)
+    return {} if data.empty?
+
     cards = data["cards"]
     members = data["members"]
     creations = data["actions"]

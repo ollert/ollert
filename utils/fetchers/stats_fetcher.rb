@@ -6,11 +6,15 @@ class StatsFetcher
         fields: "name",
         actions: :createCard,
         action_fields: "date,data",
+        action_memberCreator: :false,
+        action_member: false,
+        actions_limit: 1000,
         cards: :all,
         card_fields: "idList,name,idMembers",
         members: :all,
         member_fields: :fullName,
-        lists: :open
+        lists: :open,
+        list_fields: "name,closed",
       }
     )
   end
