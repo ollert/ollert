@@ -1,7 +1,13 @@
 class WipAnalyzer
   def self.analyze(raw)
+    return {} if raw.nil? || raw.empty?
+
     wip = {}
-    JSON.parse(raw).each do |list|
+    data = JSON.parse(raw)
+
+    return {} if data.empty?
+
+    data.each do |list|
       wip[list["name"]] ||= list["cards"].count
     end
 
