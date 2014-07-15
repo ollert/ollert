@@ -1,6 +1,9 @@
 class CfdAnalyzer
   def self.analyze(raw)
+    return {} if raw.nil? || raw.empty?
     data = JSON.parse(raw)
+    return {} if data.empty?
+
     actions = data["actions"]
     card_actions = actions.reject {|action| action["type"] == "updateList"}
     list_actions = actions.select {|action| action["type"] == "updateList"}

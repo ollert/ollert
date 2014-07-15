@@ -20,11 +20,14 @@ describe CfdFetcher do
       {
         actions: "createCard,updateCard:idList,updateList:closed",
         actions_limit: 1000,
-        actions_fields: "type,date,data",
+        action_fields: "data,type,date",
+        action_memberCreator: :false,
+        action_member: false,
         lists: :all,
-        list_fields: "name,closed"
+        list_fields: "name,closed",
+        fields: "name"
       }
-      board = "{'name': 'DS9', 'lists': {}, 'acitons': {}, 'id': 'ori0kf34rf34jfjfrej'}"
+      board = "{'name': 'DS9', 'lists': {}, 'actions': {}, 'id': 'ori0kf34rf34jfjfrej'}"
 
       client = double(Trello::Client)
       expect(client).to receive(:get).with("/boards/#{board_id}", options).and_return(board)

@@ -5,9 +5,12 @@ class CfdFetcher
       {
         actions: "createCard,updateCard:idList,updateList:closed",
         actions_limit: 1000,
-        actions_fields: "type,date,data",
+        action_fields: "data,type,date",
+        action_memberCreator: :false,
+        action_member: false,
         lists: :all,
-        list_fields: "name,closed"
+        list_fields: "name,closed",
+        fields: "name"
       }
     )
   end
