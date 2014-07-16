@@ -57,7 +57,7 @@ class StatsAnalyzer
       counts[card["idList"]] += 1
     end
     most = counts.max_by {|k, v| v}
-    list = lists.select {|l| l["id"] == most[0]}.first
+    list = lists.select {|l| l["id"] == most[0]}.first unless most.nil?
 
     if list.nil?
       return "", 0
@@ -72,7 +72,7 @@ class StatsAnalyzer
       counts[card["idList"]] += 1
     end
     least = counts.min_by {|k, v| v}
-    list = lists.select {|l| l["id"] == least[0]}.first["name"]
+    list = lists.select {|l| l["id"] == least[0]}.first["name"] unless least.nil?
 
     if list.nil?
       return "", 0
@@ -94,11 +94,11 @@ class StatsAnalyzer
 
   def self.get_oldest_card(cards, actions)
     oldest = actions.min_by { |action| action["date"].to_date }
-    return oldest["data"]["card"]["name"], Date.today.mjd - oldest["date"].to_date.mjd
+    return oldest["data"]["card"]["name"], Date.today.mjd - oldest["date"].to_date.mjd unless oldest.nil?
   end
 
   def self.get_newest_card(cards, actions)
     oldest = actions.max_by { |action| action["date"].to_date }
-    return oldest["data"]["card"]["name"], Date.today.mjd - oldest["date"].to_date.mjd
+    return oldest["data"]["card"]["name"], Date.today.mjd - oldest["date"].to_date.mjd unless oldest.nil?
   end
 end
