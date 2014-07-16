@@ -245,6 +245,24 @@ class Ollert
   end
 
   get '/settings', :auth => :authenticated do
+    unless @user.member_token.nil? || @user.trello_name.nil?
+      client = Trello::Client.new(
+        :developer_public_key => ENV['PUBLIC_KEY'],
+        :member_token => @user.member_token
+      )
+
+      begin
+        @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, @user.trello_name))
+      rescue Trello::Error => e
+        @user.member_token = nil
+        @user.trello_name = nil
+        @user.save
+
+        session[:trello_name] = nil
+        session[:token] = nil
+      end
+    end
+
     haml :settings
   end
 end
