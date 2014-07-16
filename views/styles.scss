@@ -4,26 +4,10 @@ $medium-light: #A0A0A0;
 $light: #CCCCCC;
 $light-light: #F2F2F2;
 
-/* Red */
 $bgDefault      : #e74c3c;
 $bgHighlight    : #a4251c;
 $colDefault     : #ecf0f1;
 $colHover       : #ffbbbc;
-/* Green * /
-$bgDefault      : #2ecc71;
-$bgHighlight    : #27ae60;
-$colDefault     : #ecf0f1;
-$colHover       : #d1ffed;
-/* Purple * /
-$bgDefault      : #9b59b6;
-$bgHighlight    : #8e44ad;
-$colDefault     : #ecf0f1;
-$colHover       : #ecdbff;
-/* Orange * /
-$bgDefault      : #e67e22;
-$bgHighlight    : #d35400;
-$colDefault     : #ecf0f1;
-$colHover       : #ffe6d1; /**/
 
 @font-face {
   font-family: 'Muli';
@@ -117,26 +101,22 @@ hr {
 }
 
 .analysis-blocks {
-    background-color: #F8F8F8;
-    padding: 5px;
-    margin: 5px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #DDD;
-    border-bottom: 2px solid #BBB;
-    -moz-border-radius-topleft: 3px;
-    -webkit-border-top-left-radius: 3px;
-     border-top-left-radius: 3px;
-    -moz-border-radius-topright: 3px;
-    -webkit-border-top-right-radius: 3px;
-    border-top-right-radius: 3px;
-    -moz-border-radius-bottomright: 3px;
-    -webkit-border-bottom-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    -moz-border-radius-bottomleft: 3px;
-    -webkit-border-bottom-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    text-align: center;
+  background-color: #F8F8F8;
+  padding: 5px;
+  margin: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #DDD;
+  border-bottom: 2px solid #BBB;
+  -webkit-border-top-left-radius: 3px;
+   border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  text-align: center;
 }
 
 .analysis-blocks:hover,
@@ -148,46 +128,66 @@ hr {
 /* --- Style --- */
 
 .navbar-default {
-    background-color: $bgDefault;
-    border-color: $bgDefault;
-    .navbar-brand {
+  background-color: $bgDefault;
+  border-color: $bgDefault;
+  .navbar-brand {
+    color: $colDefault;
+    &:hover, &:focus {
+      color: $colHover;
+    }
+  }
+  .navbar-nav {
+    > li {
+      > a {
+        padding-top: 25px;
+        padding-bottom: 25px;
         color: $colDefault;
         &:hover, &:focus {
-            color: $colHover; }}
-    .navbar-nav {
-        > li {
-            > a {
-                padding-top: 25px;
-                padding-bottom: 25px;
-                color: $colDefault;
-                &:hover, &:focus {
-                    color: $colHover;   }}}
-        .active {
-            > a, > a:hover, > a:focus {
-                color: $colHover;
-                background-color: $bgHighlight; }}
-        .open {
-            > a, > a:hover, > a:focus {
-                color: $colHover;
-                background-color: $bgHighlight;
-                .caret {
-                    border-top-color: $colHover;
-                    border-bottom-color: $colHover; }}}
-        > .dropdown {
-            > a {
-                .caret {
-                    border-top-color: $colDefault;
-                    border-bottom-color: $colDefault; }
-                &:hover, &:focus {
-                    .caret {
-                        border-top-color: $colHover;
-                        border-bottom-color: $colHover; }}}}}
-    .navbar-toggle {
-        border-color: $bgHighlight;
+            color: $colHover;
+        }
+      }
+    }
+    .active {
+      > a, > a:hover, > a:focus {
+        color: $colHover;
+        background-color: $bgHighlight;
+      }
+    }
+    .open {
+      > a, > a:hover, > a:focus {
+        color: $colHover;
+        background-color: $bgHighlight;
+        .caret {
+          border-top-color: $colHover;
+          border-bottom-color: $colHover;
+        }
+      }
+    }
+    > .dropdown {
+      > a {
+        .caret {
+          border-top-color: $colDefault;
+          border-bottom-color: $colDefault;
+        }
         &:hover, &:focus {
-            background-color: $bgHighlight; }
-        .icon-bar {
-            background-color: $colDefault; }}}
+          .caret {
+            border-top-color: $colHover;
+            border-bottom-color: $colHover;
+          }
+        }
+      }
+    }
+  }
+  .navbar-toggle {
+      border-color: $bgHighlight;
+      &:hover, &:focus {
+        background-color: $bgHighlight;
+      }
+      .icon-bar {
+        background-color: $colDefault;
+      }
+    }
+}
 
 .navbar {
   min-height:70px;
@@ -237,10 +237,10 @@ hr {
 }
 
 .spinner {
-    background-image: url('/img/spinner.gif');
-    width: 35px;
-    height: 45px;
-    text-align: center;
+  background-image: url('/img/spinner.gif');
+  width: 35px;
+  height: 45px;
+  text-align: center;
 }
 
 #login-box {
@@ -262,7 +262,6 @@ hr {
   font-size: 24px;
 }
 
-/* Blue buttons (not used yet) */
 .btn-primary {
   color: #fff;
   background-color: #596a8d;
@@ -276,23 +275,7 @@ hr {
   color: #fff;
   background-color: #536488;
   border-color: #4e5f82;
-} 
-
-/* Red buttons */
-// .btn-primary {
-//   color: #fff;
-//   background-color: #dc4438;
-//   border-color: #dc4438;
-// }
-// .btn-primary:hover,
-// .btn-primary:focus,
-// .btn-primary:active,
-// .btn-primary.active,
-// .open .dropdown-toggle.btn-primary {
-//   color: #fff;
-//   background-color: #a4251c;
-//   border-color: #a4251c;
-// }
+}
 
 .signup-login-group {
   margin-top: 19px;
@@ -336,55 +319,51 @@ ul.boards-list {
   color: #E74C3C;
   text-decoration: none;
 }
+
 .analysis-blocks {
-    padding: 5px;
-    margin: 5px;
-    border-style: solid;
-    border-width: 1px;
-    -moz-border-radius-topleft: 18px;
-    -webkit-border-top-left-radius: 18px;
-     border-top-left-radius: 18px;
-    -moz-border-radius-topright: 15px;
-    -webkit-border-top-right-radius: 15px;
-    border-top-right-radius: 15px;
-    -moz-border-radius-bottomright: 22px;
-    -webkit-border-bottom-right-radius: 22px;
-    border-bottom-right-radius: 22px;
-    -moz-border-radius-bottomleft: 25px;
-    -webkit-border-bottom-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-    text-align: center;
+  padding: 5px;
+  margin: 5px;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-border-top-left-radius: 18px;
+   border-top-left-radius: 18px;
+  -webkit-border-top-right-radius: 15px;
+  border-top-right-radius: 15px;
+  -webkit-border-bottom-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+  -webkit-border-bottom-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  text-align: center;
 }
 
-
 .lg-analysis-blocks-container {
-    width: 950px;
-    height: 440px;
+  width: 950px;
+  height: 440px;
 }
 
 .med-chart{
-    width: 560px; 
-    height: 380px;
+  width: 560px; 
+  height: 380px;
 }
 
 .lg-chart{
-    width:  1130px;
-    height: 420px;
+  width:  1130px;
+  height: 420px;
 }
 
 .med-analysis-blocks-container {
-    width: 575px;
-    height: 390px;
+  width: 575px;
+  height: 390px;
 }
 
 .lg-analysis-blocks-container {
-    width: 1150px;
-    height: 440px;
+  width: 1150px;
+  height: 440px;
 }
 
 .med-analysis-blocks-container-stats {
-    width: 280px;
-    height: 200px;
+  width: 280px;
+  height: 200px;
 }
 
 .lg-analysis-blocks-container-stats {
@@ -401,12 +380,11 @@ ul.boards-list {
    border-bottom-color: #CBCBCB;   
    height: 2.75em !important;
    padding: 8px;
-   
    color: #777777;
 }
 
 ul.left-align li a{
-    text-align: left;
+  text-align: left;
 }
 
 #deleteAccountButton {
