@@ -13,5 +13,6 @@ Scenario: View names of all available boards
   Then I should see the following boards:
   | organization          | name            |
   | "My Boards"           | Welcome Board"  |
+  | "My Boards"           | "Empty Board"   |
   | "Test Organization 1" | "Test Board #1" |
   | "Test Organization 1" | "Test Board #2" |
