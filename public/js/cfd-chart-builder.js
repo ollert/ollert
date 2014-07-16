@@ -1,4 +1,4 @@
-var CfdChart = (function (options) {
+var CfdChartBuilder = (function (options) {
   var buildChart = function (options) {
     $('#CFD-Container').highcharts({
       chart: {

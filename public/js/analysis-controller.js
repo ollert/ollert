@@ -14,7 +14,7 @@ var AnalysisController = (function () {
       success: function (data) {
         $('#wip-spinner').hide();
         var parsed = jQuery.parseJSON(data);
-        WipChart.build({
+        WipChartBuilder.build({
           lists: parsed.wipcategories,
           counts: [{
             name: "Cards in List",
@@ -40,7 +40,7 @@ var AnalysisController = (function () {
 
         var parsed = jQuery.parseJSON(data);
 
-        CfdChart.build({
+        CfdChartBuilder.build({
           data: parsed.cfddata,
           dates: parsed.dates,
           boardName: boardName
@@ -62,7 +62,7 @@ var AnalysisController = (function () {
         $('#label-count-spinner').hide();
 
         var parsed = jQuery.parseJSON(data);
-        LabelCountChart.build({
+        LabelCountChartBuilder.build({
           labels: parsed.labels,
           counts: parsed.counts,
           colors: parsed.colors

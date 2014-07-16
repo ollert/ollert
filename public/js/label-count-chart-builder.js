@@ -1,4 +1,4 @@
-var LabelCountChart = (function () {
+var LabelCountChartBuilder = (function () {
   var buildChart = function (options) {
     var green = '#34b27d';
     var yellow = '#dbdb57';

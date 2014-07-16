@@ -1,4 +1,4 @@
-var WipChart = (function () {
+var WipChartBuilder = (function () {
   var buildChart = function (options) {
     $('#WIP-Container').highcharts({
       chart: {
