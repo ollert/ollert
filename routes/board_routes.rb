@@ -35,7 +35,7 @@ class Ollert
     )
 
     if session[:user].nil? 
-      flash[:info] = "Like what you see? Sign up for a free account to show your support."
+      flash[:info] = "Like what you see? <a href='/signup'>Sign up</a> for a free account to show your support."
     end
 
     begin

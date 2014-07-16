@@ -87,16 +87,16 @@ class Ollert
     begin
       member = MemberAnalyzer.analyze(MemberFetcher.fetch(client, params[:token]))
 
-      session[:token] = params[:token]
-      session[:trello_name] = member["username"]
-
-      @user.member_token = session[:token]
-      @user.trello_name = session[:trello_name]
+      @user.member_token = params[:token]
+      @user.trello_name = member["username"]
 
       if !@user.save
         status 500
         body "Failed to save connection."
       else
+        session[:token] = params[:token]
+        session[:trello_name] = member["username"]
+
         body @user.trello_name
         status 200
       end
@@ -216,6 +216,8 @@ class Ollert
         redirect :login
       else
         session[:user] = user.id
+        session[:token] = user.member_token
+        session[:trello_name] = user.trello_name
         redirect '/'
       end
     end
