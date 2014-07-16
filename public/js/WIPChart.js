@@ -7,7 +7,7 @@ function wipChart(wip_data) {
   this.categories = wip_data.lists;
   this.data = wip_data.counts;
 
-  this.buildChart = function() {
+  this.buildChart = function () {
     var that = this;
     $('#WIP-Container').highcharts({
       chart: {

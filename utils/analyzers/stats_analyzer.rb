@@ -44,9 +44,9 @@ class StatsAnalyzer
     min_name, min = get_list_with_least_cards(cards, lists)
 
     {
-      list_with_most_cards_name: max_name.length > 24 ? max_name[0..21] << "..." : max_name,
+      list_with_most_cards_name: max_name,
       list_with_most_cards_count: max,
-      list_with_least_cards_name: min_name.length > 24 ? min_name[0..21] << "..." : min_name,
+      list_with_least_cards_name: min_name,
       list_with_least_cards_count: min
     }
   end
@@ -85,9 +85,9 @@ class StatsAnalyzer
     oldest_name, oldest = get_oldest_card(cards, actions)
     newest_name, newest = get_newest_card(cards, actions)
     {
-      oldest_card_name: oldest_name.length > 24 ? oldest_name[0..21] << "..." : oldest_name,
+      oldest_card_name: oldest_name,
       oldest_card_age: oldest,
-      newest_card_name: newest_name.length > 24 ? newest_name[0..21] << "..." : newest_name,
+      newest_card_name: newest_name,
       newest_card_age: newest
     }
   end
