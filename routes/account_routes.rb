@@ -225,6 +225,20 @@ class Ollert
 
   delete '/settings/delete', :auth => :authenticated do
     if params[:iamsure] == "true"
+      unless @user.trello_name.nil? || @user.member_token.nil?
+        client = Trello::Client.new(
+          :developer_public_key => ENV['PUBLIC_KEY'],
+          :member_token => @user.member_token
+        )
+
+        begin
+          client.delete("/tokens/#{@user.member_token}")
+        rescue Trello::Error => e
+          # this probably means the token was revoked on Trello
+          # which is fine and we don't need to do anything about it
+        end
+      end
+
       if @user.delete
         session[:user] = nil
         session[:token] = nil
