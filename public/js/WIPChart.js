@@ -1,14 +1,5 @@
-function wipChartData() {
-  this.lists = [];
-  this.counts = [];
-};
-
-function wipChart(wip_data) {
-  this.categories = wip_data.lists;
-  this.data = wip_data.counts;
-
-  this.buildChart = function () {
-    var that = this;
+var WipChart = (function () {
+  var buildChart = function (options) {
     $('#WIP-Container').highcharts({
       chart: {
         type: 'bar'
@@ -20,7 +11,7 @@ function wipChart(wip_data) {
         text: 'WIP'
       },
       xAxis: {
-        categories: that.categories,
+        categories: options.categories,
         title: {
           text: null
         }
@@ -48,7 +39,11 @@ function wipChart(wip_data) {
       credits: {
         enabled: false
       },
-      series: that.data
+      series: options.counts
     });
-  };
-};
+  }
+
+  return {
+    build: buildChart
+  }
+}());

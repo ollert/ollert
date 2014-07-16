@@ -13,16 +13,15 @@ var AnalysisController = (function () {
       url: "/boards/" + boardId + "/analysis/wip",
       success: function (data) {
         $('#wip-spinner').hide();
-        var theData = jQuery.parseJSON(data);
-        var wip_data = new wipChartData();
-        wip_data.lists = theData.wipcategories;
-        wip_data.counts = [{
-          name: "Cards in List",
-          showInLegend: false,
-          data: theData.wipdata
-        }];
-        var wc = new wipChart(wip_data);
-        wc.buildChart();
+        var parsed = jQuery.parseJSON(data);
+        WipChart.build({
+          lists: parsed.wipcategories,
+          counts: [{
+            name: "Cards in List",
+            showInLegend: false,
+            data: parsed.wipdata
+          }]
+        });
       },
       error: function (xhr) {
         $("#wip-spinner").hide();
@@ -39,14 +38,13 @@ var AnalysisController = (function () {
       success: function (data) {
         $('#cfd-spinner').hide();
 
-        var theData = jQuery.parseJSON(data);
-        var cfdData = new cfdChartData();
-        var cc = new cfdChart({
-          data: theData.cfddata,
-          dates: theData.dates,
+        var parsed = jQuery.parseJSON(data);
+
+        CfdChart.build({
+          data: parsed.cfddata,
+          dates: parsed.dates,
           boardName: boardName
         });
-        cc.buildChart();
       },
       error: function (xhr) {
         $("#cfd-spinner").hide();
@@ -63,14 +61,12 @@ var AnalysisController = (function () {
       success: function (data) {
         $('#label-count-spinner').hide();
 
-        var theData = jQuery.parseJSON(data);
-
-        var lb_data = new labelCountChartData();
-        lb_data.labels = theData.labels;
-        lb_data.counts = theData.counts;
-        lb_data.colors = theData.colors;
-        var labelCount = new labelCountChart(lb_data);
-        labelCount.buildChart();
+        var parsed = jQuery.parseJSON(data);
+        LabelCountChart.build({
+          labels: parsed.labels,
+          counts: parsed.counts,
+          colors: parsed.colors
+        });
       },
       error: function (xhr) {
         $("#label-count-spinner").hide();

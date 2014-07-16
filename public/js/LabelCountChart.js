@@ -1,16 +1,5 @@
-function labelCountChartData() {
-  this.labels = [];
-  this.counts = [];
-  this.colors = [];
-}
-
-function labelCountChart(label_count_data) {
-  this.labels = label_count_data.labels;
-  this.counts = label_count_data.counts;
-  this.colors = label_count_data.colors;
-
-  this.buildChart = function () {
-    var that = this;
+var LabelCountChart = (function () {
+  var buildChart = function (options) {
     var green = '#34b27d';
     var yellow = '#dbdb57';
     var orange = '#e09952';
@@ -28,7 +17,7 @@ function labelCountChart(label_count_data) {
         text: 'cards can have multiple labels'
       },
       xAxis: {
-        categories: that.labels,
+        categories: options.labels,
         title: {
           text: null
         }
@@ -52,7 +41,7 @@ function labelCountChart(label_count_data) {
             enabled: true
           },
           colorByPoint: true,
-          colors: that.colors
+          colors: options.colors
         }
       },
       credits: {
@@ -61,8 +50,12 @@ function labelCountChart(label_count_data) {
       series: [{
         name: "Cards in List",
         showInLegend: false,
-        data: that.counts
+        data: options.counts
       }]
     });
-  };
-}
+  }
+
+  return {
+    build: buildChart
+  }
+}());
