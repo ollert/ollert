@@ -42,7 +42,31 @@ var CfdChartBuilder = (function (options) {
     });
   }
 
+  var load = function (boardId, boardName) {
+    var container = $("#cfdContainer");
+    container.height(container.height() - 10);
+
+    $.ajax({
+      url: "/boards/" + boardId + "/analysis/cfd",
+      success: function (data) {
+        $('#cfdSpinner').hide();
+
+        var parsed = jQuery.parseJSON(data);
+
+        buildChart({
+          data: parsed.cfddata,
+          dates: parsed.dates,
+          boardName: boardName
+        });
+      },
+      error: function (xhr) {
+        $("#cfdSpinner").hide();
+        container.text(xhr.responseText);
+      }
+    });
+  }
+
   return {
-    build: buildChart
+    build: load
   }
 }());

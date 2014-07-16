@@ -1,11 +1,12 @@
 var LabelCountChartBuilder = (function () {
   var buildChart = function (options) {
-    var green = '#34b27d';
-    var yellow = '#dbdb57';
-    var orange = '#e09952';
-    var red = '#cb4d4d';
-    var purple = '#93c';
-    var blue = '#4d77cb';
+    var green = '#34b27d',
+      yellow = '#dbdb57',
+      orange = '#e09952',
+      red = '#cb4d4d',
+      purple = '#93c',
+      blue = '#4d77cb';
+
     $('#labelCountContainer').highcharts({
       chart: {
         type: 'bar'
@@ -55,7 +56,30 @@ var LabelCountChartBuilder = (function () {
     });
   }
 
+  var load = function (boardId) {
+    var container = $("#labelCountContainer");
+    container.height(container.height() - 10);
+
+    $.ajax({
+      url: "/boards/" + boardId + "/analysis/labelcounts",
+      success: function (data) {
+        $('#labelCountSpinner').hide();
+
+        var parsed = jQuery.parseJSON(data);
+        buildChart({
+          labels: parsed.labels,
+          counts: parsed.counts,
+          colors: parsed.colors
+        });
+      },
+      error: function (xhr) {
+        $("#labelCountSpinner").hide();
+        container.text(xhr.responseText);
+      }
+    });
+  }
+
   return {
-    build: buildChart
+    build: load
   }
 }());
