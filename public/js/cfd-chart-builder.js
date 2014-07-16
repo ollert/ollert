@@ -1,6 +1,6 @@
 var CfdChartBuilder = (function (options) {
   var buildChart = function (options) {
-    $('#CFD-Container').highcharts({
+    $('#cfdContainer').highcharts({
       chart: {
         type: 'area'
       },

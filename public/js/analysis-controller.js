@@ -7,12 +7,13 @@ var AnalysisController = (function () {
   }
 
   var loadWipChart = function (boardId) {
-    $("#WIP-Container").height($("#WIP-Container").height() - 10);
+    $("#wipContainer").height($("#wipContainer").height() - 10);
 
     $.ajax({
       url: "/boards/" + boardId + "/analysis/wip",
       success: function (data) {
-        $('#wip-spinner').hide();
+        $('#wipSpinner').hide();
+
         var parsed = jQuery.parseJSON(data);
         WipChartBuilder.build({
           lists: parsed.wipcategories,
@@ -24,19 +25,19 @@ var AnalysisController = (function () {
         });
       },
       error: function (xhr) {
-        $("#wip-spinner").hide();
-        $("#WIP-Container").text(xhr.responseText);
+        $("#wipSpinner").hide();
+        $("#wipContainer").text(xhr.responseText);
       }
     });
   }
 
   var loadCfdChart = function (boardId, boardName) {
-    $("#CFD-Container").height($("#CFD-Container").height() - 10);
+    $("#cfdContainer").height($("#cfdContainer").height() - 10);
 
     $.ajax({
       url: "/boards/" + boardId + "/analysis/cfd",
       success: function (data) {
-        $('#cfd-spinner').hide();
+        $('#cfdSpinner').hide();
 
         var parsed = jQuery.parseJSON(data);
 
@@ -47,19 +48,19 @@ var AnalysisController = (function () {
         });
       },
       error: function (xhr) {
-        $("#cfd-spinner").hide();
-        $("#CFD-Container").text(xhr.responseText);
+        $("#cfdSpinner").hide();
+        $("#cfdContainer").text(xhr.responseText);
       }
     });
   }
 
   var loadLabelCount = function (boardId) {
-    $("#LabelCount-Container").height($("#LabelCount-Container").height() - 10);
+    $("#labelCountContainer").height($("#labelCountContainer").height() - 10);
 
     $.ajax({
       url: "/boards/" + boardId + "/analysis/labelcounts",
       success: function (data) {
-        $('#label-count-spinner').hide();
+        $('#labelCountSpinner').hide();
 
         var parsed = jQuery.parseJSON(data);
         LabelCountChartBuilder.build({
@@ -69,8 +70,8 @@ var AnalysisController = (function () {
         });
       },
       error: function (xhr) {
-        $("#label-count-spinner").hide();
-        $("#LabelCount-Container").text(xhr.responseText);
+        $("#labelCountSpinner").hide();
+        $("#labelCountContainer").text(xhr.responseText);
       }
     });
   }

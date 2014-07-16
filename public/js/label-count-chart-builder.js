@@ -6,7 +6,7 @@ var LabelCountChartBuilder = (function () {
     var red = '#cb4d4d';
     var purple = '#93c';
     var blue = '#4d77cb';
-    $('#LabelCount-Container').highcharts({
+    $('#labelCountContainer').highcharts({
       chart: {
         type: 'bar'
       },
