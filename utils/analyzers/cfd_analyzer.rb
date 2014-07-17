@@ -15,7 +15,10 @@ class CfdAnalyzer
     closed_lists = {}
     if list_actions.any?
       data["lists"].select { |x| x["closed"]}.each do |list|
-        closed_lists[list["id"]] = Date.parse(list_actions.select {|action| action["data"]["list"]["id"] == list["id"]}.first["date"])
+        closed_date = list_actions.select { |action| action["data"]["list"]["id"] == list["id"]}.first
+
+        # this might happen if there are 1000+ actions fetched. Need to work on fetching all actions!
+        closed_lists[list["id"]] = closed_date.nil? ? Date.new : Date.parse(closed_date["date"])
       end
     end
 
