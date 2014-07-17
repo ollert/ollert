@@ -1,10 +1,18 @@
 class CfdAnalyzer
-  def self.analyze(raw)
+  def self.analyze(raw, action_fetcher)
     return {} if raw.nil? || raw.empty?
     data = JSON.parse(raw)
     return {} if data.empty?
 
     actions = data["actions"]
+
+    fetched = actions.count
+    while fetched == 1000
+      new_actions = JSON.parse(action_fetcher.call(actions.last["date"]))
+      fetched = new_actions.count
+      actions.concat new_actions
+    end
+
     card_actions = actions.reject {|action| action["type"] == "updateList"}
     list_actions = actions.select {|action| action["type"] == "updateList"}
 
@@ -15,10 +23,7 @@ class CfdAnalyzer
     closed_lists = {}
     if list_actions.any?
       data["lists"].select { |x| x["closed"]}.each do |list|
-        closed_date = list_actions.select { |action| action["data"]["list"]["id"] == list["id"]}.first
-
-        # this might happen if there are 1000+ actions fetched. Need to work on fetching all actions!
-        closed_lists[list["id"]] = closed_date.nil? ? Date.new : Date.parse(closed_date["date"])
+        closed_lists[list["id"]] = Date.parse(list_actions.select { |action| action["data"]["list"]["id"] == list["id"]}.first["date"])
       end
     end
 

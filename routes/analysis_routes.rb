@@ -31,9 +31,11 @@ class Ollert
       :member_token => session[:token]
     )
 
+    action_fetcher = Proc.new { |date| CfdFetcher.fetch_actions(client, board_id, date) }
+
     begin
       status 200
-      body CfdAnalyzer.analyze(CfdFetcher.fetch(client, board_id)).to_json
+      body CfdAnalyzer.analyze(CfdFetcher.fetch(client, board_id), action_fetcher).to_json
     rescue Trello::Error => e
       body "Connection broken."
       status 500
@@ -46,9 +48,11 @@ class Ollert
       :member_token => session[:token]
     )
 
+    action_fetcher = Proc.new { |date| StatsFetcher.fetch_actions(client, board_id, date) }
+
     begin
       status 200
-      body StatsAnalyzer.analyze(StatsFetcher.fetch(client, board_id)).to_json
+      body StatsAnalyzer.analyze(StatsFetcher.fetch(client, board_id), action_fetcher).to_json
     rescue Trello::Error => e
       body "Connection broken."
       status 500

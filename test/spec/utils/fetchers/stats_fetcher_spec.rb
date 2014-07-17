@@ -14,7 +14,7 @@ describe StatsFetcher do
       expect {StatsFetcher.fetch(double(Trello::Client), "")}.to raise_error(Trello::Error)
     end
     
-    it 'uses client to get member' do
+    it 'uses client to get board data' do
       board_id = "fsadfj823w"
       options =
       {
@@ -37,6 +37,44 @@ describe StatsFetcher do
       expect(client).to receive(:get).with("/boards/#{board_id}", options).and_return(board)
 
       expect(StatsFetcher.fetch(client, board_id)).to eq board
+    end
+  end
+
+  describe '#fetch_actions' do
+    it 'raises error on nil client' do
+      expect {StatsFetcher.fetch_actions(nil, "fsadfj823w", DateTime.now)}.to raise_error(Trello::Error)
+    end
+
+    it 'raises error on nil board id' do
+      expect {StatsFetcher.fetch_actions(double(Trello::Client), nil, DateTime.now)}.to raise_error(Trello::Error)
+    end
+
+    it 'raises error on nil empty id' do
+      expect {StatsFetcher.fetch_actions(double(Trello::Client), "", DateTime.now)}.to raise_error(Trello::Error)
+    end
+
+    it 'raises error on nil date' do
+      expect {StatsFetcher.fetch_actions(double(Trello::Client), "dsafsddsa", nil)}.to raise_error(Trello::Error)
+    end
+    
+    it 'uses client to get board data' do
+      board_id = "fsadfj823w"
+      date = DateTime.now
+      options =
+      {
+        filter: :createCard,
+        fields: "data,date",
+        limit: 1000,
+        before: date,
+        memberCreator: false,
+        member: false
+      }
+      actions = "[]"
+
+      client = double(Trello::Client)
+      expect(client).to receive(:get).with("/boards/#{board_id}/actions", options).and_return(actions)
+
+      expect(StatsFetcher.fetch_actions(client, board_id, date)).to eq actions
     end
   end
 end

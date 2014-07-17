@@ -14,6 +14,7 @@ Background:
   And I fill in "username" with "ollertapp@gmail.com"
   And I press "Submit"
   Then the reset password modal should be closed
+  And I should see "You should receive an email containing a link to reset your password within a few minutes."
   And "ollertapp@gmail.com" should receive an email
 
 Scenario: Email contents should be accurate

@@ -4,9 +4,11 @@ Feature: ResetPasswordRequest
   When I forget my password
   I need to request a reset
 
-Scenario: Invalid email address
+Background:
   Given a clear email queue
-  And I am on the login page
+
+Scenario: Invalid email address
+  Given I am on the login page
   When I follow "Forgot password?"
   And I fill in "username" with "garbage@email.com"
   And I press "Submit"

@@ -18,4 +18,18 @@ class StatsFetcher
       }
     )
   end
+
+  def self.fetch_actions(client, board_id, date)
+    raise Trello::Error if client.nil? || board_id.nil? || board_id.empty? || date.nil?
+    client.get("/boards/#{board_id}/actions",
+      {
+        filter: :createCard,
+        fields: "data,date",
+        limit: 1000,
+        before: date,
+        memberCreator: false,
+        member: false
+      }
+    )
+  end
 end
