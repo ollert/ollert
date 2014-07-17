@@ -9,7 +9,7 @@ class StatsFetcher
         action_memberCreator: :false,
         action_member: false,
         actions_limit: 1000,
-        cards: :all,
+        cards: :visible,
         card_fields: "idList,name,idMembers",
         members: :all,
         member_fields: :fullName,
