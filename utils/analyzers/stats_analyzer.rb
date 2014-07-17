@@ -40,7 +40,7 @@ class StatsAnalyzer
     members_per_card = Hash[ members.map {|member| [member["id"], 0]} ]
     cards.each do |card|
       card["idMembers"].each do |member|
-        members_per_card[member] += 1
+        members_per_card[member] += 1 if members_per_card.has_key?(member)
       end
     end
     (members_per_card.values.reduce(:+).to_f / members.count).round(2)
