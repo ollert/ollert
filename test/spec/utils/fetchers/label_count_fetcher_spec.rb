@@ -16,7 +16,7 @@ describe LabelCountFetcher do
     
     it 'uses client to get board' do
       board_id = "ori0kf34rf34jfjfrej"
-      options = {cards: :open, card_fields: :labels, fields: :labelNames}
+      options = {cards: :visible, card_fields: :labels, fields: :labelNames}
       board = "{'name': 'DS9', 'labelNames': {}, 'cards': {}, 'id': 'ori0kf34rf34jfjfrej'}"
 
       client = double(Trello::Client)
