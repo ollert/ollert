@@ -43,10 +43,13 @@ class CfdAnalyzer
         my_actions.sort_by! {|a| a["date"]}
         my_actions.reverse.each do |action|
           data = action["data"]
-          if action["type"] == "updateCard"
+          if action["type"] == "updateCard" && !data["listAfter"].nil?
             list = data["listAfter"]
           elsif action["type"] == "createCard"
             list = data["list"]
+          else
+            # card is closed
+            break
           end
 
           matching_list = open_lists.select {|l| l["id"] == list["id"]}.first

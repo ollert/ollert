@@ -18,7 +18,7 @@ describe CfdFetcher do
       board_id = "ori0kf34rf34jfjfrej"
       options =
       {
-        actions: "createCard,updateCard:idList,updateList:closed",
+        actions: "createCard,updateCard:idList,updateCard:closed,updateList:closed",
         actions_limit: 1000,
         action_fields: "data,type,date",
         action_memberCreator: :false,
@@ -58,7 +58,7 @@ describe CfdFetcher do
       date = DateTime.now
       options =
       {
-        filter: "createCard,updateCard:idList,updateList:closed",
+        filter: "createCard,updateCard:idList,updateCard:closed,updateList:closed",
         fields: "data,type,date",
         limit: 1000,
         before: date,
