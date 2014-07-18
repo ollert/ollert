@@ -4,11 +4,11 @@ Background:
   Given I am on the landing page
 
 Scenario: Navigate to the log in page
-  Given I press "Log in"
+  Given I press "Log in" within ".navbar-right"
   Then I should be on the login page
 
 Scenario: Navigate to the registration page
-  Given I press "Sign Up"
+  Given I press "Sign Up" within ".navbar-right"
   Then I should be on the register page
 
 @javascript
