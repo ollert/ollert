@@ -31,44 +31,54 @@
       %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
         .container
           .navbar-header
-            %button{ type: "button", class: "navbar-toggle collapsed", "data-toggle" => "collapse", "data-target" => ".navbar-collapse" }
-              %span{ class: "sr-only" }
-                Toggle navigation
-              %span{ class: "icon-bar" }
-              %span{ class: "icon-bar" }
-              %span{ class: "icon-bar" }
             %a{class: 'navbar-brand', href: '/'}
               Ollert
+            .visible-xs-block
+              - if @user.nil?
+                %ul{class: 'signup-login-group nav visible-xs-inline'}
+                  %li{style: 'margin-right: 10px;'}
+                    %form{action: "/login", method: "get", role: "form", class: "pull-right"}
+                      %input{type: "submit", class: "btn btn-default", value: "Log in"}
+                  %li{style: 'margin-right: 80px;'}
+                    %form{action: "/signup", method: "get", role: "form", class: "pull-right"}
+                      %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
+              - else
+                %button{type: "button", class: "navbar-toggle collapsed", "data-toggle" => "collapse", "data-target" => ".navbar-collapse"}
+                  %span{class: "sr-only"}
+                    Toggle navigation
+                  %span{class: "icon-bar"}
+                  %span{class: "icon-bar"}
+                  %span{class: "icon-bar"}
           - if @user.nil?
-            %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
+            %ul{class: 'signup-login-group nav navbar-nav navbar-right hidden-xs'}
               %li
                 %form{action: "/signup", method: "get"}
                   %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
               %li{style: 'margin-left:10px;'}
                 %form{action: "/login", method: "get"}
                   %input{type: "submit", class: "btn btn-default", value: "Log in"}
-          - else
-            %ul{class: 'signup-login-group nav navbar-nav navbar-right'}
-              %li
-                %a{id: "settingsCog", href: "/settings", class: "btn btn-link btn-lg", title: "Logged in as #{@user.email}", alt: "Settings"}
-                  %span{class: "glyphicon glyphicon-cog"}
-          %ul{class: 'collapse navbar-collapse nav navbar-nav'}
-            %li
-              %a{href: "/"}
-                Home
-            - if (!@boards.nil? && @boards.any?)
-              %li{class: "dropdown"}
-                %a{href: "#", class: "dropdown-toggle", "data-toggle" => "dropdown"}
-                  My Boards
-                  %b{class: "caret"}
-                %ul{class: "dropdown-menu left-align"}
-                  - @boards.each do |org_name, boards|
-                    %li{class: "divider divider-section"}
-                      #{org_name}
-                    - boards.each do |board|
-                      %li
-                        %a{class: "btn btn-link", href: "/boards/#{board["id"]}"}
-                          #{board["name"]}
+          .collapse.navbar-collapse
+            %ul{class: 'nav navbar-nav'}
+              - unless @user.nil?
+                %li{class: "dropdown"}
+                  %a{href: "#", class: "dropdown-toggle", "data-toggle" => "dropdown"}
+                    %span{class: "glyphicon glyphicon-stats"}
+                    My Boards
+                  %ul{class: "dropdown-menu left-align"}
+                    - if @boards.nil? || @boards.empty?
+                      No Boards
+                    - else
+                      - @boards.each do |org_name, boards|
+                        %li{class: "divider divider-section"}
+                          #{org_name}
+                        - boards.each do |board|
+                          %li
+                            %a{class: "btn btn-link", href: "/boards/#{board["id"]}"}
+                              #{board["name"]}
+                %li
+                  %a{href: "/settings", title: "Logged in as #{@user.email}", alt: "Settings"}
+                    %span{class: "glyphicon glyphicon-cog"}
+                    Settings
 
       #mainContent
         - if flash.has? :error

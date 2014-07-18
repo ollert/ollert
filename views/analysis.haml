@@ -1,7 +1,10 @@
 .container
-  %div{class: "row", style: "padding-left: 10px"}
-    %h2
+  .row
+    .col-xs-6.text-left.h2
       #{@board_name}
+    .col-xs-6.text-right.h4
+      %a{href: "/boards", class: "btn btn-link", title: "View Boards", alt: "Return to Boards Overview"}
+        ← View Boards
   .row
     .col-md-3.col-sm-6.col-xs-12.no-padding
       .analysis-block-sm

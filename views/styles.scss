@@ -97,10 +97,8 @@ hr {
 }
 
 .navbar-toggle {
-  margin-top: 18px;
+  margin-top: 7.5px;
 }
-
-/* --- Style --- */
 
 .navbar-default {
   background-color: $bgDefault;
@@ -114,8 +112,8 @@ hr {
   .navbar-nav {
     > li {
       > a {
-        padding-top: 25px;
-        padding-bottom: 25px;
+        padding-top: 15px;
+        padding-bottom: 15px;
         color: $colDefault;
         &:hover, &:focus {
             color: $colHover;
@@ -164,19 +162,18 @@ hr {
     }
 }
 
-.navbar {
-  min-height:70px;
-  border-radius: 0;
+.navbar-nav {
+  color: $colDefault;
 }
 
 .navbar-brand {
   background: url(/img/ollert-logo-white.svg) no-repeat;
-  height: 34px;
+  height: 35px;
   width: 101px;
   text-indent: -99999px;
   padding: 0;
+  margin-top: 7.5px;
   margin-left: 15px;
-  margin-top: 18px;
 }
 
 .landing-connect {
@@ -252,8 +249,8 @@ hr {
   border-color: #4e5f82;
 }
 
-.signup-login-group {
-  margin-top: 19px;
+.signup-login-group .btn {
+  margin-top: 7.5px;
 }
 
 @media (min-width: 768px) {
@@ -396,10 +393,6 @@ a.btn {
 
 .landing-connect a.btn {
   margin-top: 20px;
-}
-
-#settingsCog {
-  padding: 5px 15px;
 }
 
 #agreedCheckbox {

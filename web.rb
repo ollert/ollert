@@ -13,7 +13,7 @@ class Ollert < Sinatra::Base
 
   configure do
     use Rack::MethodOverride
-  use Rack::Deflater
+    use Rack::Deflater
     
     Pony.options = {
       :via => :smtp,
