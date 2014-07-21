@@ -17,7 +17,7 @@ class CfdAnalyzer
     list_actions = actions.select {|action| action["type"] == "updateList"}
 
     # open lists
-    lists = data["lists"].select { |x| !x["closed"]}
+    lists = data["lists"].reject { |x| x["closed"]}
 
     # closed lists
     closed_lists = {}
