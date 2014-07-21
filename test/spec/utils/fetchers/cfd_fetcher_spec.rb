@@ -34,6 +34,31 @@ describe CfdFetcher do
 
       expect(CfdFetcher.fetch(client, board_id)).to eq board
     end
+
+    it 'constraints fetch by date' do
+      to_date = DateTime.strptime('1405965784', '%s')
+      from_date = DateTime.strptime('12345', '%s')
+      board_id = "ori0kf34rf34jfjfrej"
+      options =
+      {
+        actions: "createCard,updateCard:idList,updateCard:closed,updateList:closed",
+        actions_limit: 1000,
+        action_fields: "data,type,date",
+        action_memberCreator: :false,
+        action_member: false,
+        lists: :all,
+        list_fields: "name,closed",
+        fields: "name",
+        before: to_date.to_s,
+        since: from_date.to_s
+      }
+      board = "{'name': 'DS9', 'lists': {}, 'actions': {}, 'id': 'ori0kf34rf34jfjfrej'}"
+
+      client = double(Trello::Client)
+      expect(client).to receive(:get).with("/boards/#{board_id}", options).and_return(board)
+
+      expect(CfdFetcher.fetch(client, board_id, date_from: from_date, date_to: to_date)).to eq board
+    end
   end
 
   describe '#fetch_actions' do
@@ -63,7 +88,7 @@ describe CfdFetcher do
         limit: 1000,
         before: date,
         memberCreator: false,
-        member: false
+        member: false,
       }
       actions = "[]"
 
@@ -71,6 +96,30 @@ describe CfdFetcher do
       expect(client).to receive(:get).with("/boards/#{board_id}/actions", options).and_return(actions)
 
       expect(CfdFetcher.fetch_actions(client, board_id, date)).to eq actions
+    end
+
+    it 'constrains fetch by date' do
+      to_date = DateTime.strptime('1405965784', '%s')
+      from_date = DateTime.strptime('12345', '%s')
+      board_id = "fsadfj823w"
+      date = DateTime.now
+      options =
+      {
+        filter: "createCard,updateCard:idList,updateCard:closed,updateList:closed",
+        fields: "data,type,date",
+        limit: 1000,
+        before: date,
+        memberCreator: false,
+        member: false,
+        before: to_date.to_s,
+        since: from_date.to_s
+      }
+      actions = "[]"
+
+      client = double(Trello::Client)
+      expect(client).to receive(:get).with("/boards/#{board_id}/actions", options).and_return(actions)
+
+      expect(CfdFetcher.fetch_actions(client, board_id, date, date_from: from_date, date_to: to_date)).to eq actions
     end
   end
 end

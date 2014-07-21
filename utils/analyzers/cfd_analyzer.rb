@@ -1,5 +1,7 @@
+require 'date'
+
 class CfdAnalyzer
-  def self.analyze(raw, action_fetcher)
+  def self.analyze(raw, action_fetcher, parameters = {})
     return {} if raw.nil? || raw.empty?
     data = JSON.parse(raw)
     return {} if data.empty?
@@ -8,13 +10,27 @@ class CfdAnalyzer
 
     fetched = actions.count
     while fetched == 1000
-      new_actions = JSON.parse(action_fetcher.call(actions.last["date"]))
+      new_actions = JSON.parse(action_fetcher.call(actions.last["date"], parameters))
       fetched = new_actions.count
       actions.concat new_actions
     end
 
+    # pare actions by date (if parameters exist)
+    actions.reject! do |action|
+      DateTime.parse(action["date"]) < parameters[:date_from]
+    end if parameters[:date_from]
+    actions.reject! do |action|
+      parameters[:date_to] < DateTime.parse(action["date"])
+    end if parameters[:date_to]
+
+    card_actions = actions.reject {|action| action["type"] == "updateList"}
+    list_actions = actions.select {|action| action["type"] == "updateList"}
     closed_actions = actions.select {|action| action["type"] == "updateList"}.group_by { |action| action["data"]["list"]["id"]}
 
+    # open lists
+    lists = data["lists"].select { |x| !x["closed"]}
+
+    # closed lists
     closed_lists = {}
     closed_actions.each do |list, actions|
       closed_action = actions.max {|action| Date.parse(action["date"])}

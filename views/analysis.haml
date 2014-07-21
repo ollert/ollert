@@ -1,4 +1,3 @@
-
 .analysis-board
   .container
     .row
@@ -8,12 +7,23 @@
         %a{href: "/boards", class: "btn btn-link", title: "View Boards", alt: "Return to Boards Overview"}
           ← View Boards
     .row
+      .col-xs-12.no-padding
+        .date-range.pull-right
+          %i.calendar.glyphicon.glyphicon-calendar
+          %span.default Date Range
+          %span.range
+            %span.from
+            %i.glyphicon.glyphicon-arrow-right
+            %span.to
+          %b.caret
+    .row
       .col-md-3.col-sm-6.col-xs-12.no-padding
         .analysis-block-sm
           .stat-title
             %h4 Average members per card
           .stat-value{id: 'avg_members_per_card'}
             %img{src: '/img/spinner.gif', class: 'stats-spinner'}
+
       .col-md-3.col-sm-6.col-xs-12.no-padding
         .analysis-block-sm
           .stat-title
@@ -50,7 +60,7 @@
         .analysis-block-md
           %img{src: '/img/spinner.gif', id: 'labelCountSpinner'}
           %div{id: "labelCountContainer", class: "med-chart", style: "height: inherit"}
-    .row 
+    .row
       .col-md-3.col-sm-6.col-xs-12.no-padding
         %div{class: "analysis-block-sm "}
           .stat-title
@@ -82,12 +92,17 @@
           .stat-value{id: 'newest_card_age'}
             %img{src: '/img/spinner.gif', class: 'stats-spinner'}
 
-%script{src: "/js/highcharts.js"}       
+%script{src: "/js/highcharts.js"}
 %script{src: "/js/cfd-chart-builder.js"}
 %script{src: "/js/wip-chart-builder.js"}
 %script{src: "/js/label-count-chart-builder.js"}
 %script{src: "/js/stats-builder.js"}
 %script{src: "/js/analysis-controller.js"}
+%script{src: "/js/moment.min.js"}
+%script{src: "/js/daterangepicker.js"}
+
+%link{rel: 'stylesheet', href: "/css/daterangepicker-bs3.css"}
 
 %script
-  AnalysisController.init("#{@board_id}", "#{@board_name}");
+  var analysisController = AnalysisController("#{@board_id}", "#{@board_name}");
+  analysisController.init();
