@@ -13,19 +13,18 @@ class CfdAnalyzer
       actions.concat new_actions
     end
 
-    card_actions = actions.reject {|action| action["type"] == "updateList"}
-    list_actions = actions.select {|action| action["type"] == "updateList"}
+    closed_actions = actions.select {|action| action["type"] == "updateList"}.group_by { |action| action["data"]["list"]["id"]}
 
-    # open lists
-    lists = data["lists"].reject { |x| x["closed"]}
-
-    # closed lists
     closed_lists = {}
-    if list_actions.any?
-      data["lists"].select { |x| x["closed"]}.each do |list|
-        closed_lists[list["id"]] = Date.parse(list_actions.select { |action| action["data"]["list"]["id"] == list["id"]}.first["date"])
+    closed_actions.each do |list, actions|
+      closed_action = actions.max {|action| Date.parse(action["date"])}
+      if closed_action["data"]["list"]["closed"]
+        closed_lists[list] = closed_action["date"]
       end
     end
+
+    card_actions = actions.reject {|action| action["type"] == "updateList"}
+    lists = data["lists"].reject { |x| x["closed"]}
 
     format(build(card_actions, lists, closed_lists), lists)
   end
