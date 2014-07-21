@@ -20,9 +20,22 @@ var StatsBuilder = (function () {
     $('#newest_card_age').text(stats.newest_card_age);
   }
 
-  var load = function (boardId) {
+  var load = function (boardId, parameters) {
+    queryString = '';
+    if (typeof(parameters) != 'undefined') {
+      for (var property in parameters) {
+        if (parameters.hasOwnProperty(property)) {
+          queryString += queryString === '' ? '?' : '&';
+
+          queryString += encodeURI(property);
+          queryString += '=';
+          queryString += encodeURI(parameters[property].format('YYYY-MM-DD'));
+        }
+      }
+    }
+
     $.ajax({
-      url: "/boards/" + boardId + "/analysis/stats",
+      url: "/boards/" + boardId + "/analysis/stats" + queryString,
       success: function (data) {
         $(".stats-spinner").hide();
 

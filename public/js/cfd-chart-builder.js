@@ -42,12 +42,25 @@ var CfdChartBuilder = (function (options) {
     });
   }
 
-  var load = function (boardId, boardName) {
+  var load = function (boardId, boardName, parameters) {
     var container = $("#cfdContainer");
     container.height(container.height() - 10);
 
+    queryString = '';
+    if (typeof(parameters) != 'undefined') {
+      for (var property in parameters) {
+        if (parameters.hasOwnProperty(property)) {
+          queryString += queryString === '' ? '?' : '&';
+
+          queryString += encodeURI(property);
+          queryString += '=';
+          queryString += encodeURI(parameters[property].format('YYYY-MM-DD'));
+        }
+      }
+    }
+
     $.ajax({
-      url: "/boards/" + boardId + "/analysis/cfd",
+      url: "/boards/" + boardId + "/analysis/cfd" + queryString,
       success: function (data) {
         $('#cfdSpinner').hide();
 

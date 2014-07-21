@@ -1,5 +1,7 @@
+require 'date'
+
 class StatsAnalyzer
-  def self.analyze(raw, action_fetcher)
+  def self.analyze(raw, action_fetcher, parameters = {})
     return {} if raw.nil? || raw.empty?
     data = JSON.parse(raw)
     return {} if data.empty?
@@ -15,6 +17,14 @@ class StatsAnalyzer
       fetched = new_actions.count
       creations.concat new_actions
     end
+
+    # pare creations by date (if parameters exist)
+    creations.reject! do |creation|
+      DateTime.parse(creation["date"]) < parameters[:date_from]
+    end if parameters[:date_from]
+    creations.reject! do |creation|
+      parameters[:date_to] < DateTime.parse(creation["date"])
+    end if parameters[:date_to]
 
     analyze_members(cards, members)
           .merge(analyze_cards(cards, creations))

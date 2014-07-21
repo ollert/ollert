@@ -38,6 +38,35 @@ describe StatsFetcher do
 
       expect(StatsFetcher.fetch(client, board_id)).to eq board
     end
+
+    it 'constrains fetch by date' do
+      to_date = DateTime.strptime('1405965784', '%s')
+      from_date = DateTime.strptime('12345', '%s')
+      board_id = "fsadfj823w"
+      options =
+      {
+        fields: "name",
+        actions: :createCard,
+        action_fields: "date,data",
+        action_memberCreator: :false,
+        action_member: false,
+        actions_limit: 1000,
+        cards: :visible,
+        card_fields: "idList,name,idMembers",
+        members: :all,
+        member_fields: :fullName,
+        lists: :open,
+        list_fields: "name,closed",
+        since: from_date.to_s,
+        before: to_date.to_s
+      }
+      board = "{'id': 'fsadfj823w', 'name': 'extort company', 'actions': {}, 'cards': {}, 'members': {}, 'lists': {}}"
+
+      client = double(Trello::Client)
+      expect(client).to receive(:get).with("/boards/#{board_id}", options).and_return(board)
+
+      expect(StatsFetcher.fetch(client, board_id, date_from: from_date, date_to: to_date)).to eq board
+    end
   end
 
   describe '#fetch_actions' do
@@ -75,6 +104,30 @@ describe StatsFetcher do
       expect(client).to receive(:get).with("/boards/#{board_id}/actions", options).and_return(actions)
 
       expect(StatsFetcher.fetch_actions(client, board_id, date)).to eq actions
+    end
+
+    it 'constrains fetch by date' do
+      to_date = DateTime.strptime('1405965784', '%s')
+      from_date = DateTime.strptime('12345', '%s')
+      board_id = "fsadfj823w"
+      date = DateTime.now
+      options =
+      {
+        filter: :createCard,
+        fields: "data,date",
+        limit: 1000,
+        before: date,
+        memberCreator: false,
+        member: false,
+        before: to_date.to_s,
+        since: from_date.to_s
+      }
+      actions = "[]"
+
+      client = double(Trello::Client)
+      expect(client).to receive(:get).with("/boards/#{board_id}/actions", options).and_return(actions)
+
+      expect(StatsFetcher.fetch_actions(client, board_id, date, date_from: from_date, date_to: to_date)).to eq actions
     end
   end
 end
