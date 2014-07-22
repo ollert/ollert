@@ -23,6 +23,7 @@ body {
 //  begin sticky footer
 
 html,body {
+  background: #d7d7d7;
   height: 100%;
   /* The html and body elements cannot have any padding or margin. */
 }
@@ -293,7 +294,7 @@ ul.boards-list {
 }
 
 .analysis-block-sm, .analysis-block-md, .analysis-block-lg {
-  background-color: #F8F8F8;
+  background-color: #FFFFFF;
   padding: 5px;
   margin: 5px;
   border-style: solid;
