@@ -1,3 +1,5 @@
+require 'pry'
+
 When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |username, password|
   trello_popup = page.driver.window_handles.last
   page.within_window trello_popup do
@@ -7,9 +9,9 @@ When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |
     else
       click_link "Log in"
     end
-    
-    fill_in "email-login", with: username
-    fill_in "password-login", with: password
+
+    fill_in "user", with: username
+    fill_in "password", with: password
     click_button "Log In"
     click_button "Allow"
   end
@@ -37,8 +39,8 @@ Given(/^the test user manually connects to Trello$/) do
       click_link "Log in"
     end
 
-    fill_in "email-login", with: "ollerttest"
-    fill_in "password-login", with: "testing ollert"
+    fill_in "user", with: "ollerttest"
+    fill_in "password", with: "testing ollert"
     click_button "Log In"
     click_button "Allow"
   end
