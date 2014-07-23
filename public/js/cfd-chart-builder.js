@@ -1,4 +1,4 @@
-var CfdChartBuilder = (function (options) {
+var CfdChartBuilder = (function (parent) {
   var buildChart = function (options) {
     $('#cfdContainer').highcharts({
       chart: {
@@ -46,18 +46,7 @@ var CfdChartBuilder = (function (options) {
     var container = $("#cfdContainer");
     container.height(container.height() - 10);
 
-    queryString = '';
-    if (typeof(parameters) != 'undefined') {
-      for (var property in parameters) {
-        if (parameters.hasOwnProperty(property)) {
-          queryString += queryString === '' ? '?' : '&';
-
-          queryString += encodeURI(property);
-          queryString += '=';
-          queryString += encodeURI(parameters[property].format('YYYY-MM-DD'));
-        }
-      }
-    }
+    var queryString = parent.getQueryString(parameters);
 
     $.ajax({
       url: "/boards/" + boardId + "/analysis/cfd" + queryString,
@@ -82,4 +71,4 @@ var CfdChartBuilder = (function (options) {
   return {
     build: load
   }
-}());
+}(DateFilterable));

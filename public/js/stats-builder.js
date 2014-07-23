@@ -1,4 +1,4 @@
-var StatsBuilder = (function () {
+var StatsBuilder = (function (parent) {
   var buildBoxes = function (stats) {
     $('#board_members_count').text(stats.board_members_count);
     $('#card_count').text(stats.card_count);
@@ -21,18 +21,7 @@ var StatsBuilder = (function () {
   }
 
   var load = function (boardId, parameters) {
-    queryString = '';
-    if (typeof(parameters) != 'undefined') {
-      for (var property in parameters) {
-        if (parameters.hasOwnProperty(property)) {
-          queryString += queryString === '' ? '?' : '&';
-
-          queryString += encodeURI(property);
-          queryString += '=';
-          queryString += encodeURI(parameters[property].format('YYYY-MM-DD'));
-        }
-      }
-    }
+    var queryString = parent.getQueryString(parameters);
 
     $.ajax({
       url: "/boards/" + boardId + "/analysis/stats" + queryString,
@@ -55,4 +44,4 @@ var StatsBuilder = (function () {
   return {
     build: load
   }
-})();
+})(DateFilterable);
