@@ -11,7 +11,7 @@
         %a{class: "btn btn-primary btn-xl connect-btn", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'TrelloController.authorizeAnonymous()' : 'TrelloController.authorizeUser()'}"}
           Connect to Get Started
 .landing-info.landing-section
-  .container
+  .container.hidden-xs
     .row.text-center.h1
       Why Ollert?
 
@@ -29,32 +29,55 @@
         %img{src: '/img/landing-question.png', style: 'width: 75%;'}
       .col-md-offset-1.col-md-3.col-xs-4
         %img{src: '/img/landing-ollert.png', style: 'width: 100%;'}
+  .container.visible-xs-block
+    .row.text-center.h1
+      Why Ollert?
 
+    .row.text-center.h3
+      .col-xs-12
+        Your Trello boards do a great job telling you the state of today.
+    .row  
+      .col-xs-12
+        %img{src: '/img/landing-trello.png', style: 'width: 100%;'}
+    .row.text-center.h3
+      .col-xs-12
+        But how do you know what's happened during the past week, month, or year?
+    .row
+      .col-xs-12.text-center
+        %img{src: '/img/landing-question.png', style: 'width: 75%;'}
+    .row.text-center.h3
+      .col-xs-12
+        That's where Ollert comes in.
+    .row
+      .col-xs-12
+        %img{src: '/img/landing-ollert.png', style: 'width: 100%;'}
 .landing-victory.landing-section
   .container
     .row.text-center.h1
       A new way to think about Trello boards.
 
-    .row.text-center.h3
-      .col-md-5.col-xs-6
-        Use Ollert to visualize the progress of your boards.
-      .col-md-offset-2.col-md-5.col-xs-6
+    .row
+      .col-xs-12.text-center.h3
         Instantly see the numbers behind the cards.
     .row
-      .col-md-5.col-xs-6
-        %img{src: '/img/landing-visualize.png', style: 'width: 100%;'}
-      .col-md-offset-2.col-md-5.col-xs-6
+      .col-xs-12
         %img{src: '/img/landing-instantly.png', style: 'width: 100%;'}
+    .row
+      .col-xs-12.text-center.h3
+        Use Ollert to visualize the progress of your boards.
+    .row
+      .col-xs-12
+        %img{src: '/img/landing-visualize.png', style: 'width: 100%;'}
 
 .landing-hook.landing-section
-  .container
+  .container.hidden-xs
     .row
       .col-xs-12.h1.text-center{style: 'margin-bottom: 20px;'}
         What are you waiting for? It's free.
     .row.text-center
       .col-md-offset-2.col-md-3.col-xs-6
         %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'TrelloController.authorizeAnonymous()' : 'TrelloController.authorizeUser()'}"}
-          Get Started Now
+          Connect to Get Started
       .col-md-offset-2.col-md-3.col-xs-6
         %a{class: "btn btn-primary btn-xl", href: "/signup"}
           Create an Account
@@ -63,6 +86,27 @@
         Connect to Trello, choose a board, and view your stats. No strings attached.
       .col-md-offset-2.col-md-3.col-xs-6
         Just supply an email and password. We'll remember your Trello information after the first time you authenticate. More benefits coming soon.
+    .row
+      .col-xs-12.text-center
+        Want more information? Contact <a href="mailto:connect@ollertapp.com">connect@ollertapp.com</a>.  
+  .container.hidden-sm 
+    .row
+      .col-xs-12.h1.text-center{style: 'margin-bottom: 20px;'}
+        What are you waiting for? It's free.
+    .row.text-center.h4
+      .col-xs-12
+        Connect to Trello, choose a board, and view your stats. No strings attached.
+    .row.text-center
+      .col-xs-12
+        %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'TrelloController.authorizeAnonymous()' : 'TrelloController.authorizeUser()'}"}
+          Connect to Get Started
+    .row.text-center.h4
+      .col-xs-12
+        Just supply an email and password. We'll remember your Trello information after the first time you authenticate. More benefits coming soon.
+    .row.text-center
+      .col-xs-12
+        %a{class: "btn btn-primary btn-xl", href: "/signup"}
+          Create an Account
     .row
       .col-xs-12.text-center
         Want more information? Contact <a href="mailto:connect@ollertapp.com">connect@ollertapp.com</a>.
