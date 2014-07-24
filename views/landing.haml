@@ -13,7 +13,8 @@
 .landing-info.landing-section
   .container.hidden-xs
     .row.text-center.h1
-      Why Ollert?
+      .c0l-xs-12
+        Why Ollert?
 
     .row.text-center.h3
       .col-md-3.col-xs-4
@@ -24,11 +25,11 @@
         That's where Ollert comes in.
     .row
       .col-md-3.col-xs-4
-        %img{src: '/img/landing-trello.png', style: 'width: 100%;'}
+        %img.img-full{src: '/img/landing-trello.png'}
       .col-md-offset-1.col-md-4.text-center.col-xs-4
-        %img{src: '/img/landing-question.png', style: 'width: 75%;'}
+        %img.img-less{src: '/img/landing-question.png'}
       .col-md-offset-1.col-md-3.col-xs-4
-        %img{src: '/img/landing-ollert.png', style: 'width: 100%;'}
+        %img.img-full{src: '/img/landing-ollert.png'}
   .container.visible-xs-block
     .row.text-center.h1
       Why Ollert?
@@ -69,7 +70,7 @@
       .col-xs-12
         %img{src: '/img/landing-visualize.png', style: 'width: 100%;'}
 
-.landing-hook.landing-section
+.landing-hook.landing-section.two-column
   .container.hidden-xs
     .row
       .col-xs-12.h1.text-center{style: 'margin-bottom: 20px;'}
@@ -89,9 +90,9 @@
     .row
       .col-xs-12.text-center
         Want more information? Contact <a href="mailto:connect@ollertapp.com">connect@ollertapp.com</a>.  
-  .container.hidden-sm 
+  .container.visible-xs-block.one-column 
     .row
-      .col-xs-12.h1.text-center{style: 'margin-bottom: 20px;'}
+      .col-xs-12.h1.text-center.landing-subtitle
         What are you waiting for? It's free.
     .row.text-center.h4
       .col-xs-12
