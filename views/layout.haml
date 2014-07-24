@@ -29,7 +29,7 @@
   %body
     %div{id: 'wrap'}
       %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
-        .container{style: "width: 100%;"}
+        .container-fluid
           .navbar-header
             %a{class: 'navbar-brand', href: '/'}
               Ollert
@@ -105,7 +105,7 @@
       .container
         .row
           .col-sm-6.col-xs-12
-            %ul{style: 'margin-bottom: 38px; margin-top: 38px;'}
+            %ul.footer-item.footer-links
               %li
                 %a{href: "http://www.sep.com/labs/startupweekend/", alt: "SEP Startup Weekend"}
                   SEP Startup Weekend
@@ -119,5 +119,5 @@
                 %a{href: "mailto:connect@ollertapp.com", alt: "Contact Us"}
                   Contact Us
           .col-md-3.col-md-offset-3.col-sm-4.col-sm-offset-2.col-xs-12.no-padding
-            %a{href: "http://www.sep.com/labs/", alt: "SEP Labs", target: "blank", title: "Danger! Experimental", style: 'margin-top: 38px;'}
-              %img{src: '/img/SEP-Labs-Logo-White.svg', height: '60px', style: 'margin-bottom: 38px; margin-top: 53px;' }
+            %a{href: "http://www.sep.com/labs/", alt: "SEP Labs", target: "blank", title: "Danger! Experimental"}
+              %img.footer-item.footer-lab{src: '/img/SEP-Labs-Logo-White.svg'}
