@@ -43,7 +43,7 @@ Scenario: Allow connecting to Trello - Bottom of Page
 Scenario: Allow connecting to Trello after Deny
   Given I follow "Connect to Get Started" within ".landing-connect"
   And I press "Deny" on the Trello popup
-  And I follow "Connect to Get Started"
+  And I follow "Connect to Get Started" within ".landing-connect"
   When I authorize with Trello with username "ollerttest" and password "testing ollert"
   Then I should not see "Connecting..."
   And I should not see "Redirecting..."
