@@ -6,7 +6,7 @@ Feature: BoardDetails
 
 Scenario: View board anonymously
   Given I am on the landing page
-  And I follow "Connect to Get Started" withing ".landing-connect"
+  And I follow "Connect to Get Started" within ".landing-connect"
   When I authorize with Trello with username "ollerttest" and password "testing ollert"
   Then I should not see "Connecting..."
   And I should not see "Redirecting..."

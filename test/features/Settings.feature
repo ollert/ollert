@@ -9,7 +9,7 @@ Scenario: Logging out
   Given the test user is in the system
   And the test user is logged in
   And I go to the settings page
-  When I press "Log Out"
+  When I follow "Log out"
   Then I should be on the landing page
   And I should see "Come see us again soon!"
 

@@ -1,7 +1,7 @@
 require 'pry'
 
 When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |username, password|
-  trello_popup = page.driver.window_handles.last
+  trello_popup = windows.last
   page.within_window trello_popup do
     fake_chrome_drivers
     if page.has_content? "Switch Accounts"
@@ -18,7 +18,7 @@ When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |
 end
 
 When /^I press "(.*?)" on the Trello popup$/ do |button|
-  trello_popup = page.driver.window_handles.last
+  trello_popup = windows.last
   page.within_window trello_popup do
     click_button button
   end
@@ -30,7 +30,7 @@ Given(/^the test user manually connects to Trello$/) do
 
   click_link("Connect with Trello")
 
-  trello_popup = page.driver.window_handles.last
+  trello_popup = windows.last
   page.within_window trello_popup do
     fake_chrome_drivers
     if page.has_content? "Switch Accounts"

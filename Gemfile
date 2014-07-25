@@ -28,8 +28,8 @@ group :development, :test do
   gem 'dotenv'
   gem 'rspec'
   gem 'cucumber'
-  gem 'capybara'
+  gem 'capybara', '< 2.4.0'
   gem 'rack_session_access'
   gem 'email_spec'
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', '~> 1.2.0'
 end

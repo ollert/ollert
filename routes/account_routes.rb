@@ -47,7 +47,7 @@ class Ollert
     haml :login
   end
 
-  post '/logout', :auth => :authenticated do
+  get '/logout', :auth => :authenticated do
     session[:user] = nil
     session[:token] = nil
     flash[:success] = "Come see us again soon!"
