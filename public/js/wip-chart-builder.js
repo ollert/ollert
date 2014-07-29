@@ -27,7 +27,7 @@ var WipChartBuilder = (function () {
         }
       },
       tooltip: {
-        valueSuffix: ' Cards'
+        pointFormat: 'Cards in list: <strong>{point.y} Cards</strong>',
       },
       plotOptions: {
         bar: {

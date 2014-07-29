@@ -1,3 +1,4 @@
+require 'pry'
 require 'date'
 
 class CfdAnalyzer
@@ -53,7 +54,8 @@ class CfdAnalyzer
     end
 
     card_actions.group_by {|a| a["data"]["card"]["id"]}.each do |card, actions|
-      30.days.ago.to_date.upto(Date.today).reverse_each do |date|
+      earliest_date = actions.map{|a| a['date'].to_date}.min
+      earliest_date.upto(Date.today).reverse_each do |date|
         my_actions = actions.reject {|a| a["date"].to_date > date}
         my_actions.sort_by! {|a| a["date"]}
         my_actions.reverse.each do |action|
@@ -86,15 +88,12 @@ class CfdAnalyzer
     lists.each do |list|
       list_array = Array.new
       dates.each do |date|
-        list_array << cfd[date][list["name"]]
+        list_array << [date.strftime('%s000').to_i, cfd[date][list["name"]]]
       end
       cfd_values << { name: list["name"], data: list_array}
     end
 
-    dates.map! {|date| date.strftime("%b %-d")}
-
     {
-      dates: dates,
       cfddata: cfd_values
     }
   end

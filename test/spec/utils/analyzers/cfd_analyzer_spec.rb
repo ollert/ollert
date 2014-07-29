@@ -19,7 +19,8 @@ describe CfdAnalyzer do
     end
 
     it 'returns cfd data' do
-      now = DateTime.now
+      n = DateTime.now
+      now = DateTime.new(n.year, n.month, n.day, 0, 0, 0, 0)
 
       latest = now.strftime("%FT%T%:z")
       middle = (now - 3.days).strftime("%FT%T%:z")
@@ -36,17 +37,17 @@ describe CfdAnalyzer do
              '{"id":"53adf6510ad5d8524d8dc356","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"90yw2Uln","idShort":1,"name":"Test card 1","id":"53adf6510ad5d8524d8dc355"}},"type":"createCard","date":"' + earliest + '"}]}'
 
       expect(CfdAnalyzer.analyze(raw, nil)).to match({
-        dates: (now - 5.days).upto(now).map {|date| date.strftime("%b %-d")},
         cfddata: [
-          {name: "To Do", data: [2, 2, 1, 1, 1, 2]},
-          {name: "Doing", data: [1, 1, 2, 2, 2, 2]},
-          {name: "Done", data: [0, 0, 2, 2, 2, 2]}
+          {name: "To Do", data: [d(5, 2), d(4, 2), d(3, 1), d(2, 1), d(1, 1), d(0, 2)]},
+          {name: "Doing", data: [d(5, 1), d(4, 1), d(3, 2), d(2, 2), d(1, 2), d(0, 2)]},
+          {name: "Done", data: [d(5, 0), d(4, 0), d(3, 2), d(2, 2), d(1, 2), d(0, 2)]}
         ]
       })
     end
 
     it 'handles more than 1000 actions' do   
-      now = DateTime.now
+      n = DateTime.now
+      now = DateTime.new(n.year, n.month, n.day, 0, 0, 0, 0)
 
       latest = now.strftime("%FT%T%:z")
       middle = (now - 3.days).strftime("%FT%T%:z")
@@ -64,13 +65,23 @@ describe CfdAnalyzer do
       expect(action_fetcher).to receive(:call).once.with(earliest, {}).and_return("[]")
 
       expect(CfdAnalyzer.analyze(raw, action_fetcher)).to match({
-        dates: (now - 5.days).upto(now).map {|date| date.strftime("%b %-d")},
         cfddata: [
-          {name: "To Do", data: [1, 1, 1, 1, 1, 1]},
-          {name: "Doing", data: [0, 0, 1, 1, 1, 1]},
-          {name: "Done", data: [0, 0, 0, 0, 0, 0]}
+          {name: "To Do", data: [d(5, 1), d(4, 1), d(3, 1), d(2, 1), d(1, 1), d(0, 1)]},
+          {name: "Doing", data: [d(5, 0), d(4, 0), d(3, 1), d(2, 1), d(1, 1), d(0, 1)]},
+          {name: "Done", data: [d(5, 0), d(4, 0), d(3, 0), d(2, 0), d(1, 0), d(0, 0)]}
         ]
       })
     end
+  end
+
+  # so named to make the above expectations more terse.
+  # this method takes two integers: how many days ago,
+  # and a data point. it returns an array containing a
+  # datestamp (for x days ago) and the data point
+  def d(how_many_days_ago, datum)
+    n = DateTime.now
+    now = DateTime.new(n.year, n.month, n.day, 0, 0, 0, 0)
+    date = now - how_many_days_ago.days
+    [date.strftime('%s000').to_i, datum]
   end
 end

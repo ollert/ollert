@@ -1,12 +1,5 @@
 var LabelCountChartBuilder = (function () {
   var buildChart = function (options) {
-    var green = '#34b27d',
-      yellow = '#dbdb57',
-      orange = '#e09952',
-      red = '#cb4d4d',
-      purple = '#93c',
-      blue = '#4d77cb';
-
     $('#labelCountContainer').highcharts({
       chart: {
         type: 'bar'
@@ -34,7 +27,7 @@ var LabelCountChartBuilder = (function () {
         }
       },
       tooltip: {
-        valueSuffix: ' Cards'
+        pointFormat: 'Cards in list: <strong>{point.y} Cards</strong>',
       },
       plotOptions: {
         bar: {
