@@ -1,4 +1,4 @@
-var StatsBuilder = (function (parent) {
+var StatsBuilder = (function () {
   var buildBoxes = function (stats) {
     $('#board_members_count').text(stats.board_members_count);
     $('#card_count').text(stats.card_count);
@@ -20,11 +20,10 @@ var StatsBuilder = (function (parent) {
     $('#newest_card_age').text(stats.newest_card_age);
   }
 
-  var load = function (boardId, parameters) {
-    var queryString = parent.getQueryString(parameters);
+  var load = function (boardId) {
 
     $.ajax({
-      url: "/boards/" + boardId + "/analysis/stats" + queryString,
+      url: "/boards/" + boardId + "/analysis/stats",
       success: function (data) {
         $(".stats-spinner").hide();
 
@@ -44,4 +43,4 @@ var StatsBuilder = (function (parent) {
   return {
     build: load
   }
-})(DateFilterable);
+})();

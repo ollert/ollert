@@ -62,7 +62,7 @@ describe CfdAnalyzer do
       raw += '{"id":"53adf6510ad5d8524d8dc356","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"90yw2Uln","idShort":1,"name":"Test card 1","id":"53adf6510ad5d8524d8dc355"}},"type":"createCard","date":"' + earliest + '"}]}'
 
       action_fetcher = double(Proc)
-      expect(action_fetcher).to receive(:call).once.with(earliest, {}).and_return("[]")
+      expect(action_fetcher).to receive(:call).once.with(earliest).and_return("[]")
 
       expect(CfdAnalyzer.analyze(raw, action_fetcher)).to match({
         cfddata: [

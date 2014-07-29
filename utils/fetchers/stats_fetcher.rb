@@ -1,7 +1,5 @@
-require_relative 'fetcher'
-
 class StatsFetcher
-  def self.fetch(client, board_id, parameters = {})
+  def self.fetch(client, board_id)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 
     options = {
@@ -18,12 +16,11 @@ class StatsFetcher
       lists: :open,
       list_fields: "name,closed",
     }
-    Fetcher.merge_date_option!(options, parameters)
 
     client.get("/boards/#{board_id}", options)
   end
 
-  def self.fetch_actions(client, board_id, date, parameters = {})
+  def self.fetch_actions(client, board_id, date)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty? || date.nil?
 
     options = {
@@ -34,7 +31,6 @@ class StatsFetcher
       memberCreator: false,
       member: false
     }
-    Fetcher.merge_date_option!(options, parameters)
 
     client.get("/boards/#{board_id}/actions", options)
   end

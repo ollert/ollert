@@ -1,8 +1,7 @@
-require 'pry'
 require 'date'
 
 class CfdAnalyzer
-  def self.analyze(raw, action_fetcher, parameters = {})
+  def self.analyze(raw, action_fetcher)
     return {} if raw.nil? || raw.empty?
     data = JSON.parse(raw)
     return {} if data.empty?
@@ -11,18 +10,10 @@ class CfdAnalyzer
 
     fetched = actions.count
     while fetched == 1000
-      new_actions = JSON.parse(action_fetcher.call(actions.last["date"], parameters))
+      new_actions = JSON.parse(action_fetcher.call(actions.last["date"]))
       fetched = new_actions.count
       actions.concat new_actions
     end
-
-    # pare actions by date (if parameters exist)
-    actions.reject! do |action|
-      DateTime.parse(action["date"]) < parameters[:date_from]
-    end if parameters[:date_from]
-    actions.reject! do |action|
-      parameters[:date_to] < DateTime.parse(action["date"])
-    end if parameters[:date_to]
 
     card_actions = actions.reject {|action| action["type"] == "updateList"}
     list_actions = actions.select {|action| action["type"] == "updateList"}
@@ -55,7 +46,7 @@ class CfdAnalyzer
 
     card_actions.group_by {|a| a["data"]["card"]["id"]}.each do |card, actions|
       earliest_date = actions.map{|a| a['date'].to_date}.min
-      earliest_date.upto(Date.today).reverse_each do |date|
+      Date.today.downto(earliest_date).each do |date|
         my_actions = actions.reject {|a| a["date"].to_date > date}
         my_actions.sort_by! {|a| a["date"]}
         my_actions.reverse.each do |action|

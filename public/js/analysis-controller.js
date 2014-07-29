@@ -9,12 +9,12 @@ var AnalysisController = (function () {
     loadCharts();
   };
 
-  var loadCharts = function (options) {
+  var loadCharts = function () {
     WipChartBuilder.build(_boardId);
     LabelCountChartBuilder.build(_boardId);
     CfdChartBuilder.init(_boardId, _boardName);
-    CfdChartBuilder.build(options);
-    StatsBuilder.build(_boardId, options);
+    CfdChartBuilder.build();
+    StatsBuilder.build(_boardId);
   };
 
   return {

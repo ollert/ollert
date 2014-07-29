@@ -1,4 +1,4 @@
-var CfdChartBuilder = (function (parent) {
+var CfdChartBuilder = (function () {
   var _boardId;
   var _boardName;
 
@@ -63,7 +63,7 @@ var CfdChartBuilder = (function (parent) {
     });
   };
 
-  var postInitialLoadCallback = function(data) {
+  var postInitialLoadCallback = function (data) {
     $('#cfdSpinner').hide();
 
     var parsedData = jQuery.parseJSON(data);
@@ -71,12 +71,10 @@ var CfdChartBuilder = (function (parent) {
     buildChart(parsedData);
   };
 
-  var load = function (callback, parameters) {
-    var queryString = parent.getQueryString(parameters);
-
+  var load = function () {
     $.ajax({
-      url: "/boards/" + _boardId + "/analysis/cfd" + queryString,
-      success: callback,
+      url: "/boards/" + _boardId + "/analysis/cfd",
+      success: postInitialLoadCallback,
       error: function (xhr) {
         $("#cfdSpinner").hide();
         container.text(xhr.responseText);
@@ -86,6 +84,6 @@ var CfdChartBuilder = (function (parent) {
 
   return {
     init: initialize,
-    build: function(parameters) { load(postInitialLoadCallback, parameters); }
+    build: load
   };
-}(DateFilterable));
+}());
