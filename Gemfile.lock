@@ -167,5 +167,6 @@ DEPENDENCIES
   ruby-trello
   sass
   sinatra
+  sinatra-contrib
   sinatra-reloader
   unicorn

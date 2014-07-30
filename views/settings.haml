@@ -7,69 +7,69 @@
   .row
     %hr
 
-  %form.form-horizontal{id: "updateEmail", role: "form"}
+  %form#update-email.form-horizontal{role: 'form'}
     .form-group
       .col-sm-3.col-xs-4.col-lg-2
-        %label.control-label{for: "email"}
+        %label.control-label{for: 'email'}
           Email
       .col-sm-5.col-xs-8.col-lg-5
-        %input.form-control{type: "email", id: "email", name: "email", value: "#{@user.email}", required: "required"}
+        %input#email.form-control{type: 'email', name: 'email', value: "#{@user.email}", required: 'required'}
     .form-group
       .col-sm-offset-3.col-sm-5.col-xs-offset-4.col-xs-8.col-lg-offset-2.col-lg-5
-        %input.btn.btn-primary{type: "submit", value:"Update Email"}
-        %span{id: "emailStatus"}
+        %input.btn.btn-primary{type: 'submit', value:'Update Email'}
+        %span#email-status
 
   .row
     %hr
 
-  %form{id: "updatePassword", role: "form", class: "form-horizontal"}
+  %form#update-password.form-horizontal{role: 'form'}
     .form-group
       .col-sm-3.col-xs-5.col-lg-2
-        %label{for: "current_password", class: "control-label"}
+        %label.control-label{for: 'current-password'}
           Current Password
       .col-sm-5.col-xs-7.col-lg-5
-        %input{type: "password", id: "current_password", name: "current_password", class: "form-control", autocomplete: "off", required: "required"}
+        %input#current-password.form-control{type: 'password', name: 'current_password', autocomplete: 'off', required: 'required'}
     .form-group
       .col-sm-3.col-xs-5.col-lg-2
-        %label{for: "new_password", class: "control-label"}
+        %label.control-label{for: 'new-password'}
           New Password
       .col-sm-5.col-xs-7.col-lg-5
-        %input{type: "password", id: "new_password", name: "new_password", class: "form-control", required: "required"}
+        %input#new-password.form-control{type: 'password', name: 'new_password', required: 'required'}
     .form-group
       .col-sm-3.col-xs-5.col-lg-2
-        %label{for: "confirm_password", class: "control-label"}
+        %label.control-label{for: 'confirm-password'}
           Confirm New
       .col-sm-5.col-xs-7.col-lg-5
-        %input{type: "password", id: "confirm_password", name: "confirm_password", class: "form-control", required: "required"}
+        %input#confirm-password.form-control{type: 'password', name: 'confirm_password', required: 'required'}
     .form-group
       .col-sm-offset-3.col-sm-5.col-xs-offset-5.col-xs-7.col-lg-offset-2.col-lg-5
-        %input{class: "btn btn-primary", type: "submit", value:"Update Password"}
-        %span{id: "passwordStatus"}
+        %input.btn.btn-primary{type: 'submit', value:'Update Password'}
+        %span#password-status
 
   .row
     %hr
 
   .col-sm-offset-3.col-sm-9.col-xs-12.col-lg-offset-2.col-lg-10.no-padding
-    %a{id: "trelloDisconnect", class: "btn btn-lg btn-warning", href: "javascript:void(0)"}
+    %a#trello-disconnect.btn.btn-lg.btn-warning{href: 'javascript:void(0)'}
       Disconnect Trello user <b>#{@user.trello_name}</b>
-    %a{id: "trelloConnect", class: "btn btn-primary btn-lg", href: "javascript:void(0)"}
+    %a#trello-connect.btn.btn-primary.btn-lg{href: 'javascript:void(0)'}
       Connect with Trello
-    %span{id: "trelloConnectStatus"}
+    %span#trello-connect-status
 
   .row
     %hr
 
   .col-sm-offset-3.col-sm-9.col-xs-12.col-lg-offset-2.col-lg-10.no-padding
-    %form{id: "deleteAccount"}
-      .checkbox{style: "font-size: 16px;"}
+    %form#delete-account
+      .checkbox{style: 'font-size: 16px;'}
         %label
-          %input{type: "checkbox", name: "iamsure", id: "iamsure"}
+          %input#i-am-sure{type: 'checkbox', name: 'iamsure'}
             This box verifies that you would like to delete your account when clicking the link below.
-      %input{type: "submit", id: "deleteAccountButton", class: "btn btn-defualt btn-danger", value: "Delete Account"}
-      %span{id: "deleteAccountStatus"}
+      %input#delete-account-button.btn.btn-default.btn-danger{type: 'submit', value: 'Delete Account'}
+      %span#delete-account-status
 
-%script{src: "/js/loading-indicator.js"}
-%script{src: "/js/settings-controller.js"}
+%script{src: '/js/loading-indicator.js'}
+%script{src: '/js/settings-controller.js'}
 
 :javascript
   $(document).ready(function() {

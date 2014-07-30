@@ -15,17 +15,27 @@ class Ollert
     begin
       @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, session[:trello_name]))
     rescue Trello::Error => e
-      flash[:error] = "There's something wrong with the Trello connection. Please re-establish the connection."
       if !@user.nil?
         @user.member_token = nil
         @user.trello_name = nil
         @user.save
       end
 
-      redirect '/'
+      respond_to do |format|
+        format.html do
+          flash[:error] = "There's something wrong with the Trello connection. Please re-establish the connection."
+
+          redirect '/'
+        end
+
+        format.json { status 400 }
+      end
     end
 
-    haml :boards
+    respond_to do |format|
+      format.html { haml :boards }
+      format.json { {'data' => @boards }.to_json }
+    end
   end
 
   get '/boards/:id', :auth => :token do |board_id|

@@ -15,10 +15,12 @@
 
     %script{src: "/js/trello-client.js"}
     %script{src: "/js/trello-controller.js"}
+    %script{src: "/js/ollert.js"}
 
     :javascript
       $(document).ready(function() {
         Trello.setKey("#{ENV['PUBLIC_KEY']}")
+        Ollert.loadBoards();
       });
 
     %script{src: "/js/plugins.js"}
@@ -27,18 +29,6 @@
       %script{src: "/js/google-analytics.js"}
 
   %body
-    - my_boards_menu = capture_haml do
-      %ul.dropdown-menu.pull-right
-        - if @boards.nil? || @boards.empty?
-          No Boards
-        - else
-          - @boards.each do |org_name, boards|
-            %li{class: "divider divider-section"}
-              #{org_name}
-            - boards.each do |board|
-              %li
-                %a{class: "btn btn-link", href: "/boards/#{board["id"]}"}
-                  #{board["name"]}
     %div{id: 'wrap'}
       %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
         .container-fluid
@@ -61,11 +51,11 @@
                   %span{class: "icon-bar"}
                   %span{class: "icon-bar"}
                   %span{class: "icon-bar"}
-                %button.my-boards.navbar-toggle.collapsed.btn.btn-link{type: 'button', data: { toggle: 'dropdown' } }
+                %button.my-boards-button.navbar-toggle.collapsed.btn.btn-link{type: 'button', data: { toggle: 'dropdown' } }
                   %span.glyphicon.glyphicon-stats
                   My Boards
                   %b.caret
-                = my_boards_menu
+                %ul.dropdown-menu.pull-right.my-boards
           - if @user.nil?
             %ul{class: 'signup-login-group nav navbar-nav navbar-right hidden-xs'}
               %li
@@ -82,7 +72,7 @@
                     %span.glyphicon.glyphicon-stats
                     My Boards
                     %b.caret
-                  = my_boards_menu
+                  %ul.dropdown-menu.pull-right.my-boards
                 %li
                   %a{href: "/settings", title: "Logged in as #{@user.email}", alt: "Settings"}
                     %span.glyphicon.glyphicon-cog

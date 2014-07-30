@@ -41,23 +41,23 @@ Scenario: Updating password
   Given the test user is in the system
   And the test user is logged in
   And I go to the settings page
-  When I fill in "current_password" with "testing ollert"
-  And I fill in "new_password" with "new password"
-  And I fill in "confirm_password" with "new password"
+  When I fill in "current-password" with "testing ollert"
+  And I fill in "new-password" with "new password"
+  And I fill in "confirm-password" with "new password"
   And I press "Update Password"
   Then I should see "Password updated."
-  And the "current_password" field should contain ""
-  And the "new_password" field should contain ""
-  And the "confirm_password" field should contain ""
+  And the "current-password" field should contain ""
+  And the "new-password" field should contain ""
+  And the "confirm-password" field should contain ""
 
 @javascript
 Scenario: Updating password with wrong current password
   Given the test user is in the system
   And the test user is logged in
   And I go to the settings page
-  When I fill in "current_password" with "bad password"
-  And I fill in "new_password" with "new password"
-  And I fill in "confirm_password" with "new password"
+  When I fill in "current-password" with "bad password"
+  And I fill in "new-password" with "new password"
+  And I fill in "confirm-password" with "new password"
   And I press "Update Password"
   Then I should see "Save failed: Current password entered incorrectly."
 
@@ -66,9 +66,9 @@ Scenario: Updating password with non-matching new password
   Given the test user is in the system
   And the test user is logged in
   And I go to the settings page
-  When I fill in "current_password" with "testing ollert"
-  And I fill in "new_password" with "new password"
-  And I fill in "confirm_password" with "different password"
+  When I fill in "current-password" with "testing ollert"
+  And I fill in "new-password" with "new password"
+  And I fill in "confirm-password" with "different password"
   And I press "Update Password"
   Then I should see "Save failed: New password fields do not match."
 

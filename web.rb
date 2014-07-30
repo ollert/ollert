@@ -4,8 +4,10 @@ require 'pony'
 require 'rack-flash'
 require 'rack/ssl'
 require 'sinatra/base'
+require 'sinatra/respond_with'
 
 class Ollert < Sinatra::Base
+  register Sinatra::RespondWith
   configure :development do
     require 'sinatra/reloader'
     register Sinatra::Reloader
