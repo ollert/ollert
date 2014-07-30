@@ -1,6 +1,6 @@
 var LoadingIndicator = function (element) {
   element.find(".loading-indicator").remove();
-  element.append("<span class='loading-indicator'/>");
+  element.append("<div class='loading-indicator'/>");
   this.indicator = element.find(".loading-indicator");
 };
 

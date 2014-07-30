@@ -52,6 +52,7 @@ html,body {
   color: $medium;
   font-size: 12pt;
   text-align: center;
+  min-height: 2.3em;
 }
 
 .stat-subtitle {
@@ -62,8 +63,8 @@ html,body {
 
 .stat-value {
   color:  $medium-light;
-  font-size: 60pt;
   text-align: center;
+  font-size: 60pt;
 }
 
 .stat-unit {
@@ -320,7 +321,7 @@ ul.boards-list {
 }
 
 .analysis-block-sm {
-  height: 200px;
+  height: 225px;
 }
 
 .analysis-block-md {
@@ -358,6 +359,7 @@ ul.left-align li a{
 
 .loading-indicator {
   margin-left: 15px;
+  margin-top: 15px;
 }
 
 .loading-indicator img {
@@ -450,4 +452,9 @@ a.btn {
 .logout-button {
   margin-left: 1em;
   margin-bottom: 1em;
+}
+
+.container.settings {
+  padding-top: 30px;
+  padding-bottom: 50px;
 }
