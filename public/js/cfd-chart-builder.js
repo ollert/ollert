@@ -2,11 +2,6 @@ var CfdChartBuilder = (function () {
   var _boardId;
   var _boardName;
 
-  var initialize = function(boardId, boardName) {
-    _boardId = boardId;
-    _boardName = boardName;
-  };
-
   var buildChart = function (data) {
     $('#cfdContainer').highcharts("StockChart", {
       chart: {
@@ -82,8 +77,14 @@ var CfdChartBuilder = (function () {
     });
   };
 
+  var buildAndLoad = function (boardId, boardName) {
+    _boardId = boardId;
+    _boardName = boardName;
+
+    load();
+  };
+
   return {
-    init: initialize,
-    build: load
+    build: buildAndLoad
   };
 }());

@@ -12,8 +12,7 @@ var AnalysisController = (function () {
   var loadCharts = function () {
     WipChartBuilder.build(_boardId);
     LabelCountChartBuilder.build(_boardId);
-    CfdChartBuilder.init(_boardId, _boardName);
-    CfdChartBuilder.build();
+    CfdChartBuilder.build(_boardId, _boardName);
     StatsBuilder.build(_boardId);
   };
 
