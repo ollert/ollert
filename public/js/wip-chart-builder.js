@@ -1,6 +1,6 @@
 var WipChartBuilder = (function () {
   var buildChart = function (options) {
-    $('#wipContainer').highcharts({
+    $('#wip-container').highcharts({
       chart: {
         type: 'bar'
       },
@@ -44,13 +44,13 @@ var WipChartBuilder = (function () {
   }
 
   var load = function (boardId) {
-    var container = $("#wipContainer")
+    var container = $("#wip-container")
     container.height(container.height() - 10);
 
     $.ajax({
       url: "/boards/" + boardId + "/analysis/wip",
       success: function (data) {
-        $('#wipSpinner').hide();
+        $('#wip-spinner').hide();
 
         var parsed = jQuery.parseJSON(data);
         buildChart({
@@ -63,7 +63,7 @@ var WipChartBuilder = (function () {
         });
       },
       error: function (xhr) {
-        $("#wipSpinner").hide();
+        $("#wip-spinner").hide();
         container.text(xhr.responseText);
       }
     });

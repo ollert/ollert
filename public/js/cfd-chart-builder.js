@@ -3,7 +3,7 @@ var CfdChartBuilder = (function () {
   var _boardName;
 
   var buildChart = function (data) {
-    $('#cfdContainer').highcharts("StockChart", {
+    $('#cfd-container').highcharts("StockChart", {
       chart: {
         type: 'area',
         zoomType: 'x'
@@ -59,7 +59,7 @@ var CfdChartBuilder = (function () {
   };
 
   var postInitialLoadCallback = function (data) {
-    $('#cfdSpinner').hide();
+    $('#cfd-spinner').hide();
 
     var parsedData = jQuery.parseJSON(data);
 
@@ -71,7 +71,7 @@ var CfdChartBuilder = (function () {
       url: "/boards/" + _boardId + "/analysis/cfd",
       success: postInitialLoadCallback,
       error: function (xhr) {
-        $("#cfdSpinner").hide();
+        $("#cfd-spinner").hide();
         container.text(xhr.responseText);
       }
     });

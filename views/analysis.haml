@@ -1,94 +1,97 @@
 #board-details
   .container
     .row
-      .col-xs-6.text-left.h2
+      .col-xs-6.text-left.h2.top-row
         #{@board_name}
       .col-xs-6.text-right.h2
-        %a{href: "/boards", class: "btn btn-link", title: "View Boards", alt: "Return to Boards Overview"}
+        %a.btn.btn-link{href: '/boards', title: 'View Boards', alt: 'Return to Boards Overview'}
           ← View Boards
     .row
       .col-md-3.col-sm-6.col-xs-12.no-padding
         .analysis-block-sm
           .stat-title
             %h4 Average members per card
-          .stat-value{id: 'avg_members_per_card'}
-            %img{src: '/img/spinner.gif', class: 'stats-spinner'}
+          #avg-members-per-card.stat-value
+            %img.stats-spinner{src: '/img/spinner.gif'}
 
       .col-md-3.col-sm-6.col-xs-12.no-padding
         .analysis-block-sm
           .stat-title
             %h4 Average cards per member
-          .stat-value{id: 'avg_cards_per_member'}
-            %img{src: '/img/spinner.gif', class: 'stats-spinner'}
+          #avg-cards-per-member.stat-value
+            %img.stats-spinner{src: '/img/spinner.gif'}
 
       .col-md-3.col-sm-6.col-xs-12.no-padding
         .analysis-block-sm
           .stat-title
             %h4 List with the most cards
-          .stat-subtitle{id: 'list_with_most_cards_name'}
-          .stat-value{id: 'list_with_most_cards_count'}
-            %img{src: '/img/spinner.gif', class: 'stats-spinner'}
+          #list-with-most-cards-count.stat-value
+            %img.stats-spinner{src: '/img/spinner.gif'}
+          #list-with-most-cards-name.stat-subtitle
 
       .col-md-3.col-sm-6.col-xs-12.no-padding
         .analysis-block-sm
           .stat-title
             %h4 List with the least cards
-          .stat-subtitle{id: 'list_with_least_cards_name'}
-          .stat-value{id: 'list_with_least_cards_count'}
-            %img{src: '/img/spinner.gif', class: 'stats-spinner'}
+          #list-with-least-cards-count.stat-value
+            %img.stats-spinner{src: '/img/spinner.gif'}
+          #list-with-least-cards-name.stat-subtitle
+
     .row
       .col-xs-12.no-padding
         .analysis-block-lg
-          %img{src: '/img/spinner.gif', id: 'cfdSpinner'}
-          %div{id: "cfdContainer", class: "lg-chart", style: "margin: 0 auto; height: inherit"}
+          %img#cfd-spinner{src: '/img/spinner.gif'}
+          #cfd-container.lg-chart{style: 'margin: 0 auto; height: inherit'}
+
     .row
       .col-md-6.col-xs-12.no-padding
         .analysis-block-md
-          %img{src: '/img/spinner.gif', id: 'wipSpinner'}
-          %div{id: "wipContainer", class: "med-chart", style: "height: inherit"}
+          %img#wip-spinner{src: '/img/spinner.gif'}
+          #wip-container.med-chart{style: 'height: inherit'}
       .col-md-6.col-xs-12.no-padding
         .analysis-block-md
-          %img{src: '/img/spinner.gif', id: 'labelCountSpinner'}
-          %div{id: "labelCountContainer", class: "med-chart", style: "height: inherit"}
+          %img#label-count-spinner{src: '/img/spinner.gif'}
+          #label-count-container.med-chart{style: 'height: inherit'}
+
     .row
       .col-md-3.col-sm-6.col-xs-12.no-padding
-        %div{class: "analysis-block-sm "}
+        .analysis-block-sm
           .stat-title
-            Board members
-          .stat-subtitle
-            &nbsp;
-          .stat-value{id: 'board_members_count'}
-            %img{src: '/img/spinner.gif', class: 'stats-spinner'}
+            %h4 Board members
+          #board-members-count.stat-value
+            %img.stats-spinner{src: '/img/spinner.gif'}
+
       .col-md-3.col-sm-6.col-xs-12.no-padding
-        %div{class: "analysis-block-sm "}
+        .analysis-block-sm
           .stat-title
-            Total cards
-          .stat-subtitle
-            &nbsp;
-          .stat-value{id: 'card_count'}
-            %img{src: '/img/spinner.gif', class: 'stats-spinner'}
+            %h4 Total cards
+          #card-count.stat-value
+            %img.stats-spinner{src: '/img/spinner.gif'}
+
       .col-md-3.col-sm-6.col-xs-12.no-padding
-        %div{class: "analysis-block-sm "}
+        .analysis-block-sm
           .stat-title
             %h4 Oldest Card (age in days)
-          .stat-subtitle{id: 'oldest_card_name'}
-          .stat-value{id: 'oldest_card_age'}
-            %img{src: '/img/spinner.gif', class: 'stats-spinner'}
+          #oldest-card-age.stat-value
+            %img.stats-spinner{src: '/img/spinner.gif'}
+          #oldest-card-name.stat-subtitle
+
       .col-md-3.col-sm-6.col-xs-12.no-padding
-        %div{class: "analysis-block-sm "}
+        .analysis-block-sm
           .stat-title
             %h4 Newest Card (age in days)
-          .stat-subtitle{id: 'newest_card_name'}
-          .stat-value{id: 'newest_card_age'}
-            %img{src: '/img/spinner.gif', class: 'stats-spinner'}
+          #newest-card-age.stat-value
+            %img.stats-spinner{src: '/img/spinner.gif'}
+          #newest-card-name.stat-subtitle
 
-%script{src: "/js/highstock.js"}
-%script{src: "/js/cfd-chart-builder.js"}
-%script{src: "/js/wip-chart-builder.js"}
-%script{src: "/js/label-count-chart-builder.js"}
-%script{src: "/js/stats-builder.js"}
-%script{src: "/js/analysis-controller.js"}
-%script{src: "/js/moment.min.js"}
+%script{src: '/js/highstock.js'}
+%script{src: '/js/modules/no-data-to-display.src.js'}
+%script{src: '/js/cfd-chart-builder.js'}
+%script{src: '/js/wip-chart-builder.js'}
+%script{src: '/js/label-count-chart-builder.js'}
+%script{src: '/js/stats-builder.js'}
+%script{src: '/js/analysis-controller.js'}
+%script{src: '/js/moment.min.js'}
 
 %script
   $(document).ready(function() { AnalysisController.init("#{@board_id}", "#{@board_name}"); });

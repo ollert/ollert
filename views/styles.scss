@@ -32,7 +32,7 @@ html,body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  /* Negative indent footer by it's height */
+  /* Negative indent footer by its height */
   margin: 0 auto -120px;
 }
 
@@ -295,6 +295,8 @@ ul.boards-list {
 
 #board-details {
   background: #d7d7d7;
+  padding-top: 30px;
+  padding-bottom: 50px;
 }
 
 .analysis-block-sm, .analysis-block-md, .analysis-block-lg, .date-range {
