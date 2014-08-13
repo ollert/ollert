@@ -1,6 +1,7 @@
 class Ollert
   get '/', :auth => :none do
     if !@user.nil? && !@user.member_token.nil?
+      puts "redirect to boards"
       redirect '/boards'
     end
     

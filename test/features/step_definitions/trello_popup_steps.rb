@@ -1,5 +1,3 @@
-require 'pry'
-
 When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |username, password|
   trello_popup = windows.last
   page.within_window trello_popup do

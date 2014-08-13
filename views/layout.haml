@@ -19,8 +19,10 @@
 
     :javascript
       $(document).ready(function() {
-        Trello.setKey("#{ENV['PUBLIC_KEY']}")
-        Ollert.loadBoards();
+        Trello.setKey("#{ENV['PUBLIC_KEY']}");
+        if (#{!@user.nil?}) {
+          Ollert.loadBoards();        
+        }
       });
 
     %script{src: "/js/plugins.js"}

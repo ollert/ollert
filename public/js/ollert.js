@@ -4,10 +4,14 @@ var Ollert = (function () {
 
     $.ajax({
       url: "/boards",
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json'
+      },
       success: loadBoardsCallback,
       statusCode: {
-        400: function () { loadSimpleBoards('No Boards'); }
+        400: function () {
+          loadSimpleBoards('No Boards');
+        }
       },
       error: function (request, status, error) {
         if (request.status != 400) {
