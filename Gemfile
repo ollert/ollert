@@ -12,13 +12,11 @@ gem 'haml'
 gem 'sass'
 gem 'rack-flash3'
 gem 'rack-ssl'
+gem 'rack-rewrite'
 gem 'pony'
 gem 'mongoid'
 gem 'ruby-trello'
 gem 'bcrypt'
-
-group :production do
-end
 
 group :development do
   gem 'pry'

@@ -84,6 +84,7 @@ GEM
       rack
     rack-protection (1.5.3)
       rack
+    rack-rewrite (1.5.0)
     rack-ssl (1.4.1)
       rack
     rack-test (0.6.2)
@@ -157,6 +158,7 @@ DEPENDENCIES
   pony
   pry
   rack-flash3
+  rack-rewrite
   rack-ssl
   rack_session_access
   rake
