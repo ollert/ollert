@@ -3,6 +3,7 @@ require 'mongoid'
 require 'pony'
 require 'rack-flash'
 require 'rack/ssl'
+require 'rack/rewrite'
 require 'sinatra/base'
 require 'sinatra/respond_with'
 
@@ -36,7 +37,15 @@ class Ollert < Sinatra::Base
 
   use Rack::Session::Cookie, secret: ENV['SESSION_SECRET'], expire_after: 30 * (60*60*24) # 30 days in seconds
   use Rack::Flash, sweep: true
-  use Rack::SSL, :exclude => ->(_){ ENV['RACK_ENV'] != "production" }
+
+  configure :production do
+    use Rack::SSL
+    use Rack::Rewrite do
+      r301 %r{.*}, 'https://ollertapp.com$&', :if => Proc.new {|rack_env|
+        rack_env['SERVER_NAME'] != 'ollertapp.com'
+      }
+    end
+  end
 
   set(:auth) do |role|
     condition do
