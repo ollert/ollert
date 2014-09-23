@@ -9,14 +9,34 @@ var CfdChartBuilder = (function () {
         zoomType: 'x'
       },
       rangeSelector: {
-        buttons: [
-          { type: 'day', count: 1, text: '1d' },
-          { type: 'week', count: 1, text: '1w' },
-          { type: 'week', count: 2, text: '2w' },
-          { type: 'month', count: 1, text: '1m' },
-          { type: 'month', count: 3, text: '3m' },
-          { type: 'year', count: 1, text: '1y' },
-          { type: 'all', text: 'All' }],
+        buttons: [{
+          type: 'day',
+          count: 1,
+          text: '1d'
+        }, {
+          type: 'week',
+          count: 1,
+          text: '1w'
+        }, {
+          type: 'week',
+          count: 2,
+          text: '2w'
+        }, {
+          type: 'month',
+          count: 1,
+          text: '1m'
+        }, {
+          type: 'month',
+          count: 3,
+          text: '3m'
+        }, {
+          type: 'year',
+          count: 1,
+          text: '1y'
+        }, {
+          type: 'all',
+          text: 'All'
+        }],
         selected: 3
       },
       title: {
@@ -54,12 +74,18 @@ var CfdChartBuilder = (function () {
           }
         }
       },
+      credits: {
+        enabled: false
+      },
       series: data.cfddata
     });
   };
 
   var postInitialLoadCallback = function (data) {
     $('#cfd-spinner').hide();
+
+    var container = $("#cfd-container");
+    container.height(container.height() - 10);
 
     var parsedData = jQuery.parseJSON(data);
 
