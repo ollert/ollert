@@ -25,3 +25,18 @@ end
 Then(/^the test user "(.*?)" should be nil$/) do |field|
   User.first[field.to_sym].should be_nil
 end
+
+Given(/^the email field contains the test email address$/) do
+  find_field("email").value.should eq ENV['TRELLO_TEST_USERNAME']
+end
+
+Given(/^there is a copycat user in the system$/) do
+  original = User.first
+  User.create trello_id: original.trello_id
+  original.trello_id = nil
+  original.save
+end
+
+When(/^I click my avatar$/) do
+  find(".settings-link").click
+end

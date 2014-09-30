@@ -1,7 +1,7 @@
 .container.settings
   .row
-    %h2
-      .col-xs-4
+    %h2.ollert-header
+      .col-xs-12
         Settings
 
   .row
@@ -12,6 +12,8 @@
       .col-sm-3.col-xs-4.col-lg-2
         %label.control-label{for: 'email'}
           Email
+        %a#email-info.btn-link{href: "javascript:void(0)", data: {toggle: "popover", placement: "bottom", trigger: "focus", content: "Providing an email will allow us to get in touch with you in case of problems with your account or to ask for feedback. We will not sell or otherwise distribute your email address."}}
+          %span.glyphicon.glyphicon-info-sign
       .col-sm-5.col-xs-8.col-lg-5
         %input#email.form-control{type: 'email', name: 'email', value: "#{@user.email}", required: 'required'}
     .form-group
@@ -22,39 +24,16 @@
   .row
     %hr
 
-  %form#update-password.form-horizontal{role: 'form'}
-    .form-group
-      .col-sm-3.col-xs-5.col-lg-2
-        %label.control-label{for: 'current-password'}
-          Current Password
-      .col-sm-5.col-xs-7.col-lg-5
-        %input#current-password.form-control{type: 'password', name: 'current_password', autocomplete: 'off', required: 'required'}
-    .form-group
-      .col-sm-3.col-xs-5.col-lg-2
-        %label.control-label{for: 'new-password'}
-          New Password
-      .col-sm-5.col-xs-7.col-lg-5
-        %input#new-password.form-control{type: 'password', name: 'new_password', required: 'required'}
-    .form-group
-      .col-sm-3.col-xs-5.col-lg-2
-        %label.control-label{for: 'confirm-password'}
-          Confirm New
-      .col-sm-5.col-xs-7.col-lg-5
-        %input#confirm-password.form-control{type: 'password', name: 'confirm_password', required: 'required'}
-    .form-group
-      .col-sm-offset-3.col-sm-5.col-xs-offset-5.col-xs-7.col-lg-offset-2.col-lg-5
-        %input.btn.btn-primary{type: 'submit', value:'Update Password'}
-        %span#password-status
-
   .row
-    %hr
-
-  .col-sm-offset-3.col-sm-9.col-xs-12.col-lg-offset-2.col-lg-10.no-padding
-    %a#trello-disconnect.btn.btn-lg.btn-warning{href: 'javascript:void(0)'}
-      Disconnect Trello user <b>#{@user.trello_name}</b>
-    %a#trello-connect.btn.btn-primary.btn-lg{href: 'javascript:void(0)'}
-      Connect with Trello
-    %span#trello-connect-status
+    .col-sm-offset-3.col-sm-9.col-xs-12.col-lg-offset-2.col-lg-10
+      .row#trello-connect-status
+        %span
+          .loading-indicator
+            Currently connected to Trello as <strong>#{@user.trello_name}</strong>
+      .row
+        .col-xs-12
+          %a#trello-connect.btn.btn-primary.btn-md{href: 'javascript:void(0)'}
+            Connect to a Different Trello Account
 
   .row
     %hr
@@ -73,5 +52,5 @@
 
 :javascript
   $(document).ready(function() {
-    SettingsController.init(#{!@user.member_token.nil?});
+    SettingsController.init();
   });

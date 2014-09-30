@@ -10,10 +10,10 @@ require_relative '../utils/fetchers/stats_fetcher'
 require_relative '../utils/analyzers/stats_analyzer'
 
 class Ollert
-  get '/boards/:board_id/analysis/wip' do |board_id|
+  get '/boards/:board_id/analysis/wip', :auth => :connected do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => session[:token]
+      :member_token => @user.member_token
     )
 
     begin
@@ -25,10 +25,10 @@ class Ollert
     end
   end
 
-  get '/boards/:id/analysis/cfd' do |board_id|
+  get '/boards/:id/analysis/cfd', :auth => :connected do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => session[:token]
+      :member_token => @user.member_token
     )
 
     action_fetcher = Proc.new { |date| CfdFetcher.fetch_actions(client, board_id, date) }
@@ -42,10 +42,10 @@ class Ollert
     end
   end
   
-  get '/boards/:id/analysis/stats' do |board_id|
+  get '/boards/:id/analysis/stats', :auth => :connected do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => session[:token]
+      :member_token => @user.member_token
     )
 
     action_fetcher = Proc.new { |date| StatsFetcher.fetch_actions(client, board_id, date) }
@@ -59,10 +59,10 @@ class Ollert
     end
   end
   
-  get '/boards/:id/analysis/labelcounts' do |board_id|
+  get '/boards/:id/analysis/labelcounts', :auth => :connected do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => session[:token]
+      :member_token => @user.member_token
     )
 
     begin

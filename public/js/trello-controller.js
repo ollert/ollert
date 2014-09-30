@@ -1,13 +1,5 @@
 var TrelloController = (function () {
-  var anonymous = function () {
-    authorize("1hour", anonymousSuccess);
-  }
-
-  var user = function (callback) {
-    authorize("never", callback || userSuccess);
-  }
-
-  var authorize = function (expires, callback) {
+  var authorize = function (callback) {
     Trello.deauthorize();
     Trello.clearReady();
 
@@ -15,47 +7,40 @@ var TrelloController = (function () {
       name: "Ollert",
       type: "popup",
       interactive: true,
-      expiration: expires,
+      expiration: "never",
       persist: false,
-      success: callback,
+      success: callback || onSuccessfulAuthorization,
       scope: {
         read: true,
-        write: true
+        write: true,
+        account: true
       }
     });
-  }
-
-  var anonymousSuccess = function () {
-    onSuccessfulAuthorization("/trello/connect");
-  }
-
-  var userSuccess = function () {
-    onSuccessfulAuthorization("/settings/trello/connect");
-  }
+  };
 
   var onSuccessfulAuthorization = function (url) {
     $(".connect-btn").text("Connecting...");
 
     $.ajax({
-      url: url,
+      url: "/trello/connect",
       method: "put",
       data: {
         token: Trello.token()
       },
       success: function () {
-        self.location = "/boards";
         $(".connect-btn").text("Connection successful. Redirecting...");
+        self.location = "/boards";
       },
-      error: function (xhr) {
-        FlashMessage.error(xhr.responseText);
-        $(".connect-btn").text("Connection failed. Try again.");
+      error: function (xhr, textStatus, errorThrown) {
+        if (xhr.responseText) {
+          FlashMessage.error(xhr.responseText);
+          $(".connect-btn").text("Connection failed. Try again.");
+        }
       }
     });
-  }
+  };
 
   return {
-    authorize: authorize,
-    authorizeAnonymous: anonymous,
-    authorizeUser: user
+    authorize: authorize
   };
 }());

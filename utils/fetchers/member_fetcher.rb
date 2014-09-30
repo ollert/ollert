@@ -3,7 +3,7 @@ class MemberFetcher
     raise Trello::Error if client.nil? || token.nil? || token.empty?
     client.get("/tokens/#{token}/member",
       {
-        fields: :username
+        fields: "username,gravatarHash,email"
       }
     )
   end

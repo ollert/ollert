@@ -8,14 +8,17 @@
         Learn what your Trello boards aren't telling you.
     .row
       .text-center
-        %a{class: "btn btn-primary btn-xl connect-btn", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'TrelloController.authorizeAnonymous()' : 'TrelloController.authorizeUser()'}"}
+        %a{class: "btn btn-primary btn-xl connect-btn", href: "javascript:void(0)", onClick: "TrelloController.authorize()"}
           Connect to Get Started
+    .row
+      .text-center.small
+        By connecting, you agree to our <a href="/terms">terms of service</a>.
+
 .landing-info.landing-section
   .container.hidden-xs
     .row.text-center.h1
       .c0l-xs-12
         Why Ollert?
-
     .row.text-center.h3
       .col-md-3.col-xs-4
         Your Trello boards do a great job telling you the state of today.
@@ -60,54 +63,37 @@
         Instantly see the numbers behind the cards.
     .row
       .col-xs-12
-        %img{src: '/img/landing-instantly.png', style: 'width: 100%;'}
+        %img{src: '/img/landing-instantly.png'}
     .row
       .col-xs-12.text-center.h3
         Use Ollert to visualize the progress of your boards.
     .row
       .col-xs-offset-1.col-xs-10
-        %img{src: '/img/landing-visualize.png', style: 'width: 100%;'}
+        %img{src: '/img/landing-visualize.png'}
 
 .landing-hook.landing-section
-  .container.hidden-xs
-    .row
-      .col-xs-12.h1.text-center{style: 'margin-bottom: 20px;'}
-        What are you waiting for? It's free.
-    .row.text-center
-      .col-md-offset-1.col-md-4.col-sm-6
-        %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'TrelloController.authorizeAnonymous()' : 'TrelloController.authorizeUser()'}"}
-          Connect to Get Started
-      .col-md-offset-2.col-md-4.col-sm-6
-        %a{class: "btn btn-primary btn-xl", href: "/signup"}
-          Create an Account
-    .row.text-center.h4
-      .col-md-offset-1.col-md-4.col-sm-6
-        Connect to Trello, choose a board, and view your stats. No strings attached.
-      .col-md-offset-2.col-md-4.col-sm-6
-        Just supply an email and password. We'll remember your Trello information after the first time you authenticate. More benefits coming soon.
-    .row
-      .col-xs-12.text-center
-        Want more information? Contact <a href="mailto:connect@ollertapp.com">connect@ollertapp.com</a>.  
-  .container.visible-xs-block
+  .container
     .row
       .col-xs-12.h1.text-center.landing-subtitle
         What are you waiting for? It's free.
+    .row.text-center.h4
+      .col-xs-12
+        Connect to Trello, choose a board, and view your stats. It's that easy.
     .row.text-center
       .col-xs-12
-        %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "#{@user.nil? ? 'TrelloController.authorizeAnonymous()' : 'TrelloController.authorizeUser()'}"}
+        %a{class: "btn btn-primary btn-xl", href: "javascript:void(0)", onClick: "TrelloController.authorize()"}
           Connect to Get Started
-    .row.text-center.h4
-      .col-xs-12
-        Connect to Trello, choose a board, and view your stats. No strings attached.
-    .row.text-center{style: "margin-top: 40px;"}
-      .col-xs-12
-        %a{class: "btn btn-primary btn-xl", href: "/signup"}
-          Create an Account
-    .row.text-center.h4
-      .col-xs-12
-        Just supply an email and password. We'll remember your Trello information after the first time you authenticate. More benefits coming soon.
-    .row
-      .col-xs-12.text-center
-        Want more information? Contact <a href="mailto:connect@ollertapp.com">connect@ollertapp.com</a>.
 
-%script{src: "/js/flash-message.js"}
+.landing-contact.landing-section
+  .container
+    .row
+      .col-xs-12.h1.text-center.landing-subtitle
+        Want more information?
+    .row.text-center
+      .col-xs-12.h4
+        %img{src: "/img/icon_email.png"}
+        Contact <a href="mailto:connect@ollertapp.com">connect@ollertapp.com</a>.
+    .row.text-center
+      .col-xs-12.h4
+        %img{src: "/img/icon_twitter.png"}
+        Follow us on Twitter <a href="https://twitter.com/OllertApp" target="blank">@OllertApp</a>.

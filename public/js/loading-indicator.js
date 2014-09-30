@@ -6,10 +6,10 @@ var LoadingIndicator = function (element) {
 
 LoadingIndicator.prototype = function () {
   var
-  error = function (msg) {
-    this.indicator.html(msg);
-    this.indicator.addClass("loading-error");
-  },
+    error = function (msg) {
+      this.indicator.html(msg);
+      this.indicator.addClass("loading-error");
+    },
     success = function (msg) {
       this.indicator.html(msg);
       this.indicator.addClass("loading-success");

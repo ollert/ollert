@@ -1,4 +1,5 @@
 require 'date'
+require 'mongoid'
 
 class CfdAnalyzer
   def self.analyze(raw, action_fetcher)

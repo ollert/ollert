@@ -51,7 +51,7 @@ unless ENV['RACK_ENV'] == 'production'
 
     desc "Run a single Cuke test"
     task :cuke, [:feature] => :dotenv do |t, args|
-      ruby "-S cucumber -v -r #{File.dirname(__FILE__)}/test/features #{args[:feature]}"
+      ruby "-S cucumber -v -r #{File.dirname(__FILE__)}/test/features #{File.dirname(__FILE__)}/test/features/#{args[:feature]}.feature"
     end
 
     desc "Run spec tests and cukes"

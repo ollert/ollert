@@ -1,19 +1,12 @@
-var SettingsController = function () {
-  function initialize(connected) {
-    if (connected) {
-      $("#trello-disconnect").show();
-    } else {
-      $("#trello-connect").show();
-    }
-
-    $("#trello-disconnect").on("click", disconnectFromTrello);
+var SettingsController = function() {
+  function initialize() {
     $("#trello-connect").on("click", connectToTrello);
 
     $("#update-email").on("submit", updateEmail);
-    $("#update-password").on("submit", updatePassword);
+    $("#email-info").popover();
 
     $("#delete-account").on("submit", deleteAccount);
-  }
+  };
 
   function updateEmail(e) {
     e.preventDefault();
@@ -29,10 +22,10 @@ var SettingsController = function () {
         email: $("#email").val()
       },
       method: "PUT",
-      success: function (email) {
+      success: function(email) {
         ind.success("Your new email is <b>" + email + "</b>. Use this to log in.");
       },
-      error: function (xhr) {
+      error: function(xhr) {
         ind.error(
           xhr.responseText +
           " (" +
@@ -42,36 +35,34 @@ var SettingsController = function () {
           ")"
         );
       },
-      complete: function () {
+      complete: function() {
         $("#update-email input").enable();
       }
     });
-  }
+  };
 
-  function updatePassword(e) {
-    e.preventDefault();
+  function connectToTrello() {
+    TrelloController.authorize(onSuccessfulConnect);
+  };
 
-    var ind = new LoadingIndicator($("#password-status"));
+  var onSuccessfulConnect = function() {
+    var ind = new LoadingIndicator($("#trello-connect-status span"));
     ind.show("Saving...");
 
-    $("#update-password input").disable();
-
+    $("#trello-connect").disable();
     $.ajax({
-      url: "/settings/password",
+      url: "/settings/trello/connect",
       data: {
-        current_password: $("#current-password").val(),
-        new_password: $("#new-password").val(),
-        confirm_password: $("#confirm-password").val()
+        token: Trello.token()
       },
       method: "PUT",
-      success: function (email) {
-        ind.success("Password updated.");
-
-        $("#current-password").val("");
-        $("#new-password").val("");
-        $("#confirm-password").val("");
+      success: function(member) {
+        member = jQuery.parseJSON(member);
+        ind.success("Currently connected to Trello as <strong>" + member["username"] +
+          "</strong>");
+        Ollert.loadAvatar(member["gravatar_hash"]);
       },
-      error: function (xhr) {
+      error: function(xhr) {
         ind.error(
           xhr.responseText +
           " (" +
@@ -81,80 +72,12 @@ var SettingsController = function () {
           ")"
         );
       },
-      complete: function () {
-        $("#update-password input").enable();
-      }
-    });
-  }
-
-  function disconnectFromTrello() {
-    var ind = new LoadingIndicator($("#trello-connect-status"));
-    ind.show("Saving...");
-
-    $("#trello-disconnect").disable();
-    $.ajax({
-      url: "/settings/trello/disconnect",
-      method: "PUT",
-      success: function () {
-        ind.success("Successfully disconnected.");
-
-        $("#trello-disconnect").hide();
-        $("#trello-connect").show();
-      },
-      error: function (xhr) {
-        ind.error(
-          xhr.responseText +
-          " (" +
-          xhr.status +
-          ": " +
-          xhr.statusText +
-          ")"
-        );
-      },
-      complete: function () {
-        $("#trello-disconnect").enable();
+      complete: function() {
+        $("#trello-connect").enable();
         Ollert.loadBoards();
       }
     });
-  }
-
-  function connectToTrello() {
-    var onSuccess = function () {
-      var ind = new LoadingIndicator($("#trello-connect-status"));
-      ind.show("Saving...");
-
-      $("#trello-connect").disable();
-      $.ajax({
-        url: "/settings/trello/connect",
-        data: {
-          token: Trello.token()
-        },
-        method: "PUT",
-        success: function (username) {
-          ind.success("Successfully connected.");
-          $("#trello-connect").hide();
-          $("#trello-disconnect").show();
-
-          $("#trello-disconnect").html("Disconnect Trello user <b>" + username + "</b>")
-        },
-        error: function (xhr) {
-          ind.error(
-            xhr.responseText +
-            " (" +
-            xhr.status +
-            ": " +
-            xhr.statusText +
-            ")"
-          );
-        },
-        complete: function () {
-          $("#trello-connect").enable();
-          Ollert.loadBoards();
-        }
-      });
-    }
-    TrelloController.authorizeUser(onSuccess);
-  }
+  };
 
   function deleteAccount(e) {
     e.preventDefault();
@@ -171,11 +94,11 @@ var SettingsController = function () {
         _method: "DELETE"
       },
       method: "POST",
-      success: function () {
+      success: function() {
         ind.success("Account deleted. Redirecting...");
         self.location = "/";
       },
-      error: function (xhr) {
+      error: function(xhr) {
         ind.error(
           xhr.responseText +
           " (" +
@@ -185,11 +108,11 @@ var SettingsController = function () {
           ")"
         );
       },
-      complete: function () {
+      complete: function() {
         $("#delete-account input").enable();
       }
     });
-  }
+  };
 
   return {
     init: initialize

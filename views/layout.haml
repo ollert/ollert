@@ -16,6 +16,11 @@
     %script{src: "/js/trello-client.js"}
     %script{src: "/js/trello-controller.js"}
     %script{src: "/js/ollert.js"}
+    %script{src: "/js/plugins.js"}
+    %script{src: "/js/flash-message.js"}
+
+    - if ENV['RACK_ENV'] == "production"
+      %script{src: "/js/google-analytics.js"}
 
     :javascript
       $(document).ready(function() {
@@ -24,11 +29,6 @@
           Ollert.loadBoards();        
         }
       });
-
-    %script{src: "/js/plugins.js"}
-
-    - if ENV['RACK_ENV'] == "production"
-      %script{src: "/js/google-analytics.js"}
 
   %body
     %div{id: 'wrap'}
@@ -43,16 +43,13 @@
                   %li{style: 'margin-right: 10px;'}
                     %form{action: "/login", method: "get", role: "form", class: "pull-right"}
                       %input{type: "submit", class: "btn btn-default", value: "Log in"}
-                  %li{style: 'margin-right: 80px;'}
-                    %form{action: "/signup", method: "get", role: "form", class: "pull-right"}
-                      %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
               - else
                 %button.navbar-toggle.collapsed{type: "button", data: { toggle: 'collapse', target: '.navbar-collapse' } }
-                  %span{class: "sr-only"}
+                  %span.sr-only
                     Toggle navigation
-                  %span{class: "icon-bar"}
-                  %span{class: "icon-bar"}
-                  %span{class: "icon-bar"}
+                  %span.icon-bar
+                  %span.icon-bar
+                  %span.icon-bar
                 %button.my-boards-button.navbar-toggle.collapsed.btn.btn-link{type: 'button', data: { toggle: 'dropdown' } }
                   %span.glyphicon.glyphicon-stats
                   My Boards
@@ -60,29 +57,31 @@
                 %ul.dropdown-menu.pull-right.my-boards
           - if @user.nil?
             %ul{class: 'signup-login-group nav navbar-nav navbar-right hidden-xs'}
-              %li
-                %form{action: "/signup", method: "get"}
-                  %input{type: "submit", class: "btn btn-primary", value: "Sign Up"}
               %li{style: 'margin-left:10px;'}
-                %form{action: "/login", method: "get"}
-                  %input{type: "submit", class: "btn btn-default", value: "Log in"}
+                %form{onsubmit: "TrelloController.authorize(); return false;"}
+                  %input.btn.btn-default{type: "submit", value: "Log in"}
           .collapse.navbar-collapse
             %ul.nav.navbar-nav.pull-right
               - unless @user.nil?
                 %li.hidden-xs
-                  %a{href: '#', data: { toggle: 'dropdown' } }
+                  %a{href: 'javascript:void(0)', data: { toggle: 'dropdown' } }
                     %span.glyphicon.glyphicon-stats
                     My Boards
                     %b.caret
                   %ul.dropdown-menu.pull-right.my-boards
                 %li
-                  %a{href: "/settings", title: "Logged in as #{@user.email}", alt: "Settings"}
-                    %span.glyphicon.glyphicon-cog
-                    Settings
-                %li
-                  %a{href: "/logout", title: "Log out", alt: "Log out"}
-                    %span.glyphicon.glyphicon-off
-                    Log out
+                  %a.settings-link{href: 'javascript:void(0)', data: { toggle: 'dropdown' } }
+                    %img{src: "http://www.gravatar.com/avatar/#{@user.gravatar_hash}?s=40", alt: "Profile Avatar"}
+                    %b.caret
+                  %ul.dropdown-menu.pull-right
+                    %li
+                      %a{href: "/settings", alt: "Settings"}
+                        %span.glyphicon.glyphicon-cog
+                        Settings
+                    %li
+                      %a{href: "/logout", alt: "Log out"}
+                        %span.glyphicon.glyphicon-off
+                        Log out
 
       #mainContent
         - if flash.has? :error

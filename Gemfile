@@ -13,10 +13,8 @@ gem 'sass'
 gem 'rack-flash3'
 gem 'rack-ssl'
 gem 'rack-rewrite'
-gem 'pony'
 gem 'mongoid'
 gem 'ruby-trello'
-gem 'bcrypt'
 
 group :development do
   gem 'pry'
@@ -29,6 +27,5 @@ group :development, :test do
   gem 'cucumber'
   gem 'capybara', '< 2.4.0'
   gem 'rack_session_access'
-  gem 'email_spec'
   gem 'capybara-webkit', '~> 1.2.0'
 end

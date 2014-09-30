@@ -1,4 +1,7 @@
-When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |username, password|
+When /^I authorize with Trello$/ do
+  expect(ENV['TRELLO_TEST_USERNAME']).to_not be_nil
+  expect(ENV['TRELLO_TEST_PASSWORD']).to_not be_nil
+
   trello_popup = windows.last
   page.within_window trello_popup do
     fake_chrome_drivers
@@ -8,8 +11,8 @@ When /^I authorize with Trello with username "(.*?)" and password "(.*?)"$/ do |
       click_link "Log in"
     end
 
-    fill_in "user", with: username
-    fill_in "password", with: password
+    fill_in "user", with: ENV['TRELLO_TEST_USERNAME']
+    fill_in "password", with: ENV['TRELLO_TEST_PASSWORD']
     click_button "Log In"
     click_button "Allow"
   end
@@ -20,30 +23,6 @@ When /^I press "(.*?)" on the Trello popup$/ do |button|
   page.within_window trello_popup do
     click_button button
   end
-end
-
-Given(/^the test user manually connects to Trello$/) do
-  page.set_rack_session user: User.find_by(email: "ollertapp@gmail.com").id
-  visit path_to("the settings page")
-
-  click_link("Connect with Trello")
-
-  trello_popup = windows.last
-  page.within_window trello_popup do
-    fake_chrome_drivers
-    if page.has_content? "Switch Accounts"
-      click_link "Switch Accounts"
-    else
-      click_link "Log in"
-    end
-
-    fill_in "user", with: "ollerttest"
-    fill_in "password", with: "testing ollert"
-    click_button "Log In"
-    click_button "Allow"
-  end
-
-  page.should have_content("Successfully connected")
 end
 
 def fake_chrome_drivers

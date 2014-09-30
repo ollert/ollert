@@ -33,13 +33,13 @@ html,body {
   height: auto !important;
   height: 100%;
   /* Negative indent footer by its height */
-  margin: 0 auto -120px;
+  margin: 0 auto -190px;
 }
 
 /* Set the fixed height of the footer here */
 #push,
 #footer {
-  min-height: 120px;
+  min-height: 190px;
 }
 
 // end sticky footer
@@ -79,14 +79,14 @@ html,body {
   color: #ADB3BA;
   border: none;
   font-size: 1.3em;
-}
 
-#footer a {
-  color: #ADB3BA;
-}
+  a {
+    color: #ADB3BA;
 
-#footer a:hover {
-  color: #FFF;
+    &:hover {
+      color: #FFF;
+    }
+  }
 }
 
 hr {
@@ -112,12 +112,18 @@ hr {
   }
   .navbar-nav {
     > li {
-      > a {
+
+      > a:not(.btn-default) {
         padding-top: 15px;
         padding-bottom: 15px;
         color: $colDefault;
         &:hover, &:focus {
             color: $colHover;
+        }
+
+        &.settings-link {
+          padding-top: 5px;
+          padding-bottom: 5px;
         }
       }
     }
@@ -153,14 +159,14 @@ hr {
     }
   }
   .navbar-toggle {
-      border-color: $bgHighlight;
-      &:hover, &:focus {
-        background-color: $bgHighlight;
-      }
-      .icon-bar {
-        background-color: $colDefault;
-      }
+    border-color: $bgHighlight;
+    &:hover, &:focus {
+      background-color: $bgHighlight;
     }
+    .icon-bar {
+      background-color: $colDefault;
+    }
+  }
 }
 
 .navbar-nav {
@@ -179,18 +185,38 @@ hr {
 
 .landing-connect {
   background: $bgDefault;
-  padding-bottom: 80px;
   padding-top: 20px;
   color: whitesmoke;
+
+  a.btn {
+    margin-top: 20px;
+  }
+
+  .small {
+    margin-top: 5px;
+    font-size: 75%;
+
+    a {
+      color: paleturquoise;
+
+      &:hover {
+        color: #FFF;
+      }
+    }
+  }
+
+  .row:last-child {
+    padding-bottom: 57px;
+  }
 }
 
 .landing-section {
   padding-bottom: 70px;
   padding-top: 60px;
-}
 
-.landing-section .row {
-  padding-bottom: 10px;
+  .row {
+    padding-bottom: 10px;
+  }
 }
 
 .landing-info {
@@ -199,10 +225,25 @@ hr {
 
 .landing-victory {
   background: $light;
+
+  img {
+    width: 100%;
+  }
 }
 
 .landing-hook {
   background: $light-light;
+  padding-bottom: 60px;
+
+  .row {
+    &:first-child {
+      padding-bottom: 0;
+    }
+
+    &:nth-child(2) {
+      margin-top: 0;
+    }
+  }
 }
 
 .container {
@@ -240,11 +281,17 @@ hr {
   color: #fff;
   background-color: #596a8d;
   border-color: #64759a;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    color: #fff;
+    background-color: #536488;
+    border-color: #4e5f82;
+  }
 }
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
+
 .open .dropdown-toggle.btn-primary {
   color: #fff;
   background-color: #536488;
@@ -296,7 +343,6 @@ ul.boards-list {
 
 #board-details {
   background: #d7d7d7;
-  padding-top: 30px;
   padding-bottom: 50px;
 }
 
@@ -332,17 +378,22 @@ ul.boards-list {
   height: 440px;
 }
 
-.dropdown-menu .divider-section{
-   overflow: visible;
-   white-space: nowrap;
-   font-weight: bold;
-   background-color: #F3F3F3;
-   border-bottom-width: 1px;
-   border-bottom-style: solid;
-   border-bottom-color: #CBCBCB;   
-   height: 2.75em !important;
-   padding: 8px;
-   color: #777777;
+.dropdown-menu {
+  .divider-section{
+     overflow: visible;
+     white-space: nowrap;
+     font-weight: bold;
+     background-color: #F3F3F3;
+     border-bottom-width: 1px;
+     border-bottom-style: solid;
+     border-bottom-color: #CBCBCB;   
+     height: 2.75em !important;
+     padding: 8px;
+     color: #777777;
+     margin: 0;
+  }
+
+  padding: 0;
 }
 
 ul.left-align li a{
@@ -357,25 +408,20 @@ ul.left-align li a{
   font-size: 16px;
 }
 
-#trello-disconnect, #trello-connect {
-  display: none;
-}
-
 .loading-indicator {
   margin-left: 15px;
-  margin-top: 15px;
-}
 
-.loading-indicator img {
-  margin-right: 15px;
-}
+  img {
+    margin-right: 15px;
+  }
 
-.loading-indicator.loading-error {
-  color: red;
-}
+  &.loading-error {
+    color: red;
+  }
 
-.loading-indicator.loading-success {
-  color: green;
+  &.loading-success {
+    color: green;
+  }
 }
 
 .no-padding {
@@ -402,10 +448,6 @@ ul.left-align li a{
 
 a.btn {
   white-space: normal;
-}
-
-.landing-connect a.btn {
-  margin-top: 20px;
 }
 
 #agreedCheckbox {
@@ -458,7 +500,40 @@ a.btn {
   margin-bottom: 1em;
 }
 
+.ollert-header {
+  padding-top: 35px;
+}
+
 .container.settings {
-  padding-top: 30px;
   padding-bottom: 50px;
+
+  a.btn-link {
+    color: black;
+  }
+
+  .popover {
+    width: 300px;    
+  }
+
+  #update-email {
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+#trello-connect-status {
+  margin-bottom: 10px;
+}
+
+.landing-contact {
+  background: $light;
+
+  .row {
+    padding-bottom: 0;
+  }
+
+  img {
+    margin-right: 1em;
+  }
 }

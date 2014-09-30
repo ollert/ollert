@@ -1,5 +1,5 @@
-var Ollert = (function () {
-  var loadBoards = function () {
+var Ollert = (function() {
+  var loadBoards = function() {
     clearBoards();
 
     $.ajax({
@@ -9,11 +9,11 @@ var Ollert = (function () {
       },
       success: loadBoardsCallback,
       statusCode: {
-        400: function () {
+        400: function() {
           loadSimpleBoards('No Boards');
         }
       },
-      error: function (request, status, error) {
+      error: function(request, status, error) {
         if (request.status != 400) {
           loadSimpleBoards('Error. Try reloading!');
         }
@@ -21,17 +21,17 @@ var Ollert = (function () {
     });
   };
 
-  var clearBoards = function () {
+  var clearBoards = function() {
     var menus = $('.my-boards');
 
-    menus.each(function () {
+    menus.each(function() {
       $(this).empty();
     });
   };
 
-  var loadSimpleBoards = function (text) {
+  var loadSimpleBoards = function(text) {
     var menus = $('.my-boards');
-    menus.each(function () {
+    menus.each(function() {
       var element = $("<li>" + text + "</li>");
       element.addClass('divider');
       element.addClass('divider-section');
@@ -40,13 +40,13 @@ var Ollert = (function () {
     });
   };
 
-  var loadBoardsCallback = function (data) {
+  var loadBoardsCallback = function(data) {
     var boardData = data['data'];
     var menus = $('.my-boards');
 
     for (var organization in boardData) {
       if (boardData.hasOwnProperty(organization)) {
-        menus.each(function () {
+        menus.each(function() {
           var element = $("<li>" + organization + "</li>");
           element.addClass('divider');
           element.addClass('divider-section');
@@ -56,7 +56,7 @@ var Ollert = (function () {
 
         for (var i = 0; i < boardData[organization].length; i++) {
           var board = boardData[organization][i];
-          menus.each(function () {
+          menus.each(function() {
             var element = $("<li></li>");
             var link = $("<a>" + board['name'] + "</a>");
             link.addClass('btn');
@@ -71,7 +71,12 @@ var Ollert = (function () {
     }
   };
 
+  var loadAvatar = function(gravatar_hash) {
+    $(".settings-link > img").attr("src", "http://www.gravatar.com/avatar/" + gravatar_hash + "?s=40");
+  };
+
   return {
-    loadBoards: loadBoards
+    loadBoards: loadBoards,
+    loadAvatar: loadAvatar
   };
 })();

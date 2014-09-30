@@ -1,13 +1,18 @@
 .container
-  .h3
-    Select a board to view its statistics.
+  .row
+    %h2.ollert-header
+      .col-xs-12
+        Boards
+
+  .row
+    %hr
+
   - @boards.each do |org_name, boards|
-    .organization
+    .organization.clearfix
       .h4
         #{org_name}
       %ul{class: 'boards-list'}
         - boards.each do |board|
-          %li{class: 'boards-list-item'}
-            %a{class: "btn btn-link boards-list-item-link", href: "/boards/#{board["id"]}"}
+          %li.boards-list-item
+            %a.btn.btn-link.boards-list-item-link{href: "/boards/#{board["id"]}"}
               #{board["name"]}
-    %div{style: 'clear: both;'}

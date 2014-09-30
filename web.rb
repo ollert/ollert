@@ -1,6 +1,5 @@
 require 'haml'
 require 'mongoid'
-require 'pony'
 require 'rack-flash'
 require 'rack/ssl'
 require 'rack/rewrite'
@@ -17,19 +16,6 @@ class Ollert < Sinatra::Base
   configure do
     use Rack::MethodOverride
     use Rack::Deflater
-    
-    Pony.options = {
-      :via => :smtp,
-      :via_options => {
-        :address => 'smtp.sendgrid.net',
-        :port => '587',
-        :domain => 'ollertapp.com',
-        :user_name => ENV['SENDGRID_USERNAME'],
-        :password => ENV['SENDGRID_PASSWORD'],
-        :authentication => :plain,
-        :enable_starttls_auto => true
-      }
-    }
 
     I18n.enforce_available_locales = true
     Mongoid.load! "#{File.dirname(__FILE__)}/mongoid.yml"
@@ -50,15 +36,10 @@ class Ollert < Sinatra::Base
   set(:auth) do |role|
     condition do
       @user = session[:user].nil? ? nil : User.find(session[:user])
-      if role == :authenticated
+      if role == :connected
         if @user.nil?
           session[:user] = nil
           flash[:warning] = "Hey! You should create an account to do that."
-          redirect '/'
-        end
-      elsif role == :token
-        if session[:token].nil? || session[:token].empty?
-          flash[:info] = "Log in or connect with Trello to analyze your boards."
           redirect '/'
         end
       end
