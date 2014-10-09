@@ -32,9 +32,12 @@ end
 
 Given(/^there is a copycat user in the system$/) do
   original = User.first
-  User.create trello_id: original.trello_id
+  trelloId = original.trello_id
+
   original.trello_id = nil
   original.save
+
+  User.create trello_id: trelloId
 end
 
 When(/^I click my avatar$/) do
