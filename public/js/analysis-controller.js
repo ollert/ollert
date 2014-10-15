@@ -1,20 +1,53 @@
 var AnalysisController = (function () {
-  var _boardId;
-  var _boardName;
+  var initialize = function (boardId, boardStates) {
+    $("#configure-board-apply").on("click", function () {
+      reloadCharts(boardId);
+    });
 
-  var initialize = function (boardId, boardName) {
-    _boardId = boardId;
-    _boardName = boardName;
+    setupConfigurationModal(boardStates);
 
-    loadCharts();
+    loadCharts(boardId);
   };
 
-  var loadCharts = function () {
-    WipChartBuilder.build(_boardId);
-    LabelCountChartBuilder.build(_boardId);
-    CfdChartBuilder.build(_boardId, _boardName);
-    StatsBuilder.build(_boardId);
+  var loadCharts = function (boardId) {
+    WipChartBuilder.build(boardId);
+    LabelCountChartBuilder.build(boardId);
+    ProgressChartBuilder.build(boardId);
+    StatsBuilder.build(boardId);
   };
+
+  var reloadCharts = function (boardId) {
+    $("#configure-board-modal").modal('hide');
+
+    $('#burn-up-spinner').show();
+    $('#burn-up-container').empty();
+
+    $('#burn-down-spinner').show();
+    $('#burn-down-container').empty();
+
+    $('#cfd-spinner').show();
+    $('#cfd-container').empty();
+
+    loadCharts(boardId);
+  }
+
+  var setupConfigurationModal = function (categories) {
+    populateListNames($("#in-scope"), $("#in-scope-states"), categories);
+    populateListNames($("#out-scope"), $("#out-scope-states"), categories);
+  };
+
+  var populateListNames = function (dropDown, menu, categories) {
+    menu.empty();
+    for (var i = 0; i < categories.length; i++) {
+      menu.append(
+        "<li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0)'>" +
+        categories[i] + "</a></li>")
+    }
+
+    $("li a", menu).on('click', function () {
+      $("label", dropDown).text($(this).text());
+    });
+  }
 
   return {
     init: initialize,

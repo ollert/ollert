@@ -346,7 +346,7 @@ ul.boards-list {
   padding-bottom: 50px;
 }
 
-.analysis-block-sm, .analysis-block-md, .analysis-block-lg, .date-range {
+.analysis-block-sm, .analysis-block-md, .analysis-block-md-tall, .analysis-block-lg, .date-range {
   background-color: #FFFFFF;
   padding: 5px;
   margin: 5px;
@@ -455,6 +455,14 @@ a.btn {
   margin-top: 10px;
 }
 
+.btn-config {
+  font-size: 16px;
+}
+
+.lbl-config {
+  color:  $medium-light;
+}
+
 .no-padding {
   padding: 0;
 }
@@ -536,4 +544,25 @@ a.btn {
   img {
     margin-right: 1em;
   }
+}
+
+#burn-up-control-container {
+  padding: 0;
+  margin: 0;
+  text-align: left;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+  li {
+    padding: 0;
+    margin: 0;
+    font-size: 8pt;
+  }
+}
+
+.graph-container{
+  height: inherit
 }

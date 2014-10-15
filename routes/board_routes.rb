@@ -4,6 +4,8 @@ require_relative '../utils/fetchers/board_fetcher'
 require_relative '../utils/analyzers/board_analyzer'
 require_relative '../utils/fetchers/member_fetcher'
 require_relative '../utils/analyzers/member_analyzer'
+require_relative '../utils/analyzers/board_details_analyzer'
+require_relative '../utils/fetchers/board_details_fetcher'
 
 class Ollert
   get '/boards', :auth => :connected do
@@ -44,7 +46,24 @@ class Ollert
     )
 
     begin
-      @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, @user.trello_name))
+      details = BoardDetailsAnalyzer.analyze(BoardDetailsFetcher.fetch(client, board_id))
+      @board_name = details[:name]
+      @board_states = details[:lists]
+
+      boardSettings = @user.boards.find_or_create_by(board_id: board_id)
+
+      if boardSettings.starting_list.nil? || boardSettings.starting_list.empty?
+        boardSettings.starting_list = @board_states.first
+      end
+
+      if boardSettings.ending_list.nil? || boardSettings.ending_list.empty?
+        boardSettings.ending_list = @board_states.last
+      end
+
+      boardSettings.save
+
+      @starting_list = boardSettings.starting_list
+      @ending_list = boardSettings.ending_list
     rescue Trello::Error => e
       unless @user.nil?
         @user.member_token = nil
@@ -62,7 +81,6 @@ class Ollert
       end
     end
 
-    @board_name = @boards.values.flatten.select {|x| x["id"] == board_id}.first["name"]
     @board_id = board_id
 
     haml :analysis

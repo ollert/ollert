@@ -1,11 +1,45 @@
+.modal.fade{id: "configure-board-modal", tabindex: "-1", role: "dialog", "aria-hidden" => "true"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{type: "button", class: "close", "data-dismiss" => "modal"}
+          %span.glyphicon.glyphicon-remove{"aria-hidden" => "true"}
+          %span{class: "sr-only"}
+            Close
+        %h4{class: "modal-title"}
+          Configure Boards
+      %form{id: "configureBoards", role: "form"}
+        .modal-body.row
+          .col-xs-6
+            %label.lbl-config{for: "in-scope"}
+              Work Begins
+            %div.dropdown
+              .button.btn.btn-config.btn-default.dropdown-toggle{id: "in-scope", name: "in-scope", type:"button", data: { toggle: "dropdown" }}
+                %label
+                  #{@starting_list}
+                %span.caret
+              %ul.dropdown-menu{id: "in-scope-states", role: "menu", "aria-labelledby" => "in-scope"}
+          .col-xs-6 
+            %label.lbl-config{for: "out-scope"}
+              Work Ends
+            %div.dropdown
+              .button.btn.btn-config.btn-default.dropdown-toggle{id: "out-scope", name: "out-scope", type:"button", data: { toggle: "dropdown" }}
+                %label
+                  #{@ending_list}
+                %span.caret
+              %ul.dropdown-menu{id: "out-scope-states", role: "menu", "aria-labelledby" => "out-scope"}
+        .modal-footer
+          %a.btn.btn-primary{id: "configure-board-apply"}
+            Apply
+
 #board-details
   .container
     .row
       .col-xs-6.text-left.h2.ollert-header
         #{@board_name}
       .col-xs-6.text-right.h2.ollert-header
-        %a.btn.btn-link{href: '/boards', title: 'View Boards', alt: 'Return to Boards Overview'}
-          ← View Boards
+        %button.btn.btn-default.pull-right{"data-toggle" => "modal", "data-target" =>"#configure-board-modal"}
+          %span.glyphicon.glyphicon-wrench
     .row
       .col-md-3.col-sm-6.col-xs-12.no-padding
         .analysis-block-sm
@@ -41,18 +75,27 @@
       .col-xs-12.no-padding
         .analysis-block-lg
           %img#cfd-spinner{src: '/img/spinner.gif'}
-          #cfd-container.lg-chart{style: 'margin: 0 auto; height: inherit'}
+          #cfd-container.graph-container.lg-chart{style: 'margin: 0 auto;'}
 
     .row
       .col-md-6.col-xs-12.no-padding
         .analysis-block-md
           %img#wip-spinner{src: '/img/spinner.gif'}
-          #wip-container.med-chart{style: 'height: inherit'}
+          #wip-container.med-chart.graph-container
       .col-md-6.col-xs-12.no-padding
         .analysis-block-md
           %img#label-count-spinner{src: '/img/spinner.gif'}
-          #label-count-container.med-chart{style: 'height: inherit'}
+          #label-count-container.med-chart.graph-container
 
+    .row
+      .col-md-6.col-xs-12.no-padding
+        .analysis-block-lg
+          %img#burn-down-spinner{src: '/img/spinner.gif'}
+          #burn-up-container.med-chart.graph-container
+      .col-md-6.col-xs-12.no-padding
+        .analysis-block-lg
+          %img#burn-up-spinner{src: '/img/spinner.gif'}
+          #burn-down-container.med-chart.graph-container
     .row
       .col-md-3.col-sm-6.col-xs-12.no-padding
         .analysis-block-sm
@@ -87,6 +130,8 @@
 %script{src: '/js/highstock.js'}
 %script{src: '/js/modules/no-data-to-display.src.js'}
 %script{src: '/js/cfd-chart-builder.js'}
+%script{src: '/js/burn-chart-builder.js'}
+%script{src: '/js/graph-builder.js'}
 %script{src: '/js/wip-chart-builder.js'}
 %script{src: '/js/label-count-chart-builder.js'}
 %script{src: '/js/stats-builder.js'}
@@ -94,4 +139,4 @@
 %script{src: '/js/moment.min.js'}
 
 %script
-  $(document).ready(function() { AnalysisController.init("#{@board_id}", "#{@board_name}"); });
+  $(document).ready(function() { AnalysisController.init("#{@board_id}", #{@board_states}); });

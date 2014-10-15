@@ -1,12 +1,34 @@
 require 'date'
 require 'mongoid'
 
-class CfdAnalyzer
-  def self.analyze(raw, action_fetcher)
+class ProgressChartsAnalyzer
+  def self.analyze(raw, action_fetcher, startingList, endingList)
     return {} if raw.nil? || raw.empty?
     data = JSON.parse(raw)
     return {} if data.empty?
 
+    # open lists
+    lists = data["lists"].select { |x| !x["closed"]}
+
+    startingListIndex = startingList.nil? || startingList.empty? ? 0 : lists.index{ |l| startingList == l["name"]}
+    endingListIndex = endingList.nil? || endingList.empty? ? lists.count - 1 : lists.index{ |l| endingList == l["name"]}
+
+    cfdData = parseCFDData(data, lists, action_fetcher)
+
+    cfdData.reject do |date| 
+      index = lists.index{ |l| cfdData[date]["name"] == l["name"]}
+      !index.nil? && index >= startingListIndex && index < endingListIndex
+    end
+
+    {
+      cfd: formatCFD(cfdData, lists[startingListIndex..endingListIndex]),
+      burnup: formatBurnUp(cfdData, lists[startingListIndex..endingListIndex-1], lists[endingListIndex, lists.count-1])
+    }
+  end
+
+  private
+
+  def self.parseCFDData(data, lists, action_fetcher)
     actions = data["actions"]
 
     fetched = actions.count
@@ -33,12 +55,9 @@ class CfdAnalyzer
     end
 
     card_actions = actions.reject {|action| action["type"] == "updateList"}
-    lists = data["lists"].reject { |x| x["closed"]}
 
-    format(build(card_actions, lists, closed_lists), lists)
+    build(card_actions, lists, closed_lists)
   end
-
-  private
 
   def self.build(card_actions, open_lists, closed_lists)
     cfd = Hash.new do |h, k|
@@ -74,7 +93,7 @@ class CfdAnalyzer
     cfd
   end
 
-  def self.format(cfd, lists)
+  def self.formatCFD(cfd, lists)
     dates = cfd.keys.sort
     cfd_values = Array.new
     lists.each do |list|
@@ -84,6 +103,34 @@ class CfdAnalyzer
       end
       cfd_values << { name: list["name"], data: list_array}
     end
+
+    {
+      cfddata: cfd_values
+    }
+  end
+
+  def self.formatBurnUp(cfd, inScopeLists, outOfScopeLists)
+    dates = cfd.keys.sort
+    cfd_values = Array.new
+   
+    inList_array = Array.new
+    outList_array = Array.new
+    dates.each do |date|
+      inCount = 0
+      outCount = 0
+
+      inScopeLists.each do |list|
+        inCount += cfd[date][list["name"]]
+      end
+      inList_array << [date.strftime('%s000').to_i, inCount]
+
+      outOfScopeLists.each do |list|
+        outCount += cfd[date][list["name"]]
+      end
+      outList_array << [date.strftime('%s000').to_i, outCount]
+    end
+    cfd_values << { name: "InScope", data: inList_array}
+    cfd_values << { name: "Complete", data: outList_array}
 
     {
       cfddata: cfd_values

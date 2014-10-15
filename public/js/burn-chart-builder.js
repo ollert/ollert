@@ -1,6 +1,6 @@
-var CfdChartBuilder = (function () {
-  var buildCFDChart = function (data) {
-    $('#cfd-container').highcharts("StockChart", {
+var BurnUpDownChartBuilder = (function () {
+  var build = function (data, container, title) {
+    container.highcharts("StockChart", {
       chart: {
         type: 'area',
         zoomType: 'x'
@@ -19,10 +19,6 @@ var CfdChartBuilder = (function () {
           count: 1,
           text: '1m'
         }, {
-          type: 'month',
-          count: 3,
-          text: '3m'
-        }, {
           type: 'year',
           count: 1,
           text: '1y'
@@ -33,17 +29,14 @@ var CfdChartBuilder = (function () {
         selected: 2
       },
       title: {
-        text: 'Cumulative Flow Diagram'
-      },
-      subtitle: {
-        text: 'CFD'
+        text: title
       },
       xAxis: {
         minRange: 24 * 3600 * 1000, // one day
         tickmarkPlacement: 'on',
         title: {
           enabled: false
-        }
+        },
       },
       yAxis: {
         floor: 0,
@@ -70,20 +63,46 @@ var CfdChartBuilder = (function () {
       credits: {
         enabled: false
       },
-      series: data.cfddata
+      series: data
     });
   };
 
-  var loadCFDChart = function (parsedData) {
-    $('#cfd-spinner').hide();
+  var loadBurnUpChart = function (parsedData) {
+    $('#burn-up-spinner').hide();
 
-    var container = $("#cfd-container");
+    var container = $("#burn-up-container")
     container.height(container.height() - 10);
 
-    buildCFDChart(parsedData);
+    var burnUpSeriesData = [];
+    burnUpSeriesData.push({
+      name: "To Do",
+      data: parsedData.cfddata[0].data
+    });
+    burnUpSeriesData.push({
+      name: "Completed",
+      data: parsedData.cfddata[1].data
+    });
+
+    build(burnUpSeriesData, container, "Burn Up");
+  }
+
+  var loadBurnDownChart = function (parsedData) {
+    $('#burn-down-spinner').hide();
+
+    var container = $("#burn-down-container")
+    container.height(container.height() - 10);
+
+    var burnDownSeriesData = [];
+    burnDownSeriesData.push({
+      name: "To Do",
+      data: parsedData.cfddata[0].data
+    });
+
+    build(burnDownSeriesData, container, "Burn Down");
   }
 
   return {
-    build: loadCFDChart
+    buildBurnUp: loadBurnUpChart,
+    buildBurnDown: loadBurnDownChart,
   };
 }());

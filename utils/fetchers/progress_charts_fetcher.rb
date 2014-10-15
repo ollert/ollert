@@ -1,5 +1,4 @@
-class CfdFetcher
-
+class ProgressChartsFetcher
   def self.fetch(client, board_id)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 

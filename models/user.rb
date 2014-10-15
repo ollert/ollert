@@ -3,6 +3,8 @@ require 'mongoid'
 class User
   include Mongoid::Document
 
+  embeds_many :boards
+
   field :email, type: String
   field :trello_id, type: String
   field :trello_name, type: String
