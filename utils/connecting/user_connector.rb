@@ -1,10 +1,5 @@
 class UserConnector
-  def self.connect(public_key, member_token, current_user = nil)
-    client = Trello::Client.new(
-      :developer_public_key => public_key,
-      :member_token => member_token
-    )
-
+  def self.connect(client, member_token, current_user = nil)
     begin
       member = MemberAnalyzer.analyze(MemberFetcher.fetch(client, member_token))
 

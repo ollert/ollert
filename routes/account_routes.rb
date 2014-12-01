@@ -80,7 +80,12 @@ class Ollert
   end
 
   put '/trello/connect' do
-    result = UserConnector.connect ENV['PUBLIC_KEY'], params[:token]
+    client = Trello::Client.new(
+      :developer_public_key => ENV['PUBLIC_KEY'],
+      :member_token => params[:token]
+    )
+
+    result = UserConnector.connect client, params[:token]
 
     session[:user] = result[:id]
     status result[:status]
@@ -88,7 +93,12 @@ class Ollert
   end
 
   put '/settings/trello/connect', auth: :connected do
-    result = UserConnector.connect ENV['PUBLIC_KEY'], params[:token], @user
+    client = Trello::Client.new(
+      :developer_public_key => ENV['PUBLIC_KEY'],
+      :member_token => params[:token]
+    )
+
+    result = UserConnector.connect client, params[:token], @user
     
     session[:user] = result[:id]
     status result[:status]
