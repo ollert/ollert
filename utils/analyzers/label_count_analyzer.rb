@@ -1,25 +1,15 @@
 class LabelCountAnalyzer
   def self.analyze(raw)
     return {} if raw.nil? || raw.empty?
-
     data = JSON.parse(raw)
-
     return {} if data.empty?
-
-    label_hash = Hash[ data["labelNames"].map {|k, v| [k, {name: v.empty? ? k : v, count: 0}] } ]
-
-    data["cards"].each do |card|
-      card["labels"].each do |label|
-        label_hash[label["color"]][:count] += 1
-      end
-    end
-
-    sorted_labels = label_hash.sort_by {|k, v| v[:count]}.reverse
+    
+    labels = data.reject {|label| label["uses"] == 0 && label["name"].empty?}
 
     {
-      labels: sorted_labels.map {|label| label[1][:name]},
-      counts: sorted_labels.map {|label| label[1][:count]},
-      colors: sorted_labels.map {|label| convert_color(label[0])}
+      labels: labels.map {|label| label["name"]},
+      counts: labels.map {|label| label["uses"]},
+      colors: labels.map {|label| convert_color(label["color"])}
     }
   end
 
@@ -28,17 +18,27 @@ class LabelCountAnalyzer
   def self.convert_color(color)
     case color
       when "green"
-       '#34b27d'
+       '#41c200'
       when "yellow"
-        '#dbdb57'
+        '#fad900'
       when "orange"
-        '#e09952'
+        '#ff9f19'
       when "red"
-        '#cb4d4d'
+        '#f54747'
       when "purple"
-        '#93c'
+        '#a632db'
       when "blue"
-        '#4d77cb'
+        '#0079bf'
+      when 'sky'
+        '#00c2e0'
+      when "lime"
+        '#45e660'
+      when "pink"
+        '#ff78cb'
+      when "black"
+        '#4d4d4d'
+      else
+        '#b3b3b3'
       end
   end
 end

@@ -17,11 +17,11 @@ describe LabelCountFetcher do
     
     it 'uses client to get board' do
       board_id = "ori0kf34rf34jfjfrej"
-      options = {cards: :visible, card_fields: :labels, fields: :labelNames}
+      options = {:fields=>"color,name,uses", :limit=>100}
       board = "{'name': 'DS9', 'labelNames': {}, 'cards': {}, 'id': 'ori0kf34rf34jfjfrej'}"
 
       client = double(Trello::Client)
-      expect(client).to receive(:get).with("/boards/#{board_id}", options).and_return(board)
+      expect(client).to receive(:get).with("/boards/#{board_id}/labels", options).and_return(board)
 
       expect(LabelCountFetcher.fetch(client, board_id)).to eq board
     end

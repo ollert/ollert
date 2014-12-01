@@ -18,21 +18,57 @@ describe LabelCountAnalyzer do
       expect(LabelCountAnalyzer.analyze("{}")).to be_empty
     end
 
-    it 'returns labels, colors, and counts' do
-      raw = '{"id":"52d01ea35592096d7e24fd0f",' +
-            '"labelNames":{"yellow":"Spring","red":"Summer","purple":"","orange":"Winter","green":"Anytime","blue":"Nice-To-Haves"},' +
-            '"cards":[{"id":"52d0a7ade32bfbcf06b5aed6","labels":[{"color":"green","name":"Anytime"}]},' +
-            '{"id":"52d01f282ffa9f613d000607","labels":[{"color":"yellow","name":"Spring"}]},' +
-            '{"id":"52d01f9b4546e0ee10b1c919","labels":[{"color":"red","name":"Summer"},{"color":"yellow","name":"Spring"}]},' +
-            '{"id":"52d01fb64b46b82f5686b091","labels":[{"color":"purple","name":""},{"color":"yellow","name":"Spring"},{"color":"orange","name":"Winter"}]},' +
-            '{"id":"52f0120ce2ca1d2051be5365","labels":[{"color":"orange","name":"Winter"}]},' +
-            '{"id":"52d01fc01a2c5c6e119f850e","labels":[{"color":"yellow","name":"Spring"}]},' +
-            '{"id":"52f011e0d1987a7b51a06e39","labels":[{"color":"red","name":"Summer"}]}]}'
+    it 'returns all the defined colors' do
+      raw = '[{"id":"5463a60b74d650d567f7dbdd","color":"green","name":"Left","uses":48},' +
+             '{"id":"5463a60b74d650d567f7dbdc","color":"yellow","name":"Right","uses":46},' +
+             '{"id":"5463a60b74d650d567f7dbde","color":"purple","name":"Up","uses":21},' +
+             '{"id":"5463a60b74d650d567f7dbdf","color":"orange","name":"Down","uses":13},' +
+             '{"id":"5463a60b74d650d567f7dbe0","color":"red","name":"A","uses":8},' +
+             '{"id":"5463a60b74d650d567f7dbe1","color":"purple","name":"B","uses":8},' +
+             '{"id":"5463a60b74d650d567f7dbe2","color":"blue","name":"X","uses":3},' +
+             '{"id":"5463a60b74d650d567f7dbe3","color":"sky","name":"Y","uses":1},' +
+             '{"id":"5463a60b74d650d567f7dbe4","color":"lime","name":"L","uses":18},' +
+             '{"id":"5463a60b74d650d567f7dbe5","color":"black","name":"R","uses":4},' +
+             '{"id":"5463a60b74d650d567f7dbe1","color":"pink","name":"Z","uses":5}]'
 
       expect(LabelCountAnalyzer.analyze(raw)).to match({
-        labels: ["Spring", "Winter", "Summer", "Anytime", "purple", "Nice-To-Haves"],
-        counts: [4, 2, 2, 1, 1, 0],
-        colors: ["#dbdb57", "#e09952", "#cb4d4d", "#34b27d", "#93c", "#4d77cb"]
+        labels: ["Left", "Right", "Up", "Down", "A", "B", "X", "Y", "L", "R", "Z"],
+        counts: [48,46,21,13,8,8,3,1,18,4,5],
+        colors: ["#41c200", "#fad900", "#a632db", "#ff9f19", "#f54747", "#a632db", "#0079bf", "#00c2e0", "#45e660", "#4d4d4d", "#ff78cb"]
+      })
+    end
+
+    it 'discards labels with 0 counts and no names but keeps with names' do
+      raw = '[{"id":"5463a60b74d650d567f7dbdd","color":"green","name":"Left","uses":48},' +
+             '{"id":"5463a60b74d650d567f7dbdc","color":"yellow","name":"Right","uses":46},' +
+             '{"id":"5463a60b74d650d567f7dbde","color":"purple","name":"Up","uses":0},' +
+             '{"id":"5463a60b74d650d567f7dbdf","color":"orange","name":"Down","uses":13},' +
+             '{"id":"5463a60b74d650d567f7dbe0","color":"red","name":"A","uses":8},' +
+             '{"id":"5463a60b74d650d567f7dbe1","color":"purple","name":"","uses":0},' +
+             '{"id":"5463a60b74d650d567f7dbe2","color":"blue","name":"X","uses":3},' +
+             '{"id":"5463a60b74d650d567f7dbe3","color":"sky","name":"Y","uses":1},' +
+             '{"id":"5463a60b74d650d567f7dbe4","color":"lime","name":"L","uses":18},' +
+             '{"id":"5463a60b74d650d567f7dbe5","color":"black","name":"","uses":0},' +
+             '{"id":"5463a60b74d650d567f7dbe1","color":"pink","name":"Z","uses":5}]'
+
+      expect(LabelCountAnalyzer.analyze(raw)).to match({
+        labels: ["Left", "Right", "Up", "Down", "A", "X", "Y", "L", "Z"],
+        counts: [48,46,0,13,8,3,1,18,5],
+        colors: ["#41c200", "#fad900", "#a632db", "#ff9f19", "#f54747", "#0079bf", "#00c2e0", "#45e660", "#ff78cb"]
+      })
+    end
+
+    it 'returns all undefined colors as grey' do
+      raw = '[{"id":"5463a60b74d650d567f7dbdd","color":"green","name":"Left","uses":48},' +
+             '{"id":"5463a60b74d650d567f7dbdc","color":"yellow","name":"Right","uses":46},' +
+             '{"id":"5463a60b74d650d567f7dbe3","color":"","name":"Y","uses":1},' +
+             '{"id":"5463a60b74d650d567f7dbe4","color":"","name":"L","uses":18},' +
+             '{"id":"5463a60b74d650d567f7dbe1","color":"","name":"Z","uses":5}]'
+
+      expect(LabelCountAnalyzer.analyze(raw)).to match({
+        labels: ["Left", "Right", "Y", "L", "Z"],
+        counts: [48, 46, 1, 18, 5],
+        colors: ["#41c200", "#fad900", "#b3b3b3", "#b3b3b3", "#b3b3b3"]
       })
     end
   end
