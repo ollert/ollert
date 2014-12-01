@@ -355,7 +355,7 @@ ul.boards-list {
   border-color: #DDD;
   border-bottom: 2px solid #BBB;
   -webkit-border-top-left-radius: 3px;
-   border-top-left-radius: 3px;
+  border-top-left-radius: 3px;
   -webkit-border-top-right-radius: 3px;
   border-top-right-radius: 3px;
   -webkit-border-bottom-right-radius: 3px;
@@ -379,6 +379,9 @@ ul.boards-list {
 }
 
 .dropdown-menu {
+  overflow-y: auto;
+  max-height: 26em;
+
   .divider-section{
      overflow: visible;
      white-space: nowrap;
