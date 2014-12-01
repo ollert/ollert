@@ -1,5 +1,7 @@
 require 'trello'
 
+require_relative '../utils/connecting/user_connector'
+
 class Ollert
   get '/logout', :auth => :connected do
     session[:user] = nil
@@ -41,8 +43,8 @@ class Ollert
       end
 
       if @user.delete
+        # log out
         session[:user] = nil
-
         status 200
       else
         if @user.errors.any?
@@ -78,78 +80,18 @@ class Ollert
   end
 
   put '/trello/connect' do
-    client = Trello::Client.new(
-      :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => params[:token]
-    )
+    result = UserConnector.connect ENV['PUBLIC_KEY'], params[:token]
 
-    begin
-      member = MemberAnalyzer.analyze(MemberFetcher.fetch(client, params[:token]))
-
-      user = User.find_or_initialize_by trello_id: member["id"]
-
-      unless user.member_token.nil? || user.member_token == params[:token]
-        begin
-          client.delete("/tokens/#{user.member_token}")
-        rescue
-          # do nothing
-          # most likely token either expired or was revoked
-        end
-      end
-
-      user.member_token = params[:token]
-      user.trello_id = member["id"]
-      user.trello_name = member["username"]
-      user.gravatar_hash = member["gravatarHash"]
-      user.email = member["email"] || user.email
-      user.save
-
-      # log in
-      session[:user] = user.id
-
-      status 200
-    rescue Trello::Error => e
-      body "There's something wrong with the Trello connection. Please re-establish the connection."
-      status 500
-    end
+    session[:user] = result[:id]
+    status result[:status]
+    body result[:body]
   end
 
   put '/settings/trello/connect', auth: :connected do
-    client = Trello::Client.new(
-      :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => params[:token]
-    )
-
-    begin
-      member = MemberAnalyzer.analyze(MemberFetcher.fetch(client, params[:token]))
-
-      if member["id"] != @user.trello_id && !User.find_by(trello_id: member["id"]).nil?
-        body "User already exists using that account. Log out to connect with that account."
-        status 500
-        return
-      end
-
-      unless @user.member_token.nil? || @user.member_token == params[:token]
-        begin
-          client.delete("/tokens/#{@user.member_token}")
-        rescue
-          # do nothing
-          # most likely token either expired or was revoked
-        end
-      end
-
-      @user.member_token = params[:token]
-      @user.trello_id = member["id"]
-      @user.trello_name = member["username"]
-      @user.gravatar_hash = member["gravatarHash"]
-      @user.email = member["email"] || @user.email
-      @user.save
-
-      body {{username: member["username"], gravatar_hash: member["gravatarHash"]}.to_json}
-      status 200
-    rescue Trello::Error => e
-      body "There's something wrong with the Trello connection. Please re-establish the connection."
-      status 500
-    end
+    result = UserConnector.connect ENV['PUBLIC_KEY'], params[:token], @user
+    
+    session[:user] = result[:id]
+    status result[:status]
+    body result[:body]
   end
 end
