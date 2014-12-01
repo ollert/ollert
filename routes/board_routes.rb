@@ -52,13 +52,8 @@ class Ollert
 
       boardSettings = @user.boards.find_or_create_by(board_id: board_id)
 
-      if boardSettings.starting_list.nil? || boardSettings.starting_list.empty?
-        boardSettings.starting_list = @board_states.first
-      end
-
-      if boardSettings.ending_list.nil? || boardSettings.ending_list.empty?
-        boardSettings.ending_list = @board_states.last
-      end
+      boardSettings.starting_list = savedListOrDefault(boardSettings.starting_list, @board_states, @board_states.first)
+      boardSettings.ending_list = savedListOrDefault(boardSettings.ending_list, @board_states, @board_states.last)
 
       boardSettings.save
 
@@ -84,5 +79,9 @@ class Ollert
     @board_id = board_id
 
     haml :analysis
+  end
+
+  def savedListOrDefault(savedListName, listOptions, defaultListName)
+    !savedListName.nil? && listOptions.any? {|l| l == savedListName} ? savedListName : defaultListName
   end
 end
