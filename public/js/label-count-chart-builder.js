@@ -1,5 +1,5 @@
-var LabelCountChartBuilder = (function () {
-  var buildChart = function (options) {
+var LabelCountChartBuilder = (function() {
+  var buildChart = function(options) {
     $('#label-count-container').highcharts({
       chart: {
         type: 'bar'
@@ -49,13 +49,16 @@ var LabelCountChartBuilder = (function () {
     });
   }
 
-  var load = function (boardId) {
+  var load = function(boardId, token) {
     var container = $("#label-count-container");
     container.height(container.height() - 10);
 
     $.ajax({
-      url: "/boards/" + boardId + "/analysis/labelcounts",
-      success: function (data) {
+      url: "/api/v1/labels/" + boardId,
+      data: {
+        token: token
+      },
+      success: function(data) {
         $('#label-count-spinner').hide();
 
         var parsed = jQuery.parseJSON(data);
@@ -65,7 +68,7 @@ var LabelCountChartBuilder = (function () {
           colors: parsed.colors
         });
       },
-      error: function (xhr) {
+      error: function(xhr) {
         $("#label-count-spinner").hide();
         container.text(xhr.responseText);
       }

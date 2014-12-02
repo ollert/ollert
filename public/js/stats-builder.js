@@ -1,5 +1,5 @@
-var StatsBuilder = (function () {
-  var buildBoxes = function (stats) {
+var StatsBuilder = (function() {
+  var buildBoxes = function(stats) {
     $('#board-members-count').text(stats.board_members_count);
     $('#card-count').text(stats.card_count);
     $('#avg-members-per-card').text(stats.avg_members_per_card);
@@ -20,16 +20,19 @@ var StatsBuilder = (function () {
     $('#newest-card-age').text(stats.newest_card_age);
   }
 
-  var load = function (boardId) {
+  var load = function(boardId, token) {
 
     $.ajax({
-      url: "/boards/" + boardId + "/analysis/stats",
-      success: function (data) {
+      url: "/api/v1/stats/" + boardId,
+      data: {
+        token: token
+      },
+      success: function(data) {
         $(".stats-spinner").hide();
 
         buildBoxes(jQuery.parseJSON(data));
       },
-      error: function (xhr) {
+      error: function(xhr) {
         $(".stats-spinner").hide();
 
         $(".stat-value").css({

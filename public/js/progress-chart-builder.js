@@ -1,5 +1,5 @@
-var ProgressChartBuilder = (function () {
-  var postInitialLoadCallback = function (data) {
+var ProgressChartBuilder = (function() {
+  var displayData = function(data) {
     var parsedData = jQuery.parseJSON(data);
 
     CfdChartBuilder.build(parsedData.cfd);
@@ -7,18 +7,29 @@ var ProgressChartBuilder = (function () {
     BurnUpDownChartBuilder.buildBurnDown(parsedData.burnup);
   };
 
-  var loadGraphs = function (boardId) {
-    var startingList = $("#in-scope label").text().trim()
-    var endingList = $("#out-scope label").text().trim()
+  var resetCharts = function() {
+    $('#burn-up-spinner').show();
+    $('#burn-up-container').empty();
+
+    $('#burn-down-spinner').show();
+    $('#burn-down-container').empty();
+
+    $('#cfd-spinner').show();
+    $('#cfd-container').empty();
+  };
+
+  var build = function(boardId, token, startingList, endingList) {
+    resetCharts();
 
     $.ajax({
-      url: "/boards/" + boardId + "/analysis/progress",
+      url: "/api/v1/progress/" + boardId,
       data: {
         startingList: startingList,
         endingList: endingList,
+        token: token
       },
-      success: postInitialLoadCallback,
-      error: function (xhr) {
+      success: displayData,
+      error: function(xhr) {
         $("#cfd-spinner").hide();
         $('#burn-up-spinner').hide();
         $('#burn-down-spinner').hide();
@@ -30,11 +41,7 @@ var ProgressChartBuilder = (function () {
     });
   };
 
-  var buildAndLoad = function (boardId) {
-    loadGraphs(boardId);
-  };
-
   return {
-    build: buildAndLoad
+    build: build
   };
 }());

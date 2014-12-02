@@ -1,42 +1,49 @@
-var AnalysisController = (function () {
-  var initialize = function (boardId, boardStates) {
-    $("#configure-board-apply").on("click", function () {
-      reloadCharts(boardId);
-    });
-
-    setupConfigurationModal(boardStates);
-
-    loadCharts(boardId);
+var AnalysisController = (function() {
+  var initialize = function(boardId, boardStates, token) {
+    setupConfigurationModal(boardId, boardStates, token);
+    loadCharts(boardId, token);
   };
 
-  var loadCharts = function (boardId) {
-    WipChartBuilder.build(boardId);
-    LabelCountChartBuilder.build(boardId);
-    ProgressChartBuilder.build(boardId);
-    StatsBuilder.build(boardId);
+  var getCurrentStartingList = function() {
+    return $("#in-scope label").text().trim();
   };
 
-  var reloadCharts = function (boardId) {
+  var getCurrentEndingList = function() {
+    return $("#out-scope label").text().trim();
+  };
+
+  var loadCharts = function(boardId, token) {
+    WipChartBuilder.build(boardId, token);
+    StatsBuilder.build(boardId, token);
+    LabelCountChartBuilder.build(boardId, token);
+    ProgressChartBuilder.build(boardId, token, getCurrentStartingList(), getCurrentEndingList());
+  };
+
+  var updateListRange = function(boardId, token) {
     $("#configure-board-modal").modal('hide');
 
-    $('#burn-up-spinner').show();
-    $('#burn-up-container').empty();
+    $.ajax({
+      url: "/boards/" + boardId,
+      type: "put",
+      data: {
+        startingList: getCurrentStartingList(),
+        endingList: getCurrentEndingList()
+      }
+    });
 
-    $('#burn-down-spinner').show();
-    $('#burn-down-container').empty();
-
-    $('#cfd-spinner').show();
-    $('#cfd-container').empty();
-
-    loadCharts(boardId);
-  }
-
-  var setupConfigurationModal = function (categories) {
-    populateListNames($("#in-scope"), $("#in-scope-states"), categories);
-    populateListNames($("#out-scope"), $("#out-scope-states"), categories);
+    ProgressChartBuilder.build(boardId, token, getCurrentStartingList(), getCurrentEndingList());
   };
 
-  var populateListNames = function (dropDown, menu, categories) {
+  var setupConfigurationModal = function(boardId, categories, token) {
+    populateListNames($("#in-scope"), $("#in-scope-states"), categories);
+    populateListNames($("#out-scope"), $("#out-scope-states"), categories);
+
+    $("#configure-board-apply").on("click", function() {
+      updateListRange(boardId, token);
+    });
+  };
+
+  var populateListNames = function(dropDown, menu, categories) {
     menu.empty();
     for (var i = 0; i < categories.length; i++) {
       menu.append(
@@ -44,13 +51,12 @@ var AnalysisController = (function () {
         categories[i] + "</a></li>")
     }
 
-    $("li a", menu).on('click', function () {
+    $("li a", menu).on('click', function() {
       $("label", dropDown).text($(this).text());
     });
-  }
+  };
 
   return {
-    init: initialize,
-    reload: loadCharts
+    init: initialize
   }
 })();

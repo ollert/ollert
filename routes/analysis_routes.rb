@@ -10,10 +10,36 @@ require_relative '../utils/fetchers/stats_fetcher'
 require_relative '../utils/analyzers/stats_analyzer'
 
 class Ollert
-  get '/boards/:board_id/analysis/wip', :auth => :connected do |board_id|
+  ["/api/v1/*"].each do |path|
+    before path do
+      if params["token"].nil?
+        halt 400, "Missing token."
+      end
+    end
+  end
+
+  get '/api/v1/progress/:board_id' do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => @user.member_token
+      :member_token => params["token"]
+    )
+
+    begin
+      data = ProgressChartsFetcher.fetch(client, board_id)
+
+      action_fetcher = Proc.new { |date| ProgressChartsFetcher.fetch_actions(client, board_id, date) }
+      body ProgressChartsAnalyzer.analyze(data, action_fetcher, params["starting_list"], params["ending_list"]).to_json
+      status 200
+    rescue Trello::Error => e
+      body "Connection broken."
+      status 500
+    end
+  end
+
+  get '/api/v1/wip/:board_id' do |board_id|
+    client = Trello::Client.new(
+      :developer_public_key => ENV['PUBLIC_KEY'],
+      :member_token => params["token"]
     )
 
     begin
@@ -25,33 +51,10 @@ class Ollert
     end
   end
 
-  get '/boards/:id/analysis/progress', :auth => :connected do |board_id|
+  get '/api/v1/stats/:board_id' do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => @user.member_token
-    )
-
-    begin
-      data = ProgressChartsFetcher.fetch(client, board_id)
-
-      boardSettings = @user.boards.find_or_create_by(board_id: board_id)
-      boardSettings.starting_list = params["startingList"]
-      boardSettings.ending_list = params["endingList"]
-      boardSettings.save
-
-      action_fetcher = Proc.new { |date| ProgressChartsFetcher.fetch_actions(client, board_id, date) }
-      body ProgressChartsAnalyzer.analyze(data, action_fetcher, boardSettings.starting_list, boardSettings.ending_list).to_json
-      status 200
-    rescue Trello::Error => e
-      body "Connection broken."
-      status 500
-    end
-  end
-
-  get '/boards/:id/analysis/stats', :auth => :connected do |board_id|
-    client = Trello::Client.new(
-      :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => @user.member_token
+      :member_token => params['token']
     )
 
     begin
@@ -64,10 +67,10 @@ class Ollert
     end
   end
   
-  get '/boards/:id/analysis/labelcounts', :auth => :connected do |board_id|
+  get '/api/v1/labels/:board_id' do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => @user.member_token
+      :member_token => params['token']
     )
 
     begin

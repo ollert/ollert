@@ -59,6 +59,7 @@ class ProgressChartsAnalyzer
     build(card_actions, lists, closed_lists)
   end
 
+  # TODO: rewrite this - takes WAY TOO LONG
   def self.build(card_actions, open_lists, closed_lists)
     cfd = Hash.new do |h, k|
       h[k] = Hash[open_lists.collect { |list| [list["name"], 0] }]

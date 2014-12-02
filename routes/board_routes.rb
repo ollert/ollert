@@ -59,6 +59,7 @@ class Ollert
 
       @starting_list = boardSettings.starting_list
       @ending_list = boardSettings.ending_list
+      @token = @user.member_token
     rescue Trello::Error => e
       unless @user.nil?
         @user.member_token = nil
@@ -79,6 +80,13 @@ class Ollert
     @board_id = board_id
 
     haml :analysis
+  end
+
+  put '/boards/:board_id', :auth => :connected do |board_id|
+    boardSettings = @user.boards.find_or_create_by(board_id: board_id)
+    boardSettings.starting_list = params["startingList"] || boardSettings.starting_list
+    boardSettings.ending_list = params["endingList"] || boardSettings.ending_list
+    boardSettings.save
   end
 
   def savedListOrDefault(savedListName, listOptions, defaultListName)
