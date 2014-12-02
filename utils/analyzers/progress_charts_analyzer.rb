@@ -57,6 +57,7 @@ class ProgressChartsAnalyzer
 
     isFirst = true
     cad = card_actions.group_by {|ca| ca["date"].to_date}
+    return cfd if cad.empty?
     cad.keys.min.upto(Date.today).each do |date|
       cfd[date-1].each do |k,v|
         cfd[date][k] = v.clone
