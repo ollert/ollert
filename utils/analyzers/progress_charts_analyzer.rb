@@ -40,36 +40,23 @@ class ProgressChartsAnalyzer
 
     card_actions = actions.reject {|action| action["type"] == "updateList"}
     list_actions = actions.select {|action| action["type"] == "updateList"}
-    closed_actions = actions.select {|action| action["type"] == "updateList"}.group_by { |action| action["data"]["list"]["id"]}
 
     # open lists
     lists = data["lists"].select { |x| !x["closed"]}
 
-    # closed lists
-    closed_lists = {}
-    closed_actions.each do |list, actions|
-      closed_action = actions.max {|action| Date.parse(action["date"])}
-      if closed_action["data"]["list"]["closed"]
-        closed_lists[list] = closed_action["date"]
-      end
-    end
-
     card_actions = actions.reject {|action| action["type"] == "updateList"}
 
-    build(card_actions, lists, closed_lists)
+    build(card_actions, lists)
   end
 
-  def self.build(card_actions, open_lists, closed_lists)
+  def self.build(card_actions, open_lists)
     now = Time.now
     cfd = Hash.new do |h, k|
       h[k] = Hash[open_lists.collect { |list| [list["name"], []] }]
     end
 
     isFirst = true
-
-
     cad = card_actions.group_by {|ca| ca["date"].to_date}
-
     cad.keys.min.upto(Date.today).each do |date|
       cfd[date-1].each do |k,v|
         cfd[date][k] = v.clone
@@ -99,13 +86,14 @@ class ProgressChartsAnalyzer
         end
 
         matching_list = open_lists.select {|l| l["id"] == list["id"]}.first
-        next if matching_list.nil? || (!closed_lists[list["id"]].nil? && closed_lists[list["id"]].to_date < date)
+        next if matching_list.nil?
+        next if cfd[date][matching_list["name"]].include? action["data"]["card"]["id"]
         cfd[date][matching_list["name"]] << action["data"]["card"]["id"]
       end
     end
 
     cfd.each {|k,v| v.each {|l,c| cfd[k][l] = c.count}}
-    
+
     cfd
   end
 

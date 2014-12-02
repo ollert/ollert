@@ -92,14 +92,19 @@ describe ProgressChartsAnalyzer do
       now = DateTime.new(n.year, n.month, n.day, 0, 0, 0, 0)
 
       latest = now.strftime("%FT%T%:z")
-      middle = (now - 3.days).strftime("%FT%T%:z")
+      middleTime = now - 3.days
+      middle = middleTime.strftime("%FT%T%:z")
       earliest = (now - 5.days).strftime("%FT%T%:z")
 
       raw = '{"id":"53adf649de82087387769b23","name":"Test Board #1",' +
              '"lists":[{"id":"53adf649de82087387769b24","name":"To Do","closed":false},{"id":"53adf649de82087387769b25","name":"Doing","closed":false},{"id":"53adf649de82087387769b26","name":"Done","closed":false}],' +
              '"actions":['
 
-      raw += 999.times.collect {'{"id":"53c51190bafc444b8dd834d6","data":{"listAfter":{"name":"Doing","id":"53adf649de82087387769b25"},"listBefore":{"name":"To Do","id":"53adf649de82087387769b24"},"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"card":{"shortLink":"okTPlfQ2","idShort":2,"name":"Test card 2","id":"53adf6530c52105b50069487","idList":"53adf649de82087387769b25"},"old":{"idList":"53adf649de82087387769b24"}},"type":"updateCard","date":"' + middle + '"},'}.join
+      raw += 999.times.collect { |i| '{"id":"53c51190bafc444b8dd834d6","data":{"listAfter":{"name":"Doing","id":"53adf649de82087387769b25"},' +
+                                 '"listBefore":{"name":"To Do","id":"53adf649de82087387769b24"},"board":{"shortLink":"Ntr24nv0","name":"Test Board #1",' +
+                                 '"id":"53adf649de82087387769b23"},"card":{"shortLink":"okTPlfQ2","idShort":2,"name":"Test card 2","id":"53adf6530c52105b50069487",' +
+                                 '"idList":"53adf649de82087387769b25"},"old":{"idList":"53adf649de82087387769b24"}},"type":"updateCard","date":"' +
+                                 (middleTime + i.seconds).strftime("%FT%T%:z") + '"},'}.join
 
       raw += '{"id":"53adf6510ad5d8524d8dc356","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"90yw2Uln","idShort":1,"name":"Test card 1","id":"53adf6510ad5d8524d8dc355"}},"type":"createCard","date":"' + earliest + '"}]}'
 
