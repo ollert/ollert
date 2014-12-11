@@ -1,4 +1,6 @@
 class StatsFetcher
+  include ActionFetcher
+
   def self.fetch(client, board_id)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 
@@ -17,21 +19,20 @@ class StatsFetcher
       list_fields: "name,closed",
     }
 
-    client.get("/boards/#{board_id}", options)
+    include_all_actions(JSON.parse(client.get("/boards/#{board_id}", options)), client, board_id)
   end
 
-  def self.fetch_actions(client, board_id, date)
-    raise Trello::Error if client.nil? || board_id.nil? || board_id.empty? || date.nil?
+  private
 
-    options = {
-      filter: :createCard,
-      fields: "data,date",
-      limit: 1000,
-      before: date,
-      memberCreator: false,
-      member: false
-    }
-
-    client.get("/boards/#{board_id}/actions", options)
+  def self.include_all_actions(data, client, board_id)
+    fetched = data["actions"].count
+    while fetched == 1000
+      new_actions = JSON.parse(fetch_actions.call(client,
+        board_id,
+        {date: data["actions"].last["date"], filter: :createCard, fields: "data,date"}))
+      fetched = new_actions.count
+      data["actions"].concat new_actions
+    end
+    data
   end
 end

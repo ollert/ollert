@@ -1,22 +1,13 @@
 require 'date'
 
 class StatsAnalyzer
-  def self.analyze(raw, action_fetcher)
-    return {} if raw.nil? || raw.empty?
-    data = JSON.parse(raw)
+  def self.analyze(data)
     return {} if data.empty?
 
     cards = data["cards"]
     members = data["members"]
     creations = data["actions"]
     lists = data["lists"]
-
-    fetched = creations.count
-    while fetched == 1000
-      new_actions = JSON.parse(action_fetcher.call(creations.last["date"]))
-      fetched = new_actions.count
-      creations.concat new_actions
-    end
 
     analyze_members(cards, members)
           .merge(analyze_cards(cards, creations))

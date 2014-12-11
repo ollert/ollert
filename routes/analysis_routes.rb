@@ -74,8 +74,7 @@ class Ollert
     )
 
     begin
-      action_fetcher = Proc.new { |date| StatsFetcher.fetch_actions(client, board_id, date) }
-      body StatsAnalyzer.analyze(StatsFetcher.fetch(client, board_id), action_fetcher).to_json
+      body StatsAnalyzer.analyze(StatsFetcher.fetch(client, board_id)).to_json
       status 200
     rescue Trello::Error => e
       body "Connection broken."
