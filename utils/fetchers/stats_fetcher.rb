@@ -29,9 +29,8 @@ class StatsFetcher
   def self.include_all_actions(data, client, board_id)
     fetched = data["actions"].count
     while fetched == 1000
-      new_actions = JSON.parse(fetch_actions.call(client,
-        board_id,
-        {date: data["actions"].last["date"], filter: :createCard, fields: "data,date"}))
+      new_actions = JSON.parse(self.fetch_actions(client, board_id,
+        {before: data["actions"].last["date"], filter: :createCard, fields: "data,date"}))
       fetched = new_actions.count
       data["actions"].concat new_actions
     end
