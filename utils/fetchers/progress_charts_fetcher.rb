@@ -1,4 +1,8 @@
+require_relative 'action_fetcher'
+
 class ProgressChartsFetcher
+  include ActionFetcher
+
   def self.fetch(client, board_id)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 
@@ -13,21 +17,19 @@ class ProgressChartsFetcher
       fields: "name"
     }
 
-    client.get("/boards/#{board_id}", options)
+    include_all_actions(JSON.parse(client.get("/boards/#{board_id}", options)), client, board_id)
   end
 
-  def self.fetch_actions(client, board_id, date)
-    raise Trello::Error if client.nil? || board_id.nil? || board_id.empty? || date.nil?
+  private
 
-    options = {
-      filter: "createCard,updateCard:idList,updateCard:closed",
-      fields: "data,type,date",
-      limit: 1000,
-      before: date,
-      memberCreator: false,
-      member: false
-    }
-
-    client.get("/boards/#{board_id}/actions", options)
+  def self.include_all_actions(data, client, board_id)
+    fetched = data["actions"].count
+    while fetched == 1000
+      new_actions = JSON.parse(self.fetch_actions(client, board_id,
+        {before: data["actions"].last["date"], filter: "createCard,updateCard:idList,updateCard:closed", fields: "data,type,date"}))
+      fetched = new_actions.count
+      data["actions"].concat new_actions
+    end
+    data
   end
 end

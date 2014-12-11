@@ -2,10 +2,8 @@ require 'date'
 require 'mongoid'
 
 class ProgressChartsAnalyzer
-  def self.analyze(raw, action_fetcher, startingList, endingList)
-    return {} if raw.nil? || raw.empty?
-    data = JSON.parse(raw)
-    return {} if data.empty?
+  def self.analyze(data, startingList, endingList)
+    return {} if data.nil? || data.empty?
 
     # open lists
     lists = data["lists"].select { |x| !x["closed"]}
@@ -13,7 +11,7 @@ class ProgressChartsAnalyzer
     startingListIndex = startingList.nil? || startingList.empty? ? 0 : lists.index{ |l| startingList == l["name"]}
     endingListIndex = endingList.nil? || endingList.empty? ? lists.count - 1 : lists.index{ |l| endingList == l["name"]}
 
-    cfdData = parse(data, lists, action_fetcher)
+    cfdData = parse(data, lists)
 
     cfdData.reject do |date|
       index = lists.index{ |l| cfdData[date]["name"] == l["name"]}
@@ -28,23 +26,12 @@ class ProgressChartsAnalyzer
 
   private
 
-  def self.parse(data, lists, action_fetcher)
-    actions = data["actions"]
-
-    fetched = actions.count
-    while fetched == 1000
-      new_actions = JSON.parse(action_fetcher.call(actions.last["date"]))
-      fetched = new_actions.count
-      actions.concat new_actions
-    end
-
-    card_actions = actions.reject {|action| action["type"] == "updateList"}
-    list_actions = actions.select {|action| action["type"] == "updateList"}
+  def self.parse(data, lists)
+    card_actions = data["actions"].reject {|action| action["type"] == "updateList"}
+    list_actions = data["actions"].select {|action| action["type"] == "updateList"}
 
     # open lists
     lists = data["lists"].select { |x| !x["closed"]}
-
-    card_actions = actions.reject {|action| action["type"] == "updateList"}
 
     build(card_actions, lists)
   end

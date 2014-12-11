@@ -1,4 +1,5 @@
 require_relative '../../../../utils/fetchers/progress_charts_fetcher'
+require 'date'
 
 describe ProgressChartsFetcher do
   describe '#fetch' do
@@ -16,8 +17,7 @@ describe ProgressChartsFetcher do
 
     it 'uses client to get board' do
       board_id = "ori0kf34rf34jfjfrej"
-      options =
-      {
+      options = {
         actions: "createCard,updateCard:idList,updateCard:closed",
         actions_limit: 1000,
         action_fields: "data,type,date",
@@ -27,50 +27,48 @@ describe ProgressChartsFetcher do
         list_fields: "name,closed",
         fields: "name"
       }
-      board = "{'name': 'DS9', 'lists': {}, 'actions': {}, 'id': 'ori0kf34rf34jfjfrej'}"
+      board = {'name' => 'DS9', 'lists' => {}, 'actions' => {}, 'id' => 'ori0kf34rf34jfjfrej'}
 
       client = double(Trello::Client)
-      expect(client).to receive(:get).with("/boards/#{board_id}", options).and_return(board)
+      expect(client).to receive(:get).with("/boards/#{board_id}", options).and_return(JSON.generate(board).to_s)
 
       expect(ProgressChartsFetcher.fetch(client, board_id)).to eq board
     end
-  end
 
-  describe '#fetch_actions' do
-    it 'raises error on nil client' do
-      expect {ProgressChartsFetcher.fetch_actions(nil, "fsadfj823w", DateTime.now)}.to raise_error(Trello::Error)
-    end
+    it 'fetches additional actions when more than 1000 returned' do
+      board_id = "ori0kf34rf34jfjfrej"
+      options = {
+        actions: "createCard,updateCard:idList,updateCard:closed",
+        actions_limit: 1000,
+        action_fields: "data,type,date",
+        action_memberCreator: :false,
+        action_member: false,
+        lists: :all,
+        list_fields: "name,closed",
+        fields: "name"
+      }
 
-    it 'raises error on nil board id' do
-      expect {ProgressChartsFetcher.fetch_actions(double(Trello::Client), nil, DateTime.now)}.to raise_error(Trello::Error)
-    end
+      actions = Array.new(1000, "")
+      last_action_date = DateTime.now.to_s
+      actions[-1] = {"date" => last_action_date}
+      board = {'name' => 'DS9', 'lists' => {}, 'actions' => actions, 'id' => 'ori0kf34rf34jfjfrej'}
 
-    it 'raises error on nil empty id' do
-      expect {ProgressChartsFetcher.fetch_actions(double(Trello::Client), "", DateTime.now)}.to raise_error(Trello::Error)
-    end
+      client = double(Trello::Client)
+      expect(client).to receive(:get).with("/boards/#{board_id}", options).and_return(JSON.fast_generate(board).to_s)
 
-    it 'raises error on nil date' do
-      expect {ProgressChartsFetcher.fetch_actions(double(Trello::Client), "dsafsddsa", nil)}.to raise_error(Trello::Error)
-    end
-    
-    it 'uses client to get board data' do
-      board_id = "fsadfj823w"
-      date = DateTime.now
-      options =
-      {
+      action_options = {
+        before: last_action_date,
         filter: "createCard,updateCard:idList,updateCard:closed",
         fields: "data,type,date",
         limit: 1000,
-        before: date,
         memberCreator: false,
-        member: false,
+        member: false
       }
-      actions = "[]"
+      expect(client).to receive(:get).with("/boards/#{board_id}/actions", action_options).and_return(JSON.fast_generate(Array.new(10, "")).to_s)
 
-      client = double(Trello::Client)
-      expect(client).to receive(:get).with("/boards/#{board_id}/actions", options).and_return(actions)
+      board["actions"].concat Array.new(10, "")
 
-      expect(ProgressChartsFetcher.fetch_actions(client, board_id, date)).to eq actions
+      expect(ProgressChartsFetcher.fetch(client, board_id)).to eq board
     end
   end
 end

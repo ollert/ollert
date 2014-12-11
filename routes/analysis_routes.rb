@@ -24,11 +24,8 @@ class Ollert
     )
 
     begin
-      data = ProgressChartsFetcher.fetch(client, board_id)
-
-      action_fetcher = Proc.new { |date| ProgressChartsFetcher.fetch_actions(client, board_id, date) }
-      body ProgressChartsAnalyzer.analyze(data, action_fetcher,
-        params["starting_list"], params["ending_list"]).to_json
+      body ProgressChartsAnalyzer.analyze(ProgressChartsFetcher.fetch(client, board_id),
+       params["starting_list"], params["ending_list"]).to_json
       status 200
     rescue Trello::Error => e
       body "Connection broken."

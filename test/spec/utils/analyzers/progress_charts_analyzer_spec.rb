@@ -3,19 +3,19 @@ require_relative '../../../../utils/analyzers/progress_charts_analyzer'
 describe ProgressChartsAnalyzer do
   describe '#analyze' do
     it 'returns empty hash for nil' do
-      expect(ProgressChartsAnalyzer.analyze(nil, nil, "", "")).to be_empty
+      expect(ProgressChartsAnalyzer.analyze(nil, "", "")).to be_empty
     end
 
     it 'returns empty hash for empty string' do
-      expect(ProgressChartsAnalyzer.analyze("", nil, "", "")).to be_empty
+      expect(ProgressChartsAnalyzer.analyze("", "", "")).to be_empty
     end
 
     it 'returns empty hash for empty array' do
-      expect(ProgressChartsAnalyzer.analyze("[]", nil, "", "")).to be_empty
+      expect(ProgressChartsAnalyzer.analyze([], "", "")).to be_empty
     end
 
     it 'returns empty hash for empty object' do
-      expect(ProgressChartsAnalyzer.analyze("{}", nil, "", "")).to be_empty
+      expect(ProgressChartsAnalyzer.analyze({}, "", "")).to be_empty
     end
 
     it 'returns default cfd data' do
@@ -36,7 +36,7 @@ describe ProgressChartsAnalyzer do
              '{"id":"53adf6530c52105b50069488","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"okTPlfQ2","idShort":2,"name":"Test card 2","id":"53adf6530c52105b50069487"}},"type":"createCard","date":"' + earliest + '"},' +
              '{"id":"53adf6510ad5d8524d8dc356","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"90yw2Uln","idShort":1,"name":"Test card 1","id":"53adf6510ad5d8524d8dc355"}},"type":"createCard","date":"' + earliest + '"}]}'
 
-      expect(ProgressChartsAnalyzer.analyze(raw, nil, "", "")).to match({
+      expect(ProgressChartsAnalyzer.analyze(JSON.parse(raw), "", "")).to match({
         cfd: {
           cfddata: [
             {name: "To Do", data: [d(5, 2), d(4, 2), d(3, 1), d(2, 1), d(1, 1), d(0, 2)]},
@@ -71,7 +71,7 @@ describe ProgressChartsAnalyzer do
              '{"id":"53adf6530c52105b50069488","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"okTPlfQ2","idShort":2,"name":"Test card 2","id":"53adf6530c52105b50069487"}},"type":"createCard","date":"' + earliest + '"},' +
              '{"id":"53adf6510ad5d8524d8dc356","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"90yw2Uln","idShort":1,"name":"Test card 1","id":"53adf6510ad5d8524d8dc355"}},"type":"createCard","date":"' + earliest + '"}]}'
 
-      expect(ProgressChartsAnalyzer.analyze(raw, nil, "To Do", "Doing")).to match({
+      expect(ProgressChartsAnalyzer.analyze(JSON.parse(raw), "To Do", "Doing")).to match({
         cfd: {
           cfddata: [
             {name: "To Do", data: [d(5, 2), d(4, 2), d(3, 1), d(2, 1), d(1, 1), d(0, 2)]},
@@ -83,47 +83,6 @@ describe ProgressChartsAnalyzer do
             {name: "InScope", data: [d(5, 2), d(4, 2), d(3, 1), d(2, 1), d(1, 1), d(0, 2)]},
             {name: "Complete", data: [d(5, 1), d(4, 1), d(3, 4), d(2, 4), d(1, 4), d(0, 4)]}
         ]
-        }
-      })
-    end
-
-    it 'handles more than 1000 actions' do   
-      n = DateTime.now
-      now = DateTime.new(n.year, n.month, n.day, 0, 0, 0, 0)
-
-      latest = now.strftime("%FT%T%:z")
-      middleTime = now - 3.days
-      middle = middleTime.strftime("%FT%T%:z")
-      earliest = (now - 5.days).strftime("%FT%T%:z")
-
-      raw = '{"id":"53adf649de82087387769b23","name":"Test Board #1",' +
-             '"lists":[{"id":"53adf649de82087387769b24","name":"To Do","closed":false},{"id":"53adf649de82087387769b25","name":"Doing","closed":false},{"id":"53adf649de82087387769b26","name":"Done","closed":false}],' +
-             '"actions":['
-
-      raw += 999.times.collect { |i| '{"id":"53c51190bafc444b8dd834d6","data":{"listAfter":{"name":"Doing","id":"53adf649de82087387769b25"},' +
-                                 '"listBefore":{"name":"To Do","id":"53adf649de82087387769b24"},"board":{"shortLink":"Ntr24nv0","name":"Test Board #1",' +
-                                 '"id":"53adf649de82087387769b23"},"card":{"shortLink":"okTPlfQ2","idShort":2,"name":"Test card 2","id":"53adf6530c52105b50069487",' +
-                                 '"idList":"53adf649de82087387769b25"},"old":{"idList":"53adf649de82087387769b24"}},"type":"updateCard","date":"' +
-                                 (middleTime + i.seconds).strftime("%FT%T%:z") + '"},'}.join
-
-      raw += '{"id":"53adf6510ad5d8524d8dc356","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"90yw2Uln","idShort":1,"name":"Test card 1","id":"53adf6510ad5d8524d8dc355"}},"type":"createCard","date":"' + earliest + '"}]}'
-
-      action_fetcher = double(Proc)
-      expect(action_fetcher).to receive(:call).once.with(earliest).and_return("[]")
-
-      expect(ProgressChartsAnalyzer.analyze(raw, action_fetcher, "", "")).to match({
-        cfd: {
-          cfddata: [
-            {name: "To Do", data: [d(5, 1), d(4, 1), d(3, 1), d(2, 1), d(1, 1), d(0, 1)]},
-            {name: "Doing", data: [d(5, 0), d(4, 0), d(3, 1), d(2, 1), d(1, 1), d(0, 1)]},
-            {name: "Done", data: [d(5, 0), d(4, 0), d(3, 0), d(2, 0), d(1, 0), d(0, 0)]}
-          ]
-        },
-        burnup: {
-          cfddata: [
-          {name: "InScope", data: [d(5, 1), d(4, 1), d(3, 2), d(2, 2), d(1, 2), d(0, 2)]},
-          {name: "Complete", data: [d(5, 0), d(4, 0), d(3, 0), d(2, 0), d(1, 0), d(0, 0)]}
-          ]
         }
       })
     end
