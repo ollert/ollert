@@ -2,7 +2,7 @@ require 'date'
 
 class StatsAnalyzer
   def self.analyze(data)
-    return {} if data.empty?
+    return {} if data.nil? || data.empty?
 
     cards = data["cards"]
     members = data["members"]

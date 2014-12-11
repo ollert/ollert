@@ -1,3 +1,5 @@
+require_relative 'action_fetcher'
+
 class StatsFetcher
   include ActionFetcher
 

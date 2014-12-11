@@ -18,7 +18,7 @@ describe ProgressChartsFetcher do
       board_id = "ori0kf34rf34jfjfrej"
       options =
       {
-        actions: "createCard,updateCard:idList,updateCard:closed,updateList:closed",
+        actions: "createCard,updateCard:idList,updateCard:closed",
         actions_limit: 1000,
         action_fields: "data,type,date",
         action_memberCreator: :false,
@@ -58,7 +58,7 @@ describe ProgressChartsFetcher do
       date = DateTime.now
       options =
       {
-        filter: "createCard,updateCard:idList,updateCard:closed,updateList:closed",
+        filter: "createCard,updateCard:idList,updateCard:closed",
         fields: "data,type,date",
         limit: 1000,
         before: date,
