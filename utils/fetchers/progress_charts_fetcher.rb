@@ -3,7 +3,7 @@ class ProgressChartsFetcher
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 
     options = {
-      actions: "createCard,updateCard:idList,updateCard:closed,updateList:closed",
+      actions: "createCard,updateCard:idList,updateCard:closed",
       actions_limit: 1000,
       action_fields: "data,type,date",
       action_memberCreator: :false,
@@ -20,7 +20,7 @@ class ProgressChartsFetcher
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty? || date.nil?
 
     options = {
-      filter: "createCard,updateCard:idList,updateCard:closed,updateList:closed",
+      filter: "createCard,updateCard:idList,updateCard:closed",
       fields: "data,type,date",
       limit: 1000,
       before: date,

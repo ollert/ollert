@@ -1,13 +1,12 @@
 require 'json'
 
-require_relative '../utils/fetchers/label_count_fetcher'
-require_relative '../utils/analyzers/label_count_analyzer'
-require_relative '../utils/fetchers/wip_fetcher'
-require_relative '../utils/analyzers/wip_analyzer'
-require_relative '../utils/fetchers/progress_charts_fetcher'
-require_relative '../utils/analyzers/progress_charts_analyzer'
-require_relative '../utils/fetchers/stats_fetcher'
-require_relative '../utils/analyzers/stats_analyzer'
+Dir.glob("#{File.dirname(__FILE__)}/../utils/fetchers/*.rb").each do |file|
+  require file.chomp(File.extname(file))
+end
+
+Dir.glob("#{File.dirname(__FILE__)}/../utils/analyzers/*.rb").each do |file|
+  require file.chomp(File.extname(file))
+end
 
 class Ollert
   ["/api/v1/*"].each do |path|
@@ -28,9 +27,26 @@ class Ollert
       data = ProgressChartsFetcher.fetch(client, board_id)
 
       action_fetcher = Proc.new { |date| ProgressChartsFetcher.fetch_actions(client, board_id, date) }
-      body ProgressChartsAnalyzer.analyze(data, action_fetcher, params["starting_list"], params["ending_list"]).to_json
+      body ProgressChartsAnalyzer.analyze(data, action_fetcher,
+        params["starting_list"], params["ending_list"]).to_json
       status 200
     rescue Trello::Error => e
+      body "Connection broken."
+      status 500
+    end
+  end
+
+  get '/api/v1/cycletime/:board_id' do |board_id|
+    client = Trello::Client.new(
+      :developer_public_key => ENV['PUBLIC_KEY'],
+      :member_token => params["token"]
+    )
+
+    begin
+      body CycleTimeAnalyzer.analyze(CycleTimeFetcher.fetch(client, board_id),
+        params["starting_list"], params["ending_list"]).to_json
+      status 200
+    rescue
       body "Connection broken."
       status 500
     end
@@ -43,8 +59,8 @@ class Ollert
     )
 
     begin
-      status 200
       body WipAnalyzer.analyze(WipFetcher.fetch(client, board_id)).to_json
+      status 200
     rescue Trello::Error => e
       body "Connection broken."
       status 500
@@ -74,8 +90,8 @@ class Ollert
     )
 
     begin
-      status 200
       body LabelCountAnalyzer.analyze(LabelCountFetcher.fetch(client, board_id)).to_json
+      status 200
     rescue Trello::Error => e
       body "Connection broken."
       status 500
