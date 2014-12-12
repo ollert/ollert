@@ -1,9 +1,9 @@
 class BoardAnalyzer
-  def self.analyze(raw)
-    return {} if raw.nil? || raw.empty?
+  def self.analyze(data)
+    return {} if data.nil? || data.empty?
 
     trello_boards = {}
-    JSON.parse(raw).each do |board|
+    data.each do |board|
       organization = board["organization"].nil? ? "My Boards" : board["organization"]["displayName"]
       trello_boards[organization] ||= []
       trello_boards[organization] << board

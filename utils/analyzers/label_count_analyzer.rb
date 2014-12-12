@@ -1,8 +1,6 @@
 class LabelCountAnalyzer
-  def self.analyze(raw)
-    return {} if raw.nil? || raw.empty?
-    data = JSON.parse(raw)
-    return {} if data.empty?
+  def self.analyze(data)
+    return {} if data.nil? || data.empty?
     
     labels = data.reject {|label| label["uses"] == 0 && label["name"].empty?}
 

@@ -11,11 +11,11 @@ describe WipAnalyzer do
     end
 
     it 'returns empty hash for empty array' do
-      expect(WipAnalyzer.analyze("[]")).to be_empty
+      expect(WipAnalyzer.analyze([])).to be_empty
     end
 
     it 'returns empty hash for empty object' do
-      expect(WipAnalyzer.analyze("{}")).to be_empty
+      expect(WipAnalyzer.analyze({})).to be_empty
     end
 
     it 'returns wip' do
@@ -29,7 +29,7 @@ describe WipAnalyzer do
                '"name":"Done","closed":false,"idBoard":"5352919ed45d47fd76cc3f19",' +
                '"pos":49152,"subscribed":false,"cards":[{"id":"5351c35f1802100f77f838c6"}]}]'
 
-      expect(WipAnalyzer.analyze(raw)).to match({
+      expect(WipAnalyzer.analyze(JSON.parse(raw))).to match({
         :wipcategories => ["To Do (sorted by priority)", "Doing", "Done"],
         :wipdata => [3, 0, 1]
       })

@@ -11,23 +11,23 @@ describe BoardDetailsAnalyzer do
     end
 
     it 'returns empty hash for empty array' do
-      expect(BoardDetailsAnalyzer.analyze("[]")).to be_empty
+      expect(BoardDetailsAnalyzer.analyze([])).to be_empty
     end
 
     it 'returns empty hash for empty object' do
-      expect(BoardDetailsAnalyzer.analyze("{}")).to be_empty
+      expect(BoardDetailsAnalyzer.analyze({})).to be_empty
     end
 
     it 'returns board details' do
       raw = '{"id":"5352919ed45d47fd76cc3f1a","name":"My Board","lists":[' +
-        '{"name":"To Do"},' +
-        '{"name":"Doing"},' +
-        '{"name":"Done"}' +
+        '{"name":"To Do","id":"1"},' +
+        '{"name":"Doing","id":"2"},' +
+        '{"name":"Done","id":"3"}' +
         ']}'
 
-      expect(BoardDetailsAnalyzer.analyze(raw)).to match({
+      expect(BoardDetailsAnalyzer.analyze(JSON.parse(raw))).to match({
         :name => "My Board",
-        :lists => ["To Do", "Doing", "Done"],
+        :lists => [{name: "To Do", id: "1"}, {name: "Doing", id: "2"}, {name: "Done", id: "3"}],
       })
     end
   end

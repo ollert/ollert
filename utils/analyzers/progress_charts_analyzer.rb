@@ -8,8 +8,8 @@ class ProgressChartsAnalyzer
     # open lists
     lists = data["lists"].select { |x| !x["closed"]}
 
-    startingListIndex = startingList.nil? || startingList.empty? ? 0 : lists.index{ |l| startingList == l["name"]}
-    endingListIndex = endingList.nil? || endingList.empty? ? lists.count - 1 : lists.index{ |l| endingList == l["name"]}
+    startingListIndex = lists.index{ |l| startingList == l["id"]} || 0
+    endingListIndex = lists.index{ |l| endingList == l["id"]} || lists.count - 1
 
     cfdData = parse(data, lists)
 
@@ -17,6 +17,9 @@ class ProgressChartsAnalyzer
       index = lists.index{ |l| cfdData[date]["name"] == l["name"]}
       !index.nil? && index >= startingListIndex && index < endingListIndex
     end
+
+    puts startingListIndex
+    puts endingListIndex
 
     {
       cfd: formatCFD(cfdData, lists[startingListIndex..endingListIndex]),

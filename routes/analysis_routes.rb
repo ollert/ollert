@@ -25,7 +25,7 @@ class Ollert
 
     begin
       body ProgressChartsAnalyzer.analyze(ProgressChartsFetcher.fetch(client, board_id),
-       params["starting_list"], params["ending_list"]).to_json
+       params["startingList"], params["endingList"]).to_json
       status 200
     rescue Trello::Error => e
       body "Connection broken."
@@ -41,7 +41,7 @@ class Ollert
 
     begin
       body CycleTimeAnalyzer.analyze(CycleTimeFetcher.fetch(client, board_id),
-        params["starting_list"], params["ending_list"]).to_json
+        params["startingList"], params["endingList"]).to_json
       status 200
     rescue
       body "Connection broken."

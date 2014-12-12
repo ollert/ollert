@@ -8,29 +8,23 @@
             Close
         %h4{class: "modal-title"}
           Configure Boards
-      %form{id: "configureBoards", role: "form"}
-        .modal-body.row
-          .col-xs-6
-            %label.lbl-config{for: "in-scope"}
+
+      .modal-body
+        %form.form-horizontal{role: "form"}
+          .form-group
+            %label.col-xs-4.control-label{for: "starting-list"}
               Work Begins
-            %div.dropdown
-              .button.btn.btn-config.btn-default.dropdown-toggle{id: "in-scope", name: "in-scope", type:"button", data: { toggle: "dropdown" }}
-                %label
-                  #{@starting_list}
-                %span.caret
-              %ul.dropdown-menu{id: "in-scope-states", role: "menu", "aria-labelledby" => "in-scope"}
-          .col-xs-6 
-            %label.lbl-config{for: "out-scope"}
+            .col-xs-8
+              %select.form-control#starting-list
+          .form-group
+            %label.col-xs-4.control-label{for: "ending-list"}
               Work Ends
-            %div.dropdown
-              .button.btn.btn-config.btn-default.dropdown-toggle{id: "out-scope", name: "out-scope", type:"button", data: { toggle: "dropdown" }}
-                %label
-                  #{@ending_list}
-                %span.caret
-              %ul.dropdown-menu{id: "out-scope-states", role: "menu", "aria-labelledby" => "out-scope"}
-        .modal-footer
-          %a.btn.btn-primary{id: "configure-board-apply"}
-            Apply
+            .col-xs-8
+              %select.form-control#ending-list
+
+      .modal-footer
+        %a.btn.btn-primary{id: "submit-board-lists"}
+          Apply
 
 #board-details
   .container
@@ -139,4 +133,4 @@
 %script{src: '/js/moment.min.js'}
 
 %script
-  $(document).ready(function() { AnalysisController.init("#{@board_id}", #{@board_states}, "#{@token}"); });
+  $(document).ready(function() { AnalysisController.init("#{@board_id}", #{@board_lists}, "#{@starting_list}", "#{@ending_list}", "#{@token}"); });

@@ -39,7 +39,7 @@ class Ollert
     end
   end
 
-  get '/boards/:id', :auth => :connected do |board_id|
+  get '/boards/:board_id', :auth => :connected do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
       :member_token => @user.member_token
@@ -48,17 +48,19 @@ class Ollert
     begin
       details = BoardDetailsAnalyzer.analyze(BoardDetailsFetcher.fetch(client, board_id))
       @board_name = details[:name]
-      @board_states = details[:lists]
+      @board_lists = details[:lists]
 
-      boardSettings = @user.boards.find_or_create_by(board_id: board_id)
+      board_settings = @user.boards.find_or_create_by(board_id: board_id)
 
-      boardSettings.starting_list = savedListOrDefault(boardSettings.starting_list, @board_states, @board_states.first)
-      boardSettings.ending_list = savedListOrDefault(boardSettings.ending_list, @board_states, @board_states.last)
+      list_ids = @board_lists.map {|bl| bl[:id]}
+      board_settings.starting_list = saved_list_or_default(board_settings.starting_list, list_ids, list_ids.first)
+      board_settings.ending_list = saved_list_or_default(board_settings.ending_list, list_ids, list_ids.last)
 
-      boardSettings.save
+      board_settings.save
 
-      @starting_list = boardSettings.starting_list
-      @ending_list = boardSettings.ending_list
+      @board_lists = @board_lists.to_json
+      @starting_list = board_settings.starting_list
+      @ending_list = board_settings.ending_list
       @token = @user.member_token
     rescue Trello::Error => e
       unless @user.nil?
@@ -83,13 +85,13 @@ class Ollert
   end
 
   put '/boards/:board_id', :auth => :connected do |board_id|
-    boardSettings = @user.boards.find_or_create_by(board_id: board_id)
-    boardSettings.starting_list = params["startingList"] || boardSettings.starting_list
-    boardSettings.ending_list = params["endingList"] || boardSettings.ending_list
-    boardSettings.save
+    board_settings = @user.boards.find_or_create_by(board_id: board_id)
+    board_settings.starting_list = params["startingList"] || board_settings.starting_list
+    board_settings.ending_list = params["endingList"] || board_settings.ending_list
+    board_settings.save
   end
 
-  def savedListOrDefault(savedListName, listOptions, defaultListName)
-    !savedListName.nil? && listOptions.any? {|l| l == savedListName} ? savedListName : defaultListName
+  def saved_list_or_default(saved_list, list_options, default_list)
+    saved_list.nil? ? default_list : list_options.find {|lo| lo == saved_list} || default_list
   end
 end

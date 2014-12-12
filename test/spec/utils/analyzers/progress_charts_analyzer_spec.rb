@@ -53,7 +53,7 @@ describe ProgressChartsAnalyzer do
       })
     end
 
-    it 'returns cfd data' do
+    it 'returns cfd data with givens tarting and ending list' do
       n = DateTime.now
       now = DateTime.new(n.year, n.month, n.day, 0, 0, 0, 0)
 
@@ -71,7 +71,7 @@ describe ProgressChartsAnalyzer do
              '{"id":"53adf6530c52105b50069488","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"okTPlfQ2","idShort":2,"name":"Test card 2","id":"53adf6530c52105b50069487"}},"type":"createCard","date":"' + earliest + '"},' +
              '{"id":"53adf6510ad5d8524d8dc356","data":{"board":{"shortLink":"Ntr24nv0","name":"Test Board #1","id":"53adf649de82087387769b23"},"list":{"name":"To Do","id":"53adf649de82087387769b24"},"card":{"shortLink":"90yw2Uln","idShort":1,"name":"Test card 1","id":"53adf6510ad5d8524d8dc355"}},"type":"createCard","date":"' + earliest + '"}]}'
 
-      expect(ProgressChartsAnalyzer.analyze(JSON.parse(raw), "To Do", "Doing")).to match({
+      expect(ProgressChartsAnalyzer.analyze(JSON.parse(raw), "53adf649de82087387769b24", "53adf649de82087387769b25")).to match({
         cfd: {
           cfddata: [
             {name: "To Do", data: [d(5, 2), d(4, 2), d(3, 1), d(2, 1), d(1, 1), d(0, 2)]},

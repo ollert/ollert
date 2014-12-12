@@ -1,6 +1,6 @@
 class MemberAnalyzer
-  def self.analyze(raw)
-    return {} if raw.nil? || raw.empty?
-    JSON.parse(raw)
+  def self.analyze(data)
+    return {} if data.nil? || data.empty?
+    data
   end
 end
