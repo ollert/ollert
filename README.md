@@ -37,7 +37,7 @@ Requirements
 
 In the project root folder, use `bundle install` to install required gems.
 
-Create a file called `.env` in the root project folder. This file will be read by the gem [dotenv](https://github.com/bkeepers/dotenv) and will set up the bits that are unique to your environment. The format of the `.env` file is simply:
+Create a file called `.env` in the root project folder. The format of the `.env` file is simply:
 
     ENVIRONMENT_VARIABLE=This is the value
 	ANOTHER_VARIABLE=Another value
