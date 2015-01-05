@@ -18,9 +18,6 @@ class ProgressChartsAnalyzer
       !index.nil? && index >= startingListIndex && index < endingListIndex
     end
 
-    puts startingListIndex
-    puts endingListIndex
-
     {
       cfd: formatCFD(cfdData, lists[startingListIndex..endingListIndex]),
       burnup: formatBurnUp(cfdData, lists[startingListIndex..endingListIndex-1], lists[endingListIndex, lists.count-1])
