@@ -25,7 +25,7 @@ group :development, :test do
   gem 'dotenv'
   gem 'rspec'
   gem 'cucumber'
-  gem 'capybara', '< 2.4.0'
+  gem 'capybara'
   gem 'rack_session_access'
-  gem 'capybara-webkit', '~> 1.2.0'
+  gem 'capybara-webkit'
 end

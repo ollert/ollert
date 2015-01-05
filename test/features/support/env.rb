@@ -17,6 +17,9 @@ Capybara.javascript_driver = :webkit
 
 World do
   Ollert.new
+end
+
+Before do
   Mongoid.purge!
 end
 
