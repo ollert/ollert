@@ -50,11 +50,9 @@ Environment variables:
 * `TRELLO_TEST_USERNAME`
     * required
     * Username to use while running cukes
-    * Email lrprice@sep.com for this variable
 * `TRELLO_TEST_PASSWORD`
     * required
     * Password to use while running cukes
-    * Email lrprice@sep.com for this variable
 * `SESSION_SECRET`
     * optional
     * Any string
@@ -69,7 +67,7 @@ All changes checked in to `origin/master` must be tested. There are two types of
 
 To run the `spec` tests, use `rake test:spec`.
 
-To run the cukes, use `rake test:cukes`.
+To run the cukes, use `rake test:cukes`. Cukes are run using the `TRELLO_TEST_USERNAME`. At least one test will fail if you have the improper boards. Create an organization "Test Organization 1" on Trello. Under "Test Organization", create two boards: "Test Board #1" and "Test Board #2". Additionally, create a general board called "Empty Board" and verify that the default "Welcome Board" is still visible to you. If "Welcome Board" is no longer available, you can simply create a new "Welcome Board" without any organization.
 
 To run all tests, use `rake test:all`.
 
