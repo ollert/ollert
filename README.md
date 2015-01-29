@@ -23,17 +23,17 @@ Since Ollert depends entirely on Trello for users, Ollert will support only brow
 
 #### Development
 
-You will want to install Ubuntu within a virtual machine for ease of development. There's an installation ISO available on `\\net\files\ISOs\OperatingSystems\Ubuntu` (if you're not sure, grab `ubuntu-12.04-server-amd64.iso`).
+You almost certainly want to be using a Unix-based operating system. Some dependencies will be necessary before you can run the application. On Ubuntu:
 
-Once you get your VM running, you'll want to install the following packages:
-
-    # sudo apt-get install libxslt-dev libxml2-dev build-essential libqtwebkit-dev
+``` bash
+# sudo apt-get install libxslt-dev libxml2-dev build-essential libqtwebkit-dev
+```
 
 *Note*: You may need more packages. If you do, please edit this document and add them to the command above.
 
 Requirements
 
-* `ruby-2.1.2` - Install using [RVM](https://rvm.io/), be aware of [this issue](https://rvm.io/integration/gnome-terminal)
+* `ruby-2.2.0` - Install using [RVM](https://rvm.io/), be aware of [this issue](https://rvm.io/integration/gnome-terminal)
 * `mongodb` - Check out [this very helpful page](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)
 * `bundler` - `gem install bundler`
 
@@ -75,4 +75,14 @@ To run all tests, use `rake test:all`.
 
 #### CI
 
-Ollert has a [job set up in Jenkins](http://jenkins.net.sep.com/job/Ollert). This job runs all the tests. If your tests don't pass on the build server, they don't pass. No exceptions.
+We are working on getting a Travis build up and running. Be patient.
+
+### Contributing
+
+* Claim/Create an issue
+* Fork the repository
+* Crate a feature branch
+* Write tests
+* Submit a pull request
+* Fix comments
+* Profit
