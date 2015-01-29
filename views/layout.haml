@@ -21,6 +21,8 @@
 
     - if ENV['RACK_ENV'] == "production"
       %script{src: "/js/google-analytics.js"}
+      ga('create', "#{ENV['GOOGLE_ANALYTICS_KEY']}", 'ollertapp.com');
+      ga('send', 'pageview');
 
     :javascript
       $(document).ready(function() {
