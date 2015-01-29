@@ -33,6 +33,7 @@ class Ollert
     end
   end
 
+  # TODO: Finish
   get '/api/v1/cycletime/:board_id' do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
