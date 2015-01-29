@@ -6,6 +6,8 @@ Company: Software Engineering Professionals, Inc.
 
 Website: [ollertapp.com](https://ollertapp.com)
 
+License: [GNU Affero GPL v3.0](LICENSE)
+
 #### Description
 
 Ollert is a data analysis tool for Trello.
