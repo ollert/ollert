@@ -1,6 +1,6 @@
 When /^I authorize with Trello$/ do
-  expect(ENV['TRELLO_TEST_USERNAME']).to_not be_nil
-  expect(ENV['TRELLO_TEST_PASSWORD']).to_not be_nil
+  expect(Environment.test_username).to_not be_nil
+  expect(Environment.test_password).to_not be_nil
 
   trello_popup = windows.last
   page.within_window trello_popup do
@@ -11,8 +11,8 @@ When /^I authorize with Trello$/ do
       click_link "Log in"
     end
 
-    fill_in "user", with: ENV['TRELLO_TEST_USERNAME']
-    fill_in "password", with: ENV['TRELLO_TEST_PASSWORD']
+    fill_in "user", with: Environment.test_username
+    fill_in "password", with: Environment.test_password
     click_button "Log In"
     click_button "Allow"
   end

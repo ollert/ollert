@@ -9,10 +9,10 @@ Before do
 end
 
 After do
-  user = User.find_by(email: ENV['TRELLO_TEST_USERNAME'])
+  user = User.find_by(email: Environment.test_username)
   if !user.nil? && !user.member_token.nil?
     client = Trello::Client.new(
-        developer_public_key: ENV['PUBLIC_KEY'],
+        developer_public_key: Environment.public_key,
         member_token: user.member_token
     )
 

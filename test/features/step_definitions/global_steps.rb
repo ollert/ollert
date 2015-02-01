@@ -4,7 +4,7 @@ end
 
 Given(/^the test user is in the system$/) do
   user = User.new
-  user.email = ENV['TRELLO_TEST_USERNAME']
+  user.email = Environment.test_username
 
   user.save!
 end
@@ -17,7 +17,7 @@ Given(/^the doppelganger user is in the system$/) do
 end
 
 Given(/^the test user is logged in$/) do
-  page.set_rack_session user: User.find_by(email: ENV['TRELLO_TEST_USERNAME']).id
+  page.set_rack_session user: User.find_by(email: Environment.test_username).id
 end
 
 Then(/^there should be (\d+) user(?:s?) in the system$/) do |num_users|
