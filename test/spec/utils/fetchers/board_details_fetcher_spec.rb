@@ -1,19 +1,11 @@
-require_relative '../../../../utils/fetchers/board_details_fetcher'
+require_relative '../../spec_helper'
+require 'board_details_fetcher'
 
 describe BoardDetailsFetcher do
+
+  it_behaves_like 'a fetcher'
+
   describe '#fetch' do
-    it 'raises error on nil client' do
-      expect {BoardDetailsFetcher.fetch(nil, "fsadfj823w")}.to raise_error(Trello::Error)
-    end
-
-    it 'raises error on nil board id' do
-      expect {BoardDetailsFetcher.fetch(double(Trello::Client), nil)}.to raise_error(Trello::Error)
-    end
-
-    it 'raises error on empty board id' do
-      expect {BoardDetailsFetcher.fetch(double(Trello::Client), "")}.to raise_error(Trello::Error)
-    end
-    
     it 'uses client to get details' do
       board_id = "fsadfj823w"
       options = {filter: :open, lists: :open, fields: :name}

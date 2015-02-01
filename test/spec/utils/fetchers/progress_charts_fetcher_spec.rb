@@ -1,20 +1,11 @@
-require_relative '../../../../utils/fetchers/progress_charts_fetcher'
-require 'date'
+require_relative '../../spec_helper'
+require 'progress_charts_fetcher'
 
 describe ProgressChartsFetcher do
+
+  it_behaves_like 'a fetcher'
+
   describe '#fetch' do
-    it 'raises error on nil client' do
-      expect {ProgressChartsFetcher.fetch(nil, "ori0kf34rf34jfjfrej")}.to raise_error(Trello::Error)
-    end
-
-    it 'raises error on nil board id' do
-      expect {ProgressChartsFetcher.fetch(double(Trello::Client), nil)}.to raise_error(Trello::Error)
-    end
-
-    it 'raises error on empty board id' do
-      expect {ProgressChartsFetcher.fetch(double(Trello::Client), "")}.to raise_error(Trello::Error)
-    end
-
     it 'uses client to get board' do
       board_id = "ori0kf34rf34jfjfrej"
       options = {

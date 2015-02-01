@@ -1,20 +1,11 @@
-require_relative '../../../../utils/fetchers/stats_fetcher'
-require 'date'
+require_relative '../../spec_helper'
+require 'stats_fetcher'
 
 describe StatsFetcher do
+
+  it_behaves_like 'a fetcher'
+
   describe '#fetch' do
-    it 'raises error on nil client' do
-      expect {StatsFetcher.fetch(nil, "fsadfj823w")}.to raise_error(Trello::Error)
-    end
-
-    it 'raises error on nil board id' do
-      expect {StatsFetcher.fetch(double(Trello::Client), nil)}.to raise_error(Trello::Error)
-    end
-
-    it 'raises error on nil empty id' do
-      expect {StatsFetcher.fetch(double(Trello::Client), "")}.to raise_error(Trello::Error)
-    end
-    
     it 'uses client to get board data' do
       board_id = "fsadfj823w"
       options = {
