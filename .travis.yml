@@ -3,6 +3,7 @@ rvm: 2.2.0
 notifications:
   email: false
 script: rake test:all
+services: mongodb
 env:
   global:
   - secure: Nh4Vc1EEgs+C7rqTauvCJaehvsI6hQiYtm/ttzIirDjCJt0P0jgm0ZZoqESItz5SQUEUoQ+tAhkCOmShCkAKjg11XXqY024DYdySypY/eDjF7WoNJeVXS1nIsgPNfpoMKh2yk6t//MmZgeuwb7FuVEoJ63qUpyXDnICHOyfo6m8=
