@@ -27,7 +27,7 @@ Then(/^the test user "(.*?)" should be nil$/) do |field|
 end
 
 Given(/^the email field contains the test email address$/) do
-  find_field("email").value.should eq ENV['TRELLO_TEST_USERNAME']
+  find_field("email").value.should eq Environment.test_username
 end
 
 Given(/^there is a copycat user in the system$/) do
