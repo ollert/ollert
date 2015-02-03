@@ -2,18 +2,17 @@ language: ruby
 rvm: 2.2.0
 notifications:
   email: false
-script: rake test:all
+script: xvfb-run rake test:all
 services: mongodb
 env:
   global:
+  - DISPLAY=:99.0
   - secure: Nh4Vc1EEgs+C7rqTauvCJaehvsI6hQiYtm/ttzIirDjCJt0P0jgm0ZZoqESItz5SQUEUoQ+tAhkCOmShCkAKjg11XXqY024DYdySypY/eDjF7WoNJeVXS1nIsgPNfpoMKh2yk6t//MmZgeuwb7FuVEoJ63qUpyXDnICHOyfo6m8=
   - secure: Sp/QRPI2M1wGNg14DqsN3N4l6OwKLHEMf7V4qsYnhOIlirEpMfJ3OnG0VHoNwK9Yq/hOaL6g802WvwUgAkNQnyXF85gWFo5bsuDxqogwFWp0bb7s1BAjolZ06z79D+LCtZAsMOFpxFXY+fg1goc8F8XxVOvkwo0wsSNiSKN62aI=
   - secure: N58wuHe+HiUI6L31EBjWplRmErAXb9DdmNJo2lefcjAAUDJfvQF5/qO4pyXRoSBThPygkpx0a4UyR3JblLUdCKebnT5/e7PqEpbImDEpKFwPGa2onA1EcEq+tDgcAuAE8TH1SLC2z/lPKJXmLhvTCx5zRNZ9Z5nzsHZdwpnd1gc=
   - secure: FNvhD0mL8Q1kT2GUDUEB+wwIyMga/ejt9niYbbRcbZqrBGabeiVf5hDG2QlM/nq7FYXo5IGTkMre9lztKgc5hnGYVRWfOCS57RvEysbE6UTj/aEOWsKDJcmVDajt/dwxlFUrOBCo16QEREsk9xb/V9BvNNr4H8Nn1YaowTmy9g4=
 before_install:
   - sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev; fi'
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d xvfb start
 install:
   - bundle
   - rake &
