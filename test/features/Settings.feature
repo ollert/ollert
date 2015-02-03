@@ -36,10 +36,8 @@ Scenario: Connecting to a different Trello account
   Then I should not see "Connecting..."
   And I should not see "Redirecting..."
   And I should be on the boards page
-  Given I go to the settings page
-  When I follow "Connect to a Different Trello Account"
-  And I authorize with Trello
-  And the test user "trello_name" should be "ollerttest"
+  When I go to the settings page
+  Then I am able to connect to an alternative Trello account
 
 @javascript
 Scenario: Connecting to Trello with previously-used Trello account
