@@ -14,7 +14,5 @@ env:
   - secure: U4PjogvxKMIJqhA+Q/xz8PW0j2LL0YlgNoZ1UWkU7NEfxzug0k8CtVP3Wc/yjDOYIqA+5bnINSfWhH2IPNL5VW8zhBq3sLVsPI0AXNaMPCaJqB+MbJ3IztB5MYjkn5oph3lbahw7CwLvFn5d8D3XLG+4Ou/ctNGTccR4aRiqe3I=
 before_install:
   - sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev; fi'
-install:
-  - bundle
-  - rake &
+install: bundle
 
