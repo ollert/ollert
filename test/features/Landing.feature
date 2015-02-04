@@ -1,15 +1,9 @@
 Feature: Landing
 
-Background:
-  Given I am on the landing page
-
 @javascript
 Scenario: Using the login button
-  Given I press "Log in" within ".navbar-right"
-  When I authorize with Trello
-  Then I should not see "Connecting..."
-  And I should not see "Redirecting..."
-  And I should be on the boards page
+  When I login using Trello
+  Then I should be on the boards page
 
 @javascript
 Scenario: Deny connecting to Trello - Top of Page

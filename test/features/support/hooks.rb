@@ -1,5 +1,6 @@
 Before do
   Mongoid.purge!
+  on(LandingPage).load
 end
 
 After do
