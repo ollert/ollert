@@ -2,21 +2,18 @@ Feature: Landing
 
 @javascript
 Scenario: Using the login button
-  When I login using Trello
+  When I choose to login to Trello
   Then I should be on the boards page
 
 @javascript
 Scenario: Deny connecting to Trello - Top of Page
-  Given I deny Ollert access to my Trello account
+  Given I change my mind about connecting with Trello
   Then I should still be on the landing page
 
 @javascript
 Scenario: Allow connecting to Trello - Top of Page
-  Given I follow "Connect to Get Started" within ".landing-connect"
-  When I authorize with Trello
-  Then I should not see "Connecting..."
-  And I should not see "Redirecting..."
-  And I should be on the boards page
+  When I choose to connect with Trello
+  Then I should be on the boards page
 
 @javascript
 Scenario: Deny connecting to Trello - Bottom of Page

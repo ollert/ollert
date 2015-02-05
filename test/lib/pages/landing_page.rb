@@ -1,10 +1,13 @@
 class LandingPage < SitePrism::Page
-  include OllertTest::Navigation
-
   set_url '/'
-  element :connect, '.landing-connect .connect-btn'
+  element :login_top, '.navbar-right input[value="Log in"]'
+  element :connect, '.landing-connect a.connect-btn'
 
-  def get_started
+  def choose_to_login
+    login_top.click
+  end
+
+  def lets_get_started
     connect.click
   end
 end
