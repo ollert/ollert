@@ -7,7 +7,7 @@ services: mongodb
 env:
   global:
   - DISPLAY=:99.0
-  - RACK_ENV=testing
+  - RACK_ENV=test
   - secure: byekKEwdF+4kurrSkAbRm5rtKlP32Uw2ZKv2bFrewZ7lXx+N87ysijs3/Cmy4twsyzpTXAwsqDPS2zfn9rfVbwGLLmrY/IJFgAgY2CMjO2bCDBcDcloezpHvpqqBO7fVGee9DUJ7nr1QdARfVbbtkHvsGoAc2M3HX71EAphMcIo=
   - secure: IOhxVfITF6H0+7vTHqDtdtTkZPfMLps/yCfXdqNJxrNcvWT9c/h28k3CzBD0+GsbTCoO9ijrtQJn9gkWeweTtV5LgPeZhecyPFc9hQoomYePM3r7KfSk90aJhPnG8RMJsQvyRdhzjfXczphb8tPf+oa7NCq+VBIi11X4YyONgtY=
   - secure: Cn+2rFDDANJN/KpWBnxPOX3Ser1Oy7vi7s9ykuDejLI4gwosmktPzFIMrR85426fNyaGI6jRIev86Amdp5UvKzhahL7GDEUvwSD68O29L/RSLn42cjrf0u/NMNu9eXFUB/cHPy3rkoqOee6uJyoH+ZhD0fuYH6ojSBxjPiB1ej0=
