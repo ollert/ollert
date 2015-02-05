@@ -34,4 +34,5 @@ group :development, :test do
   gem 'launchy'
   gem 'site_prism'
   gem 'page_navigation'
+  gem 'selenium-webdriver'
 end

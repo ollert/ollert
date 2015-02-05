@@ -2,7 +2,7 @@ class LoginPage < SitePrism::Page
   element(:login_with_trello, 'a', text: 'Log in')
   element(:login, 'input#login')
 
-  element(:allow, 'input[value="Allow"]')
+  element(:allow_button, 'input[value="Allow"]')
   element(:deny_button, 'input.deny')
 
   element(:username, 'input[name="user"]')
@@ -14,9 +14,13 @@ class LoginPage < SitePrism::Page
       self.username.set username
       self.password.set password
       login.click
-      allow.click
-      wait_until { current_url =~ /\/boards/i }
+      allow_button.click
     end
+    wait_until { current_url =~ /\/boards/i }
+  end
+
+  def allow
+    in_trello_popup { allow_button.click }
   end
 
   def deny
