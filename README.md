@@ -1,12 +1,12 @@
 ### Ollert
 
-Author: Larry Price <larry@ollertapp.com>
+[![Build Status](https://travis-ci.org/sep/ollert.svg?branch=master)](https://travis-ci.org/sep/ollert)
 
-Company: Software Engineering Professionals, Inc.
 
-Website: [ollertapp.com](https://ollertapp.com)
-
-License: [GNU Affero GPL v3.0](LICENSE)
+* Author: Larry Price <larry@ollertapp.com>
+* Company: Software Engineering Professionals, Inc.
+* Website: [ollertapp.com](https://ollertapp.com)
+* License: [GNU Affero GPL v3.0](LICENSE)
 
 #### Description
 
