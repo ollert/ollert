@@ -7,12 +7,12 @@ services: mongodb
 env:
   global:
   - DISPLAY=:99.0
-  - RACK_ENV=testing
-  - secure: ixpYdEHOqIRhGMs7ah8zAtLqZymV6Ywb+7nMl6G5W5lANNa+63JV+OX0lHygJXWMmwcYBqEcMRdhHA/d0+h5zSUv/nIYCBDPxFOp5ehKzUe3VaYluw9WJP/uIaKEOV1LiihAszDAp+5iWxww1hs6bBgt1TM8KzJGey7G4I4JtEs=
-  - secure: VbFWkwZogerrHvlFCcRV3a30X7Qix9XGuYs8W6AmeB8REF+szIEuVcZzFAEWbIydLutUSQRG9yt1rV5cozBBa51BiPV8kwPx4g/6HCpfAdvTdMcmWYEi8jXRwpIYnKFqtQyE3w1cJdRSrkcN2PithocTyeupWnHnIorGAKdl730=
-  - secure: Y2xnuDUJXY+PUWPwpx3iU3gIrlUoDge0tKwl5/fSN5WG9ui/7IZry3u329OKi+3gkJyPAvxSyTsOEFj1nmJGX136bnzVPjyQvMyoHBoqMKIqQCJe2QKNd30MlSYh6hQBWUFrCYPXXfO0AeqeLk9WwzGlyp6LwQoKpBYO2Fgiz+E=
-  - secure: ZLoI6FSLI5mIZbru83kkEvpBSeoU1zL1doTy0SYVFy0v/A8ROGgbv4Gw9lZANTgIvWDjbPBSRrf6YU+Vrdh/ytaVg98ZospClbb2hXk40y8jSrbdC/4Xg77qIxuAdiYWjUSHeCKg8qCNCleK8goEPqHr79Y/HJGUGcQEdwXN8fQ=
-  - secure: Nqv89hEUOfTuqlQu9xISjktwPMooUAK/nSmyEd5oCjVlE2n7gUbxb5HR5ZhDP2ieu5ro6QIXj9inbYUi6tdZo8Y2QcMP9bnnChr7z4Erx5IqvRSC5CuMFPd8llWUK5Fv56+KqXG8NBSQy40WYGUHiUIuWwlh8hyZQ1A4gjJRC7U=
+  - RACK_ENV=test
+  - secure: byekKEwdF+4kurrSkAbRm5rtKlP32Uw2ZKv2bFrewZ7lXx+N87ysijs3/Cmy4twsyzpTXAwsqDPS2zfn9rfVbwGLLmrY/IJFgAgY2CMjO2bCDBcDcloezpHvpqqBO7fVGee9DUJ7nr1QdARfVbbtkHvsGoAc2M3HX71EAphMcIo=
+  - secure: IOhxVfITF6H0+7vTHqDtdtTkZPfMLps/yCfXdqNJxrNcvWT9c/h28k3CzBD0+GsbTCoO9ijrtQJn9gkWeweTtV5LgPeZhecyPFc9hQoomYePM3r7KfSk90aJhPnG8RMJsQvyRdhzjfXczphb8tPf+oa7NCq+VBIi11X4YyONgtY=
+  - secure: Cn+2rFDDANJN/KpWBnxPOX3Ser1Oy7vi7s9ykuDejLI4gwosmktPzFIMrR85426fNyaGI6jRIev86Amdp5UvKzhahL7GDEUvwSD68O29L/RSLn42cjrf0u/NMNu9eXFUB/cHPy3rkoqOee6uJyoH+ZhD0fuYH6ojSBxjPiB1ej0=
+  - secure: XEr0CJhoW+9v9KcQqfoK/igdqLJtAblz3eGECD7G4RYNPOeLZsOImv03rs+zRUi40gd4iqxSkcX1F4/NmOxWhmGqXy3f3u4/HFAWneMjQm0j4NzQSVFvaLMJx2vURdUsDeJYWVt57xm7ow4Kg02xlOpDFmKLRdn5/SaG8iN/sGg=
+  - secure: d1eEQH6CsyEitrJwmfK5bzDVoKa3ZWskaLxKrRlcUdVzyDReaBb2RhhPFkNmJnOmcQYSHfEIqmon7GDS/Uf375VL9zRpcTh08hRb+UQIj/Wr1PUsPEO0TytIA6bA9Kudp5TPx3Ky77uW64OY4y/Ihae4rH193JVobNgtJcdrNUw=
 before_install:
 - sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa
   && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev;
