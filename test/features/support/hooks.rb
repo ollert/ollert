@@ -1,9 +1,3 @@
-require 'dotenv'
-
-AfterConfiguration do |config|
-  Dotenv.load File.join(File.dirname(__FILE__), '../../../.env')
-end
-
 Before do
   Mongoid.purge!
 end
