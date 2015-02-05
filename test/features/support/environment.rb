@@ -1,5 +1,9 @@
 class Environment
   class << self
+    def test_display_name
+      ENV['TRELLO_TEST_DISPLAY_NAME']
+    end
+
     def test_username
       ENV['TRELLO_TEST_USERNAME']
     end

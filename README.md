@@ -49,6 +49,9 @@ Environment variables:
 * `PUBLIC_KEY`
     * required
     * Retrieve a public key from Trello by visiting [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate).
+* `TRELLO_TEST_DISPLAY_NAME`
+    * required
+    * Display name to use while running cukes (this is your `@<username>` from Trello)
 * `TRELLO_TEST_USERNAME`
     * required
     * Username to use while running cukes
