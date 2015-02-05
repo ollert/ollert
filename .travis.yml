@@ -8,11 +8,11 @@ env:
   global:
   - DISPLAY=:99.0
   - RACK_ENV=testing
-  - secure: W3b+AlBvaVvue04mNOuNYOHb9gJ+QL73Og9rEShG5oax1Rl+tQBrSFgCGdE5zPQBgGl4MXVg64mSSK8W8vgMbYCHmkcJcR/35vZAx2LHuVwyOJhnqyzkAYhNVxprf6AFOnvwP6e6ff/bkBquGFXjnIIPrPjj/Z5JFIOwqvEMwC4=
-  - secure: A2yzFdeU/LvkhK1E/0J6+eJ3us2KEBWHP57ua8/t6/g5ZBVNWQ/CEgiQ+e/Iy/A6qvXoMaG+9CHTHzu/xLLOzwWighBHAXUF8RoRnYDylsdtsuiXgfia5CpdvlMIm6lprk5jnYm8RqN0lyyLiszLyftkaixXHhTrk4tYROctPxs=
-  - secure: h1/seAKNUbsGik8+h1yiN4X/TRnL/gepz8gnO3wd/Hv6+xygbYxflJ8VDjx82kBO84cL5cO3Pxnjqss4v8ah5z6IuhcHGBIU64M7AuHaD8be2GE+xwstC+7I/tjb1LkW9odkSE2499NyCQ4xxGqMzkLtJmFsOwRl3WmTsPbsKGk=
-  - secure: jBHBgwltBLWIXeTt8T4k779dO75Isofy/33qVUnnjVBXm4sV/fMzE3w+GIxMxkelSF/GeOFtPhSm92SN4Lts9BRhWqkm53jKEj3+3HlxBtxm9YDo2ypBqhXNKafeSNrrbY341KnsD/6HM/eb2vAV8IwoUTFEqi3F9BQglwIN/U8=
-  - secure: Ry3P7GF+/64RGee0yRF/Wkq9Mv9NiNFlHtGluKAEyEZrq6LUO8sG3p7Lv6mPcYNKW37SP3naWc/Jg7Y41Fa74JSWDk6y1mr0ZAHSVmFP+weyOtvdR6vyUTC5/yVe2DRP98uCWnCBx/6loI/DDM5Z4NeMW/Ye5qp/5g4IsSsadqk=
+  - secure: ixpYdEHOqIRhGMs7ah8zAtLqZymV6Ywb+7nMl6G5W5lANNa+63JV+OX0lHygJXWMmwcYBqEcMRdhHA/d0+h5zSUv/nIYCBDPxFOp5ehKzUe3VaYluw9WJP/uIaKEOV1LiihAszDAp+5iWxww1hs6bBgt1TM8KzJGey7G4I4JtEs=
+  - secure: VbFWkwZogerrHvlFCcRV3a30X7Qix9XGuYs8W6AmeB8REF+szIEuVcZzFAEWbIydLutUSQRG9yt1rV5cozBBa51BiPV8kwPx4g/6HCpfAdvTdMcmWYEi8jXRwpIYnKFqtQyE3w1cJdRSrkcN2PithocTyeupWnHnIorGAKdl730=
+  - secure: Y2xnuDUJXY+PUWPwpx3iU3gIrlUoDge0tKwl5/fSN5WG9ui/7IZry3u329OKi+3gkJyPAvxSyTsOEFj1nmJGX136bnzVPjyQvMyoHBoqMKIqQCJe2QKNd30MlSYh6hQBWUFrCYPXXfO0AeqeLk9WwzGlyp6LwQoKpBYO2Fgiz+E=
+  - secure: ZLoI6FSLI5mIZbru83kkEvpBSeoU1zL1doTy0SYVFy0v/A8ROGgbv4Gw9lZANTgIvWDjbPBSRrf6YU+Vrdh/ytaVg98ZospClbb2hXk40y8jSrbdC/4Xg77qIxuAdiYWjUSHeCKg8qCNCleK8goEPqHr79Y/HJGUGcQEdwXN8fQ=
+  - secure: Nqv89hEUOfTuqlQu9xISjktwPMooUAK/nSmyEd5oCjVlE2n7gUbxb5HR5ZhDP2ieu5ro6QIXj9inbYUi6tdZo8Y2QcMP9bnnChr7z4Erx5IqvRSC5CuMFPd8llWUK5Fv56+KqXG8NBSQy40WYGUHiUIuWwlh8hyZQ1A4gjJRC7U=
 before_install:
 - sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa
   && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev;
