@@ -7,9 +7,8 @@ Scenario: Using the login button
 
 @javascript
 Scenario: Deny connecting to Trello - Top of Page
-  Given I follow "Connect to Get Started" within ".landing-connect"
-  And I press "Deny" on the Trello popup
-  Then I should be on the landing page
+  Given I deny Ollert access to my Trello account
+  Then I should still be on the landing page
 
 @javascript
 Scenario: Allow connecting to Trello - Top of Page
