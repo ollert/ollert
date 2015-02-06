@@ -42,15 +42,13 @@ unless ENV['RACK_ENV'] == 'production'
       r.rspec_opts << '--format documentation'
     end
 
-    require 'dotenv/tasks'
-
     desc "Run all Cucumber tests"
-    task :cukes => :dotenv do
+    task :cukes do
       ruby "-S cucumber #{File.dirname(__FILE__)}/test/features"
     end
 
     desc "Run a single Cuke test"
-    task :cuke, [:feature] => :dotenv do |t, args|
+    task :cuke, [:feature] do |t, args|
       ruby "-S cucumber -v -r #{File.dirname(__FILE__)}/test/features #{File.dirname(__FILE__)}/test/features/#{args[:feature]}.feature"
     end
 
