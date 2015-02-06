@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'wip_fetcher'
 
 describe WipFetcher do
 

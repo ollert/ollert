@@ -1,5 +1,7 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../..', 'utils', 'fetchers'))
+
+require 'require_all'
+require_rel '../../utils'
 
 RSpec.shared_examples 'a fetcher' do
   it 'raises error on nil client' do

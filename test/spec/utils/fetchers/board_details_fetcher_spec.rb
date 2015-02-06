@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'board_details_fetcher'
 
 describe BoardDetailsFetcher do
 

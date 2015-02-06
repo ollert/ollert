@@ -28,4 +28,5 @@ group :development, :test do
   gem 'capybara'
   gem 'rack_session_access'
   gem 'capybara-webkit'
+  gem 'require_all'
 end
