@@ -37,9 +37,12 @@ unless ENV['RACK_ENV'] == 'production'
   namespace :test do
     RSpec::Core::RakeTask.new(:spec) do |r|
       r.pattern = "test/**/*_spec.rb"
-      r.rspec_opts = []
-      r.rspec_opts << '--color'
-      r.rspec_opts << '--format documentation'
+      r.rspec_opts = '--color --format documentation --tag ~integration:true'
+    end
+
+    RSpec::Core::RakeTask.new(:integration) do |r|
+      r.pattern = "test/**/*_spec.rb"
+      r.rspec_opts = '--color --format documentation --tag integration:true'
     end
 
     desc "Run all Cucumber tests"
@@ -53,7 +56,7 @@ unless ENV['RACK_ENV'] == 'production'
     end
 
     desc "Run spec tests and cukes"
-    task :all => [:spec, :cukes] do
+    task :all => [:spec, :integration, :cukes] do
     end
   end
 end

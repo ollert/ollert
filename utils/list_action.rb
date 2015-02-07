@@ -10,8 +10,9 @@ module Util
       @card_id = data['card']['id']
     end
 
-    def self.actions(client, board_id)
-      client.get("/boards/#{board_id}/actions", filter: 'createCard').json_into(ListAction)
+    def self.actions(client, board_id, options={})
+      options = options.merge(filter: 'createCard,updateCard:idList,updateCard:closed')
+      client.get("/boards/#{board_id}/actions", options).json_into(ListAction)
     end
   end
 end
