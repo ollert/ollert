@@ -13,10 +13,8 @@ env:
   - secure: Cn+2rFDDANJN/KpWBnxPOX3Ser1Oy7vi7s9ykuDejLI4gwosmktPzFIMrR85426fNyaGI6jRIev86Amdp5UvKzhahL7GDEUvwSD68O29L/RSLn42cjrf0u/NMNu9eXFUB/cHPy3rkoqOee6uJyoH+ZhD0fuYH6ojSBxjPiB1ej0=
   - secure: XEr0CJhoW+9v9KcQqfoK/igdqLJtAblz3eGECD7G4RYNPOeLZsOImv03rs+zRUi40gd4iqxSkcX1F4/NmOxWhmGqXy3f3u4/HFAWneMjQm0j4NzQSVFvaLMJx2vURdUsDeJYWVt57xm7ow4Kg02xlOpDFmKLRdn5/SaG8iN/sGg=
   - secure: d1eEQH6CsyEitrJwmfK5bzDVoKa3ZWskaLxKrRlcUdVzyDReaBb2RhhPFkNmJnOmcQYSHfEIqmon7GDS/Uf375VL9zRpcTh08hRb+UQIj/Wr1PUsPEO0TytIA6bA9Kudp5TPx3Ky77uW64OY4y/Ihae4rH193JVobNgtJcdrNUw=
-  - secure: "QJHNpTn4HdXPMgZ1jwNpFs6zvno7fXIt4JmC0H+sOO0KoAzQS/ZQViE50lxwZGZrEX029mB4BYDTNKahJ7tR5BdNMsY9SQBNzikyLtyTyN1jjKY94y/SKBye1nS2x0moAKeTrxtLTEYUD7E8ky5LD6lEDJQOQTasqYw612Ekx4E="
-  - secure: "b6/tpJaYfmmcBtuAB+KFQG+28fmAEt4jfxbRU3sf4+Q6Zgbxirp0chCEBzGcJgyMm7/p4flmNOq1nPwm0Q8JEptMIN95xI4HRCeqzOCN0i0rrvAYLWpJiORL+Rrnm33NLP/7ax5cIDuVGI3PD5ulhygp5x2KSQ4fnX4BiqPABtM="
+  - secure: QJHNpTn4HdXPMgZ1jwNpFs6zvno7fXIt4JmC0H+sOO0KoAzQS/ZQViE50lxwZGZrEX029mB4BYDTNKahJ7tR5BdNMsY9SQBNzikyLtyTyN1jjKY94y/SKBye1nS2x0moAKeTrxtLTEYUD7E8ky5LD6lEDJQOQTasqYw612Ekx4E=
+  - secure: b6/tpJaYfmmcBtuAB+KFQG+28fmAEt4jfxbRU3sf4+Q6Zgbxirp0chCEBzGcJgyMm7/p4flmNOq1nPwm0Q8JEptMIN95xI4HRCeqzOCN0i0rrvAYLWpJiORL+Rrnm33NLP/7ax5cIDuVGI3PD5ulhygp5x2KSQ4fnX4BiqPABtM=
 before_install:
-- sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa
-  && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev;
-  fi'
+  - sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev; fi'
 install: bundle
