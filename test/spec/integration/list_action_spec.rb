@@ -28,7 +28,8 @@ describe Util::ListAction do
 
     context 'fields' do
       let(:raw) { {date: Time.now, data: {card: {}}} }
-      let(:card) { raw[:data][:card] }
+      let(:data) { raw[:data] }
+      let(:card) { data[:card] }
       let(:result) do
         expect(client).to receive(:get).and_return [raw].to_json
         actions.first
@@ -40,6 +41,44 @@ describe Util::ListAction do
 
         expect(result.card).to eq('expected card name')
         expect(result.card_id).to eq('expected card id')
+      end
+
+      context 'updateCard' do
+        let(:before) { data[:listBefore] = {} }
+        let(:after) { data[:listAfter] = {} }
+
+        it 'maps the before list' do
+          before[:name] = 'expected list'
+          before[:id] = 'expected list id'
+
+          expect(result.before).to eq('expected list')
+          expect(result.before_id).to eq('expected list id')
+        end
+
+        it 'maps the after list' do
+          after[:name] = 'expected list'
+          after[:id] = 'expected list id'
+
+          expect(result.after).to eq('expected list')
+          expect(result.after_id).to eq('expected list id')
+        end
+      end
+
+      context 'createCard' do
+        let(:list) { data[:list] = {} }
+
+        it 'does not have a before list' do
+          expect(result.before).to be_nil
+          expect(result.before_id).to be_nil
+        end
+
+        it 'uses "list" as the after list' do
+          list[:name] = 'expected list'
+          list[:id] = 'expected list id'
+
+          expect(result.after).to eq('expected list')
+          expect(result.after_id).to eq('expected list id')
+        end
       end
     end
   end

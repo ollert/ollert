@@ -4,18 +4,27 @@ module Util
   class ListAction < Trello::Action
     extend Util::Fetcher
 
-    attr_reader :card, :card_id
+    attr_reader :card, :card_id, :before, :before_id, :after, :after_id
 
     def initialize(fields={})
       super
 
-      @card = data['card']['name']
-      @card_id = data['card']['id']
+      @card, @card_id = name_and_id data['card']
+      @before, @before_id = name_and_id data['listBefore']
+      @after, @after_id = name_and_id data['listAfter'] || data['list']
     end
 
-    def self.actions(client, board_id, options={})
-      options = options.merge(result_to: ListAction, filter: 'createCard,updateCard:idList,updateCard:closed')
-      all(client, "/boards/#{board_id}/actions", options)
+    private
+    def name_and_id(hash)
+      return nil unless hash
+      [hash['name'], hash['id']]
+    end
+
+    class << self
+      def actions(client, board_id, options={})
+        options = options.merge(result_to: ListAction, filter: 'createCard,updateCard:idList,updateCard:closed')
+        all(client, "/boards/#{board_id}/actions", options)
+      end
     end
   end
 end
