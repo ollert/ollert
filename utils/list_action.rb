@@ -1,5 +1,8 @@
+require_relative 'fetchers/fetcher'
+
 module Util
   class ListAction < Trello::Action
+    extend Util::Fetcher
 
     attr_reader :card, :card_id
 
@@ -11,8 +14,8 @@ module Util
     end
 
     def self.actions(client, board_id, options={})
-      options = options.merge(filter: 'createCard,updateCard:idList,updateCard:closed')
-      client.get("/boards/#{board_id}/actions", options).json_into(ListAction)
+      options = options.merge(result_to: ListAction, filter: 'createCard,updateCard:idList,updateCard:closed')
+      all(client, "/boards/#{board_id}/actions", options)
     end
   end
 end
