@@ -16,7 +16,7 @@ module Util
         page = project(action.call, projection)
         results.concat page
         break if page.count != options[:limit]
-        options[:before] = page.last.date.to_s
+        options[:before] = oldest_date_for page.last
       end
       results
     end
@@ -24,6 +24,15 @@ module Util
     def project(result, cls)
       return [] if result.nil?
       (cls && result.json_into(cls)) || JSON.parse(result)
+    end
+
+    def oldest_date_for(page)
+      case page
+        when Hash
+          page['date'].to_s
+        else
+          page.date.to_s
+        end
     end
   end
 end

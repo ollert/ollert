@@ -61,22 +61,31 @@ describe Util::Fetcher do
     end
 
     it 'handles when there is more than one page worth' do
-      setup_items 27
-      expect(the_result.count).to eq(27)
+      expected = setup_items 27
+      expect(the_result).to eq(expected)
     end
 
-    def setup_items(how_many)
+    it 'can page through hashes as well' do
+      setup_items(11, is_hash: true)
+      expect(FakeFetcher.all(client, _, limit: page_size).count).to eq(11)
+    end
+
+    def setup_items(how_many, option={})
       all = how_many.times.map {|n| FakeFetcher.new('id' =>  n, 'date' =>  Date.new(1998, 9, n + 1))}.reverse
+
+      to_json = ->(p) { 
+        ((option[:is_hash] && p.map {|a| {'id' => a.id, 'date' => a.date}}) || p).to_json
+      }
 
       page_number = 1
       all.each_slice(page_size) do |page|
 
         case
           when page_number == 1
-            expect(client).to receive(:get).with(_, hash_including(before: nil)).and_return page.to_json
+            expect(client).to receive(:get).with(_, hash_including(before: nil)).and_return to_json.call(page)
           else
             previous_page_date = page.first.date + 1
-            expect(client).to receive(:get).with(_, hash_including(before: previous_page_date.to_s)).and_return page.to_json
+            expect(client).to receive(:get).with(_, hash_including(before: previous_page_date.to_s)).and_return to_json.call(page)
         end
         page_number += 1
       end
