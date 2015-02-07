@@ -93,5 +93,21 @@ describe Util::Fetcher do
       all
     end
   end
+
+  context 'integration', integration: true do
+    let(:client) { TrelloHelper.client }
+    let(:board_id) { TrelloHelper.board_id }
+    let(:total) { 4 }
+
+    it 'can page through actual Trello cards' do
+      expected_names = total.times.map do |n|
+        card = TrelloHelper.add_card
+        @since ||= card.last_activity_date - 1
+        card.name
+      end.reverse
+
+      expect(Util::ListAction.actions(client, board_id, limit: total - 1, since: @since.to_s).map(&:card)).to eq(expected_names)
+    end
+  end
 end
 

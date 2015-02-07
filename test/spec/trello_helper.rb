@@ -22,8 +22,7 @@ class TrelloHelper
 
   def self.cleanup
     [@first_list, @second_list].compact.each do |list|
-      list.close
-      list.save
+      list.close!
     end
   end
 

@@ -1,13 +1,8 @@
 require_relative '../spec_helper'
 
-describe Util::ListAction, integration: true do
-  let(:client) { TrelloHelper.client }
-  let(:right_now) { @first_card.last_activity_date - 1 }
+describe Util::ListAction do
+  let(:client) { double Trello::Client }
   let(:_) { anything }
-
-  before(:all) do
-    @first_card = TrelloHelper.add_card
-  end
 
   context 'ListAction.all' do
     let(:actions) { Util::ListAction.actions(client, TrelloHelper.board_id, since: right_now.to_s).sort_by(&:date) }
@@ -27,7 +22,7 @@ describe Util::ListAction, integration: true do
       end
     end
 
-    it 'includes created, moved and closed cards' do
+    xit 'includes created, moved and closed cards' do
       @first_card.move_to_list TrelloHelper.second_list
       @first_card.close!
 
