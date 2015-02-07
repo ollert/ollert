@@ -14,17 +14,17 @@ module Util
       @after, @after_id = name_and_id data['listAfter'] || data['list']
     end
 
-    private
-    def name_and_id(hash)
-      return nil unless hash
-      [hash['name'], hash['id']]
-    end
-
     class << self
       def actions(client, board_id, options={})
         options = options.merge(result_to: ListAction, filter: 'createCard,updateCard:idList,updateCard:closed')
         all(client, "/boards/#{board_id}/actions", options)
       end
+    end
+
+    private
+    def name_and_id(hash)
+      return nil unless hash
+      [hash['name'], hash['id']]
     end
   end
 end
