@@ -25,5 +25,22 @@ describe Util::ListAction do
       actions
       expect(client).to have_received(:get).with(_, hash_including(filter: 'createCard,updateCard:idList,updateCard:closed'))
     end
+
+    context 'fields' do
+      let(:raw) { {date: Time.now, data: {card: {}}} }
+      let(:card) { raw[:data][:card] }
+      let(:result) do
+        expect(client).to receive(:get).and_return [raw].to_json
+        actions.first
+      end
+
+      it 'maps the card information' do
+        card[:name] = 'expected card name'
+        card[:id] = 'expected card id'
+
+        expect(result.card).to eq('expected card name')
+        expect(result.card_id).to eq('expected card id')
+      end
+    end
   end
 end
