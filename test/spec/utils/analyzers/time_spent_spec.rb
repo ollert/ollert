@@ -26,6 +26,18 @@ describe Util::Analyzers::TimeSpent do
     expect(time_spent.in('development').total_days).to eq(0)
   end
 
+  it 'does the best it can when the createCard action is missing' do
+    time_spent = time_spent ActionBuilder
+      .fake_missing_create(:development, :backlog, three_days_ago)
+      .move_card(:qa)
+      .actions
+
+    pp time_spent.instance_variable_get(:@actions)
+
+    expect(time_spent.in('development').total_days).to eq(1)
+    expect(time_spent.in('qa').total_days).to eq(2)
+  end
+
   it 'handles multiple movements' do
     time_spent = time_spent ActionBuilder.create_card(:backlog, last_monday)
       .move_card(:development)
@@ -99,6 +111,14 @@ describe Util::Analyzers::TimeSpent do
 
     def self.create_card(list, date=Date.today)
       ActionBuilder.new list, date
+    end
+
+    def self.fake_missing_create(list, previous, date=Date.today)
+      builder = ActionBuilder.new list, date
+      action = builder.actions.first
+      action.instance_variable_set(:@before, previous.to_s)
+      action.instance_variable_set(:@before_id, Base64.encode64(previous.to_s))
+      builder
     end
 
     def move_card(new_list, days_later=1)

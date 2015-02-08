@@ -10,7 +10,7 @@ module Util
         @times = {}
 
         @actions.reduce(nil) do |last_date, action|
-          span_for(action.before).add last_date, action.date if action.before
+          span_for(action.before).add last_date, action.date if last_date
           action.date
         end
 
