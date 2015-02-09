@@ -21,9 +21,9 @@ describe Util::ListAction do
       expect(client).to have_received(:get).with(_, hash_including(since: right_now.to_s))
     end
 
-    it 'includes created, moved and closed cards' do
+    it 'includes created and moved cards' do
       actions
-      expect(client).to have_received(:get).with(_, hash_including(filter: 'createCard,updateCard:idList,updateCard:closed'))
+      expect(client).to have_received(:get).with(_, hash_including(filter: 'createCard,updateCard:idList'))
     end
 
     context 'fields' do

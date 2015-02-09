@@ -16,7 +16,7 @@ module Util
 
     class << self
       def actions(client, board_id, options={})
-        options = options.merge(result_to: ListAction, filter: 'createCard,updateCard:idList,updateCard:closed')
+        options = options.merge(result_to: ListAction, filter: 'createCard,updateCard:idList')
         all(client, "/boards/#{board_id}/actions", options)
       end
     end
