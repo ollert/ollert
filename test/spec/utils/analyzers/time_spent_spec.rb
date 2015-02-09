@@ -11,35 +11,33 @@ describe Util::Analyzers::TimeSpent do
   it 'created cards have only been in their original list' do
     actions = ActionBuilder.create_card(:backlog, three_days_ago).actions
 
-    time_spent = time_spent(actions)
+    time_spent_for(actions)
 
-    expect(time_spent.in('backlog').total_days).to eq(3)
+    expect(time_in('backlog').total_days).to eq(3)
   end
 
   it 'handles when there has only been one movement' do
-    time_spent = time_spent ActionBuilder
+    time_spent_for ActionBuilder
       .create_card(:backlog, one_day_ago)
       .move_card(:development)
       .actions
 
-    expect(time_spent.in('backlog').total_days).to eq(1)
-    expect(time_spent.in('development').total_days).to eq(0)
+    expect(time_in('backlog').total_days).to eq(1)
+    expect(time_in('development').total_days).to eq(0)
   end
 
   it 'does the best it can when the createCard action is missing' do
-    time_spent = time_spent ActionBuilder
+    time_spent_for ActionBuilder
       .fake_missing_create(:development, :backlog, three_days_ago)
       .move_card(:qa)
       .actions
 
-    pp time_spent.instance_variable_get(:@actions)
-
-    expect(time_spent.in('development').total_days).to eq(1)
-    expect(time_spent.in('qa').total_days).to eq(2)
+    expect(time_in('development').total_days).to eq(1)
+    expect(time_in('qa').total_days).to eq(2)
   end
 
   it 'handles multiple movements' do
-    time_spent = time_spent ActionBuilder.create_card(:backlog, last_monday)
+    time_spent_for ActionBuilder.create_card(:backlog, last_monday)
       .move_card(:development)
       .move_card(:qa)
       .move_card(:failed)
@@ -47,10 +45,10 @@ describe Util::Analyzers::TimeSpent do
       .move_card(:passed)
       .actions
 
-    expect(time_spent.in('backlog').total_days).to eq(1)
-    expect(time_spent.in('qa').total_days).to eq(1)
-    expect(time_spent.in('failed').total_days).to eq(1)
-    expect(time_spent.in('development').total_days).to eq(2)
+    expect(time_in('backlog').total_days).to eq(1)
+    expect(time_in('qa').total_days).to eq(1)
+    expect(time_in('failed').total_days).to eq(1)
+    expect(time_in('development').total_days).to eq(2)
   end
 
   it 'handles if the actions are out of chronological order' do
@@ -59,46 +57,56 @@ describe Util::Analyzers::TimeSpent do
       .move_card(:qa)
       .actions.reverse
 
-    time_spent = time_spent(reversed_actions)
+    time_spent_for(reversed_actions)
 
-    expect(time_spent.in('backlog').total_days).to eq(3)
+    expect(time_in('backlog').total_days).to eq(3)
   end
 
   it 'additionally tracks business days as well' do
-    backlog_times  = time_spent(ActionBuilder.create_card(:backlog, last_friday)
+    time_spent_for(ActionBuilder.create_card(:backlog, last_friday)
       .move_card(:development, 3) # monday
       .actions).in('backlog')
 
+    backlog_times = time_in('backlog')
     expect(backlog_times.total_days).to eq(3)
     expect(backlog_times.business_days).to eq(1) # Friday --> Monday
   end
 
   it 'exposes the times' do
-    time_spent = time_spent ActionBuilder.create_card(:backlog, three_days_ago)
+    time_spent_for ActionBuilder.create_card(:backlog, three_days_ago)
       .move_card(:development)
       .move_card(:passed)
       .actions
 
-    expect(time_spent.times.keys).to eq(['backlog', 'development', 'passed'])
+    actual_lists = @time_spent.times.keys.map {|l| Base64.decode64 l}
+    expect(actual_lists).to eq(['backlog', 'development', 'passed'])
   end
 
   it '#to_json' do
-    time_spent = time_spent ActionBuilder.create_card(:backlog, last_friday)
+    time_spent_for ActionBuilder.create_card(:backlog, last_friday)
       .move_card(:development, 3)
       .actions
 
-    dev_time = time_spent.in('development')
+    dev_time = time_in('development')
 
     expected_json = {
-      backlog: {total_days: 3, business_days: 1},
-      development: {total_days: dev_time.total_days, business_days: dev_time.business_days}
+      id_for('backlog') => {total_days: 3, business_days: 1},
+      id_for('development') => {total_days: dev_time.total_days, business_days: dev_time.business_days}
     }.to_json
 
-    expect(time_spent.to_json).to eq(expected_json)
+    expect(@time_spent.to_json).to eq(expected_json)
   end
 
-  def time_spent(actions)
-    Util::Analyzers::TimeSpent.from actions
+  def time_spent_for(actions)
+    @time_spent = Util::Analyzers::TimeSpent.from actions
+  end
+
+  def time_in(list)
+    @time_spent.in id_for(list)
+  end
+
+  def id_for(list)
+    Base64.encode64 list
   end
 
   class ActionBuilder

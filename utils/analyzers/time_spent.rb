@@ -10,12 +10,12 @@ module Util
         @times = {}
 
         @actions.reduce(nil) do |last_date, action|
-          span_for(action.before).add last_date, action.date if last_date
+          span_for(action.before_id).add last_date, action.date if last_date
           action.date
         end
 
         last = @actions.last
-        span_for(last.after).add last.date, Date.today
+        span_for(last.after_id).add last.date, Date.today
       end
 
       def in(list)
