@@ -82,10 +82,4 @@ We are working on getting a Travis build up and running. Be patient.
 
 ### Contributing
 
-* Claim/Create an issue
-* Fork the repository
-* Crate a feature branch
-* Write tests
-* Submit a pull request
-* Fix comments
-* Profit
+We want your help! Check out [CONTRIBUTING.md](/CONTRIBUTING.md) for advice on making contributions.
