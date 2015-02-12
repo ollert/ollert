@@ -3,10 +3,11 @@ require 'business_time'
 module Util
   module Analyzers
     class TimeSpent
-      attr_reader :times
+      attr_reader :card_id, :times
 
-      def initialize(actions)
+      def initialize(card_id, actions)
         @actions = actions.sort_by(&:date)
+        @card_id = card_id
         @times = {}
 
         @actions.reduce(nil) do |last_date, action|
@@ -22,12 +23,15 @@ module Util
         @times[list]
       end
 
-      def to_json(options={})
-        times.to_json
+      def as_json(opts={})
+        {
+          card_id: card_id,
+          times: times
+        }
       end
 
-      def self.from(actions)
-        TimeSpent.new actions
+      def self.by_card(actions)
+        actions.group_by(&:card_id).map {|id, card_actions| TimeSpent.new id, card_actions}
       end
 
       private
@@ -50,8 +54,11 @@ module Util
           @business_days += start_day.business_days_until end_day
         end
 
-        def to_json(options={})
-          {total_days: total_days, business_days: business_days}.to_json
+        def as_json(options={})
+          {
+            total_days: total_days,
+            business_days: business_days
+          }
         end
       end
     end
