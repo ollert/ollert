@@ -1,12 +1,7 @@
 require 'json'
+require 'require_all'
 
-Dir.glob("#{File.dirname(__FILE__)}/../utils/fetchers/*.rb").each do |file|
-  require file.chomp(File.extname(file))
-end
-
-Dir.glob("#{File.dirname(__FILE__)}/../utils/analyzers/*.rb").each do |file|
-  require file.chomp(File.extname(file))
-end
+require_rel '../utils'
 
 class Ollert
   ["/api/v1/*"].each do |path|
@@ -29,6 +24,23 @@ class Ollert
       status 200
     rescue Trello::Error => e
       body "Connection broken."
+      status 500
+    end
+  end
+
+  get '/api/v1/listchanges/:board_id' do |board_id|
+    client = Trello::Client.new developer_public_key: ENV['PUBLIC_KEY'], member_token: params['token']
+
+    begin
+      lists = client.get("/boards/#{board_id}/lists", filter: 'open').json_into(Trello::List)
+      all = Util::ListAction.actions(client, board_id)
+
+      {
+        lists: lists.map {|l| {id: l.id, name: l.name}},
+        times: Util::Analyzers::TimeSpent.by_card(all)
+      }.to_json
+    rescue Exception => e
+      body 'Connection broken.'
       status 500
     end
   end
