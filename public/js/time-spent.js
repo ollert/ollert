@@ -31,9 +31,11 @@
     var lists = listChanges.lists,
         cardTimes = listChanges.times,
         listName = function(id) {
-          return _.find(lists, function(list) {
+          var found = _.find(lists, function(list) {
             return list.id === id;
-          }).name;
+          });
+
+          return found ? found.name : null;
         };
 
     this.average = function() {
@@ -41,11 +43,15 @@
 
       return _.reduce(listTotals, function(result, kv) {
         var listId = kv[0],
-            listResult = kv[1];
+            listResult = kv[1],
+            name = listName(listId);
 
-        result.lists.push(listName(listId));
-        result.total_days.push(listResult.average('total_days'));
-        result.business_days.push(listResult.average('business_days'));
+        if(_.isString(name)) {
+          result.lists.push(name);
+          result.total_days.push(listResult.average('total_days'));
+          result.business_days.push(listResult.average('business_days'));
+        }
+
         return result;
       }, {lists: [], total_days: [], business_days: []});
     };

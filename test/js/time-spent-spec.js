@@ -56,6 +56,19 @@ describe('TimeSpent', function() {
 
       expect(subject.average()).toEqual(expected);
     });
+
+    it('ignores lists that no longer exist', function() {
+      addTimeFor('card one', 'backlog', {total_days: 1, business_days: 1});
+      addTimeFor('card one', 'not-there-anymore', {total_days: 1, business_days: 1});
+
+      var expected = {
+        lists: ['backlog'],
+        total_days: [1],
+        business_days: [1]
+      };
+
+      expect(subject.average()).toEqual(expected);
+    });
   });
 
   setupLists = function() {
