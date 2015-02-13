@@ -6,14 +6,15 @@ describe Util::ListAction do
   let(:_) { anything }
 
   context 'ListAction.all' do
-    let(:actions) { Util::ListAction.actions(client, TrelloHelper.board_id, since: right_now.to_s).sort_by(&:date) }
+    let(:board_id) { 'abc123def' }
+    let(:actions) { Util::ListAction.actions(client, board_id, since: right_now.to_s).sort_by(&:date) }
     let(:response) { [{date: Time.now, data: {card: {}}}].to_json }
 
     before(:each) { allow(client).to receive(:get).and_return(response) }
 
     it 'just wants the actions' do
       actions
-      expect(client).to have_received(:get).with("/boards/#{TrelloHelper.board_id}/actions", _)
+      expect(client).to have_received(:get).with("/boards/#{board_id}/actions", _)
     end
 
     it 'can pass additional information' do
