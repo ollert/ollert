@@ -41,8 +41,10 @@ In the project root folder, use `bundle install` to install required gems.
 
 Create a file called `.env` in the root project folder. The format of the `.env` file is simply:
 
-    ENVIRONMENT_VARIABLE=This is the value
-	ANOTHER_VARIABLE=Another value
+```
+ENVIRONMENT_VARIABLE=This is the value
+ANOTHER_VARIABLE=Another value
+```
 
 Environment variables:
 
@@ -75,6 +77,9 @@ To run the `spec` tests, use `rake test:spec`.
 To run the cukes, use `rake test:cukes`. Cukes are run using the `TRELLO_TEST_USERNAME`. At least one test will fail if you have the improper boards. Create an organization "Test Organization 1" on Trello. Under "Test Organization", create two boards: "Test Board #1" and "Test Board #2". Additionally, create a general board called "Empty Board" and verify that the default "Welcome Board" is still visible to you. If "Welcome Board" is no longer available, you can simply create a new "Welcome Board" without any organization.
 
 To run all tests, use `rake test:all`.
+
+##### `testem`
+The JavaScript specs use [`testem`](https://github.com/airportyh/testem#installation) as the test runner, which will require `nodejs`.
 
 #### CI
 
