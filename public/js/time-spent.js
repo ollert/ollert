@@ -1,8 +1,10 @@
 (function(root) {
+    'use strict';
+
     var average = function(field) {
             return _.property(field)(this) / this.list_count;
         },
-        initialAggregate = function() {
+        newRunningTotal = function() {
             return { business_days: 0, total_days: 0, list_count: 0, average: average };
         },
         orderTheAveragesBy = function(averages, thisOrder) {
@@ -22,22 +24,21 @@
 
             return _.object(['lists', 'total_days', 'business_days'], _.zip.apply(_, orderedWithoutMissing));
         },
+        countTheDays = function(runningTotals, listTotals) {
+            var listOrDefault = function(id) {
+                    return runningTotals[id] = runningTotals[id] || newRunningTotal();
+                },
+                list = listOrDefault(_.first(listTotals)),
+                times = _.last(listTotals);
+
+            list.total_days += times.total_days;
+            list.business_days += times.business_days;
+            list.list_count++;
+        },
         aggregateLists = function(actions) {
-            return _.reduce(actions, function(averages, current) {
-                var listOrDefault = function(id) {
-                        return averages[id] = averages[id] || initialAggregate();
-                    };
-
-                _.each(_.pairs(current), function(kv) {
-                    var list = listOrDefault(kv[0]),
-                        times = kv[1];
-
-                    list.total_days += times.total_days;
-                    list.business_days += times.business_days;
-                    list.list_count++;
-                });
-
-                return averages;
+            return _.reduce(actions, function(runningTotals, current) {
+                _.each(_.pairs(current), _.partial(countTheDays, runningTotals));
+                return runningTotals;
             }, {});
         };
 

@@ -1,3 +1,5 @@
+'use strict';
+
 describe('TimeSpent', function() {
     var subject,
         lists, times,
