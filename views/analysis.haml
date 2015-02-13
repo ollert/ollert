@@ -82,6 +82,12 @@
           #label-count-container.med-chart.graph-container
 
     .row
+      .col-xs-12.no-padding
+        .analysis-block-lg
+          %img#list-changes-spinner{src: '/img/spinner.gif'}
+          #list-changes-container.graph-container.lg-chart{style: 'margin: 0 auto;'}
+
+    .row
       .col-md-6.col-xs-12.no-padding
         .analysis-block-lg
           %img#burn-down-spinner{src: '/img/spinner.gif'}
@@ -127,6 +133,7 @@
 %script{src: '/js/burn-up-down-chart-builder.js'}
 %script{src: '/js/progress-chart-builder.js'}
 %script{src: '/js/wip-chart-builder.js'}
+%script{src: '/js/list-changes-chart-builder.js'}
 %script{src: '/js/label-count-chart-builder.js'}
 %script{src: '/js/stats-builder.js'}
 %script{src: '/js/analysis-controller.js'}
