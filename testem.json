@@ -1,4 +1,5 @@
 {
+    "launch_in_ci": ["phantomjs"],
     "framework": "jasmine2",
     "src_files": [
       "public/js/jquery*.js",
