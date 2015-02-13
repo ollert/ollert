@@ -20,7 +20,7 @@ describe('TimeSpent', function() {
     });
 
     it('can average a single record', function() {
-      addTimeFor('one card', 'backlog', {total_days: 0, business_days: 0});
+      addTimeFor('card one', 'backlog', {total_days: 0, business_days: 0});
 
       var single = {
         lists: ['backlog'],
@@ -69,9 +69,30 @@ describe('TimeSpent', function() {
 
       expect(subject.average()).toEqual(expected);
     });
+
+    it('reorders the result based on the original order of the lists', function() {
+      setupLists('passed', 'qa', 'dev', 'backlog')
+
+      addTimeFor('1', 'passed', {total_days: 4, business_days: 5});
+      addTimeFor('2', 'qa', {total_days: 3, business_days: 6});
+      addTimeFor('3', 'dev', {total_days: 2, business_days: 7});
+      addTimeFor('4', 'backlog', {total_days: 1, business_days: 8});
+
+      lists.reverse(); // reverse the expected order
+
+      var expected = {
+        lists: ['backlog', 'dev', 'qa', 'passed'],
+        total_days: [1, 2, 3, 4],
+        business_days: [8, 7, 6, 5]
+      };
+
+      expect(subject.average()).toEqual(expected);
+    });
   });
 
   setupLists = function() {
+    lists.splice(0, lists.length);
+
     _.each(arguments, function(list) {
       lists.push({id: btoa(list), name: list});
     });

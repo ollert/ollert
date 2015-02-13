@@ -8,6 +8,21 @@
           average: average
         };
       },
+      orderTheAveragesBy = function(averages, thisOrder) {
+        if(_.isEmpty(averages.lists)) {
+          return averages;
+        }
+
+        var unordered = _.zip(averages.lists, averages.total_days, averages.business_days),
+            ordered = _.map(thisOrder, function(list) {
+              return _.find(unordered, function(set) {
+                  return _.first(set) === list;
+              });
+            }),
+            orderedWithoutMissing = _.compact(ordered);
+
+        return _.object(['lists', 'total_days', 'business_days'], _.zip.apply(_, orderedWithoutMissing));
+      },
       aggregateLists = function(actions) {
         return _.reduce(actions, function(averages, current) {
           var listOrDefault = function(id) {
@@ -39,9 +54,10 @@
         };
 
     this.average = function() {
-      var listTotals = _.pairs(aggregateLists(_.pluck(cardTimes, 'times')));
+      var listTotals = _.pairs(aggregateLists(_.pluck(cardTimes, 'times'))),
+          averages;
 
-      return _.reduce(listTotals, function(result, kv) {
+      averages =  _.reduce(listTotals, function(result, kv) {
         var listId = kv[0],
             listResult = kv[1],
             name = listName(listId);
@@ -54,6 +70,9 @@
 
         return result;
       }, {lists: [], total_days: [], business_days: []});
+
+
+      return orderTheAveragesBy(averages, _.pluck(lists,'name'));
     };
   }
 
