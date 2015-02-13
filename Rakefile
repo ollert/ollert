@@ -45,6 +45,11 @@ unless ENV['RACK_ENV'] == 'production'
       r.rspec_opts = '--color --format documentation --tag integration:true'
     end
 
+    desc 'Run all JavaScript specs'
+    task :js do
+      system('testem ci') or fail
+    end
+
     desc "Run all Cucumber tests"
     task :cukes do
       ruby "-S cucumber #{File.dirname(__FILE__)}/test/features"
@@ -56,7 +61,7 @@ unless ENV['RACK_ENV'] == 'production'
     end
 
     desc "Run spec tests and cukes"
-    task :all => [:spec, :integration, :cukes] do
+    task :all => [:spec, :integration, :js, :cukes] do
     end
   end
 end

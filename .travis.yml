@@ -2,9 +2,7 @@ language: ruby
 rvm: 2.2.0
 notifications:
   email: false
-script:
-  - testem ci
-  - xvfb-run rake test:all
+script: xvfb-run rake test:all
 services: mongodb
 env:
   global:
