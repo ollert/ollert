@@ -2,7 +2,9 @@ language: ruby
 rvm: 2.2.0
 notifications:
   email: false
-script: xvfb-run rake test:all
+script:
+  - testem ci
+  - xvfb-run rake test:all
 services: mongodb
 env:
   global:
@@ -17,4 +19,6 @@ env:
   - secure: b6/tpJaYfmmcBtuAB+KFQG+28fmAEt4jfxbRU3sf4+Q6Zgbxirp0chCEBzGcJgyMm7/p4flmNOq1nPwm0Q8JEptMIN95xI4HRCeqzOCN0i0rrvAYLWpJiORL+Rrnm33NLP/7ax5cIDuVGI3PD5ulhygp5x2KSQ4fnX4BiqPABtM=
 before_install:
   - sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev; fi'
-install: bundle
+install:
+  - npm install testem -g
+  - bundle
