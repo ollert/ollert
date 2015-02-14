@@ -27,6 +27,16 @@ describe Util::ListAction do
       expect(client).to have_received(:get).with(_, hash_including(filter: 'createCard,updateCard:idList'))
     end
 
+    it 'only cares about the fields that it needs' do
+      actions
+      expect(client).to have_received(:get).with(_, hash_including(fields: 'data,type,date'))
+    end
+
+    it 'disregards who moved the lists' do
+      actions
+      expect(client).to have_received(:get).with(_, hash_including(member: false, memberCreator:false))
+    end
+
     context 'fields' do
       let(:raw) { {date: Time.now, data: {card: {}}} }
       let(:data) { raw[:data] }
