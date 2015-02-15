@@ -1,13 +1,13 @@
 require_relative 'fetchers/fetcher'
 
 module Util
-  class ListAction < Trello::Action
+  class ListAction < Trello::BasicData
     extend Util::Fetcher
 
-    attr_reader :card, :card_id, :before, :before_id, :after, :after_id
+    attr_reader :card, :card_id, :before, :before_id, :after, :after_id, :data, :date, :type
 
     def initialize(fields={})
-      super
+      @data, @date, @type  = fields['data'], fields['date'], fields['type']
 
       @card, @card_id = name_and_id data['card']
       @before, @before_id = name_and_id data['listBefore']
