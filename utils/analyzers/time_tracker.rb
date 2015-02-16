@@ -2,7 +2,7 @@ require 'business_time'
 
 module Util
   module Analyzers
-    class TimeSpent
+    class TimeTracker
       attr_reader :card_id, :times
 
       def initialize(card_id, actions)
@@ -31,7 +31,7 @@ module Util
       end
 
       def self.by_card(actions)
-        actions.group_by(&:card_id).map {|id, card_actions| TimeSpent.new id, card_actions}
+        actions.group_by(&:card_id).map {|id, card_actions| TimeTracker.new id, card_actions}
       end
 
       private

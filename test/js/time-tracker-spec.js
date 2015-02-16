@@ -1,13 +1,13 @@
 'use strict';
 
-describe('TimeSpent', function() {
+describe('TimeTracker', function() {
     var subject,
         lists, times,
         setupLists, addTimeFor;
 
     beforeEach(function() {
         lists = [], times = [];
-        subject = new Ollert.TimeSpent({lists: lists, times: times});
+        subject = new Ollert.TimeTracker({lists: lists, times: times});
     });
 
     describe('average', function() {

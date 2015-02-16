@@ -55,7 +55,7 @@ var ListChangesChartBuilder = (function() {
                 success: function(data) {
                     $('#list-changes-spinner').hide();
 
-                    var averages = new Ollert.TimeSpent(jQuery.parseJSON(data)).average();
+                    var averages = new Ollert.TimeTracker(jQuery.parseJSON(data)).average();
                     buildChart({
                         categories: averages.lists,
                         data: [

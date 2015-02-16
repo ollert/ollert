@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 require 'base64'
 require 'chronic'
 
-describe Util::Analyzers::TimeSpent do
+describe Util::Analyzers::TimeTracker do
   let(:three_days_ago) { Date.today - 3 }
   let(:one_day_ago) { Date.today - 1 }
   let(:last_monday) { Chronic.parse 'a week ago last Monday' }
@@ -12,13 +12,13 @@ describe Util::Analyzers::TimeSpent do
   it 'created cards have only been in their original list' do
     actions = ActionBuilder.create_card(:backlog, three_days_ago).actions
 
-    time_spent_for(actions)
+    time_tracked_for(actions)
 
     expect(time_in('backlog').total_days).to eq(3)
   end
 
   it 'handles when there has only been one movement' do
-    time_spent_for ActionBuilder
+    time_tracked_for ActionBuilder
       .create_card(:backlog, one_day_ago)
       .move_card(:development)
       .actions
@@ -28,7 +28,7 @@ describe Util::Analyzers::TimeSpent do
   end
 
   it 'does the best it can when the createCard action is missing' do
-    time_spent_for ActionBuilder
+    time_tracked_for ActionBuilder
       .fake_missing_create(:development, :backlog, three_days_ago)
       .move_card(:qa)
       .actions
@@ -38,7 +38,7 @@ describe Util::Analyzers::TimeSpent do
   end
 
   it 'handles multiple movements' do
-    time_spent_for ActionBuilder.create_card(:backlog, last_monday)
+    time_tracked_for ActionBuilder.create_card(:backlog, last_monday)
       .move_card(:development)
       .move_card(:qa)
       .move_card(:failed)
@@ -58,13 +58,13 @@ describe Util::Analyzers::TimeSpent do
       .move_card(:qa)
       .actions.reverse
 
-    time_spent_for(reversed_actions)
+    time_tracked_for(reversed_actions)
 
     expect(time_in('backlog').total_days).to eq(3)
   end
 
   it 'additionally tracks business days as well' do
-    time_spent_for(ActionBuilder.create_card(:backlog, last_friday)
+    time_tracked_for(ActionBuilder.create_card(:backlog, last_friday)
       .move_card(:development, 3) # monday
       .actions)
 
@@ -74,7 +74,7 @@ describe Util::Analyzers::TimeSpent do
   end
 
   it 'exposes the times' do
-    time_spent_for ActionBuilder.create_card(:backlog, three_days_ago)
+    time_tracked_for ActionBuilder.create_card(:backlog, three_days_ago)
       .move_card(:development)
       .move_card(:passed)
       .actions
@@ -84,16 +84,16 @@ describe Util::Analyzers::TimeSpent do
   end
 
   it 'breaks multiple cards up' do
-    time_spent_for ActionBuilder.create_card(:backlog, three_days_ago)
+    time_tracked_for ActionBuilder.create_card(:backlog, three_days_ago)
       .move_card(:development)
       .create_card(:backlog, last_friday, 2)
       .actions
 
-    expect(@time_spent.map(&:card_id)).to eq([1, 2])
+    expect(@time_tracked.map(&:card_id)).to eq([1, 2])
   end
 
   it '#to_json' do
-    time_spent_for ActionBuilder.create_card(:backlog, last_friday)
+    time_tracked_for ActionBuilder.create_card(:backlog, last_friday)
       .move_card(:development, 3)
       .actions
 
@@ -107,15 +107,15 @@ describe Util::Analyzers::TimeSpent do
       }
     }].to_json
 
-    expect(@time_spent.to_json).to eq(expected_json)
+    expect(@time_tracked.to_json).to eq(expected_json)
   end
 
-  def time_spent_for(actions)
-    @time_spent = Util::Analyzers::TimeSpent.by_card(actions)
+  def time_tracked_for(actions)
+    @time_tracked = Util::Analyzers::TimeTracker.by_card(actions)
   end
 
   def times_for(card_id=1)
-    @time_spent.find {|t| t.card_id === 1}
+    @time_tracked.find {|t| t.card_id === 1}
   end
 
   def time_in(list)

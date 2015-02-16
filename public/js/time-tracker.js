@@ -42,7 +42,7 @@
             }, {});
         };
 
-    function TimeSpent(listChanges) {
+    function TimeTracker(listChanges) {
         var lists = listChanges.lists,
             cardTimes = listChanges.times,
             listName = function(id) {
@@ -75,6 +75,6 @@
         };
     };
 
-    root.TimeSpent = TimeSpent;
+    root.TimeTracker = TimeTracker;
 })(Ollert);
 

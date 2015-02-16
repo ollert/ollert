@@ -37,7 +37,7 @@ class Ollert
 
       {
         lists: lists.map {|l| {id: l.id, name: l.name}},
-        times: Util::Analyzers::TimeSpent.by_card(all)
+        times: Util::Analyzers::TimeTracker.by_card(all)
       }.to_json
     rescue Exception => e
       body 'Connection broken.'
