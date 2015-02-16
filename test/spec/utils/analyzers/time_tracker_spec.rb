@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 require 'base64'
 require 'chronic'
 
-describe Util::Analyzers::TimeTracker do
+describe Utils::Analyzers::TimeTracker do
   let(:three_days_ago) { Date.today - 3 }
   let(:one_day_ago) { Date.today - 1 }
   let(:last_monday) { Chronic.parse 'a week ago last Monday' }
@@ -111,7 +111,7 @@ describe Util::Analyzers::TimeTracker do
   end
 
   def time_tracked_for(actions)
-    @time_tracked = Util::Analyzers::TimeTracker.by_card(actions)
+    @time_tracked = Utils::Analyzers::TimeTracker.by_card(actions)
   end
 
   def times_for(card_id=1)
@@ -177,7 +177,7 @@ describe Util::Analyzers::TimeTracker do
                        end
       fields['data']['card'] = {'id' => @card_id}
 
-      (@actions << Util::ListAction.new(fields)).last
+      (@actions << Utils::ListAction.new(fields)).last
     end
 
     def to_list(list)

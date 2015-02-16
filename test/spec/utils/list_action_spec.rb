@@ -1,13 +1,13 @@
 require_relative '../spec_helper'
 
-describe Util::ListAction do
+describe Utils::ListAction do
   let(:client) { double Trello::Client }
   let(:right_now) { Time.now }
   let(:_) { anything }
 
   context 'ListAction.all' do
     let(:board_id) { 'abc123def' }
-    let(:actions) { Util::ListAction.actions(client, board_id, since: right_now.to_s).sort_by(&:date) }
+    let(:actions) { Utils::ListAction.actions(client, board_id, since: right_now.to_s).sort_by(&:date) }
     let(:response) { [{date: Time.now, data: {card: {}}}].to_json }
 
     before(:each) { allow(client).to receive(:get).and_return(response) }

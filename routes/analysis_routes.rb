@@ -33,11 +33,11 @@ class Ollert
 
     begin
       lists = client.get("/boards/#{board_id}/lists", filter: 'open').json_into(Trello::List)
-      all = Util::ListAction.actions(client, board_id)
+      all = Utils::ListAction.actions(client, board_id)
 
       {
         lists: lists.map {|l| {id: l.id, name: l.name}},
-        times: Util::Analyzers::TimeTracker.by_card(all)
+        times: Utils::Analyzers::TimeTracker.by_card(all)
       }.to_json
     rescue Exception => e
       body 'Connection broken.'

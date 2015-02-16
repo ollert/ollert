@@ -1,7 +1,7 @@
 require_relative '../../spec_helper'
 
 class FakeFetcher
-  extend Util::Fetcher
+  extend Utils::Fetcher
 
   attr_reader :id, :date
 
@@ -16,7 +16,7 @@ class FakeFetcher
   end
 end
 
-describe Util::Fetcher do
+describe Utils::Fetcher do
   let(:client) { double Trello::Client }
   let(:_) { anything }
 
@@ -106,7 +106,7 @@ describe Util::Fetcher do
         card.name
       end.reverse
 
-      expect(Util::ListAction.actions(client, board_id, since: @since.to_s).map(&:card)).to eq(expected_names)
+      expect(Utils::ListAction.actions(client, board_id, since: @since.to_s).map(&:card)).to eq(expected_names)
     end
   end
 end

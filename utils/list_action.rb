@@ -1,8 +1,8 @@
 require_relative 'fetchers/fetcher'
 
-module Util
+module Utils
   class ListAction < Trello::BasicData
-    extend Util::Fetcher
+    extend Utils::Fetcher
 
     attr_reader :card, :card_id, :before, :before_id, :after, :after_id, :data, :date, :type
 

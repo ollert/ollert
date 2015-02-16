@@ -1,6 +1,6 @@
 require 'business_time'
 
-module Util
+module Utils
   module Analyzers
     class TimeTracker
       attr_reader :card_id, :times

@@ -1,4 +1,4 @@
-module Util
+module Utils
   module Fetcher
     def all(client, path, overrides={})
       projection = overrides.delete(:result_to)
