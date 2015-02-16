@@ -1,39 +1,39 @@
-require_relative '../spec_helper'
+require_relative '../../spec_helper'
 
-describe Utils::ListAction do
+describe Utils::Fetchers::ListActionFetcher do
   let(:client) { double Trello::Client }
   let(:right_now) { Time.now }
   let(:_) { anything }
 
   context 'ListAction.all' do
     let(:board_id) { 'abc123def' }
-    let(:actions) { Utils::ListAction.actions(client, board_id, since: right_now.to_s).sort_by(&:date) }
+    let(:fetch_actions) { Utils::Fetchers::ListActionFetcher.fetch(client, board_id, since: right_now.to_s).sort_by(&:date) }
     let(:response) { [{date: Time.now, data: {card: {}}}].to_json }
 
     before(:each) { allow(client).to receive(:get).and_return(response) }
 
     it 'just wants the actions' do
-      actions
+      fetch_actions
       expect(client).to have_received(:get).with("/boards/#{board_id}/actions", _)
     end
 
     it 'can pass additional information' do
-      actions
+      fetch_actions
       expect(client).to have_received(:get).with(_, hash_including(since: right_now.to_s))
     end
 
     it 'includes created and moved cards' do
-      actions
+      fetch_actions
       expect(client).to have_received(:get).with(_, hash_including(filter: 'createCard,updateCard:idList'))
     end
 
     it 'only cares about the fields that it needs' do
-      actions
+      fetch_actions
       expect(client).to have_received(:get).with(_, hash_including(fields: 'data,type,date'))
     end
 
     it 'disregards who moved the lists' do
-      actions
+      fetch_actions
       expect(client).to have_received(:get).with(_, hash_including(member: false, memberCreator:false))
     end
 
@@ -43,7 +43,7 @@ describe Utils::ListAction do
       let(:card) { data[:card] }
       let(:result) do
         expect(client).to receive(:get).and_return [raw].to_json
-        actions.first
+        fetch_actions.first
       end
 
       it 'maps the card information' do

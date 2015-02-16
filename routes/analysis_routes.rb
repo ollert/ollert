@@ -33,7 +33,7 @@ class Ollert
 
     begin
       lists = client.get("/boards/#{board_id}/lists", filter: 'open').json_into(Trello::List)
-      all = Utils::ListAction.actions(client, board_id)
+      all = Utils::Fetchers::ListActionFetcher.fetch(client, board_id)
 
       {
         lists: lists.map {|l| {id: l.id, name: l.name}},
