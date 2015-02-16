@@ -1,4 +1,4 @@
-class TrelloHelper
+class TrelloIntegrationHelper
 
   def self.client
     @client ||= Trello::Client.new developer_public_key: Trello.configuration.developer_public_key, member_token: Trello.configuration.member_token

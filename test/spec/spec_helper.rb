@@ -4,7 +4,7 @@ require 'trello'
 require 'require_all'
 require 'dotenv'
 
-require 'trello_helper'
+require 'trello_integration_helper'
 
 require_rel '../../utils'
 Dotenv.load File.join(File.dirname(__FILE__), '../../', '.env')
@@ -19,7 +19,7 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    TrelloHelper.cleanup
+    TrelloIntegrationHelper.cleanup
   end
 end
 

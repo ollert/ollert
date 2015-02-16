@@ -95,13 +95,13 @@ describe Util::Fetcher do
   end
 
   context 'integration', integration: true do
-    let(:client) { TrelloHelper.client }
-    let(:board_id) { TrelloHelper.board_id }
+    let(:client) { TrelloIntegrationHelper.client }
+    let(:board_id) { TrelloIntegrationHelper.board_id }
     let(:total) { 4 }
 
     it 'maps actual Trello cards' do
       expected_names = total.times.map do |n|
-        card = TrelloHelper.add_card
+        card = TrelloIntegrationHelper.add_card
         @since ||= card.last_activity_date - 1
         card.name
       end.reverse
