@@ -5,7 +5,7 @@ describe Utils::Fetchers::ListActionFetcher do
   let(:right_now) { Time.now }
   let(:_) { anything }
 
-  context 'ListAction.all' do
+  context '#fetch' do
     let(:board_id) { 'abc123def' }
     let(:fetch_actions) { Utils::Fetchers::ListActionFetcher.fetch(client, board_id, since: right_now.to_s).sort_by(&:date) }
     let(:response) { [{date: Time.now, data: {card: {}}}].to_json }
@@ -91,6 +91,22 @@ describe Utils::Fetchers::ListActionFetcher do
           expect(result.after_id).to eq('expected list id')
         end
       end
+    end
+  end
+
+  context 'integration', integration: true do
+    let(:client) { TrelloIntegrationHelper.client }
+    let(:board_id) { TrelloIntegrationHelper.board_id }
+    let(:total) { 4 }
+
+    it 'maps actual Trello cards' do
+      expected_names = total.times.map do |n|
+        card = TrelloIntegrationHelper.add_card
+        @since ||= card.last_activity_date - 1
+        card.name
+      end.reverse
+
+      expect(Utils::Fetchers::ListActionFetcher.fetch(client, board_id, since: @since.to_s).map(&:card)).to eq(expected_names)
     end
   end
 end
