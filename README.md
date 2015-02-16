@@ -60,6 +60,12 @@ Environment variables:
 * `TRELLO_TEST_PASSWORD`
     * required
     * Password to use while running cukes
+* `INTEGRATION_KEY`
+    * required
+    * same as your `PUBLIC_KEY` up above, but is used for integration specs
+* `INTEGRATION_TOKEN`
+    * required
+    * this is your access token to run the specs. You should generate one that does not expire.
 * `SESSION_SECRET`
     * optional
     * Any string
