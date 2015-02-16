@@ -85,7 +85,17 @@ To run the cukes, use `rake test:cukes`. Cukes are run using the `TRELLO_TEST_US
 To run all tests, use `rake test:all`.
 
 ##### `testem`
-The JavaScript specs use [`testem`](https://github.com/airportyh/testem#installation) as the test runner, which will require `nodejs`.
+The JavaScript specs use [`testem`](https://github.com/airportyh/testem#installation) as the test runner, which will require `nodejs`. To install (if you already have node) run the following command:
+
+```
+npm install testem -g
+```
+
+By default the tests will try to use [`PhantomJS`](http://phantomjs.org/) as the browser for the JavaScript specs. To install, PhantomJS needs to be part of your path. To install using Homebrew on OSX run the following command:
+
+```
+brew install phantomjs
+```
 
 #### CI
 
