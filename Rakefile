@@ -45,6 +45,21 @@ unless ENV['RACK_ENV'] == 'production'
       r.rspec_opts = '--color --format documentation --tag integration:true'
     end
 
+    desc 'Setup Integration'
+    task :setup do
+      require 'dotenv'
+      require 'launchy'
+      Dotenv.load
+      raise 'PUBLIC_KEY is not part of your .env' unless ENV['PUBLIC_KEY']
+
+      File.open('.env', 'a') do |f|
+        f.puts "INTEGRATION_KEY=#{ENV['PUBLIC_KEY']}"
+        f.puts 'INTEGRATION_TOKEN=<value copied after accepting>'
+      end
+      Launchy.open "https://trello.com/1/authorize?key=#{ENV['PUBLIC_KEY']}&scope=read%2Cwrite&name=Ollert+Integration+Tests&expiration=never&response_type=token"
+      puts "Copy the value shown to you after you choose to 'Allow' the Ollert Integration Tests application"
+    end
+
     desc 'Run all JavaScript specs'
     task :js do
       system('testem ci') or fail
@@ -65,3 +80,4 @@ unless ENV['RACK_ENV'] == 'production'
     end
   end
 end
+

@@ -60,12 +60,12 @@ Environment variables:
 * `TRELLO_TEST_PASSWORD`
     * required
     * Password to use while running cukes
-* `INTEGRATION_KEY`
+* `INTEGRATION_KEY` / `INTEGRATION_TOKEN`
     * required
-    * same as your `PUBLIC_KEY` up above, but is used for integration specs
-* `INTEGRATION_TOKEN`
-    * required
-    * this is your access token to run the specs. You should generate one that does not expire.
+    * these values are used to run the integration tests. To generate these values after you have entered your `PUBLIC_KEY` run the following command and paste the result into your `.env` file where it asks you to:
+```
+rake test:setup
+```
 * `SESSION_SECRET`
     * optional
     * Any string

@@ -47,6 +47,8 @@ GEM
     i18n (0.7.0)
     json (1.8.1)
     kgio (2.9.2)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.2)
@@ -149,6 +151,7 @@ DEPENDENCIES
   dotenv
   foreman
   haml
+  launchy
   mongoid
   pry
   rack-flash3

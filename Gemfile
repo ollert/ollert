@@ -31,4 +31,5 @@ group :development, :test do
   gem 'rack_session_access'
   gem 'capybara-webkit'
   gem 'chronic'
+  gem 'launchy'
 end
