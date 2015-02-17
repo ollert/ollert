@@ -1,10 +1,12 @@
+require 'dotenv'
+Dotenv.load File.join(File.dirname(__FILE__), '../../..', '.env')
+
 ENV['RACK_ENV'] = 'test'
 
 require_relative '../../../web'
 
 require 'capybara/cucumber'
 require 'rspec'
-require 'dotenv'
 require 'rack_session_access'
 require 'rack_session_access/capybara'
 
