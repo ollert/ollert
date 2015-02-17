@@ -56,7 +56,7 @@ unless ENV['RACK_ENV'] == 'production'
         f.puts "INTEGRATION_KEY=#{ENV['PUBLIC_KEY']}"
         f.puts 'INTEGRATION_TOKEN=<value copied after accepting>'
       end
-      Launchy.open "https://trello.com/1/authorize?key=#{ENV['PUBLIC_KEY']}&scope=read%2Cwrite&name=Ollert+Integration+Tests&expiration=never&response_type=token"
+      Launchy.open "https://trello.com/1/authorize?key=#{ENV['PUBLIC_KEY']}&scope=read%2Cwrite&name=OllertIntegrationTests&expiration=never&response_type=token"
       puts "Copy the value shown to you after you choose to 'Allow' the Ollert Integration Tests application"
     end
 
