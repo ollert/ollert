@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'progress_charts_fetcher'
 
 describe ProgressChartsFetcher do
 

@@ -37,25 +37,47 @@ unless ENV['RACK_ENV'] == 'production'
   namespace :test do
     RSpec::Core::RakeTask.new(:spec) do |r|
       r.pattern = "test/**/*_spec.rb"
-      r.rspec_opts = []
-      r.rspec_opts << '--color'
-      r.rspec_opts << '--format documentation'
+      r.rspec_opts = '--color --format documentation --tag ~integration:true'
     end
 
-    require 'dotenv/tasks'
+    RSpec::Core::RakeTask.new(:integration) do |r|
+      r.pattern = "test/**/*_spec.rb"
+      r.rspec_opts = '--color --format documentation --tag integration:true'
+    end
+
+    desc 'Setup Integration'
+    task :setup do
+      require 'dotenv'
+      require 'launchy'
+      Dotenv.load
+      raise 'PUBLIC_KEY is not part of your .env' unless ENV['PUBLIC_KEY']
+
+      File.open('.env', 'a') do |f|
+        f.puts "INTEGRATION_KEY=#{ENV['PUBLIC_KEY']}"
+        f.puts 'INTEGRATION_TOKEN=<value copied after accepting>'
+      end
+      Launchy.open "https://trello.com/1/authorize?key=#{ENV['PUBLIC_KEY']}&scope=read%2Cwrite&name=Ollert+Integration+Tests&expiration=never&response_type=token"
+      puts "Copy the value shown to you after you choose to 'Allow' the Ollert Integration Tests application"
+    end
+
+    desc 'Run all JavaScript specs'
+    task :js do
+      system('testem ci') or fail
+    end
 
     desc "Run all Cucumber tests"
-    task :cukes => :dotenv do
+    task :cukes do
       ruby "-S cucumber #{File.dirname(__FILE__)}/test/features"
     end
 
     desc "Run a single Cuke test"
-    task :cuke, [:feature] => :dotenv do |t, args|
+    task :cuke, [:feature] do |t, args|
       ruby "-S cucumber -v -r #{File.dirname(__FILE__)}/test/features #{File.dirname(__FILE__)}/test/features/#{args[:feature]}.feature"
     end
 
     desc "Run spec tests and cukes"
-    task :all => [:spec, :cukes] do
+    task :all => [:spec, :integration, :js, :cukes] do
     end
   end
 end
+

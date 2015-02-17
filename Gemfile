@@ -15,6 +15,8 @@ gem 'rack-ssl'
 gem 'rack-rewrite'
 gem 'mongoid'
 gem 'ruby-trello'
+gem 'business_time'
+gem 'require_all'
 
 group :development do
   gem 'pry'
@@ -28,4 +30,6 @@ group :development, :test do
   gem 'capybara'
   gem 'rack_session_access'
   gem 'capybara-webkit'
+  gem 'chronic'
+  gem 'launchy'
 end

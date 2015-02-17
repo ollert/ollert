@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'member_fetcher'
 
 describe MemberFetcher do
 

@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'stats_fetcher'
 
 describe StatsFetcher do
 

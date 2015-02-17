@@ -1,5 +1,4 @@
 require_relative '../../spec_helper'
-require 'label_count_fetcher'
 
 describe LabelCountFetcher do
 

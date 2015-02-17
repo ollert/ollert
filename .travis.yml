@@ -14,7 +14,7 @@ env:
   - secure: XEr0CJhoW+9v9KcQqfoK/igdqLJtAblz3eGECD7G4RYNPOeLZsOImv03rs+zRUi40gd4iqxSkcX1F4/NmOxWhmGqXy3f3u4/HFAWneMjQm0j4NzQSVFvaLMJx2vURdUsDeJYWVt57xm7ow4Kg02xlOpDFmKLRdn5/SaG8iN/sGg=
   - secure: d1eEQH6CsyEitrJwmfK5bzDVoKa3ZWskaLxKrRlcUdVzyDReaBb2RhhPFkNmJnOmcQYSHfEIqmon7GDS/Uf375VL9zRpcTh08hRb+UQIj/Wr1PUsPEO0TytIA6bA9Kudp5TPx3Ky77uW64OY4y/Ihae4rH193JVobNgtJcdrNUw=
 before_install:
-- sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa
-  && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev;
-  fi'
-install: bundle
+  - sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev; fi'
+install:
+  - npm install testem -g
+  - bundle
