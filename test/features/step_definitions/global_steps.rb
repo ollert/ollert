@@ -2,13 +2,6 @@ Then /^I should be redirected to (.*)$/ do |page|
   current_path.should eql path_to page
 end
 
-Given(/^the test user is in the system$/) do
-  user = User.new
-  user.email = Environment.test_username
-
-  user.save!
-end
-
 Given(/^the doppelganger user is in the system$/) do
   user = User.new
   user.email = "doppelganger@gmail.com"

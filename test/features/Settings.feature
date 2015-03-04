@@ -17,10 +17,9 @@ Scenario: Accessing from dropdown
   And I follow "Settings"
   Then I should be on the settings page
 
-@javascript
+@javascript @test_user
 Scenario: Updating email
-  Given the test user is in the system
-  And the test user is logged in
+  When the test user is logged in
   And I go to the settings page
   And the email field contains the test email address
   When I fill in "email" with "ollertapp@gmail.co.uk"
@@ -53,19 +52,17 @@ Scenario: Connecting to Trello with previously-used Trello account
   And I authorize with Trello
   Then I should see "User already exists using that account. Log out to connect with that account."
 
-@javascript
+@javascript @test_user
 Scenario: Deny connecting to Trello
-  Given the test user is in the system
-  And the test user is logged in
+  When the test user is logged in
   And I go to the settings page
   When I follow "Connect to a Different Trello Account"
   And I press "Deny" on the Trello popup
   Then I should see "Connect to a Different Trello Account"
 
-@javascript
+@javascript @test_user
 Scenario: Delete account
-  Given the test user is in the system
-  And the test user is logged in
+  When the test user is logged in
   And I go to the settings page
   When I check "This box verifies that you would like to delete your account when clicking the link below."
   And I press "Delete Account"
@@ -74,10 +71,9 @@ Scenario: Delete account
   And I should be on the landing page
   And there should be 0 users in the system
 
-@javascript
+@javascript @test_user
 Scenario: Delete account without checking box
-  Given the test user is in the system
-  And the test user is logged in
+  When the test user is logged in
   And I go to the settings page
   When I press "Delete Account"
   Then I should see "Delete failed: Check the 'I am sure' checkbox to confirm deletion."

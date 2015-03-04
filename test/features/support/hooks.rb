@@ -3,6 +3,12 @@ Before do
   on(LandingPage).load
 end
 
+Before('@test_user') do
+  user = User.new
+  user.email = Environment.test_username
+  user.save!
+end
+
 After do
   user = User.find_by(email: Environment.test_username)
   if !user.nil? && !user.member_token.nil?
