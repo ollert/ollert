@@ -9,6 +9,14 @@ Given(/^the doppelganger user is in the system$/) do
   user.save!
 end
 
+Given(/^I am editing the settings for the test user$/) do
+  page.set_rack_session user: User.find_by(email: Environment.test_username).id
+
+  go_to(SettingsPage) do |screen|
+    expect(screen.email).to eq(Environment.test_username)
+  end
+end
+
 Given(/^the test user is logged in$/) do
   page.set_rack_session user: User.find_by(email: Environment.test_username).id
 end

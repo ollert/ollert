@@ -9,5 +9,10 @@ module OllertTest
       block.call screen if block
       screen
     end
+
+    def go_to(cls, &block)
+      cls.new.load
+      on(cls, &block)
+    end
   end
 end

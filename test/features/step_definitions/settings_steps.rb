@@ -49,3 +49,17 @@ Then(/^I am able to connect to an alternative Trello account$/) do
   step 'I authorize with Trello'
   expect(User.first[:trello_name]).to eq(Environment.test_display_name)
 end
+
+When(/^I change my email address to "([^"]*)"$/) do |new_email|
+  @new_email = new_email
+
+  on(SettingsPage) do |screen|
+    screen.email = @new_email
+    screen.update_email
+  end
+end
+
+Then(/^my new email address setting should have been saved$/) do
+  expect(on(SettingsPage).email_status).to eq("Your new email is #{@new_email}. Use this to log in.")
+  expect(User.first[:email]).to eq(@new_email)
+end

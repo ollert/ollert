@@ -14,13 +14,9 @@ Scenario: Accessing from dropdown
 
 @javascript @test_user
 Scenario: Updating email
-  When the test user is logged in
-  And I go to the settings page
-  And the email field contains the test email address
-  When I fill in "email" with "ollertapp@gmail.co.uk"
-  And I press "Update Email"
-  Then I should see "Your new email is ollertapp@gmail.co.uk. Use this to log in."
-  And the test user "email" should be "ollertapp@gmail.co.uk"
+  Given I am editing the settings for the test user
+  When I change my email address to "ollertapp@gmail.co.uk"
+  Then my new email address setting should have been saved
 
 @javascript
 Scenario: Connecting to a different Trello account
@@ -39,7 +35,7 @@ Scenario: Connecting to Trello with previously-used Trello account
 
 @javascript @test_user
 Scenario: Deny connecting to Trello
-  When the test user is logged in
+  Given the test user is logged in
   And I go to the settings page
   When I follow "Connect to a Different Trello Account"
   And I press "Deny" on the Trello popup
@@ -47,7 +43,7 @@ Scenario: Deny connecting to Trello
 
 @javascript @test_user
 Scenario: Delete account
-  When the test user is logged in
+  Given the test user is logged in
   And I go to the settings page
   When I check "This box verifies that you would like to delete your account when clicking the link below."
   And I press "Delete Account"
@@ -58,7 +54,7 @@ Scenario: Delete account
 
 @javascript @test_user
 Scenario: Delete account without checking box
-  When the test user is logged in
+  Given the test user is logged in
   And I go to the settings page
   When I press "Delete Account"
   Then I should see "Delete failed: Check the 'I am sure' checkbox to confirm deletion."
