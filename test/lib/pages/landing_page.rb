@@ -1,25 +1,15 @@
 class LandingPage < SitePrism::Page
   set_url '/'
-  element :login_top, '.navbar-right input[value="Log in"]'
-  element :connect, '.landing-connect a.connect-btn'
-  element :hooked_connect, '.landing-hook a.btn-primary'
-  element :settings, '.settings-link'
-  element :logout_link, 'a', text: 'Log out'
 
-  def choose_to_login
-    login_top.click
-  end
+  button(:choose_to_login, '.navbar-right input[value="Log in"]')
+  button(:lets_get_started, '.landing-connect a.connect-btn')
+  button(:you_hooked_me_lets_get_started, '.landing-hook a.btn-primary')
 
-  def lets_get_started
-    connect.click
-  end
-
-  def you_hooked_me_lets_get_started
-    hooked_connect.click
-  end
+  link(:settings, 'a.settings-link')
+  link(:logout, text: 'Log out')
 
   def logout
-    settings.click
-    logout_link.click
+    settings
+    logout_element.click
   end
 end

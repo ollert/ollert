@@ -1,5 +1,9 @@
+require_rel 'accessors'
+
 module SitePrism
   class Page
+    extend Accessors
+
     def wait_until(&block)
       Waiter.wait_until_true &block
     end
