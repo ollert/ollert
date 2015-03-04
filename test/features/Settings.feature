@@ -7,12 +7,7 @@ Scenario: Accessing while not logged in
 
 @javascript
 Scenario: Accessing from dropdown
-  Given I am on the landing page
-  And I follow "Connect to Get Started" within ".landing-connect"
-  When I authorize with Trello
-  Then I should not see "Connecting..."
-  And I should not see "Redirecting..."
-  And I should be on the boards page
+  Given I choose to connect with Trello
   When I click my avatar
   And I follow "Settings"
   Then I should be on the settings page
@@ -29,24 +24,14 @@ Scenario: Updating email
 
 @javascript
 Scenario: Connecting to a different Trello account
-  Given I am on the landing page
-  And I follow "Connect to Get Started" within ".landing-connect"
-  When I authorize with Trello
-  Then I should not see "Connecting..."
-  And I should not see "Redirecting..."
-  And I should be on the boards page
+  Given I choose to connect with Trello
   When I go to the settings page
   Then I am able to connect to an alternative Trello account
 
 @javascript
 Scenario: Connecting to Trello with previously-used Trello account
-  Given I am on the landing page
-  And I follow "Connect to Get Started" within ".landing-connect"
-  When I authorize with Trello
-  Then I should not see "Connecting..."
-  And I should not see "Redirecting..."
-  And I should be on the boards page
-  Given I go to the settings page
+  Given I choose to connect with Trello
+  When I go to the settings page
   And there is a copycat user in the system
   When I follow "Connect to a Different Trello Account"
   And I authorize with Trello
