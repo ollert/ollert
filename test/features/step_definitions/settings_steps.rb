@@ -2,6 +2,11 @@ Given(/^the "(.*?)" field contains "(.*?)"$/) do |field, text|
   find_field(field).value.should eq text
 end
 
+Given(/^I am looking at settings for the test user$/) do
+  page.set_rack_session user: User.find_by(email: Environment.test_username).id
+  go_to(SettingsPage)
+end
+
 Given(/^the test user "(.*?)" is nil$/) do |field|
   user = User.first
   user[field.to_sym] = nil

@@ -35,16 +35,14 @@ Scenario: Connecting to Trello with previously-used Trello account
 
 @javascript @test_user
 Scenario: Deny connecting to Trello
-  Given the test user is logged in
-  And I go to the settings page
+  Given I am looking at settings for the test user
   When I follow "Connect to a Different Trello Account"
   And I press "Deny" on the Trello popup
   Then I should see "Connect to a Different Trello Account"
 
 @javascript @test_user
 Scenario: Delete account
-  Given the test user is logged in
-  And I go to the settings page
+  Given I am looking at settings for the test user
   When I check "This box verifies that you would like to delete your account when clicking the link below."
   And I press "Delete Account"
   Then I should not see "Account deleted. Redirecting..."
@@ -54,7 +52,6 @@ Scenario: Delete account
 
 @javascript @test_user
 Scenario: Delete account without checking box
-  Given the test user is logged in
-  And I go to the settings page
+  Given I am looking at settings for the test user
   When I press "Delete Account"
   Then I should see "Delete failed: Check the 'I am sure' checkbox to confirm deletion."
