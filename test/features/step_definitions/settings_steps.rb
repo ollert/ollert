@@ -45,6 +45,12 @@ Given(/^there is a copycat user in the system$/) do
   User.create trello_id: trelloId
 end
 
+Then(/^I can get to my settings by selecting my avatar$/) do
+  on(LandingPage).settings
+  step 'I follow "Settings"'
+  expect(SettingsPage).to be_the_current_page
+end
+
 When(/^I click my avatar$/) do
   find(".settings-link").click
 end

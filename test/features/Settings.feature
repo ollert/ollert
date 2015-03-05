@@ -7,10 +7,8 @@ Scenario: Accessing while not logged in
 
 @javascript
 Scenario: Accessing from dropdown
-  Given I choose to connect with Trello
-  When I click my avatar
-  And I follow "Settings"
-  Then I should be on the settings page
+  When I choose to connect with Trello
+  Then I can get to my settings by selecting my avatar
 
 @javascript @test_user
 Scenario: Updating email
