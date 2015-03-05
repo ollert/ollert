@@ -1,17 +1,15 @@
+sudo: false
 language: ruby
 rvm: 2.2.0
 notifications:
   email: false
 script: xvfb-run rake test:all
 services: mongodb
+cache: bundler
 env:
   global:
   - DISPLAY=:99.0
   - RACK_ENV=test
-before_install:
-- sh -c 'if [ -n "$QMAKE" ]; then sudo apt-add-repository -y ppa:ubuntu-sdk-team/ppa
-  && sudo apt-get update && sudo apt-get install libqt5webkit5-dev qtdeclarative5-dev;
-  fi'
 install:
 - npm install testem -g
 - bundle

@@ -98,8 +98,7 @@ brew install phantomjs
 ```
 
 #### CI
-
-We are working on getting a Travis build up and running. Be patient.
+Travis CI is being used for CI. For clones of this repository, builds will run in your `https://travis-ci.org/<your username>/ollert` environment. Since the tests depend on the environment variables mentioned above, those also need to be carried over in your individual Travis CI setup. Please look at the documentation for [environment variables](http://docs.travis-ci.com/user/environment-variables/#Using-Settings) for more information about setting up your environment variables.
 
 ### Contributing
 
