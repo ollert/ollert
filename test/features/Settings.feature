@@ -41,12 +41,8 @@ Scenario: Deny connecting to Trello
 @javascript @test_user
 Scenario: Delete account
   Given I am looking at settings for the test user
-  When I check "This box verifies that you would like to delete your account when clicking the link below."
-  And I press "Delete Account"
-  Then I should not see "Account deleted. Redirecting..."
-  And I should see "Connect to Get Started"
-  And I should be on the landing page
-  And there should be 0 users in the system
+  When I confirm that I want to delete my account
+  Then I am redirected to login after my account is deleted
 
 @javascript @test_user
 Scenario: Delete account without checking box

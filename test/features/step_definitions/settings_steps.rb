@@ -74,3 +74,15 @@ Then(/^my new email address setting should have been saved$/) do
   expect(on(SettingsPage).email_status).to eq("Your new email is #{@new_email}. Use this to log in.")
   expect(User.first[:email]).to eq(@new_email)
 end
+
+When(/^I confirm that I want to delete my account$/) do
+  on(SettingsPage) do |screen|
+    screen.confirm_delete = true
+    screen.delete_account
+  end
+end
+
+Then(/^I am redirected to login after my account is deleted$/) do
+  expect(LandingPage).to be_the_current_page
+  expect(User.count).to be_zero
+end
