@@ -94,3 +94,15 @@ end
 Then(/^I should be reminded that I need to confirm the deletion first$/) do
   expect(on(SettingsPage).delete_status).to include "Delete failed: Check the 'I am sure' checkbox to confirm deletion."
 end
+
+Given(/^I am looking at the settings for my account$/) do
+  navigate_to(SettingsPage).load
+end
+
+When(/^I connect with the Trello account that has a copycat$/) do
+  on(SettingsPage).connect_with_a_different_account
+end
+
+Then(/^I am notified that the user account already exists$/) do
+  expect(on(SettingsPage).trello_connect_status).to include 'User already exists using that account. Log out to connect with that account.'
+end

@@ -8,6 +8,10 @@ class LoginPage < SitePrism::Page
   text_field(:username, 'input[name="user"]')
   text_field(:password, 'input[name="password"]')
 
+  def login_with_my_account
+    login_with Environment.test_username, Environment.test_password
+  end
+
   def login_with(username, password)
     in_trello_popup do
       login_with_trello

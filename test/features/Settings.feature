@@ -24,12 +24,10 @@ Scenario: Connecting to a different Trello account
 
 @javascript
 Scenario: Connecting to Trello with previously-used Trello account
-  Given I choose to connect with Trello
-  When I go to the settings page
-  And there is a copycat user in the system
-  When I follow "Connect to a Different Trello Account"
-  And I authorize with Trello
-  Then I should see "User already exists using that account. Log out to connect with that account."
+  Given I am looking at the settings for my account
+  But there is a copycat user in the system
+  When I connect with the Trello account that has a copycat
+  Then I am notified that the user account already exists
 
 @javascript @test_user
 Scenario: Deny connecting to Trello

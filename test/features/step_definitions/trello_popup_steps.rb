@@ -5,6 +5,7 @@ When /^I authorize with Trello$/ do
   trello_popup = windows.last
   page.within_window trello_popup do
     fake_chrome_drivers
+
     if page.has_content? "Switch Accounts"
       click_link "Switch Accounts"
     else
