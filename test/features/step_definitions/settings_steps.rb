@@ -86,3 +86,11 @@ Then(/^I am redirected to login after my account is deleted$/) do
   expect(LandingPage).to be_the_current_page
   expect(User.count).to be_zero
 end
+
+When(/^I choose to delete my account without confirming$/) do
+  on(SettingsPage).delete_account
+end
+
+Then(/^I should be reminded that I need to confirm the deletion first$/) do
+  expect(on(SettingsPage).delete_status).to include "Delete failed: Check the 'I am sure' checkbox to confirm deletion."
+end

@@ -7,6 +7,7 @@ class SettingsPage < SitePrism::Page
 
   checkbox(:confirm_delete, '#i-am-sure')
   button(:delete_account, '#delete-account-button')
+  label(:delete_status, '#delete-account-status')
 
   def update_email
     save_email

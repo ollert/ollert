@@ -47,5 +47,5 @@ Scenario: Delete account
 @javascript @test_user
 Scenario: Delete account without checking box
   Given I am looking at settings for the test user
-  When I press "Delete Account"
-  Then I should see "Delete failed: Check the 'I am sure' checkbox to confirm deletion."
+  When I choose to delete my account without confirming
+  Then I should be reminded that I need to confirm the deletion first
