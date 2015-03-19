@@ -32,9 +32,8 @@ Scenario: Connecting to Trello with previously-used Trello account
 @javascript @test_user
 Scenario: Deny connecting to Trello
   Given I am looking at settings for the test user
-  When I follow "Connect to a Different Trello Account"
-  And I press "Deny" on the Trello popup
-  Then I should see "Connect to a Different Trello Account"
+  When I first choose to connect with a different Trello Account, but change my mind
+  Then I should remain on the settings page
 
 @javascript @test_user
 Scenario: Delete account

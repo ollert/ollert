@@ -106,3 +106,11 @@ end
 Then(/^I am notified that the user account already exists$/) do
   expect(on(SettingsPage).trello_connect_status).to include 'User already exists using that account. Log out to connect with that account.'
 end
+
+When(/^I first choose to connect with a different Trello Account, but change my mind$/) do
+  on(SettingsPage).connect_with_a_different_account { LoginPage.new.deny }
+end
+
+Then(/^I should remain on the settings page$/) do
+  expect(SettingsPage).to be_the_current_page
+end

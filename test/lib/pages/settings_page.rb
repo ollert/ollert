@@ -18,8 +18,14 @@ class SettingsPage < SitePrism::Page
   end
 
   alias_method :orig_connect, :connect_with_a_different_account
-  def connect_with_a_different_account
+  def connect_with_a_different_account(&block)
     orig_connect
+    block.call(self) if block
+    allow_alternative_account unless block
+  end
+
+  private
+  def allow_alternative_account
     LoginPage.new.allow
     wait_until { trello_connect_status != 'Saving...' }
   end
