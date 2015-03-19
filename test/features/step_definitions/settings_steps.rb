@@ -62,8 +62,7 @@ When(/^I click my avatar$/) do
 end
 
 Then(/^I am able to connect to an alternative Trello account$/) do
-  click_link('Connect to a Different Trello Account')
-  step 'I authorize with Trello'
+  on(SettingsPage).connect_with_a_different_account
   expect(User.first[:trello_name]).to eq(Environment.test_display_name)
 end
 
