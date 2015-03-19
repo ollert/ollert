@@ -4,9 +4,7 @@ Before do
 end
 
 Before('@test_user') do
-  user = User.new
-  user.email = Environment.test_username
-  user.save!
+  User.create email: Environment.test_username
 end
 
 After do
