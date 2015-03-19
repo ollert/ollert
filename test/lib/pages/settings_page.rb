@@ -23,10 +23,14 @@ class SettingsPage < SitePrism::Page
   end
 
   alias_method :orig_connect, :connect_with_a_different_account
-  def connect_with_a_different_account(&block)
+  def connect_with_a_different_account
     orig_connect
-    block.call(self) if block
-    allow_alternative_account unless block
+
+    if block_given?
+      yield self
+    else
+      allow_alternative_account
+    end
   end
 
   private
