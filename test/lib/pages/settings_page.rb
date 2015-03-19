@@ -9,12 +9,17 @@ class SettingsPage < SitePrism::Page
   label(:trello_connect_status, '#trello-connect-status')
 
   checkbox(:confirm_delete, '#i-am-sure')
-  button(:delete_account, '#delete-account-button')
+  button(:choose_to_delete_account, '#delete-account-button')
   label(:delete_status, '#delete-account-status')
 
   def update_email
     save_email
     wait_until { email_status != 'Saving...' }
+  end
+
+  def delete_account
+    choose_to_delete_account
+    wait_until { delete_status != 'Deleting...' }
   end
 
   alias_method :orig_connect, :connect_with_a_different_account
