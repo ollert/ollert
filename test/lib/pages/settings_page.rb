@@ -10,7 +10,7 @@ class SettingsPage < SitePrism::Page
 
   checkbox(:confirm_delete, '#i-am-sure')
   button(:choose_to_delete_account, '#delete-account-button')
-  label(:delete_status, '#delete-account-status')
+  label(:delete_status, 'span#delete-account-status')
 
   def update_email
     save_email
@@ -19,7 +19,7 @@ class SettingsPage < SitePrism::Page
 
   def delete_account
     choose_to_delete_account
-    wait_until { delete_status != 'Deleting...' }
+    wait_until { no_longer_deleting? }
   end
 
   alias_method :orig_connect, :connect_with_a_different_account
@@ -33,5 +33,11 @@ class SettingsPage < SitePrism::Page
   def allow_alternative_account
     LoginPage.new.allow
     wait_until { trello_connect_status != 'Saving...' }
+  end
+
+  def no_longer_deleting?
+    delete_status != 'Deleting...'
+  rescue Capybara::ElementNotFound
+    true
   end
 end
