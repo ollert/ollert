@@ -3,7 +3,7 @@ Feature: Landing
 @javascript
 Scenario: Using the login button
   When I choose to login to Trello
-  Then I should be on the boards page
+  Then I should be able to see my boards
 
 @javascript
 Scenario: Deny connecting to Trello - Top of Page
@@ -13,7 +13,7 @@ Scenario: Deny connecting to Trello - Top of Page
 @javascript
 Scenario: Allow connecting to Trello - Top of Page
   When I choose to connect with Trello
-  Then I should be on the boards page
+  Then I should be able to see my boards
 
 @javascript
 Scenario: Deny connecting to Trello - Bottom of Page
@@ -23,13 +23,13 @@ Scenario: Deny connecting to Trello - Bottom of Page
 @javascript
 Scenario: Allow connecting to Trello - Bottom of Page
   When the pitch convinces me to connect with Trello
-  Then I should be on the boards page
+  Then I should be able to see my boards
 
 @javascript
 Scenario: Allow connecting to Trello after Deny
   Given I change my mind about connecting with Trello
   But then I choose to connect with Trello afterall
-  Then I should be on the boards page
+  Then I should be able to see my boards
 
 @javascript
 Scenario: Logging out and back in

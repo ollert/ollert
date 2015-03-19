@@ -36,3 +36,6 @@ When(/^I logout of the application$/) do
   on(LandingPage).logout
 end
 
+Then(/^I should be able to see my boards$/) do
+  expect(BoardsPage).to be_the_current_page
+end
