@@ -8,6 +8,8 @@ class LandingPage < SitePrism::Page
   link(:settings, 'a.settings-link')
   link(:logout, text: 'Log out')
 
+  label(:warning_status, 'div.alert.alert-warning')
+
   def logout
     settings
     logout_element.click

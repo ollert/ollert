@@ -8,6 +8,10 @@ module SitePrism
       Waiter.wait_until_true &block
     end
 
+    def the_current_page?
+      self.class.the_current_page?
+    end
+
     def self.the_current_page?
       page = self.new
 
