@@ -18,7 +18,7 @@ Scenario: Updating email
 @javascript
 Scenario: Connecting to a different Trello account
   Given I choose to connect with Trello
-  When I go to the settings page
+  When I go to view my settings
   Then I am able to connect to an alternative Trello account
 
 @javascript

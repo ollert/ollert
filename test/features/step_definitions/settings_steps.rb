@@ -50,8 +50,10 @@ Given(/^there is a copycat user in the system$/) do
 end
 
 Then(/^I can get to my settings by selecting my avatar$/) do
-  on(LandingPage).settings
-  step 'I follow "Settings"'
+  on(LandingPage) do |screen|
+    screen.settings
+    screen.click_link 'Settings'
+  end
   expect(SettingsPage).to be_the_current_page
 end
 
@@ -117,4 +119,8 @@ end
 
 Then(/^I should remain on the settings page$/) do
   expect(SettingsPage).to be_the_current_page
+end
+
+When(/^I go to view my settings$/) do
+  on(SettingsPage).load
 end
