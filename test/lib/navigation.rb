@@ -4,9 +4,9 @@ module OllertTest
   module Navigation
     include PageNavigation
 
-    def on(cls, &block)
+    def on(cls)
       screen = cls.new
-      block.call screen if block
+      yield screen if block_given?
       screen
     end
 
