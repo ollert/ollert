@@ -1,7 +1,3 @@
-Given(/^the "(.*?)" field contains "(.*?)"$/) do |field, text|
-  find_field(field).value.should eq text
-end
-
 When(/^I attempt to view my settings without logging in first$/) do
   on(SettingsPage).load
 end
@@ -9,34 +5,6 @@ end
 Given(/^I am looking at settings for the test user$/) do
   page.set_rack_session user: User.find_by(email: Environment.test_username).id
   go_to(SettingsPage)
-end
-
-Given(/^the test user "(.*?)" is nil$/) do |field|
-  user = User.first
-  user[field.to_sym] = nil
-  user.save!
-end
-
-Given(/^the test user "(.*?)" is "(.*?)"$/) do |field, value|
-  user = User.first
-  user[field.to_sym] = value
-  user.save!
-end
-
-Then(/^the test user email should be "(.*?)"$/) do |new_email|
-  User.first.email.should eq new_email
-end
-
-Then(/^the test user "(.*?)" should be "(.*?)"$/) do |field, value|
-  User.first[field.to_sym].should eq value
-end
-
-Then(/^the test user "(.*?)" should be nil$/) do |field|
-  User.first[field.to_sym].should be_nil
-end
-
-Given(/^the email field contains the test email address$/) do
-  find_field("email").value.should eq Environment.test_username
 end
 
 Given(/^there is a copycat user in the system$/) do
@@ -55,10 +23,6 @@ Then(/^I can get to my settings by selecting my avatar$/) do
     screen.click_link 'Settings'
   end
   expect(SettingsPage).to be_the_current_page
-end
-
-When(/^I click my avatar$/) do
-  find(".settings-link").click
 end
 
 Then(/^I am able to connect to an alternative Trello account$/) do
