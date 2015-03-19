@@ -2,6 +2,10 @@ Given(/^the "(.*?)" field contains "(.*?)"$/) do |field, text|
   find_field(field).value.should eq text
 end
 
+When(/^I attempt to view my settings without logging in first$/) do
+  on(SettingsPage).load
+end
+
 Given(/^I am looking at settings for the test user$/) do
   page.set_rack_session user: User.find_by(email: Environment.test_username).id
   go_to(SettingsPage)

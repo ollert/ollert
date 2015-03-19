@@ -1,9 +1,8 @@
 Feature: Settings
 
 Scenario: Accessing while not logged in
-  Given I am on the settings page
-  Then I should be on the landing page
-  And I should see "Hey! You should create an account to do that."
+  When I attempt to view my settings without logging in first
+  Then I should be told that I have to login before I can do that
 
 @javascript
 Scenario: Accessing from dropdown
