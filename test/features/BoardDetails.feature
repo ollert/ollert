@@ -7,3 +7,7 @@ Feature: BoardDetails
 Scenario: View board
   When I choose to connect with Trello
   Then I can drill into the board named "Empty Board"
+
+Scenario: Updating the title
+  When I am viewing the board "Test Board #1"
+  Then the page title reflects the current board I am viewing
