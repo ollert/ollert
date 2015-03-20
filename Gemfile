@@ -32,4 +32,7 @@ group :development, :test do
   gem 'capybara-webkit'
   gem 'chronic'
   gem 'launchy'
+  gem 'site_prism'
+  gem 'page_navigation'
+  gem 'selenium-webdriver'
 end

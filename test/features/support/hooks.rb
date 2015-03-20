@@ -1,5 +1,10 @@
 Before do
   Mongoid.purge!
+  on(LandingPage).load
+end
+
+Before('@test_user') do
+  User.create email: Environment.test_username
 end
 
 After do

@@ -5,12 +5,5 @@ Feature: BoardDetails
   I would like to see details about the board
 
 Scenario: View board
-  Given I am on the landing page
-  And I follow "Connect to Get Started" within ".landing-connect"
-  When I authorize with Trello
-  Then I should not see "Connecting..."
-  And I should not see "Redirecting..."
-  And I should be on the boards page
-  When I follow "Empty Board"
-  Then I should not see "Select a board to view its statistics"
-  And I should see "Empty Board"
+  When I choose to connect with Trello
+  Then I can drill into the board named "Empty Board"

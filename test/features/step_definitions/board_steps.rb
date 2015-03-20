@@ -12,3 +12,14 @@ Then(/^I should see the following boards:$/) do |table|
     expect(expected).to match_array actual
   end
 end
+
+When(/^I attempt to view my boards without logging in first$/) do
+  on(BoardsPage).load
+end
+
+Then(/^I should be told that I have to login before I can do that$/) do
+  on(LandingPage) do |screen|
+    expect(screen).to be_the_current_page
+    expect(screen.warning_status).to eq('Hey! You should create an account to do that.')
+  end
+end
