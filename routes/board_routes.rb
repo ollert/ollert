@@ -81,6 +81,7 @@ class Ollert
 
     @board_id = board_id
 
+    @title = "#{@board_name} Board"
     haml :analysis
   end
 

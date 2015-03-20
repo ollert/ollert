@@ -7,6 +7,8 @@ require 'dotenv'
 require 'trello_integration_helper'
 
 require_rel '../../utils'
+require_rel '../../helpers'
+
 Dotenv.load File.join(File.dirname(__FILE__), '../../', '.env')
 
 Trello.configure do |config|

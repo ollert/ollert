@@ -5,8 +5,11 @@ require 'rack/ssl'
 require 'rack/rewrite'
 require 'sinatra/base'
 require 'sinatra/respond_with'
+require_relative 'helpers'
 
 class Ollert < Sinatra::Base
+  helpers OllertApp::Helpers
+
   register Sinatra::RespondWith
   configure :development do
     require 'sinatra/reloader'
