@@ -4,6 +4,8 @@ Then(/^I can drill into the board named "([^"]*)"$/) do |board_name|
 end
 
 When(/^I am viewing the board "([^"]*)"$/) do |board_name|
+  TrelloIntegrationHelper.add_list('Test List')
+
   @expected_board_title = board_name
   navigate_to(BoardsPage, using: :boards_route).choose board_name
 end
