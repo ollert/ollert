@@ -11,5 +11,5 @@ When(/^I am viewing the board "([^"]*)"$/) do |board_name|
 end
 
 Then(/^the page title reflects the current board I am viewing$/) do
-  expect(on(BoardDetails).title).to eq "Ollert - #{@expected_board_title} Board"
+  expect(on(BoardDetails).title).to eq "Ollert - #{@expected_board_title}"
 end
