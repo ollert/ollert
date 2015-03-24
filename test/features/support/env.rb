@@ -29,7 +29,7 @@ World(OllertTest::Navigation) do
 end
 
 Trello.configure do |config|
-  config.developer_public_key = ENV['INTEGRATION_KEY']
-  config.member_token = ENV['INTEGRATION_TOKEN']
+  config.developer_public_key = ENV['PUBLIC_KEY']
+  config.member_token = ENV['MEMBER_TOKEN']
 end
 
