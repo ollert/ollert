@@ -17,4 +17,6 @@ After do
 
     client.delete("/tokens/#{user.member_token}")
   end
+
+  TrelloIntegrationHelper.cleanup
 end

@@ -8,20 +8,25 @@ class TrelloIntegrationHelper
     board.id
   end
 
-  def self.add_card
-    Trello::Card.create list_id: first_list.id, name: "Card ##{next_card}"
+  def self.add_card(list_id=first_list.id)
+    Trello::Card.create list_id: list_id, name: "Card ##{next_card}"
+  end
+
+  def self.add_list(name)
+    lists << Trello::List.create(board_id: board.id, name: name)
+    lists.last
   end
 
   def self.first_list
-    @first_list ||= Trello::List.create(board_id: board.id, name: 'Integration Test List #1')
+    @first_list ||= add_list('Integration Test List #1')
   end
 
   def self.second_list
-    @second_list ||= Trello::List.create(board_id: board.id, name: 'Integration Test List #2')
+    @second_list ||= add_list('Integration Test List #2')
   end
 
   def self.cleanup
-    [@first_list, @second_list].compact.each do |list|
+    lists.compact.each do |list|
       list.close!
     end
   end
@@ -35,8 +40,12 @@ class TrelloIntegrationHelper
       @next_card ||= 0
       @next_card += 1
     end
+
+    def lists
+      @lists ||= []
+    end
   end
 
-  private_class_method :board, :next_card
+  private_class_method :board, :next_card, :lists
 end
 
