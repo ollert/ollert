@@ -43,7 +43,7 @@ var ListChangesChartBuilder = (function() {
           series: options.data
         });
       },
-      load = function(boardId, token) {
+      load = function(boardId, token, startOfWork, endOfWork) {
         var container = $("#list-changes-container");
         container.height(container.height() - 10);
 
@@ -55,7 +55,7 @@ var ListChangesChartBuilder = (function() {
           success: function(data) {
             $('#list-changes-spinner').hide();
 
-            var averages = new Ollert.TimeTracker(jQuery.parseJSON(data)).average();
+            var averages = new Ollert.TimeTracker(jQuery.parseJSON(data), startOfWork, endOfWork).average();
             buildChart({
               categories: averages.lists,
               data: [

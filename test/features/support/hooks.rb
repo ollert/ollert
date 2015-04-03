@@ -8,7 +8,7 @@ Before('@test_user') do
 end
 
 Before('@existing_lists') do
-  (1..4).to_a.reverse.each {|which| TestListBuilder.setup_list("List ##{which}").with_cards("Card #{which}") }
+  (1..5).to_a.reverse.each {|which| TestListBuilder.setup_list("List ##{which}").with_cards("Card #{which}") }
 end
 
 After('@existing_lists') do
