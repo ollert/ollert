@@ -42,11 +42,17 @@
         }, {});
       };
 
-  function TimeTracker(listChanges) {
-    var lists = listChanges.lists,
+  function TimeTracker(listChanges, startOfWork, endOfWork) {
+    var lists = function() {
+          var all = listChanges.lists,
+              theList = _.findWhere(all, {id: startOfWork}),
+              startIndex = Math.max(all.indexOf(theList), 0);
+
+          return all.slice(startIndex, all.length);
+        },
         cardTimes = listChanges.times,
         listName = function(id) {
-          var found = _.find(lists, function(list) {
+          var found = _.find(lists(), function(list) {
             return list.id === id;
           });
 
@@ -71,7 +77,7 @@
         return result;
       }, {lists: [], total_days: [], business_days: []});
 
-      return orderTheAveragesBy(averages, _.pluck(lists,'name'));
+      return orderTheAveragesBy(averages, _.pluck(lists(),'name'));
     };
   };
 

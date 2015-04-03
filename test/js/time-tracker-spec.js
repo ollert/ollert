@@ -3,6 +3,7 @@
 describe('TimeTracker', function() {
   var subject,
       lists, times,
+      startOfWork, endOfWork,
       setupLists, addTimeFor;
 
   beforeEach(function() {
@@ -90,6 +91,38 @@ describe('TimeTracker', function() {
 
       expect(subject.average()).toEqual(expected);
     });
+
+    describe('start / end of work', function() {
+      var setup, 
+          average = function() {
+            return new Ollert.TimeTracker({lists: lists, times: times}, startOfWork, endOfWork)
+              .average();
+          };
+
+      beforeEach(function() {
+        var lists = ['next release', 'backlog', 'dev', 'passed'],
+            card = 0;
+
+        setup = setupLists.apply(null, lists);
+
+        _.each(lists, function(list) {
+          addTimeFor((++card).toString(), list, {total_days: 1, business_days: 1});
+        });
+      });
+
+      it('honors the starting list', function() {
+        setup.withStart('backlog');
+
+        var expected = {
+          lists: ['backlog', 'dev', 'passed'],
+          total_days: [1, 1, 1],
+          business_days: [1, 1, 1]
+        };
+
+        expect(average()).toEqual(expected);
+      });
+    });
+
   });
 
   setupLists = function() {
@@ -98,6 +131,21 @@ describe('TimeTracker', function() {
     _.each(arguments, function(list) {
       lists.push({id: btoa(list), name: list});
     });
+
+    var idFor = function(name) {
+      return _.findWhere(lists, {name: name}).id;
+    };
+
+    return {
+      withStart: function(startList) {
+        startOfWork = idFor(startList);
+        return this;
+      },
+      withEnd: function(endList) {
+        endOfWork = idFor(endList);
+        return this;
+      }
+    }
   };
 
   addTimeFor = function(card, list, listTime) {
