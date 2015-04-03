@@ -45,10 +45,12 @@
   function TimeTracker(listChanges, startOfWork, endOfWork) {
     var lists = function() {
           var all = listChanges.lists,
-              theList = _.findWhere(all, {id: startOfWork}),
-              startIndex = Math.max(all.indexOf(theList), 0);
+              startList = _.findWhere(all, {id: startOfWork}),
+              endList = _.findWhere(all, {id: endOfWork}),
+              startIndex = Math.max(all.indexOf(startList), 0),
+              endIndex = !!endList ? all.indexOf(endList) : all.length;
 
-          return all.slice(startIndex, all.length);
+          return all.slice(startIndex, endIndex);
         },
         cardTimes = listChanges.times,
         listName = function(id) {
