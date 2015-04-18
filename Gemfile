@@ -29,7 +29,7 @@ group :development, :test do
   gem 'cucumber'
   gem 'capybara'
   gem 'rack_session_access'
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', '~> 1.5'
   gem 'chronic'
   gem 'launchy'
   gem 'site_prism'
