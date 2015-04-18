@@ -1,5 +1,7 @@
 Before do
+  page.driver.allow_url '*' if page.driver.respond_to? :allow_url
   Mongoid.purge!
+
   on(LandingPage).load
 end
 
