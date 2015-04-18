@@ -5,7 +5,7 @@ var AnalysisController = (function () {
   };
 
   var getCurrentList = function (id) {
-    return $($("#" + id)[0].selectedOptions).val();
+    return $("#" + id).val();
   }
 
   var getCurrentStartingList = function () {
