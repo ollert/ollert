@@ -1,5 +1,4 @@
 require_rel '../spec/trello_integration_helper'
-require 'pp'
 
 class TestListBuilder
   def initialize(list_name)
