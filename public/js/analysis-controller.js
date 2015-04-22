@@ -5,7 +5,7 @@ var AnalysisController = (function () {
   };
 
   var getCurrentList = function (id) {
-    return $($("#" + id)[0].selectedOptions).val();
+    return $("#" + id).val();
   }
 
   var getCurrentStartingList = function () {
@@ -17,26 +17,33 @@ var AnalysisController = (function () {
   };
 
   var loadCharts = function (boardId, token) {
+    var startOfWork = getCurrentStartingList(),
+        endOfWork = getCurrentEndingList();
+
     WipChartBuilder.build(boardId, token);
     StatsBuilder.build(boardId, token);
     LabelCountChartBuilder.build(boardId, token);
-    ProgressChartBuilder.build(boardId, token, getCurrentStartingList(), getCurrentEndingList());
-    ListChangesChartBuilder.build(boardId, token);
+    ProgressChartBuilder.build(boardId, token, startOfWork, endOfWork);
+    ListChangesChartBuilder.build(boardId, token, startOfWork, endOfWork);
   };
 
   var updateListRange = function (boardId, token) {
+    var startOfWork = getCurrentStartingList(),
+        endOfWork = getCurrentEndingList();
+
     $("#configure-board-modal").modal('hide');
 
     $.ajax({
       url: "/boards/" + boardId,
       type: "put",
       data: {
-        startingList: getCurrentStartingList(),
-        endingList: getCurrentEndingList()
+        startingList: startOfWork,
+        endingList: endOfWork
       }
     });
 
-    ProgressChartBuilder.build(boardId, token, getCurrentStartingList(), getCurrentEndingList());
+    ProgressChartBuilder.build(boardId, token, startOfWork, endOfWork);
+    ListChangesChartBuilder.build(boardId, token, startOfWork, endOfWork);
   };
 
   var setupConfigurationModal = function (boardId, boardLists, startingList, endingList, token) {
