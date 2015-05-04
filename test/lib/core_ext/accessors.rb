@@ -55,6 +55,14 @@ module SitePrism
       end
     end
 
+    def select_list(name, locator)
+      locator = locator[:id] || locator[:name]
+
+      define_method("#{name}=") do |value|
+        page.select(value, from: locator)
+      end
+    end
+
     def extend_prism(name, *args, &block)
       element_name = "#{name}_element"
       element(element_name, *args)
