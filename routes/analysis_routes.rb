@@ -18,48 +18,21 @@ class Ollert
       :member_token => params["token"]
     )
 
-    begin
-      body ProgressChartsAnalyzer.analyze(ProgressChartsFetcher.fetch(client, board_id),
-       params["startingList"], params["endingList"]).to_json
-      status 200
-    rescue Trello::Error => e
-      body "Connection broken."
-      status 500
-    end
+    body ProgressChartsAnalyzer.analyze(ProgressChartsFetcher.fetch(client, board_id),
+     params["startingList"], params["endingList"]).to_json
+    status 200
   end
 
   get '/api/v1/listchanges/:board_id' do |board_id|
     client = Trello::Client.new developer_public_key: ENV['PUBLIC_KEY'], member_token: params['token']
 
-    begin
-      lists = client.get("/boards/#{board_id}/lists", filter: 'open').json_into(Trello::List)
-      all = Utils::Fetchers::ListActionFetcher.fetch(client, board_id)
+    lists = client.get("/boards/#{board_id}/lists", filter: 'open').json_into(Trello::List)
+    all = Utils::Fetchers::ListActionFetcher.fetch(client, board_id)
 
-      {
-        lists: lists.map {|l| {id: l.id, name: l.name}},
-        times: Utils::Analyzers::TimeTracker.by_card(all)
-      }.to_json
-    rescue Exception => e
-      body 'Connection broken.'
-      status 500
-    end
-  end
-
-  # TODO: Finish
-  get '/api/v1/cycletime/:board_id' do |board_id|
-    client = Trello::Client.new(
-      :developer_public_key => ENV['PUBLIC_KEY'],
-      :member_token => params["token"]
-    )
-
-    begin
-      body CycleTimeAnalyzer.analyze(CycleTimeFetcher.fetch(client, board_id),
-        params["startingList"], params["endingList"]).to_json
-      status 200
-    rescue
-      body "Connection broken."
-      status 500
-    end
+    {
+      lists: lists.map {|l| {id: l.id, name: l.name}},
+      times: Utils::Analyzers::TimeTracker.by_card(all)
+    }.to_json
   end
 
   get '/api/v1/wip/:board_id' do |board_id|
@@ -68,13 +41,8 @@ class Ollert
       :member_token => params["token"]
     )
 
-    begin
-      body WipAnalyzer.analyze(WipFetcher.fetch(client, board_id)).to_json
-      status 200
-    rescue Trello::Error => e
-      body "Connection broken."
-      status 500
-    end
+    body WipAnalyzer.analyze(WipFetcher.fetch(client, board_id)).to_json
+    status 200
   end
 
   get '/api/v1/stats/:board_id' do |board_id|
@@ -83,13 +51,8 @@ class Ollert
       :member_token => params['token']
     )
 
-    begin
-      body StatsAnalyzer.analyze(StatsFetcher.fetch(client, board_id)).to_json
-      status 200
-    rescue Trello::Error => e
-      body "Connection broken."
-      status 500
-    end
+    body StatsAnalyzer.analyze(StatsFetcher.fetch(client, board_id)).to_json
+    status 200
   end
   
   get '/api/v1/labels/:board_id' do |board_id|
@@ -98,12 +61,7 @@ class Ollert
       :member_token => params['token']
     )
 
-    begin
-      body LabelCountAnalyzer.analyze(LabelCountFetcher.fetch(client, board_id)).to_json
-      status 200
-    rescue Trello::Error => e
-      body "Connection broken."
-      status 500
-    end
+    body LabelCountAnalyzer.analyze(LabelCountFetcher.fetch(client, board_id)).to_json
+    status 200
   end
 end

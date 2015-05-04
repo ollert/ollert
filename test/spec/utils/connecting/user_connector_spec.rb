@@ -12,14 +12,6 @@ describe 'UserConnector' do
     @new_token = "1234567"
   end
 
-  it 'returns 500 on Trello Error' do
-    expect(MemberFetcher).to receive(:fetch).and_raise(Trello::Error)
-
-    result = UserConnector.connect(@client, @new_token)
-    expect(result[:body]).to eq("There's something wrong with the Trello connection. Please re-establish the connection.")
-    expect(result[:status]).to eq(500)
-  end
-
   it 'gets user for login and returns 200 when not given current user' do
     expect(MemberFetcher).to receive(:fetch).and_return(nil)
     expect(MemberAnalyzer).to receive(:analyze).and_return(@member)

@@ -5,6 +5,7 @@ require 'rack/ssl'
 require 'rack/rewrite'
 require 'sinatra/base'
 require 'sinatra/respond_with'
+require 'trello'
 require_relative 'helpers'
 
 class Ollert < Sinatra::Base
@@ -47,6 +48,11 @@ class Ollert < Sinatra::Base
         end
       end
     end
+  end
+
+  error Trello::Error do
+    body "There's something wrong with the Trello connection. Please re-establish the connection."
+    status 500
   end
 end
 
