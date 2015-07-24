@@ -378,6 +378,10 @@ ul.boards-list {
   height: 440px;
 }
 
+.highcharts-container svg { 
+  font-family: 'Muli', sans-serif !important; // override any inline font declarations in SVG 
+}
+
 .dropdown-menu {
   overflow-y: auto;
   max-height: 26em;
