@@ -13,7 +13,7 @@ task :default => [:start]
 
 desc "Start application based on environment"
 task :start do
-  fork { exec "sass --watch public/css" }
+  fork { exec "sass --watch public/css --style compressed" }
   fork { exec "foreman start -p 4000" }
   Process.waitall
 end
