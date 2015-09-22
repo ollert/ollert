@@ -4,6 +4,7 @@
     "src_files": [
       "public/js/jquery*.js",
       "public/js/*.js",
+      "public/js/vendor/*.js",
 
       "test/js/*.js"
     ]
