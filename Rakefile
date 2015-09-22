@@ -13,7 +13,9 @@ task :default => [:start]
 
 desc "Start application based on environment"
 task :start do
-  exec("foreman start -p 4000")
+  fork { exec "sass --watch public/css" }
+  fork { exec "foreman start -p 4000" }
+  Process.waitall
 end
 
 require 'mongoid'
@@ -76,4 +78,3 @@ unless ENV['RACK_ENV'] == 'production'
     end
   end
 end
-

@@ -13,7 +13,7 @@ $colHover       : #ffbbbc;
   font-family: 'Muli';
   font-style: normal;
   font-weight: 400;
-  src: local('Muli'), url(../fonts/muli.woff) format('woff');
+  src: local('Muli'), url(fonts/muli.woff) format('woff');
 }
 
 body {
@@ -378,8 +378,8 @@ ul.boards-list {
   height: 440px;
 }
 
-.highcharts-container svg { 
-  font-family: 'Muli', sans-serif !important; // override any inline font declarations in SVG 
+.highcharts-container svg {
+  font-family: 'Muli', sans-serif !important; // override any inline font declarations in SVG
 }
 
 .dropdown-menu {
@@ -393,7 +393,7 @@ ul.boards-list {
      background-color: #F3F3F3;
      border-bottom-width: 1px;
      border-bottom-style: solid;
-     border-bottom-color: #CBCBCB;   
+     border-bottom-color: #CBCBCB;
      height: 2.75em !important;
      padding: 8px;
      color: #777777;
@@ -527,7 +527,7 @@ a.btn {
   }
 
   .popover {
-    width: 300px;    
+    width: 300px;
   }
 
   #update-email {
