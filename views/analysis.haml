@@ -127,8 +127,8 @@
             %img.stats-spinner{src: '/img/spinner.gif'}
           #newest-card-name.stat-subtitle
 
-%script{src: '/js/highstock.js'}
-%script{src: '/js/modules/no-data-to-display.src.js'}
+%script{src: '/js/vendor/highstock.js'}
+%script{src: '/js/vendor/no-data-to-display.src.js'}
 %script{src: '/js/cfd-chart-builder.js'}
 %script{src: '/js/burn-up-down-chart-builder.js'}
 %script{src: '/js/progress-chart-builder.js'}
@@ -137,7 +137,7 @@
 %script{src: '/js/label-count-chart-builder.js'}
 %script{src: '/js/stats-builder.js'}
 %script{src: '/js/analysis-controller.js'}
-%script{src: '/js/moment.min.js'}
+%script{src: '/js/vendor/moment.min.js'}
 
 %script
   $(document).ready(function() { AnalysisController.init("#{@board_id}", #{@board_lists}, "#{@starting_list}", "#{@ending_list}", "#{@token}"); });
