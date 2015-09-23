@@ -7,6 +7,7 @@
     %meta{name: 'author', content: 'Larry Price <larry@ollertapp.com>'}
 
     %link{rel: 'shortcut icon', href:'/img/favicon.ico'}
+    
     %link{href: '/css/vendor/bootstrap.min.css', rel: 'stylesheet'}
     %link{rel: 'stylesheet', type: 'text/css', href: '/css/styles.css'}
 
@@ -36,7 +37,7 @@
       });
 
   %body
-    %div{id: 'wrap'}
+    %div
       %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
         .container-fluid
           .navbar-header
@@ -107,9 +108,7 @@
               #{flash[:info]}
         = yield
 
-      %div{id: 'push'}
-
-    %div{id: 'footer'}
+    %div#footer
       .container
         .row
           .col-sm-6.col-xs-12

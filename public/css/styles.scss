@@ -16,30 +16,29 @@ $colHover       : #ffbbbc;
   src: local('Muli'), url(fonts/muli.woff) format('woff');
 }
 
-body {
-  font-family: 'Muli', sans-serif;
-}
-
 //  begin sticky footer
 
-html,body {
-  height: 100%;
-  /* The html and body elements cannot have any padding or margin. */
-}
-
-/* Wrapper for page content to push down footer */
-#wrap {
+html {
+  position: relative;
   min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  /* Negative indent footer by its height */
-  margin: 0 auto -190px;
 }
 
-/* Set the fixed height of the footer here */
-#push,
+body {
+  font-family: 'Muli', sans-serif;
+  margin-bottom: 190px;
+}
+
 #footer {
-  min-height: 190px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 190px;
+  width: 100%;
+
+  .container {
+    padding: 15px;
+    padding-bottom: 0;
+  }
 }
 
 // end sticky footer
@@ -482,10 +481,6 @@ a.btn {
 
 .landing-subtitle {
   margin-bottom: 20px;
-}
-
-.footer-item {
-  margin-bottom: 38px;
 }
 
 .footer-links {
