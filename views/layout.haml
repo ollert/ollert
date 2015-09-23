@@ -7,12 +7,14 @@
     %meta{name: 'author', content: 'Larry Price <larry@ollertapp.com>'}
 
     %link{rel: 'shortcut icon', href:'/img/favicon.ico'}
-    
+
     %link{href: '/css/vendor/bootstrap.min.css', rel: 'stylesheet'}
+    %link{href: '/css/vendor/drawer.min.css', rel: 'stylesheet'}
     %link{rel: 'stylesheet', type: 'text/css', href: '/css/styles.css'}
 
     %script{src: '/js/vendor/jquery-2.1.1.min.js'}
     %script{src: '/js/vendor/bootstrap.min.js'}
+    %script{src: '/js/vendor/drawer.min.js'}
     %script{src: '/js/vendor/underscore-min.js'}
 
     %script{src: "/js/trello-client.js"}
@@ -36,7 +38,28 @@
         }
       });
 
-  %body
+  %body.has-drawer
+    #drawerExample.drawer.dw-xs-10.dw-sm-6.dw-md-4.fold{"aria-labelledby" => "drawerExample"}
+      .drawer-controls
+        %a.btn.btn-primary.btn-sm{"aria-controls" => "drawerExample", "aria-foldedopen" => "false", "data-toggle" => "drawer", :href => "#drawerExample"} Menu
+      .drawer-contents
+        .drawer-heading
+          %h2.drawer-title Menu
+        .drawer-body
+          %p
+            This is a properly padded container for content in the
+            drawer that isn't a navigation.
+          %a{:href => "#"} A Regular Link
+        %ul.drawer-nav
+          %li.active{:role => "presentation"}
+            %a{:href => "#"} Home
+          %li{:role => "presentation"}
+            %a{:href => "#"} Profile
+          %li{:role => "presentation"}
+            %a{:href => "#"} Messages
+        .drawer-footer
+          %small © Caroline Amaba
+
     %div
       %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
         .container-fluid
