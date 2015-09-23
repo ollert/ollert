@@ -40,9 +40,10 @@
 
   %body
     - unless @user.nil?
-      #drawerExample.drawer.dw-xs-10.dw-sm-6.dw-md-4.fold{"aria-labelledby" => "drawerExample"}
+      #configDrawer.drawer.dw-xs-10.dw-sm-6.dw-md-4.fold{"aria-labelledby" => "configDrawer"}
         .drawer-controls
-          %a.btn.btn-primary.btn-sm{"aria-controls" => "drawerExample", "aria-foldedopen" => "false", "data-toggle" => "drawer", :href => "#drawerExample"} Menu
+          %a.btn.btn-primary.btn-sm{"aria-controls" => "configDrawer", "aria-foldedopen" => "false", "data-toggle" => "drawer", :href => "#configDrawer"}
+            %span.glyphicon.glyphicon-menu-hamburger{"aria-hidden": "true"}
         .drawer-contents
           .drawer-heading
             %h2.drawer-title Menu
@@ -81,7 +82,7 @@
                   %span.icon-bar
                   %span.icon-bar
                 %button.my-boards-button.navbar-toggle.collapsed.btn.btn-link{type: 'button', data: { toggle: 'dropdown' } }
-                  %span.glyphicon.glyphicon-stats
+                  %span.glyphicon.glyphicon-stats{"aria-hidden": "true"}
                   My Boards
                   %b.caret
                 %ul.dropdown-menu.pull-right.my-boards
@@ -153,7 +154,7 @@
             %a{href: "http://www.sep.com/labs/", alt: "SEP Labs", target: "blank", title: "Danger! Experimental"}
               %img.footer-item.footer-lab{src: '/img/SEP-Labs-Logo-White.svg'}
 
-      :javascript
-        if (!#{@user.nil?}) {
-          $("body").toggleClass("has-drawer");
-        }
+    :javascript
+      if (!#{@user.nil?}) {
+        $("body").toggleClass("has-drawer");
+      }
