@@ -33,9 +33,6 @@
     :javascript
       $(document).ready(function() {
         Trello.setKey("#{ENV['PUBLIC_KEY']}");
-        if (#{!@user.nil?}) {
-          Ollert.loadBoards();
-        }
       });
 
   %body
@@ -53,53 +50,28 @@
       %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
         .container-fluid
           .navbar-header
-            %a{class: 'navbar-brand', href: '/'}
+            %a.navbar-brand{href: '/'}
               Ollert
-            .visible-xs-block
-              - if @user.nil?
-                %ul{class: 'signup-login-group nav visible-xs-inline'}
-                  %li{style: 'margin-right: 10px;'}
-                    %form{action: "/login", method: "get", role: "form", class: "pull-right"}
-                      %input{type: "submit", class: "btn btn-default", value: "Log in"}
-              - else
-                %button.navbar-toggle.collapsed{type: "button", data: { toggle: 'collapse', target: '.navbar-collapse' } }
-                  %span.sr-only
-                    Toggle navigation
-                  %span.icon-bar
-                  %span.icon-bar
-                  %span.icon-bar
-                %button.my-boards-button.navbar-toggle.collapsed.btn.btn-link{type: 'button', data: { toggle: 'dropdown' } }
-                  %span.glyphicon.glyphicon-stats{"aria-hidden": "true"}
-                  My Boards
-                  %b.caret
-                %ul.dropdown-menu.pull-right.my-boards
           - if @user.nil?
-            %ul{class: 'signup-login-group nav navbar-nav navbar-right hidden-xs'}
-              %li{style: 'margin-left:10px;'}
+            %ul.signup-login-group.nav.navbar-nav.navbar-right
+              %li
                 %form{onsubmit: "TrelloController.authorize(); return false;"}
                   %input.btn.btn-default{type: "submit", value: "Log in"}
-          .collapse.navbar-collapse
-            %ul.nav.navbar-nav.pull-right
-              - unless @user.nil?
-                %li.hidden-xs
-                  %a{href: 'javascript:void(0)', data: { toggle: 'dropdown' } }
-                    %span.glyphicon.glyphicon-stats
-                    My Boards
-                    %b.caret
-                  %ul.dropdown-menu.pull-right.my-boards
-                %li
-                  %a.settings-link{href: 'javascript:void(0)', data: { toggle: 'dropdown' } }
-                    %img{src: "https://www.gravatar.com/avatar/#{@user.gravatar_hash}?s=40", alt: "Profile Avatar"}
-                    %b.caret
-                  %ul.dropdown-menu.pull-right
-                    %li
-                      %a{href: "/settings", alt: "Settings"}
-                        %span.glyphicon.glyphicon-cog
-                        Settings
-                    %li
-                      %a{href: "/logout", alt: "Log out"}
-                        %span.glyphicon.glyphicon-off
-                        Log out
+          - else @user.nil?
+            %ul.nav.navbar-nav.navbar-right
+              %li
+                %a.settings-link{href: 'javascript:void(0)', data: { toggle: 'dropdown' } }
+                  %img{src: "https://www.gravatar.com/avatar/#{@user.gravatar_hash}?s=40", alt: "Profile Avatar"}
+                  %b.caret
+                %ul.dropdown-menu.pull-right
+                  %li
+                    %a{href: "/settings", alt: "Settings"}
+                      %span.glyphicon.glyphicon-cog
+                      Settings
+                  %li
+                    %a{href: "/logout", alt: "Log out"}
+                      %span.glyphicon.glyphicon-off
+                      Log out
 
       #mainContent
         - if flash.has? :error
@@ -142,6 +114,9 @@
               %img.footer-item.footer-lab{src: '/img/SEP-Labs-Logo-White.svg'}
 
     :javascript
-      if (!#{@user.nil?}) {
-        $("body").toggleClass("has-drawer");
-      }
+      $(document).ready(function() {
+        if (#{!@user.nil?}) {
+          Ollert.loadBoards();
+          $("body").toggleClass("has-drawer");
+        }
+      });
