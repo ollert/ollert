@@ -47,6 +47,7 @@ body {
 
 #config-drawer {
   z-index: auto;
+  position: absolute;
 
   .drawer-controls a {
     margin-left: -1.5em;

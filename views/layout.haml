@@ -16,6 +16,7 @@
     %script{src: '/js/vendor/bootstrap.min.js'}
     %script{src: '/js/vendor/drawer.min.js'}
     %script{src: '/js/vendor/underscore-min.js'}
+    %script{src: '/js/vendor/hammer.min.js'}
 
     %script{src: "/js/trello-client.js"}
     %script{src: "/js/trello-controller.js"}
@@ -109,14 +110,25 @@
               %li
                 %a{href: "mailto:connect@ollertapp.com", alt: "Contact Us"}
                   Contact Us
-          .col-md-3.col-md-offset-3.col-sm-4.col-sm-offset-2.col-xs-12.no-padding
-            %a{href: "http://www.sep.com/labs/", alt: "SEP Labs", target: "blank", title: "Danger! Experimental"}
-              %img.footer-item.footer-lab{src: '/img/SEP-Labs-Logo-White.svg'}
+          .col-md-3.col-md-offset-3.col-sm-4.col-sm-offset-2.hidden-xs.no-padding
+            %a{href: "//www.sep.com/labs/", alt: "SEP Labs", target: "blank", title: "Danger! Experimental"}
+              %img.footer-item.footer-lab{"src": "/img/labs-logo.png"}
 
     :javascript
       $(document).ready(function() {
         if (#{!@user.nil?}) {
           Ollert.loadBoards();
           $("body").toggleClass("has-drawer");
+          var hammertime = new Hammer($("body")[0]);
+          hammertime.on('swipeleft', function(ev) {
+            if ($("#config-drawer").hasClass("open")) {
+              $(".drawer-controls a").click();
+            }
+          });
+          hammertime.on('swiperight', function(ev) {
+            if (!$("#config-drawer").hasClass("open")) {
+              $(".drawer-controls a").click();
+            }
+          });
         }
       });
