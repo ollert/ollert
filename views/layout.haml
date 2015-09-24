@@ -40,27 +40,14 @@
 
   %body
     - unless @user.nil?
-      #configDrawer.drawer.dw-xs-10.dw-sm-6.dw-md-4.fold{"aria-labelledby" => "configDrawer"}
+      #config-drawer.drawer.dw-xs-10.dw-sm-6.dw-md-4.dw-lg-3.fold{"aria-labelledby" => "config-drawer"}
         .drawer-controls
-          %a.btn.btn-primary.btn-sm{"aria-controls" => "configDrawer", "aria-foldedopen" => "false", "data-toggle" => "drawer", :href => "#configDrawer"}
+          %a.btn.btn-primary.btn-sm{"aria-controls" => "config-drawer", "aria-foldedopen" => "false", "data-toggle" => "drawer", :href => "#config-drawer"}
             %span.glyphicon.glyphicon-menu-hamburger{"aria-hidden": "true"}
         .drawer-contents
           .drawer-heading
-            %h2.drawer-title Menu
-          .drawer-body
-            %p
-              This is a properly padded container for content in the
-              drawer that isn't a navigation.
-            %a{:href => "#"} A Regular Link
-          %ul.drawer-nav
-            %li.active{:role => "presentation"}
-              %a{:href => "#"} Home
-            %li{:role => "presentation"}
-              %a{:href => "#"} Profile
-            %li{:role => "presentation"}
-              %a{:href => "#"} Messages
-          .drawer-footer
-            %small © Caroline Amaba
+            %h2.drawer-title Boards
+          %ul.drawer-nav#config-drawer-board-list
 
     %div
       %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}

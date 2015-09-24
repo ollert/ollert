@@ -1,6 +1,8 @@
 var Ollert = (function() {
   var loadBoards = function() {
-    clearBoards();
+    $('.my-boards').each(function() {
+      $(this).empty();
+    });
 
     $.ajax({
       url: "/boards",
@@ -8,24 +10,9 @@ var Ollert = (function() {
         Accept: 'application/json'
       },
       success: loadBoardsCallback,
-      statusCode: {
-        400: function() {
-          loadSimpleBoards('No Boards');
-        }
-      },
       error: function(request, status, error) {
-        if (request.status != 400) {
-          loadSimpleBoards('Error. Try reloading!');
-        }
+        loadSimpleBoards(request.status === 400 ? 'No boards' : 'Error. Try reloading!');
       }
-    });
-  };
-
-  var clearBoards = function() {
-    var menus = $('.my-boards');
-
-    menus.each(function() {
-      $(this).empty();
     });
   };
 
@@ -41,8 +28,27 @@ var Ollert = (function() {
   };
 
   var loadBoardsCallback = function(data) {
+    // loadSimpleBoards('Work in progress');
     var boardData = data['data'];
     var menus = $('.my-boards');
+
+    console.log(data)
+    var boardItem;
+    for (var boardName in boardData) {
+      var organization = boardData[boardName],
+          organizationBoards = $("<ul/>");
+      for (var j = 0; j < organization.length; ++j) {
+        var board = organization[j]
+        item = $("<li/>", {
+          role: "presentation"
+        });
+        item.append($("<a href=\"/boards/" + board.id + "\">" + board.name + "</a>"));
+        organizationBoards.append(item);
+      }
+      var section = $("<li role=\"presentation\"><b>" + boardName + "</b></li>").append(organizationBoards)
+      $("#config-drawer-board-list").append(section);
+    }
+
 
     for (var organization in boardData) {
       if (boardData.hasOwnProperty(organization)) {
