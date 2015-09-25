@@ -1,5 +1,5 @@
 development:
-  sessions:
+  clients:
     default:
       database: ollert-dev
       hosts:
@@ -8,7 +8,7 @@ development:
     raise_not_found_error: false
 
 test:
-  sessions:
+  clients:
     default:
       database: ollert-test
       hosts:
@@ -17,7 +17,7 @@ test:
     raise_not_found_error: false
 
 production:
-  sessions:
+  clients:
     default:
       uri: <%= ENV['MONGOLAB_URI'] %>
   options:

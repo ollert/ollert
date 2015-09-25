@@ -14,4 +14,3 @@ class TestListBuilder
     TestListBuilder.new list_name
   end
 end
-

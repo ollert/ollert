@@ -6,10 +6,10 @@ class BoardSettings < SitePrism::Page
   link(:apply, text: 'Apply')
 
   def define_work(start_of, end_of)
+    wait_for_ajax
     self.start_of_work = start_of
     self.end_of_work = end_of
     apply
     wait_for_ajax
   end
 end
-

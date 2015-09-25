@@ -11,14 +11,19 @@ require 'site_prism'
 
 require 'capybara/webkit'
 require 'require_all'
+require 'tilt/haml'
 
 require_rel '../../../web', '../../spec/trello_integration_helper', '../../lib'
 
 Capybara.app = Ollert
-Capybara.default_wait_time = 10
+Capybara.default_max_wait_time = 10
 Capybara.app.use RackSessionAccess::Middleware
 
 Capybara.javascript_driver = :webkit
+
+Capybara::Webkit.configure do |config|
+  config.allow_url("*")
+end
 
 SitePrism.configure do |config|
   config.use_implicit_waits = true
@@ -32,4 +37,3 @@ Trello.configure do |config|
   config.developer_public_key = ENV['PUBLIC_KEY']
   config.member_token = ENV['MEMBER_TOKEN']
 end
-

@@ -65,7 +65,7 @@ unless ENV['RACK_ENV'] == 'production'
 
     desc "Run all Cucumber tests"
     task :cukes do
-      ruby "-S cucumber #{File.dirname(__FILE__)}/test/features"
+      ruby "-S cucumber -v -r #{File.dirname(__FILE__)}/test/features #{File.dirname(__FILE__)}/test/features"
     end
 
     desc "Run a single Cuke test"

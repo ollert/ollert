@@ -74,7 +74,7 @@ var SettingsController = function() {
       },
       complete: function() {
         $("#trello-connect").enable();
-        Ollert.loadBoards();
+        Ollert.refreshDrawer();
       }
     });
   };

@@ -7,13 +7,16 @@
     %meta{name: 'author', content: 'Larry Price <larry@ollertapp.com>'}
 
     %link{rel: 'shortcut icon', href:'/img/favicon.ico'}
-    
+
     %link{href: '/css/vendor/bootstrap.min.css', rel: 'stylesheet'}
+    %link{href: '/css/vendor/drawer.min.css', rel: 'stylesheet'}
     %link{rel: 'stylesheet', type: 'text/css', href: '/css/styles.css'}
 
     %script{src: '/js/vendor/jquery-2.1.1.min.js'}
     %script{src: '/js/vendor/bootstrap.min.js'}
+    %script{src: '/js/vendor/drawer.min.js'}
     %script{src: '/js/vendor/underscore-min.js'}
+    %script{src: '/js/vendor/hammer.min.js'}
 
     %script{src: "/js/trello-client.js"}
     %script{src: "/js/trello-controller.js"}
@@ -31,63 +34,45 @@
     :javascript
       $(document).ready(function() {
         Trello.setKey("#{ENV['PUBLIC_KEY']}");
-        if (#{!@user.nil?}) {
-          Ollert.loadBoards();
-        }
       });
 
   %body
+    - unless @user.nil?
+      #config-drawer.drawer.dw-xs-10.dw-sm-6.dw-md-4.dw-lg-3.fold{"aria-labelledby" => "config-drawer"}
+        .drawer-controls
+          %a.btn.btn-primary.btn-sm{"aria-controls" => "config-drawer", "aria-foldedopen" => "false", "data-toggle" => "drawer", :href => "#config-drawer"}
+            %span.glyphicon.glyphicon-menu-hamburger{"aria-hidden": "true"}
+        .drawer-contents
+          .drawer-heading
+            %h2.drawer-title Boards
+          %ul.drawer-nav#config-drawer-board-list
+
     %div
       %nav{class: 'navbar navbar-default navbar-static-top', role: 'navigation'}
         .container-fluid
           .navbar-header
-            %a{class: 'navbar-brand', href: '/'}
+            %a.navbar-brand{href: '/'}
               Ollert
-            .visible-xs-block
-              - if @user.nil?
-                %ul{class: 'signup-login-group nav visible-xs-inline'}
-                  %li{style: 'margin-right: 10px;'}
-                    %form{action: "/login", method: "get", role: "form", class: "pull-right"}
-                      %input{type: "submit", class: "btn btn-default", value: "Log in"}
-              - else
-                %button.navbar-toggle.collapsed{type: "button", data: { toggle: 'collapse', target: '.navbar-collapse' } }
-                  %span.sr-only
-                    Toggle navigation
-                  %span.icon-bar
-                  %span.icon-bar
-                  %span.icon-bar
-                %button.my-boards-button.navbar-toggle.collapsed.btn.btn-link{type: 'button', data: { toggle: 'dropdown' } }
-                  %span.glyphicon.glyphicon-stats
-                  My Boards
-                  %b.caret
-                %ul.dropdown-menu.pull-right.my-boards
           - if @user.nil?
-            %ul{class: 'signup-login-group nav navbar-nav navbar-right hidden-xs'}
-              %li{style: 'margin-left:10px;'}
+            %ul.signup-login-group.nav.navbar-nav.navbar-right
+              %li
                 %form{onsubmit: "TrelloController.authorize(); return false;"}
                   %input.btn.btn-default{type: "submit", value: "Log in"}
-          .collapse.navbar-collapse
-            %ul.nav.navbar-nav.pull-right
-              - unless @user.nil?
-                %li.hidden-xs
-                  %a{href: 'javascript:void(0)', data: { toggle: 'dropdown' } }
-                    %span.glyphicon.glyphicon-stats
-                    My Boards
-                    %b.caret
-                  %ul.dropdown-menu.pull-right.my-boards
-                %li
-                  %a.settings-link{href: 'javascript:void(0)', data: { toggle: 'dropdown' } }
-                    %img{src: "https://www.gravatar.com/avatar/#{@user.gravatar_hash}?s=40", alt: "Profile Avatar"}
-                    %b.caret
-                  %ul.dropdown-menu.pull-right
-                    %li
-                      %a{href: "/settings", alt: "Settings"}
-                        %span.glyphicon.glyphicon-cog
-                        Settings
-                    %li
-                      %a{href: "/logout", alt: "Log out"}
-                        %span.glyphicon.glyphicon-off
-                        Log out
+          - else @user.nil?
+            %ul.nav.navbar-nav.navbar-right
+              %li
+                %a.settings-link{href: 'javascript:void(0)', data: { toggle: 'dropdown' } }
+                  %img{src: "https://www.gravatar.com/avatar/#{@user.gravatar_hash}?s=40", alt: "Profile Avatar"}
+                  %b.caret
+                %ul.dropdown-menu.pull-right
+                  %li
+                    %a{href: "/settings", alt: "Settings"}
+                      %span.glyphicon.glyphicon-cog
+                      Settings
+                  %li
+                    %a{href: "/logout", alt: "Log out"}
+                      %span.glyphicon.glyphicon-off
+                      Log out
 
       #mainContent
         - if flash.has? :error
@@ -125,6 +110,10 @@
               %li
                 %a{href: "mailto:connect@ollertapp.com", alt: "Contact Us"}
                   Contact Us
-          .col-md-3.col-md-offset-3.col-sm-4.col-sm-offset-2.col-xs-12.no-padding
-            %a{href: "http://www.sep.com/labs/", alt: "SEP Labs", target: "blank", title: "Danger! Experimental"}
-              %img.footer-item.footer-lab{src: '/img/SEP-Labs-Logo-White.svg'}
+          .col-md-3.col-md-offset-3.col-sm-4.col-sm-offset-2.hidden-xs.no-padding
+            %a{href: "//www.sep.com/labs/", alt: "SEP Labs", target: "blank", title: "Danger! Experimental"}
+              %img.footer-item.footer-lab{"src": "/img/labs-logo.png"}
+
+    - if !@user.nil?
+      :javascript
+        $(document).ready(Ollert.initDrawer);

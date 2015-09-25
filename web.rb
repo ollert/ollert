@@ -22,6 +22,8 @@ class Ollert < Sinatra::Base
     use Rack::Deflater
 
     I18n.enforce_available_locales = true
+    Mongoid.logger = Logger::WARN
+    Mongo::Logger.logger.level = Logger::WARN
     Mongoid.load! "#{File.dirname(__FILE__)}/mongoid.yml"
   end
 
