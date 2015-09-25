@@ -130,5 +130,15 @@
               $(".drawer-controls a").click();
             }
           });
+
+          if (window['localStorage'] && window['localStorage'].getItem('hasAcknowledgedDrawer') != "true") {
+            setTimeout(function() {
+              $(".drawer-controls a").addClass("shake");
+            }, 2500);
+          }
+
+          $(".drawer-controls a").on("click", function() {
+            window['localStorage'].setItem('hasAcknowledgedDrawer', true);
+          });
         }
       });

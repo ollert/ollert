@@ -48,15 +48,37 @@ body {
 #config-drawer {
   z-index: auto;
   position: absolute;
-
   .drawer-controls a {
     margin-left: -1.5em;
     margin-top: 8em;
-  }
+    &.shake {
+      animation-name: shake;
+      animation-duration: 2000ms;
+      animation-iteration-count: 3;
+      animation-timing-function: linear;
+      transform-origin: 50% 50%;
 
+      -webkit-animation-name: shake;
+      -webkit-animation-duration: 2000ms;
+      -webkit-animation-iteration-count: 3;
+      -webkit-animation-timing-function: linear;
+    }
+  }
   .drawer-contents {
     z-index: 1035;
   }
+}
+
+@keyframes shake {
+  0% { transform: scale(1); }
+  50% {transform: scale(2); }
+  100% { transform: scale(1); }
+}
+
+@-webkit-keyframes shake {
+  0% { transform: scale(1); }
+  50% {transform: scale(2); }
+  100% { transform: scale(1); }
 }
 
 // end drawer customizations
