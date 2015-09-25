@@ -8,7 +8,7 @@ before_fork do |server, worker|
     Process.kill 'QUIT', Process.pid
   end
 
-  Mongoid.default_session.disconnect
+  Mongoid.disconnect_clients
 end
 
 after_fork do |server, worker|

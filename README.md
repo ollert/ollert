@@ -49,26 +49,26 @@ ANOTHER_VARIABLE=Another value
 Environment variables:
 
 * `PUBLIC_KEY`
-    * required
-    * Retrieve a public key from Trello by visiting [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate).
+  * required
+  * Retrieve a public key from Trello by visiting [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate)
 * `TRELLO_TEST_DISPLAY_NAME`
-    * required
-    * Display name to use while running cukes (this is your `@<username>` from Trello)
+  * required
+  * Display name to use while running cukes (this is your `@<username>` from Trello)
 * `TRELLO_TEST_USERNAME`
-    * required
-    * Username to use while running cukes
+  * required
+  * Username to use while running cukes
 * `TRELLO_TEST_PASSWORD`
-    * required
-    * Password to use while running cukes
+  * required
+  * Password to use while running cukes
 * `MEMBER_TOKEN`
-    * required
-    * this value is used to run the integration tests. To generate this value after you have entered your `PUBLIC_KEY` run the following command and paste the result into your `.env` file where it asks you to:
-```
-rake test:setup
-```
+  * required
+  * this value is used to run the integration tests. To generate this value after you have entered your `PUBLIC_KEY` run the following command and paste the result into your `.env` file where it asks you to: `rake test:setup`
 * `SESSION_SECRET`
-    * optional
-    * Any string
+  * optional
+  * Any string
+* `RACK_ENV`
+  * optional
+  * You should set this to `development`. Other options include `testing` and `production`.
 
 Run `rake` to start the application on `localhost:4000`.
 
