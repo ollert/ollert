@@ -14,6 +14,10 @@ var Ollert = (function() {
       }
     });
 
+    tempNotifyUsersAboutDrawer();
+  };
+
+  var tempNotifyUsersAboutDrawer = function () {
     if (window['localStorage'] && window['localStorage'].getItem('hasAcknowledgedDrawer') != "true") {
       setTimeout(function() {
         $(".drawer-controls a").addClass("shake");
