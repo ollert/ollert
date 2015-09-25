@@ -1,9 +1,36 @@
 var Ollert = (function() {
-  var loadBoards = function() {
-    $('.my-boards').each(function() {
-      $(this).empty();
+  var initDrawer = function() {
+    refreshDrawer();
+    $("body").toggleClass("has-drawer");
+    var hammertime = new Hammer($("body")[0]);
+    hammertime.on('swipeleft', function(ev) {
+      if ($("#config-drawer").hasClass("open")) {
+        $(".drawer-controls a").click();
+      }
+    });
+    hammertime.on('swiperight', function(ev) {
+      if (!$("#config-drawer").hasClass("open")) {
+        $(".drawer-controls a").click();
+      }
     });
 
+    if (window['localStorage'] && window['localStorage'].getItem('hasAcknowledgedDrawer') != "true") {
+      setTimeout(function() {
+        $(".drawer-controls a").addClass("shake");
+      }, 2500);
+    }
+
+    $(".drawer-controls a").on("click", function() {
+      window['localStorage'].setItem('hasAcknowledgedDrawer', true);
+    });
+  };
+
+  var refreshDrawer = function () {
+    loadBoards();
+  };
+
+  var loadBoards = function() {
+    resetBoards("Loading boards, please wait...");
     $.ajax({
       url: "/boards",
       headers: {
@@ -11,23 +38,21 @@ var Ollert = (function() {
       },
       success: loadBoardsCallback,
       error: function(request, status, error) {
-        loadSimpleBoards(request.status === 400 ? 'No boards' : 'Error. Try reloading!');
+        resetBoards(request.status === 400 ? 'No boards' : 'Error. Try reloading!');
       }
     });
   };
 
-  var loadSimpleBoards = function(text) {
-    var menus = $('.my-boards');
-    menus.each(function() {
-      var element = $("<li>" + text + "</li>");
-      element.addClass('divider');
-      element.addClass('divider-section');
-
-      $(this).append(element);
-    });
+  var resetBoards = function(text) {
+    if (text) {
+      $("#config-drawer-board-list").append($("<span>" + text + "</span>"));
+    } else {
+      $("#config-drawer-board-list").empty();
+    }
   };
 
   var loadBoardsCallback = function(data) {
+    resetBoards();
     var boardData = data['data'], boardItem, board, organization, boards;
     for (var orgName in boardData) {
       organization = boardData[orgName];
@@ -50,7 +75,8 @@ var Ollert = (function() {
   };
 
   return {
-    loadBoards: loadBoards,
+    initDrawer: initDrawer,
+    refreshDrawer: refreshDrawer,
     loadAvatar: loadAvatar
   };
 })();

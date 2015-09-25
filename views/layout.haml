@@ -114,31 +114,6 @@
             %a{href: "//www.sep.com/labs/", alt: "SEP Labs", target: "blank", title: "Danger! Experimental"}
               %img.footer-item.footer-lab{"src": "/img/labs-logo.png"}
 
-    :javascript
-      $(document).ready(function() {
-        if (#{!@user.nil?}) {
-          Ollert.loadBoards();
-          $("body").toggleClass("has-drawer");
-          var hammertime = new Hammer($("body")[0]);
-          hammertime.on('swipeleft', function(ev) {
-            if ($("#config-drawer").hasClass("open")) {
-              $(".drawer-controls a").click();
-            }
-          });
-          hammertime.on('swiperight', function(ev) {
-            if (!$("#config-drawer").hasClass("open")) {
-              $(".drawer-controls a").click();
-            }
-          });
-
-          if (window['localStorage'] && window['localStorage'].getItem('hasAcknowledgedDrawer') != "true") {
-            setTimeout(function() {
-              $(".drawer-controls a").addClass("shake");
-            }, 2500);
-          }
-
-          $(".drawer-controls a").on("click", function() {
-            window['localStorage'].setItem('hasAcknowledgedDrawer', true);
-          });
-        }
-      });
+    - if !@user.nil?
+      :javascript
+        $(document).ready(Ollert.initDrawer);
