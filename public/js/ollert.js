@@ -37,9 +37,11 @@ var Ollert = (function() {
     resetBoards("Loading boards, please wait...");
     $.ajax({
       url: "/boards",
+      method: "get",
       headers: {
         Accept: 'application/json'
       },
+      dataType: "json",
       success: loadBoardsCallback,
       error: function(request, status, error) {
         resetBoards(request.status === 400 ? 'No boards' : 'Error. Try reloading!');
