@@ -12,21 +12,10 @@
     %link{href: '/css/vendor/drawer.min.css', rel: 'stylesheet'}
     %link{rel: 'stylesheet', type: 'text/css', href: '/css/styles.css'}
 
-    %script{src: '/js/vendor/jquery-2.1.1.min.js'}
-    %script{src: '/js/vendor/bootstrap.min.js'}
-    %script{src: '/js/vendor/drawer.min.js'}
-    %script{src: '/js/vendor/underscore-min.js'}
-    %script{src: '/js/vendor/hammer.min.js'}
-
-    %script{src: "/js/trello-client.js"}
-    %script{src: "/js/trello-controller.js"}
-    %script{src: "/js/ollert.js"}
-    %script{src: "/js/time-tracker.js"}
-    %script{src: "/js/plugins.js"}
-    %script{src: "/js/flash-message.js"}
+    %script{src: "/js/dist/vendor.min.js"}
+    %script{src: "/js/dist/ollert.min.js"}
 
     - if ENV['RACK_ENV'] == "production"
-      %script{src: "/js/google-analytics.js"}
       :javascript
         ga('create', "#{ENV['GOOGLE_ANALYTICS_KEY']}", 'ollertapp.com');
         ga('send', 'pageview');
