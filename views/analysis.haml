@@ -128,8 +128,6 @@
           #newest-card-name.stat-subtitle
 
 :javascript
-  $(document).ready(function() {
-    setTimeout(function() {
-      AnalysisController.init("#{@board_id}", #{@board_lists}, "#{@starting_list}", "#{@ending_list}", "#{@token}");
-    }, 0);
-  });
+  window.onload = function() {
+    AnalysisController.init("#{@board_id}", #{@board_lists}, "#{@starting_list}", "#{@ending_list}", "#{@token}");
+  };

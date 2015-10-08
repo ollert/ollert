@@ -48,6 +48,6 @@
       %span#delete-account-status
 
 :javascript
-  $(document).ready(function() {
-    setTimeout(SettingsController.init, 0);
-  });
+  window.onload = function() {
+    SettingsController.init();
+  };
