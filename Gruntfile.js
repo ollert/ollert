@@ -7,7 +7,7 @@ module.exports = function(grunt) {
       all: {
         files: {
           'public/js/dist/ollert.min.js': 'public/js/*.js',
-          'public/js/dist/vendor.min.js': 'public/js/vendor/*.js'
+          // 'public/js/dist/vendor.min.js': 'public/js/vendor/*.js'
         }
       }
     },
