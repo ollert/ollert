@@ -60,7 +60,7 @@ unless ENV['RACK_ENV'] == 'production'
 
     desc 'Run all JavaScript specs'
     task :js do
-      system('testem ci') or fail
+      system('npm test') or fail
     end
 
     desc "Run all Cucumber tests"

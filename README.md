@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/sep/ollert.svg?branch=master)](https://travis-ci.org/sep/ollert)
 
 
-* Author: Larry Price <larry@ollertapp.com>
+* Author: Larry Price <larry@larry-price.com>
 * Company: Software Engineering Professionals, Inc.
 * Website: [ollertapp.com](https://ollertapp.com)
 * License: [GNU Affero GPL v3.0](LICENSE)
@@ -36,8 +36,14 @@ Requirements
 * `ruby-2.2.0` - Install using [RVM](https://rvm.io/), be aware of [this issue](https://rvm.io/integration/gnome-terminal)
 * `mongodb` - Check out [this very helpful page](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)
 * `bundler` - `gem install bundler`
+* `npm` - `sudo apt-get install nodejs npm`
 
-In the project root folder, use `bundle install` to install required gems.
+In the project root folder, you should:
+
+* `bundle install`
+  * Installs the required ruby gems
+* `npm install`
+  * Installs the required node packages
 
 Create a file called `.env` in the root project folder. The format of the `.env` file is simply:
 
@@ -70,7 +76,7 @@ Environment variables:
   * optional
   * You should set this to `development`. Other options include `testing` and `production`.
 
-Run `rake` to start the application on `localhost:4000`.
+Run `rake` to start the application on `localhost:4000`. This will fork two processes: a rack server (probably `unicorn`) and `grunt watch` (to constantly compile and minify Sass and javascript files).
 
 All tests must pass before pushing to `origin/master`.
 
@@ -85,13 +91,8 @@ To run the cukes, use `rake test:cukes`. Cukes are run using the `TRELLO_TEST_US
 To run all tests, use `rake test:all`.
 
 ##### `testem`
-The JavaScript specs use [`testem`](https://github.com/airportyh/testem#installation) as the test runner, which will require `nodejs`. To install (if you already have node) run the following command:
 
-```
-npm install testem -g
-```
-
-By default the tests will try to use [`PhantomJS`](http://phantomjs.org/) as the browser for the JavaScript specs. To install, PhantomJS needs to be part of your path. To install using Homebrew on OSX run the following command:
+The JavaScript specs use [`testem`](https://github.com/airportyh/testem#installation) as the test runner. By default the tests will try to use [`PhantomJS`](http://phantomjs.org/) as the browser for the JavaScript specs. To install, PhantomJS needs to be part of your path. To install using Homebrew on OSX run the following command:
 
 ```
 brew install phantomjs
