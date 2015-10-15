@@ -13,8 +13,8 @@ task :default => [:start]
 
 desc "Start application based on environment"
 task :start do
-  fork { exec "sass --watch public/css --style compressed" }
   fork { exec "foreman start -p 4000" }
+  fork { exec "grunt watch" }
   Process.waitall
 end
 
@@ -60,7 +60,7 @@ unless ENV['RACK_ENV'] == 'production'
 
     desc 'Run all JavaScript specs'
     task :js do
-      system('testem ci') or fail
+      system('npm test') or fail
     end
 
     desc "Run all Cucumber tests"
