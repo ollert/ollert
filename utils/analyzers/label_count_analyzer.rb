@@ -1,7 +1,7 @@
 class LabelCountAnalyzer
   def self.analyze(data)
     return {} if data.nil? || data.empty?
-    
+
     labels = data.reject {|label| label["uses"] == 0 && label["name"].empty?}
 
     {

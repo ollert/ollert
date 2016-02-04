@@ -94,11 +94,11 @@ class StatsAnalyzer
 
   def self.get_oldest_card(cards, actions)
     oldest = actions.min_by { |action| action["date"].to_date }
-    return oldest["data"]["card"]["name"], Date.today.mjd - oldest["date"].to_date.mjd unless oldest.nil?
+    return oldest["data"]["card"]["name"], DateTime.now.utc.mjd - oldest["date"].to_datetime.utc.mjd unless oldest.nil?
   end
 
   def self.get_newest_card(cards, actions)
     oldest = actions.max_by { |action| action["date"].to_date }
-    return oldest["data"]["card"]["name"], Date.today.mjd - oldest["date"].to_date.mjd unless oldest.nil?
+    return oldest["data"]["card"]["name"], DateTime.now.utc.mjd - oldest["date"].to_datetime.utc.mjd unless oldest.nil?
   end
 end

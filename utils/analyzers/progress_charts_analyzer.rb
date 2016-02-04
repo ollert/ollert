@@ -43,9 +43,10 @@ class ProgressChartsAnalyzer
     end
 
     isFirst = true
-    cad = card_actions.group_by {|ca| ca["date"].to_date}
+    cad = card_actions.group_by {|ca| ca["date"].to_datetime.utc.to_date}
     return cfd if cad.empty?
-    cad.keys.min.upto(Date.today).each do |date|
+
+    cad.keys.min.upto(DateTime.now.utc.to_date).each do |date|
       cfd[date-1].each do |k,v|
         cfd[date][k] = v.clone
       end unless isFirst
@@ -104,7 +105,7 @@ class ProgressChartsAnalyzer
   def self.formatBurnUp(cfd, inScopeLists, outOfScopeLists)
     dates = cfd.keys.sort
     cfd_values = Array.new
-   
+
     inList_array = Array.new
     outList_array = Array.new
     dates.each do |date|
