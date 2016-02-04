@@ -3,7 +3,7 @@ class Ollert
     if !@user.nil? && !@user.member_token.nil?
       redirect '/boards'
     end
-    
+
     haml :landing
   end
 
