@@ -2,13 +2,14 @@ class LabelCountAnalyzer
   def self.analyze(data)
     return {} if data.nil? || data.empty?
 
-    labels = data.reject {|label| label["uses"] == 0 && label["name"].empty?}
 
-    {
-      labels: labels.map {|label| label["name"]},
-      counts: labels.map {|label| label["uses"]},
-      colors: labels.map {|label| convert_color(label["color"])}
-    }
+    labels = {labels: [], colors: [], counts: []}
+    data.reject {|label| label["uses"] == 0 && label["name"].empty?}.each do |label|
+      labels[:labels] << label['name']
+      labels[:colors] << convert_color(label['color'])
+      labels[:counts] << label['uses']
+    end
+    labels
   end
 
   private
