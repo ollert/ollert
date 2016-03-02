@@ -60,13 +60,7 @@ var LabelCountChartBuilder = (function() {
       },
       success: function(data) {
         $('#label-count-spinner').hide();
-
-        var parsed = jQuery.parseJSON(data);
-        buildChart({
-          labels: parsed.labels,
-          counts: parsed.counts,
-          colors: parsed.colors
-        });
+        buildChart(jQuery.parseJSON(data));
       },
       error: function(xhr) {
         $("#label-count-spinner").hide();

@@ -54,7 +54,7 @@ class Ollert
     body StatsAnalyzer.analyze(StatsFetcher.fetch(client, board_id)).to_json
     status 200
   end
-  
+
   get '/api/v1/labels/:board_id' do |board_id|
     client = Trello::Client.new(
       :developer_public_key => ENV['PUBLIC_KEY'],
