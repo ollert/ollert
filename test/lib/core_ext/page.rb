@@ -16,6 +16,10 @@ module SitePrism
       wait_until { finished_all_ajax? }
     end
 
+    def refresh
+      visit current_path
+    end
+
     def self.the_current_page?
       page = self.new
 

@@ -25,6 +25,10 @@ class TrelloIntegrationHelper
     @second_list ||= add_list('Integration Test List #2')
   end
 
+  def self.archive_all_cards
+    board.cards.each(&:close!)
+  end
+
   def self.cleanup
     lists.compact.each do |list|
       list.close!
