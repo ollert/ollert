@@ -77,7 +77,7 @@ describe Utils::Analyzers::TimeTracker do
   it 'breaks multiple cards up' do
     time_tracked_for ActionBuilder.create_card(:backlog, 3.days.ago)
       .move_card(:development)
-      .create_card(:backlog, last_friday, 2)
+      .create_card(:backlog, last_friday)
 
     expect(@time_tracked.map { |time| time.card.id }).to eq([1, 2])
   end
@@ -152,8 +152,7 @@ describe Utils::Analyzers::TimeTracker do
       ActionBuilder.new list, date, card_id
     end
 
-    def create_card(list, date=Date.today, card_id)
-      @card_id = SecureRandom.uuid
+    def create_card(list, date=Date.today)
       next_action(list, date.to_time, 'createCard')
       self
     end
