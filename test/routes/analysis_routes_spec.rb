@@ -22,7 +22,7 @@ RSpec.describe 'analysis routes' do
       expect(trello_client).to receive(:get).with("/boards/#{board_id}/lists", filter: 'open')
         .and_return(lists.to_json)
 
-      expect(trello_client).to receive(:get).with("/boards/#{board_id}/cards")
+      expect(trello_client).to receive(:get).with("/boards/#{board_id}/cards", fields: 'name,closed,idList,idBoard,shortUrl')
         .and_return(cards.to_json)
 
       get "/api/v1/listchanges/#{board_id}", token: token
