@@ -3,6 +3,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'trello'
 require 'require_all'
 require 'dotenv'
+require 'rspec/its'
 
 require 'trello_integration_helper'
 
@@ -11,14 +12,32 @@ require_rel '../../helpers'
 
 Dotenv.load File.join(File.dirname(__FILE__), '../../', '.env')
 
+require 'rack/test'
+require_relative '../../web'
+
 Trello.configure do |config|
   config.developer_public_key = ENV['PUBLIC_KEY']
   config.member_token = ENV['MEMBER_TOKEN']
 end
 
-RSpec.configure do |config|
-  config.before(:suite) do
+module OllertSpecs
+  def app
+    Ollert
   end
+
+  def json_response_body
+    @json_response_body ||= JSON.parse(last_response.body)
+  end
+end
+
+require 'factory_girl'
+FactoryGirl.definition_file_paths = %w(./spec/factories)
+FactoryGirl.find_definitions
+
+RSpec.configure do |config|
+  config.include Rack::Test::Methods
+  config.include OllertSpecs
+  config.include FactoryGirl::Syntax::Methods
 
   config.after(:suite) do
     TrelloIntegrationHelper.cleanup

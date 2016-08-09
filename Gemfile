@@ -26,6 +26,7 @@ end
 group :development, :test do
   gem 'dotenv'
   gem 'rspec'
+  gem 'rspec-its'
   gem 'cucumber'
   gem 'capybara'
   gem 'rack_session_access'
@@ -35,4 +36,7 @@ group :development, :test do
   gem 'site_prism'
   gem 'page_navigation'
   gem 'selenium-webdriver'
+  gem 'factory_girl'
+  gem 'activesupport'
+  gem 'faker', '~> 1.6.6'
 end
