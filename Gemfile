@@ -14,7 +14,7 @@ gem 'rack-flash3'
 gem 'rack-ssl'
 gem 'rack-rewrite'
 gem 'mongoid'
-gem 'ruby-trello'
+gem 'ruby-trello', '~> 1.4.2'
 gem 'business_time'
 gem 'require_all'
 
