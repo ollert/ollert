@@ -82,12 +82,23 @@ describe Utils::Analyzers::TimeTracker do
     expect(@time_tracked.map { |time| time.card.id }).to eq([1, 2])
   end
 
-  it 'ignores a card if there are missing actions' do
-    time_tracked_for ActionBuilder.create_card(:backlog, 3.days.ago)
-      .move_card(:development)
-      .copy_card_from_list
+  context 'cards with no actions' do
+    before do
+      time_tracked_for ActionBuilder.create_card(:backlog, 3.days.ago)
+        .move_card(:development)
+        .copy_card_from_list
+    end
 
-    expect(@time_tracked.map { |time| time.card.id }).to eq([1])
+    subject { @time_tracked }
+
+    its(:size) { should eq(2) }
+
+    context 'no actions' do
+      let(:id_with_no_actions) { 2 }
+      subject { super().find { |time| time.card.id == id_with_no_actions } }
+
+      its(:times) { should be_empty }
+    end
   end
 
   it '#to_json' do
@@ -132,6 +143,7 @@ describe Utils::Analyzers::TimeTracker do
     def initialize(list, date, card_id)
       @actions = []
       @cards = []
+      @next_id = 0
       @card_id = card_id
       next_action(list, date.to_time, 'createCard')
     end
@@ -141,13 +153,13 @@ describe Utils::Analyzers::TimeTracker do
     end
 
     def create_card(list, date=Date.today, card_id)
-      @card_id = card_id
+      @card_id = SecureRandom.uuid
       next_action(list, date.to_time, 'createCard')
       self
     end
 
     def copy_card_from_list
-      @cards << FactoryGirl.build(:trello_card)
+      add_card
       self
     end
 
@@ -168,7 +180,7 @@ describe Utils::Analyzers::TimeTracker do
     def next_action(list, date, type)
       case type
       when 'createCard'
-        @cards << FactoryGirl.build(:trello_card, id: @card_id)
+        add_card
       end
 
       fields = {
@@ -189,6 +201,11 @@ describe Utils::Analyzers::TimeTracker do
       fields['data']['card'] = {'id' => @card_id}
 
       (@actions << Utils::ListAction.new(fields)).last
+    end
+
+    def add_card
+      @next_id += 1
+      @cards << FactoryGirl.build(:trello_card, id: @next_id)
     end
 
     def to_list(list)

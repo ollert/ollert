@@ -6,7 +6,7 @@ module Utils
       attr_reader :card, :times
 
       def initialize(card, actions)
-        @actions = actions.sort_by(&:date)
+        @actions = actions ? actions.sort_by(&:date) : []
         @card = card
         @times = {}
 
@@ -16,7 +16,7 @@ module Utils
         end
 
         last = @actions.last
-        span_for(last.after_id).add last.date, DateTime.now.utc.to_date
+        span_for(last.after_id).add last.date, DateTime.now.utc.to_date if last
       end
 
       def in(list)
@@ -32,10 +32,7 @@ module Utils
 
       def self.by_card(cards:, actions:)
         grouped_actions = actions.group_by(&:card_id)
-        cards.map do |card|
-          found_actions = grouped_actions[card.id]
-          TimeTracker.new card, found_actions if found_actions
-        end.compact
+        cards.map { |c| TimeTracker.new c, grouped_actions[c.id] }
       end
 
       private
