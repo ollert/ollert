@@ -9,4 +9,12 @@ FactoryGirl.define do
     name { Faker::StarWars.planet }
     closed false
   end
+
+  factory :trello_card, class: Trello::Card do
+    initialize_with { new(attributes.stringify_keys) }
+
+    id { SecureRandom.uuid }
+    name { Faker::StarWars.quote }
+    closed false
+  end
 end

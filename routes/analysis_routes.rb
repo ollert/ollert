@@ -23,10 +23,12 @@ class Ollert
 
   get '/api/v1/listchanges/:board_id' do |board_id|
     lists = @client.get("/boards/#{board_id}/lists", filter: 'open').json_into(Trello::List)
+    cards = @client.get("/boards/#{board_id}/cards").json_into(Trello::Card)
     all = Utils::Fetchers::ListActionFetcher.fetch(@client, board_id)
 
     {
-      lists: lists.map {|l| {id: l.id, name: l.name}},
+      lists: lists.map {|l| l.attributes.slice(:id, :name) },
+      cards: cards.map { |c| c.attributes.slice(:id, :name, :list_id, :closed) },
       times: Utils::Analyzers::TimeTracker.by_card(all)
     }.to_json
   end

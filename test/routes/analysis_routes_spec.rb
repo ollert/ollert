@@ -11,6 +11,7 @@ RSpec.describe 'analysis routes' do
   describe '/api/v1/listchanges/:board_id' do
     let(:board_id) { 'abc-def' }
     let(:lists) { build_list(:trello_list, 5) }
+    let(:cards) { build_list(:trello_card, 5) }
     let(:actions) { [] }
     let(:times) { [] }
 
@@ -20,6 +21,9 @@ RSpec.describe 'analysis routes' do
 
       expect(trello_client).to receive(:get).with("/boards/#{board_id}/lists", filter: 'open')
         .and_return(lists.to_json)
+
+      expect(trello_client).to receive(:get).with("/boards/#{board_id}/cards")
+        .and_return(cards.to_json)
 
       get "/api/v1/listchanges/#{board_id}", token: token
     end
@@ -42,12 +46,16 @@ RSpec.describe 'analysis routes' do
 
     context 'json' do
       let(:expected_lists) do
-        lists.map { |l| { 'id' => l.id, 'name' => l.name } }
+        lists.map { |l| l.attributes.slice(:id, :name).stringify_keys }
+      end
+      let(:expected_cards) do
+        cards.map { |c| c.attributes.slice(*%i(id name list_id closed)).stringify_keys }
       end
 
       subject { json_response_body }
 
       its(%w(lists)) { should match_array(expected_lists) }
+      its(%w(cards)) { should match_array(expected_cards) }
       its(%w(times)) { should be_empty }
 
       context 'times' do
