@@ -1,18 +1,17 @@
-require_relative '../../spec_helper'
-
-class FakeFetcher
+class FakeFetcher < Trello::BasicData
   extend Utils::Fetcher
 
-  attr_reader :id, :date
-
-  def initialize(fields={})
-    @id = fields['id']
-    @date = fields['date']
-    @date = Date.parse(date) if date.is_a? String
-  end
+  register_attributes :id, :date
 
   def ==(other)
     id == other.id && date == other.date
+  end
+
+  def update_fields(fields)
+    attributes[:id] = fields['id']
+    fields['date'].tap do |date|
+      attributes[:date] = Date.parse(date) if date
+    end
   end
 end
 
@@ -71,7 +70,7 @@ describe Utils::Fetcher do
     end
 
     def setup_items(how_many, option={})
-      all = how_many.times.map {|n| FakeFetcher.new('id' =>  n, 'date' =>  Date.new(1998, 9, n + 1))}.reverse
+      all = how_many.times.map {|n| FakeFetcher.new('id' =>  n, 'date' =>  Date.new(1998, 9, n + 1).to_s)}.reverse
 
       to_json = ->(p) { 
         ((option[:is_hash] && p.map {|a| {'id' => a.id, 'date' => a.date}}) || p).to_json

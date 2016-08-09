@@ -6,6 +6,7 @@ require 'dotenv'
 require 'rspec/its'
 
 require 'trello_integration_helper'
+require_rel '../lib/core_ext/list'
 
 require_rel '../../utils'
 require_rel '../../helpers'
