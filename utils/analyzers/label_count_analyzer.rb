@@ -3,7 +3,7 @@ class LabelCountAnalyzer
     return {} if data.nil? || data.empty?
 
     labels = {labels: [], colors: [], counts: []}
-    data.map {|card| card["labels"]}.flatten.group_by {|label| label["id"]}.sort_by {|id, uses| -uses.count}.each do |id, uses|
+    data.map {|card| card["labels"]}.flatten.group_by {|label| label["id"]}.sort_by {|id, uses| [-uses.count, uses[0]['color'].downcase]}.each do |id, uses|
       labels[:labels] << ((uses[0]["name"].nil? || uses[0]["name"].empty?) ? uses[0]["color"] : uses[0]["name"])
       labels[:colors] << convert_color(uses[0]["color"])
       labels[:counts] << uses.count

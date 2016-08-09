@@ -29,8 +29,8 @@ describe LabelCountAnalyzer do
                {"labels" => [{"id" => "11", "color" => "mauve"}]}]
 
       expect(LabelCountAnalyzer.analyze(cards)).to match(
-        labels: %w(yellow red Doing orange purple green sky Completed lime pink mauve),
-        colors: %w(#fad900 #f54747 #0079bf #ff9f19 #a632db #41c200 #00c2e0 #4d4d4d #45e660 #ff78cb #b3b3b3),
+        labels: %w(yellow Completed Doing green lime mauve orange pink purple red sky),
+        colors: %w(#fad900 #4d4d4d #0079bf #41c200 #45e660 #b3b3b3 #ff9f19 #ff78cb #a632db #f54747 #00c2e0),
         counts: [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
       )
     end
