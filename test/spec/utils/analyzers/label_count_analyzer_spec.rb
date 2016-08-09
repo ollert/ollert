@@ -28,11 +28,11 @@ describe LabelCountAnalyzer do
                {"labels" => [{"id" => "10", "color" => "pink"}]},
                {"labels" => [{"id" => "11", "color" => "mauve"}]}]
 
-      expect(LabelCountAnalyzer.analyze(cards)).to match({
-        :labels=>["yellow", "green", "Doing", "orange", "purple", "red", "sky", "Completed", "lime", "pink", "mauve"],
-        :colors=>["#fad900", "#41c200", "#0079bf", "#ff9f19", "#a632db", "#f54747", "#00c2e0", "#4d4d4d", "#45e660", "#ff78cb", "#b3b3b3"],
-        :counts=>[2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-      })
+      expect(LabelCountAnalyzer.analyze(cards)).to match(
+        labels: %w(yellow red Doing orange purple green sky Completed lime pink mauve),
+        colors: %w(#fad900 #f54747 #0079bf #ff9f19 #a632db #41c200 #00c2e0 #4d4d4d #45e660 #ff78cb #b3b3b3),
+        counts: [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      )
     end
   end
 end
