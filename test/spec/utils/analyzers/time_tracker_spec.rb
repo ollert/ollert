@@ -140,16 +140,15 @@ describe Utils::Analyzers::TimeTracker do
   class ActionBuilder
     attr_reader :actions, :cards
 
-    def initialize(list, date, card_id)
+    def initialize(list, date)
       @actions = []
       @cards = []
       @next_id = 0
-      @card_id = card_id
       next_action(list, date.to_time, 'createCard')
     end
 
-    def self.create_card(list, date=Date.today, card_id=1)
-      ActionBuilder.new list, date, card_id
+    def self.create_card(list, date=Date.today)
+      ActionBuilder.new list, date
     end
 
     def create_card(list, date=Date.today)
@@ -162,8 +161,8 @@ describe Utils::Analyzers::TimeTracker do
       self
     end
 
-    def self.fake_missing_create(list, previous, date=Date.today, card_id=1)
-      builder = ActionBuilder.new list, date, card_id
+    def self.fake_missing_create(list, previous, date=Date.today)
+      builder = ActionBuilder.new list, date
       action = builder.actions.first
       action.instance_variable_set(:@before, previous.to_s)
       action.instance_variable_set(:@before_id, Base64.encode64(previous.to_s))
@@ -204,6 +203,7 @@ describe Utils::Analyzers::TimeTracker do
 
     def add_card
       @next_id += 1
+      @card_id = @next_id
       @cards << FactoryGirl.build(:trello_card, id: @next_id)
     end
 
