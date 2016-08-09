@@ -41,7 +41,7 @@ RSpec.describe 'analysis routes' do
       let(:actions) { [{id: 1}, {id: 2}] }
       subject {  Utils::Analyzers::TimeTracker }
 
-      it { should have_received(:by_card).with([{id: 1}, {id: 2}]) }
+      it { should have_received(:by_card).with(cards: cards, actions: [{id: 1}, {id: 2}]) }
     end
 
     context 'json' do
@@ -54,8 +54,9 @@ RSpec.describe 'analysis routes' do
 
       subject { json_response_body }
 
+      its(:keys) { should match_array(%w(lists times)) }
+
       its(%w(lists)) { should match_array(expected_lists) }
-      its(%w(cards)) { should match_array(expected_cards) }
       its(%w(times)) { should be_empty }
 
       context 'times' do
