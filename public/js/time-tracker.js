@@ -43,7 +43,7 @@
       };
 
   function TimeTracker(listChanges, startOfWork, endOfWork) {
-    var lists = function() {
+    var lists = (function() {
           var all = listChanges.lists,
               startList = _.findWhere(all, {id: startOfWork}),
               endList = _.findWhere(all, {id: endOfWork}),
@@ -51,15 +51,22 @@
               endIndex = !!endList ? all.indexOf(endList) : all.length;
 
           return all.slice(startIndex, endIndex);
-        },
+        })(),
+        inProgressLists = _(lists.slice(1, -1)).groupBy('id'),
         cardTimes = listChanges.times,
         listName = function(id) {
-          var found = _.find(lists(), function(list) {
+          var found = _.find(lists, function(list) {
             return list.id === id;
           });
 
           return found ? found.name : null;
         };
+
+    this.cardsInFlight = function() {
+      return _(listChanges.times).select(function(time) {
+        return !!inProgressLists[time.card.list_id];
+      });
+    };
 
     this.average = function() {
       var listTotals = _.pairs(aggregateLists(_.pluck(cardTimes, 'times'))),
@@ -79,7 +86,7 @@
         return result;
       }, {lists: [], total_days: [], business_days: []});
 
-      return orderTheAveragesBy(averages, _.pluck(lists(),'name'));
+      return orderTheAveragesBy(averages, _.pluck(lists, 'name'));
     };
   };
 
