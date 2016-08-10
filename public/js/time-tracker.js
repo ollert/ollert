@@ -64,7 +64,7 @@
         },
         extendTimeHelpers = function(time) {
           _(time).extend({
-            inFlight: function() {
+            isActive: function() {
               return inProgress(this.card.list_id);
             },
             cycleTime: function() {
@@ -82,16 +82,16 @@
 
     _(cardTimes).each(extendTimeHelpers);
 
-    this.cardsInFlight = function() {
-      var thoseInFlight = function(time) {
-            return time.inFlight();
+    this.activeCards = function() {
+      var thoseActive = function(time) {
+            return time.isActive();
           },
           theirCycleTime = function(time) {
             return { card: time.card, active: time.cycleTime() };
           };
 
       return _(listChanges.times).chain()
-        .select(thoseInFlight)
+        .select(thoseActive)
         .map(theirCycleTime)
         .value();
     };

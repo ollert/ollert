@@ -18,13 +18,13 @@ describe('TimeTracker', function() {
     });
   });
 
-  describe('cardsInFlight', function() {
+  describe('activeCards', function() {
     beforeEach(function() {
       setupLists('backlog', 'dev', 'qa', 'passed');
     });
 
     it('is empty if no actions', function() {
-      expect(this.subject.cardsInFlight()).toEqual([]);
+      expect(this.subject.activeCards()).toEqual([]);
     });
 
     it('does not consider start / end to be "in flight"', function() {
@@ -42,7 +42,7 @@ describe('TimeTracker', function() {
         done: { total_days: 2, business_days: 2 }
       });
 
-      expect(this.subject.cardsInFlight().length).toEqual(1);
+      expect(this.subject.activeCards().length).toEqual(1);
     });
 
     describe('data', function() {
@@ -57,16 +57,16 @@ describe('TimeTracker', function() {
           qa: { total_days: 2, business_days: 1 }
         });
 
-        var findInFlight = function(name) {
-          return this.subject.find(function(flight) {
-            return flight.card.name == name;
+        var findActive = function(name) {
+          return this.subject.find(function(time) {
+            return time.card.name == name;
           });
         };
 
         Object.defineProperties(this, {
-          subject: { get: _.memoize(this.tracker.cardsInFlight) },
-          inDev: { get: _.partial(findInFlight, 'card in dev') },
-          inQA: { get: _.partial(findInFlight, 'card in qa') },
+          subject: { get: _.memoize(this.tracker.activeCards) },
+          inDev: { get: _.partial(findActive, 'card in dev') },
+          inQA: { get: _.partial(findActive, 'card in qa') },
         });
       });
 
