@@ -70,10 +70,15 @@ describe('TimeTracker', function() {
         });
       });
 
-      xit('is cool when cards originated as active', function() {
+      it('is cool when cards originated as active', function() {
         expect(this.inDev).toEqual(jasmine.objectContaining({
-          card: jasmine.objectContaining({name: 'card in dev'}),
           active: { total_days: 2, business_days: 2 }
+        }));
+      });
+
+      it('can calculate multiple active lane times', function() {
+        expect(this.inQA).toEqual(jasmine.objectContaining({
+          active: { total_days: 6, business_days: 3 }
         }));
       });
     });

@@ -53,6 +53,7 @@
           return all.slice(startIndex, endIndex);
         })(),
         inProgressLists = _(lists.slice(1, -1)).groupBy('id'),
+        inProgress = _.partial(_.has, inProgressLists, _),
         cardTimes = listChanges.times,
         listName = function(id) {
           var found = _.find(lists, function(list) {
@@ -60,12 +61,39 @@
           });
 
           return found ? found.name : null;
+        },
+        extendTimeHelpers = function(time) {
+          _(time).extend({
+            inFlight: function() {
+              return inProgress(this.card.list_id);
+            },
+            cycleTime: function() {
+              return _(this.times).reduce(function(totals, current, list) {
+                if(inProgress(list)) {
+                  totals.business_days += current.business_days;
+                  totals.total_days += current.total_days;
+                }
+
+                return totals;
+              }, { business_days: 0, total_days: 0 });
+            }
+          });
         };
 
+    _(cardTimes).each(extendTimeHelpers);
+
     this.cardsInFlight = function() {
-      return _(listChanges.times).select(function(time) {
-        return !!inProgressLists[time.card.list_id];
-      });
+      var thoseInFlight = function(time) {
+            return time.inFlight();
+          },
+          theirCycleTime = function(time) {
+            return { card: time.card, active: time.cycleTime() };
+          };
+
+      return _(listChanges.times).chain()
+        .select(thoseInFlight)
+        .map(theirCycleTime)
+        .value();
     };
 
     this.average = function() {
