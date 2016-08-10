@@ -54,14 +54,6 @@
         })(),
         inProgressLists = _(lists.slice(1, -1)).groupBy('id'),
         inProgress = _.partial(_.has, inProgressLists, _),
-        cardTimes = listChanges.times,
-        listName = function(id) {
-          var found = _.find(lists, function(list) {
-            return list.id === id;
-          });
-
-          return found ? found.name : null;
-        },
         extendTimeHelpers = function(time) {
           _(time).extend({
             isActive: function() {
@@ -80,7 +72,7 @@
           });
         };
 
-    _(cardTimes).each(extendTimeHelpers);
+    _(listChanges.times).each(extendTimeHelpers);
 
     this.activeCards = function() {
       var thoseActive = function(time) {
@@ -97,16 +89,16 @@
     };
 
     this.average = function() {
-      var listTotals = _.pairs(aggregateLists(_.pluck(cardTimes, 'times'))),
+      var listTotals = _.pairs(aggregateLists(_.pluck(listChanges.times, 'times'))),
           averages;
 
       averages =  _.reduce(listTotals, function(result, kv) {
         var listId = kv[0],
             listResult = kv[1],
-            name = listName(listId);
+            list = _(lists).findWhere({id: listId});
 
-        if(_.isString(name)) {
-          result.lists.push(name);
+        if(list) {
+          result.lists.push(list.name);
           result.total_days.push(listResult.average('total_days'));
           result.business_days.push(listResult.average('business_days'));
         }
