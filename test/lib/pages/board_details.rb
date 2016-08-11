@@ -3,7 +3,7 @@ class BoardDetails < SitePrism::Page
 
   label(:current_board, '#board-name')
 
-  elements(:time_spent_spans, '#list-changes-container .highcharts-xaxis-labels text')
+  elements(:time_spent_spans, '#time-in-lists-container .highcharts-xaxis-labels text')
 
   def time_spent_labels
     list_items = nil
