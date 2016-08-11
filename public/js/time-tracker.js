@@ -78,8 +78,22 @@
       var thoseActive = function(time) {
             return time.isActive();
           },
+          inProgressKeys = _(inProgressLists).keys(),
+          listNameFor = function(id) {
+            return inProgressLists[id][0].name;
+          },
+          byTheirName = function(o, time, listId) {
+            o[listNameFor(listId)] = time;
+            return o;
+          },
+          whereTheyWereActive = function(time) {
+            return _(time.times).chain()
+              .pick(inProgressKeys)
+              .reduce(byTheirName, {})
+              .value();
+          },
           theirCycleTime = function(time) {
-            return { card: time.card, active: time.cycleTime() };
+            return { card: time.card, active: time.cycleTime(), activeTimes: whereTheyWereActive(time) };
           };
 
       return _(listChanges.times).chain()
