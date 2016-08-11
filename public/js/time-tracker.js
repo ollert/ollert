@@ -52,7 +52,7 @@
 
           return all.slice(startIndex, endIndex);
         })(),
-        inProgressLists = _(lists.slice(1, -1)).groupBy('id'),
+        inProgressLists = _(lists.slice(1, -1)).indexBy('id'),
         inProgress = _.partial(_.has, inProgressLists, _),
         extendTimeHelpers = function(time) {
           _(time).extend({
@@ -78,10 +78,17 @@
       var thoseActive = function(time) {
             return time.isActive();
           },
-          inProgressKeys = _(inProgressLists).keys(),
           listNameFor = function(id) {
-            return inProgressLists[id][0].name;
+            return inProgressLists[id].name;
           },
+          inProgressKeys = _(inProgressLists).keys(),
+          defaultTimes = _(inProgressKeys).chain()
+            .map(listNameFor)
+            .reduce(function(defaults, list) {
+              defaults[list] = { total_days: 0, business_days: 0 };
+              return defaults;
+            }, {})
+            .value(),
           byTheirName = function(o, time, listId) {
             o[listNameFor(listId)] = time;
             return o;
@@ -90,6 +97,7 @@
             return _(time.times).chain()
               .pick(inProgressKeys)
               .reduce(byTheirName, {})
+              .tap(_.partial(_.defaults, _, defaultTimes))
               .value();
           },
           theirCycleTime = function(time) {
