@@ -44,7 +44,15 @@ var ListChangesChartBuilder = (function() {
         });
       },
       buildActive = function(activeCards) {
-        var weekdays = {
+        var series = _(activeCards[0].activeTimes).chain().keys()
+              .map(function(list) {
+                return { name: list, data: [] };
+              }).value(),
+            seriesById = _(series).indexBy('name'),
+            cardNames = _(activeCards).map(function(active) {
+              return active.card.name;
+            }),
+            weekdays = {
               name: 'Weekdays',
               data: []
             },
@@ -53,12 +61,24 @@ var ListChangesChartBuilder = (function() {
               data: []
             };
 
+        _(activeCards).each(function(active) {
+          _(active.activeTimes).each(function(time, list) {
+            var s = seriesById[list];
+            s.data.push(time.business_days);
+          });
+        });
+
         var options = _(activeCards).reduce(function(options, active) {
           options.categories.push(active.card.name);
           weekdays.data.push(active.active.business_days);
           weekends.data.push(active.active.total_days - active.active.business_days);
           return options;
         }, { categories: [], data: [ weekdays, weekends ] });
+
+        options = {
+          categories: cardNames,
+          data: series
+        };
 
         $('#active-cards-container').highcharts({
           chart: {
