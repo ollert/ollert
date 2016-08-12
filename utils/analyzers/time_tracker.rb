@@ -48,8 +48,8 @@ module Utils
         end
 
         def add(start_time, end_time)
-          start_day = start_time.to_date
-          end_day = end_time.to_date
+          start_day = start_time.to_datetime.utc.to_date
+          end_day = end_time.to_datetime.utc.to_date
 
           @total_days += (end_day - start_day).numerator
           @business_days += start_day.business_days_until end_day

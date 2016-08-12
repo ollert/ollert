@@ -3,19 +3,21 @@ require 'chronic'
 require 'active_support/core_ext/numeric/time'
 
 describe Utils::Analyzers::TimeTracker do
-  let(:last_monday) { Chronic.parse 'a week ago last Monday' }
-  let(:last_friday) { Chronic.parse 'a week ago last Friday' }
+  let(:one_day_ago) { 1.day.ago.utc }
+  let(:three_days_ago) { 3.days.ago.utc }
+  let(:last_monday) { Chronic.parse('a week ago last Monday').utc }
+  let(:last_friday) { Chronic.parse('a week ago last Friday').utc }
   let(:card_id) { 1 }
 
   it 'created cards have only been in their original list' do
-    time_tracked_for ActionBuilder.create_card(:backlog, 3.days.ago)
+    time_tracked_for ActionBuilder.create_card(:backlog, three_days_ago)
 
     expect(time_in('backlog').total_days).to eq(3)
   end
 
   it 'handles when there has only been one movement' do
     time_tracked_for ActionBuilder
-      .create_card(:backlog, 1.day.ago)
+      .create_card(:backlog, one_day_ago)
       .move_card(:development)
 
     expect(time_in('backlog').total_days).to eq(1)
@@ -24,7 +26,7 @@ describe Utils::Analyzers::TimeTracker do
 
   it 'does the best it can when the createCard action is missing' do
     time_tracked_for ActionBuilder
-      .fake_missing_create(:development, :backlog, 3.days.ago)
+      .fake_missing_create(:development, :backlog, three_days_ago)
       .move_card(:qa)
 
     expect(time_in('development').total_days).to eq(1)
@@ -66,7 +68,7 @@ describe Utils::Analyzers::TimeTracker do
   end
 
   it 'exposes the times' do
-    time_tracked_for ActionBuilder.create_card(:backlog, 3.days.ago)
+    time_tracked_for ActionBuilder.create_card(:backlog, three_days_ago)
       .move_card(:development)
       .move_card(:passed)
 
@@ -75,7 +77,7 @@ describe Utils::Analyzers::TimeTracker do
   end
 
   it 'breaks multiple cards up' do
-    time_tracked_for ActionBuilder.create_card(:backlog, 3.days.ago)
+    time_tracked_for ActionBuilder.create_card(:backlog, three_days_ago)
       .move_card(:development)
       .create_card(:backlog, last_friday)
 
@@ -84,7 +86,7 @@ describe Utils::Analyzers::TimeTracker do
 
   context 'cards with no actions' do
     before do
-      time_tracked_for ActionBuilder.create_card(:backlog, 3.days.ago)
+      time_tracked_for ActionBuilder.create_card(:backlog, three_days_ago)
         .move_card(:development)
         .copy_card_from_list
     end
@@ -218,7 +220,7 @@ describe Utils::Analyzers::TimeTracker do
     end
 
     def previous_date
-      actions.last.date.to_date
+      actions.last.date.to_datetime.utc.to_date
     end
 
   end
