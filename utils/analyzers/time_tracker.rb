@@ -16,8 +16,7 @@ module Utils
         end
 
         last = @actions.last
-        now = DateTime.now.utc + last.date.to_datetime.utc_offset.second
-        span_for(last.after_id).add last.date, now
+        span_for(last.after_id).add last.date, DateTime.now.utc.to_date
       end
 
       def in(list)
