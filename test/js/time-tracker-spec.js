@@ -81,6 +81,15 @@ describe('TimeTracker', function() {
           active: { total_days: 6, business_days: 3 }
         }));
       });
+
+      describe('activeTimes', function() {
+        it('knows the breakdown of time by active list', function() {
+          expect(this.inQA.activeTimes).toEqual(jasmine.objectContaining({
+            dev: { total_days: 4, business_days: 2 },
+            qa: { total_days: 2, business_days: 1 }
+          }));
+        });
+      });
     });
   });
 

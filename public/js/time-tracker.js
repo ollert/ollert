@@ -100,13 +100,13 @@
               .tap(_.partial(_.defaults, _, defaultTimes))
               .value();
           },
-          theirCycleTime = function(time) {
+          whereTimeWasSpent = function(time) {
             return { card: time.card, active: time.cycleTime(), activeTimes: whereTheyWereActive(time) };
           };
 
       return _(listChanges.times).chain()
         .select(thoseActive)
-        .map(theirCycleTime)
+        .map(whereTimeWasSpent)
         .value();
     };
 
