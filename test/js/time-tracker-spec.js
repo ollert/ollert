@@ -58,7 +58,7 @@ describe('TimeTracker', function() {
         });
 
         var findActive = function(name) {
-          return this.subject.find(function(time) {
+          return _(this.subject).find(function(time) {
             return time.card.name == name;
           });
         };
