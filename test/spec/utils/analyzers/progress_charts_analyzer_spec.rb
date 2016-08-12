@@ -19,8 +19,7 @@ describe ProgressChartsAnalyzer do
     end
 
     it 'returns default cfd data' do
-      n = DateTime.now
-      now = DateTime.new(n.year, n.month, n.day, 0, 0, 0, 0)
+      now = DateTime.now.utc.to_date
 
       latest = now.strftime("%FT%T%:z")
       middle = (now - 3.days).strftime("%FT%T%:z")
@@ -53,9 +52,8 @@ describe ProgressChartsAnalyzer do
       })
     end
 
-    it 'returns cfd data with givens tarting and ending list' do
-      n = DateTime.now
-      now = DateTime.new(n.year, n.month, n.day, 0, 0, 0, 0)
+    it 'returns cfd data with given starting and ending list' do
+      now = DateTime.now.utc.to_date
 
       latest = now.strftime("%FT%T%:z")
       middle = (now - 3.days).strftime("%FT%T%:z")
@@ -93,8 +91,7 @@ describe ProgressChartsAnalyzer do
   # and a data point. it returns an array containing a
   # datestamp (for x days ago) and the data point
   def d(how_many_days_ago, datum)
-    n = DateTime.now
-    now = DateTime.new(n.year, n.month, n.day, 0, 0, 0, 0)
+    now = DateTime.now.utc.to_date
     date = now - how_many_days_ago.days
     [date.strftime('%s000').to_i, datum]
   end
