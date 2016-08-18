@@ -39,4 +39,5 @@ group :development, :test do
   gem 'factory_girl'
   gem 'activesupport'
   gem 'faker', '~> 1.6.6'
+  gem 'timecop'
 end
