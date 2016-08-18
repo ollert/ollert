@@ -1,13 +1,16 @@
 require 'base64'
 require 'chronic'
 require 'active_support/core_ext/numeric/time'
+require 'timecop'
 
 describe Utils::Analyzers::TimeTracker do
-  let(:one_day_ago) { 1.day.ago.utc }
-  let(:three_days_ago) { 3.days.ago.utc }
-  let(:last_monday) { Chronic.parse('a week ago last Monday').utc }
-  let(:last_friday) { Chronic.parse('a week ago last Friday').utc }
+  let(:one_day_ago) { 1.day.ago }
+  let(:three_days_ago) { 3.days.ago }
+  let(:last_monday) { Chronic.parse('a week ago last Monday') }
+  let(:last_friday) { Chronic.parse('a week ago last Friday') }
   let(:card_id) { 1 }
+
+  around { |example| Timecop.freeze { example.run } }
 
   it 'created cards have only been in their original list' do
     time_tracked_for ActionBuilder.create_card(:backlog, three_days_ago)
@@ -220,7 +223,7 @@ describe Utils::Analyzers::TimeTracker do
     end
 
     def previous_date
-      actions.last.date.to_datetime.utc.to_date
+      actions.last.date.to_date
     end
 
   end

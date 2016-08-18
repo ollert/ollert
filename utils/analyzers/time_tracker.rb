@@ -16,7 +16,7 @@ module Utils
         end
 
         last = @actions.last
-        span_for(last.after_id).add last.date, DateTime.now.utc.to_date if last
+        span_for(last.after_id).add last.date, DateTime.now.to_date if last
       end
 
       def in(list)
@@ -48,8 +48,8 @@ module Utils
         end
 
         def add(start_time, end_time)
-          start_day = start_time.to_datetime.utc.to_date
-          end_day = end_time.to_datetime.utc.to_date
+          start_day = start_time.to_date
+          end_day = end_time.to_date
 
           @total_days += (end_day - start_day).numerator
           @business_days += start_day.business_days_until end_day
