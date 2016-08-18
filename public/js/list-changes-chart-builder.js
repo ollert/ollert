@@ -125,6 +125,15 @@ var ListChangesChartBuilder = (function() {
                   textShadow: '0 0 3px black'
                 }
               }
+            },
+            series: {
+              dataLabels: {
+                formatter: function() {
+                  if(this.y !== 0) {
+                    return this.y;
+                  }
+                }
+              }
             }
           },
           credits: {
