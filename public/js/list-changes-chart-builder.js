@@ -127,7 +127,7 @@ var ListChangesChartBuilder = (function() {
         });
       },
       load = function(boardId, token, startOfWork, endOfWork) {
-        var container = $("#time-in-lists-container");
+        var container = $('#time-in-lists-container').add('#active-cards-container');
         container.height(container.height() - 10);
 
         $.ajax({
