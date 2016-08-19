@@ -3,11 +3,11 @@ require 'business_time'
 module Utils
   module Analyzers
     class TimeTracker
-      attr_reader :card_id, :times
+      attr_reader :card, :times
 
-      def initialize(card_id, actions)
-        @actions = actions.sort_by(&:date)
-        @card_id = card_id
+      def initialize(card, actions)
+        @actions = actions ? actions.sort_by(&:date) : []
+        @card = card
         @times = {}
 
         @actions.reduce(nil) do |last_date, action|
@@ -16,7 +16,7 @@ module Utils
         end
 
         last = @actions.last
-        span_for(last.after_id).add last.date, DateTime.now.utc.to_date
+        span_for(last.after_id).add last.date, DateTime.now.to_date if last
       end
 
       def in(list)
@@ -25,13 +25,14 @@ module Utils
 
       def as_json(opts={})
         {
-          card_id: card_id,
+          card: card,
           times: times
         }
       end
 
-      def self.by_card(actions)
-        actions.group_by(&:card_id).map {|id, card_actions| TimeTracker.new id, card_actions}
+      def self.by_card(cards:, actions:)
+        grouped_actions = actions.group_by(&:card_id)
+        cards.map { |c| TimeTracker.new c, grouped_actions[c.id] }
       end
 
       private

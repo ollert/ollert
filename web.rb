@@ -6,6 +6,7 @@ require 'rack/rewrite'
 require 'sinatra/base'
 require 'sinatra/respond_with'
 require 'trello'
+require 'trello/core_ext/string'
 require_relative 'helpers'
 
 class Ollert < Sinatra::Base
