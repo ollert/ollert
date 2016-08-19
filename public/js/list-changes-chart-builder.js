@@ -44,7 +44,8 @@ var ListChangesChartBuilder = (function() {
         });
       },
       buildActive = function(activeCards) {
-        var series = _(activeCards[0].activeTimes).chain().keys()
+        var firstCard = activeCards[0] || [],
+            series = _(firstCard.activeTimes).chain().keys()
               .map(function(list) {
                 return { name: list, data: [] };
               }).value(),
