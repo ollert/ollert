@@ -73,6 +73,11 @@ var ListChangesChartBuilder = (function() {
           },
           xAxis: {
             categories: options.categories,
+            labels: {
+              formatter: function() {
+                return this.value.slice(0, 50) + '...';
+              }
+            }
           },
           yAxis: {
             min: 0,
