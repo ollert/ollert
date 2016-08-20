@@ -43,7 +43,7 @@
       };
 
   function TimeTracker(listChanges, startOfWork, endOfWork) {
-    var lists = function() {
+    var lists = (function() {
           var all = listChanges.lists,
               startList = _.findWhere(all, {id: startOfWork}),
               endList = _.findWhere(all, {id: endOfWork}),
@@ -51,27 +51,76 @@
               endIndex = !!endList ? all.indexOf(endList) : all.length;
 
           return all.slice(startIndex, endIndex);
-        },
-        cardTimes = listChanges.times,
-        listName = function(id) {
-          var found = _.find(lists(), function(list) {
-            return list.id === id;
-          });
+        })(),
+        inProgressLists = _(lists.slice(1, -1)).indexBy('id'),
+        inProgress = _.partial(_.has, inProgressLists, _),
+        extendTimeHelpers = function(time) {
+          _(time).extend({
+            isActive: function() {
+              return inProgress(this.card.list_id);
+            },
+            cycleTime: function() {
+              return _(this.times).reduce(function(totals, current, list) {
+                if(inProgress(list)) {
+                  totals.business_days += current.business_days;
+                  totals.total_days += current.total_days;
+                }
 
-          return found ? found.name : null;
+                return totals;
+              }, { business_days: 0, total_days: 0 });
+            }
+          });
         };
 
+    _(listChanges.times).each(extendTimeHelpers);
+
+    this.activeCards = function() {
+      var thoseActive = function(time) {
+            return time.isActive();
+          },
+          listNameFor = function(id) {
+            return inProgressLists[id].name;
+          },
+          inProgressKeys = _(inProgressLists).keys(),
+          defaultTimes = _(inProgressKeys).chain()
+            .map(listNameFor)
+            .reduce(function(defaults, list) {
+              defaults[list] = { total_days: 0, business_days: 0 };
+              return defaults;
+            }, {})
+            .value(),
+          byTheirName = function(o, time, listId) {
+            o[listNameFor(listId)] = time;
+            return o;
+          },
+          whereTheyWereActive = function(time) {
+            return _(time.times).chain()
+              .pick(inProgressKeys)
+              .reduce(byTheirName, {})
+              .tap(_.partial(_.defaults, _, defaultTimes))
+              .value();
+          },
+          whereTimeWasSpent = function(time) {
+            return { card: time.card, active: time.cycleTime(), activeTimes: whereTheyWereActive(time) };
+          };
+
+      return _(listChanges.times).chain()
+        .select(thoseActive)
+        .map(whereTimeWasSpent)
+        .value();
+    };
+
     this.average = function() {
-      var listTotals = _.pairs(aggregateLists(_.pluck(cardTimes, 'times'))),
+      var listTotals = _.pairs(aggregateLists(_.pluck(listChanges.times, 'times'))),
           averages;
 
       averages =  _.reduce(listTotals, function(result, kv) {
         var listId = kv[0],
             listResult = kv[1],
-            name = listName(listId);
+            list = _(lists).findWhere({id: listId});
 
-        if(_.isString(name)) {
-          result.lists.push(name);
+        if(list) {
+          result.lists.push(list.name);
           result.total_days.push(listResult.average('total_days'));
           result.business_days.push(listResult.average('business_days'));
         }
@@ -79,7 +128,7 @@
         return result;
       }, {lists: [], total_days: [], business_days: []});
 
-      return orderTheAveragesBy(averages, _.pluck(lists(),'name'));
+      return orderTheAveragesBy(averages, _.pluck(lists, 'name'));
     };
   };
 
