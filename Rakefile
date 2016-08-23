@@ -39,12 +39,12 @@ unless ENV['RACK_ENV'] == 'production'
   namespace :test do
     RSpec::Core::RakeTask.new(:spec) do |r|
       r.pattern = "test/**/*_spec.rb"
-      r.rspec_opts = '--color --format documentation --tag ~integration:true'
+      r.rspec_opts = '--color --format documentation --require ./test/spec/spec_helper --tag ~integration:true'
     end
 
     RSpec::Core::RakeTask.new(:integration) do |r|
       r.pattern = "test/**/*_spec.rb"
-      r.rspec_opts = '--color --format documentation --tag integration:true'
+      r.rspec_opts = '--color --format documentation --require ./test/spec/spec_helper --tag integration:true'
     end
 
     desc 'Setup Integration'
