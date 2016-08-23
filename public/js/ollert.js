@@ -36,24 +36,23 @@ var Ollert = (function() {
   var loadBoards = function() {
     resetBoards("Loading boards, please wait...");
     $.ajax({
-      url: "/boards",
+      url: "/boards.json",
       method: "get",
       headers: {
         Accept: 'application/json'
       },
       dataType: "json",
       success: loadBoardsCallback,
-      error: function(request, status, error) {
-        resetBoards(request.status === 400 ? 'No boards' : 'Error. Try reloading!');
+      error: function(response) {
+        resetBoards(response.responseJSON.error);
       }
     });
   };
 
   var resetBoards = function(text) {
+    $("#config-drawer-board-list").empty();
     if (text) {
       $("#config-drawer-board-list").append($("<span>" + text + "</span>"));
-    } else {
-      $("#config-drawer-board-list").empty();
     }
   };
 
