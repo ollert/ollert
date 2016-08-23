@@ -36,7 +36,7 @@ var Ollert = (function() {
   var loadBoards = function() {
     resetBoards("Loading boards, please wait...");
     $.ajax({
-      url: "/boards",
+      url: "/boards.json",
       method: "get",
       headers: {
         Accept: 'application/json'
