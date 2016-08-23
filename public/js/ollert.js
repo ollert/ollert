@@ -43,17 +43,16 @@ var Ollert = (function() {
       },
       dataType: "json",
       success: loadBoardsCallback,
-      error: function(request, status, error) {
-        resetBoards(request.status === 400 ? 'No boards' : 'Error. Try reloading!');
+      error: function(response) {
+        resetBoards(response.responseJSON.error);
       }
     });
   };
 
   var resetBoards = function(text) {
+    $("#config-drawer-board-list").empty();
     if (text) {
       $("#config-drawer-board-list").append($("<span>" + text + "</span>"));
-    } else {
-      $("#config-drawer-board-list").empty();
     }
   };
 

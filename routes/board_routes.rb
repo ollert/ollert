@@ -39,12 +39,6 @@ class Ollert
     begin
       @boards = BoardAnalyzer.analyze(BoardFetcher.fetch(client, @user.trello_name))
     rescue Trello::Error => e
-      unless @user.nil?
-        @user.member_token = nil
-        @user.trello_name = nil
-        @user.save
-      end
-
       status 400
       {"error": "There's something wrong with the Trello connection. Please re-establish the connection."}.to_json
     else
