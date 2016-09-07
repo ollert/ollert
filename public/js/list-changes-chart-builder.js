@@ -75,7 +75,7 @@ var ListChangesChartBuilder = (function() {
             categories: options.categories,
             labels: {
               formatter: function() {
-                return this.value.slice(0, 50) + '...';
+                return '';
               }
             }
           },
