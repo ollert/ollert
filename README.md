@@ -44,6 +44,8 @@ In the project root folder, you should:
   * Installs the required ruby gems
 * `npm install`
   * Installs the required node packages
+* `npm install -g grunt-cli`
+  * Installs the grunt-cli.
 
 Create a file called `.env` in the root project folder. The format of the `.env` file is simply:
 
