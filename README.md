@@ -33,7 +33,7 @@ You almost certainly want to be using a Unix-based operating system. Some depend
 
 Requirements
 
-* `ruby-2.2.0` - Install using [RVM](https://rvm.io/), be aware of [this issue](https://rvm.io/integration/gnome-terminal)
+* `ruby-2.3.1` - Install using [RVM](https://rvm.io/), be aware of [this issue](https://rvm.io/integration/gnome-terminal)
 * `mongodb` - Check out [this very helpful page](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)
 * `bundler` - `gem install bundler`
 * `npm` - `sudo apt-get install nodejs npm`
