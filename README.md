@@ -33,7 +33,7 @@ You almost certainly want to be using a Unix-based operating system. Some depend
 
 Requirements
 
-* `ruby-2.2.0` - Install using [RVM](https://rvm.io/), be aware of [this issue](https://rvm.io/integration/gnome-terminal)
+* `ruby-2.3.1` - Install using [RVM](https://rvm.io/), be aware of [this issue](https://rvm.io/integration/gnome-terminal)
 * `mongodb` - Check out [this very helpful page](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)
 * `bundler` - `gem install bundler`
 * `npm` - `sudo apt-get install nodejs npm`
@@ -44,6 +44,8 @@ In the project root folder, you should:
   * Installs the required ruby gems
 * `npm install`
   * Installs the required node packages
+* `npm install -g grunt-cli`
+  * Installs the grunt-cli.
 
 Create a file called `.env` in the root project folder. The format of the `.env` file is simply:
 

@@ -23,7 +23,7 @@ module Utils
 
     def project(result, cls)
       return [] if result.nil?
-      (cls && result.json_into(cls)) || JSON.parse(result)
+      (cls && cls.from_response(result)) || JSON.parse(result)
     end
 
     def oldest_date_for(page)
