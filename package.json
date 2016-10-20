@@ -1,4 +1,6 @@
 {
+  "name": "Ollert",
+  "version": "1.1.1",
   "scripts": {
     "test": "testem ci"
   },

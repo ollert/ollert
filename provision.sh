@@ -33,3 +33,18 @@ update-rc.d mongod defaults
 
 # Install Node
 apt-get install -y nodejs npm
+
+cd /vagrant
+
+bundle install
+
+npm install
+
+npm install -g grunt-cli
+
+#Next time, on Dev Ops Guild!
+#Figure out problem with /etc/init.d/mongod
+#Provision failed for Vagrant
+#Create the .env file
+#Follow instructions to run the tests
+#Forward port 4444 (Bob thinks)
