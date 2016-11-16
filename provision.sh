@@ -23,13 +23,14 @@ gem install bundler
 # - TODO: find out which version of mongodb we're actually using on heroku/mlab
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 
-echo "deb http://repo.mongodb.org/apt/ubuntu precise/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 
 apt-get update
 
 apt-get install -y mongodb-org=3.2.10 mongodb-org-server=3.2.10 mongodb-org-shell=3.2.10 mongodb-org-mongos=3.2.10 mongodb-org-tools=3.2.10
 
-update-rc.d mongod defaults
+cp /vagrant/mongodb.service /etc/systemd/system
+systemctl start mongodb
 
 # Install Node
 apt-get install -y nodejs npm
@@ -38,13 +39,24 @@ cd /vagrant
 
 bundle install
 
-npm install
+npm install --no-bin-link
 
 npm install -g grunt-cli
 
+if [ ! -f .env ]; then
+  cp /vagrant/template.env /vagrant/.env
+
+  echo "******************************"
+  echo "Update the constants in '.env'"
+  echo "******************************"
+fi
+
 #Next time, on Dev Ops Guild!
-#Figure out problem with /etc/init.d/mongod
-#Provision failed for Vagrant
-#Create the .env file
+#Todo:
+# Forward port 4000
+# Create a DevOpsGuild Trello account
+# Populate the .env file
+# automate retrieval of the board edit token for .env file (rake test::setup)
+# Have fun!!
 #Follow instructions to run the tests
-#Forward port 4444 (Bob thinks)
+#
