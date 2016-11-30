@@ -39,6 +39,10 @@ cd /vagrant
 
 bundle install
 
+# phantomjs tries to use 'node' whne the binary is 'nodejs' see:
+# for details: http://stackoverflow.com/questions/18130164/nodejs-vs-node-on-ubuntu-12-04
+update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+
 npm install --no-bin-link
 
 npm install -g grunt-cli
