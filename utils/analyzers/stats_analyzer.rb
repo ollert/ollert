@@ -4,15 +4,17 @@ class StatsAnalyzer
   def self.analyze(data, show_archived)
     return {} if data.nil? || data.empty?
 
-    cards = data["cards"]
+    cards = show_archived ? data["cards"]
+                          : data["cards"].select {|card| !card["closed"]}
+
     members = data["members"]
-    creations = show_archived ? data["actions"]
-                              : data["actions"].select {|action| cards.any? {|card| card["id"] == action["data"]["card"]["id"]}}
-    lists = data["lists"]
+    creations = data["actions"]
+
+    cards_in_open_lists = cards.select {|c| lists.any? {|l| l["id"] == c["idList"]}}
 
     analyze_members(cards, members)
           .merge(analyze_cards(cards, creations))
-          .merge(analyze_lists(cards, lists))
+          .merge(analyze_lists(cards_in_open_lists, lists))
   end
 
   private

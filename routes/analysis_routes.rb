@@ -38,8 +38,7 @@ class Ollert
   end
 
   get '/api/v1/stats/:board_id' do |board_id|
-    puts params['show_archived']
-    body StatsAnalyzer.analyze(StatsFetcher.fetch(@client, board_id), params['show_archived']).to_json
+    body StatsAnalyzer.analyze(StatsFetcher.fetch(@client, board_id), params['show_archived'] == "true").to_json
     status 200
   end
 
