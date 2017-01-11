@@ -1,12 +1,13 @@
 require 'date'
 
 class StatsAnalyzer
-  def self.analyze(data)
+  def self.analyze(data, show_archived)
     return {} if data.nil? || data.empty?
 
     cards = data["cards"]
     members = data["members"]
-    creations = data["actions"]
+    creations = show_archived ? data["actions"]
+                              : data["actions"].select {|action| cards.any? {|card| card["id"] == action["data"]["card"]["id"]}}
     lists = data["lists"]
 
     analyze_members(cards, members)
@@ -99,6 +100,6 @@ class StatsAnalyzer
 
   def self.get_newest_card(cards, actions)
     newest = actions.max_by { |action| action["date"].to_date }
-    return newest["data"]["card"]["name"], DateTime.now.utc.mjd - newest["date"].to_datetime.utc.mjd unless oldest.nil?
+    return newest["data"]["card"]["name"], DateTime.now.utc.mjd - newest["date"].to_datetime.utc.mjd unless newest.nil?
   end
 end

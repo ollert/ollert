@@ -24,8 +24,9 @@ var StatsBuilder = (function() {
     $.ajax({
       url: "/api/v1/stats/" + boardId,
       data: {
-        token: token
+        show_archived: showArchived
       },
+      headers: {"Authorization": token},
       success: function(data) {
         $(".stats-spinner").hide();
 

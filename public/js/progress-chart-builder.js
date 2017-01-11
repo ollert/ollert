@@ -25,9 +25,9 @@ var ProgressChartBuilder = (function() {
       url: "/api/v1/progress/" + boardId,
       data: {
         startingList: startingList,
-        endingList: endingList,
-        token: token
+        endingList: endingList
       },
+      headers: {"Authorization": token},
       success: displayData,
       error: function(xhr) {
         $("#cfd-spinner").hide();

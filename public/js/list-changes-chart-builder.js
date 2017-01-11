@@ -49,9 +49,7 @@ var ListChangesChartBuilder = (function() {
 
         $.ajax({
           url: "/api/v1/listchanges/" + boardId,
-          data: {
-            token: token
-          },
+          headers: {"Authorization": token},
           success: function(data) {
             $('#list-changes-spinner').hide();
 

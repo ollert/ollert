@@ -6,12 +6,12 @@ require_rel '../utils'
 class Ollert
   ["/api/v1/*"].each do |path|
     before path do
-      if params["token"].nil?
+      if env["HTTP_AUTHORIZATION"].nil?
         halt 400, "Missing token."
       end
 
       @client = Trello::Client.new(developer_public_key: ENV['PUBLIC_KEY'],
-                                   member_token: params['token'])
+                                   member_token: env["HTTP_AUTHORIZATION"])
     end
   end
 
@@ -38,7 +38,8 @@ class Ollert
   end
 
   get '/api/v1/stats/:board_id' do |board_id|
-    body StatsAnalyzer.analyze(StatsFetcher.fetch(@client, board_id)).to_json
+    puts params['show_archived']
+    body StatsAnalyzer.analyze(StatsFetcher.fetch(@client, board_id), params['show_archived']).to_json
     status 200
   end
 

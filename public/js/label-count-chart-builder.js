@@ -55,9 +55,7 @@ var LabelCountChartBuilder = (function() {
 
     $.ajax({
       url: "/api/v1/labels/" + boardId,
-      data: {
-        token: token
-      },
+      headers: {"Authorization": token},
       success: function(data) {
         $('#label-count-spinner').hide();
         buildChart(jQuery.parseJSON(data));
