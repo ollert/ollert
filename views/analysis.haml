@@ -21,6 +21,11 @@
               Work Ends
             .col-xs-8
               %select.form-control#ending-list
+          .form-group
+            %label.col-xs-4.control-label{for: "show-archived"}
+              Include Archived Cards
+            .col-xs-8
+              %input.form-control#show-archived{type: "checkbox"}
 
       .modal-footer
         %a.btn.btn-primary{id: "submit-board-lists"}
@@ -129,5 +134,5 @@
 
 :javascript
   window.onload = function() {
-    AnalysisController.init("#{@board_id}", #{@board_lists}, "#{@starting_list}", "#{@ending_list}", "#{@token}");
+    AnalysisController.init("#{@board_id}", #{@board_lists}, "#{@starting_list}", "#{@ending_list}", #{!!@show_archived}, "#{@token}");
   };

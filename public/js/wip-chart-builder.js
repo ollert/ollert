@@ -43,7 +43,7 @@ var WipChartBuilder = (function() {
     });
   }
 
-  var load = function(boardId, token) {
+  var load = function(boardId, token, showArchived) {
     var container = $("#wip-container")
     container.height(container.height() - 10);
 

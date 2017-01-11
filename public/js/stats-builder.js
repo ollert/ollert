@@ -20,8 +20,7 @@ var StatsBuilder = (function() {
     $('#newest-card-age').text(stats.newest_card_age);
   }
 
-  var load = function(boardId, token) {
-
+  var load = function(boardId, token, showArchived) {
     $.ajax({
       url: "/api/v1/stats/" + boardId,
       data: {

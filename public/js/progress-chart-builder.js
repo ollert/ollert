@@ -18,7 +18,7 @@ var ProgressChartBuilder = (function() {
     $('#cfd-container').empty();
   };
 
-  var build = function(boardId, token, startingList, endingList) {
+  var build = function(boardId, token, startingList, endingList, showArchived) {
     resetCharts();
 
     $.ajax({

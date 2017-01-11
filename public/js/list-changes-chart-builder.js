@@ -43,7 +43,7 @@ var ListChangesChartBuilder = (function() {
           series: options.data
         });
       },
-      load = function(boardId, token, startOfWork, endOfWork) {
+      load = function(boardId, token, startOfWork, endOfWork, showArchived) {
         var container = $("#list-changes-container");
         container.height(container.height() - 10);
 
