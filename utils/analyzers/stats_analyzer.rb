@@ -9,6 +9,7 @@ class StatsAnalyzer
 
     members = data["members"]
     creations = data["actions"]
+    lists = data["lists"]
 
     cards_in_open_lists = cards.select {|c| lists.any? {|l| l["id"] == c["idList"]}}
 

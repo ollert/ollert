@@ -7,7 +7,12 @@ class LabelCountFetcher
     cards = []
     before = nil
     loop do
-      newCards = JSON.parse(client.get("/boards/#{board_id}/cards/open", {fields: "labels,idList", actions: "createCard", limit: 1000, before: before}))
+      newCards = JSON.parse(client.get("/boards/#{board_id}/cards", {
+        fields: "labels,idList,closed",
+        limit: 1000,
+        before: before,
+        filter: :all
+      }))
       cards.concat newCards
       break unless newCards.count == 1000
       before = newCards.first['actions'][0]["date"]
