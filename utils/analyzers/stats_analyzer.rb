@@ -1,12 +1,10 @@
 require 'date'
 
 class StatsAnalyzer
-  def self.analyze(data, show_archived)
+  def self.analyze(data)
     return {} if data.nil? || data.empty?
 
-    cards = show_archived ? data["cards"]
-                          : data["cards"].select {|card| !card["closed"]}
-
+    cards = data["cards"]
     members = data["members"]
     creations = data["actions"]
     lists = data["lists"]

@@ -3,7 +3,7 @@ require_relative 'action_fetcher'
 class StatsFetcher
   include ActionFetcher
 
-  def self.fetch(client, board_id)
+  def self.fetch(client, board_id, show_archived)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 
     options = {
@@ -13,13 +13,17 @@ class StatsFetcher
       action_memberCreator: :false,
       action_member: false,
       actions_limit: 1000,
-      cards: :all,
-      card_fields: "idList,name,idMembers,closed",
+      cards: :visible,
+      card_fields: "idList,name,idMembers",
       members: :all,
       member_fields: :fullName,
       lists: :open,
       list_fields: "name,closed",
     }
+
+    if show_archived
+      options[:cards] = :all
+    end
 
     include_all_actions(JSON.parse(client.get("/boards/#{board_id}", options)), client, board_id)
   end
