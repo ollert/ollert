@@ -16,7 +16,7 @@ module Utils
         end
 
         last = @actions.last
-        span_for(last.after_id).add last.date, DateTime.now.to_date if last
+        span_for(last.after_id).add last.date, DateTime.now.new_offset(0).to_date if last
       end
 
       def in(list)
