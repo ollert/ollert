@@ -31,8 +31,8 @@ class Ollert
     param :show_archived, Boolean, default: true
     lists = Trello::List.from_response @client.get("/boards/#{board_id}/lists", filter: 'open')
     cards = Trello::Card.from_response @client.get("/boards/#{board_id}/cards",
-                                                   fields: 'name,closed,idList,idBoard,shortUrl',
-                                                   filter: params[:show_archived] ? 'all' : 'open')
+                                                   fields: 'name,idList,idBoard,shortUrl',
+                                                   filter: params[:show_archived] ? 'all' : 'visible')
     actions = Utils::Fetchers::ListActionFetcher.fetch(@client, board_id)
 
     {
