@@ -2,11 +2,11 @@ require 'date'
 require 'mongoid'
 
 class ProgressChartsAnalyzer
-  def self.analyze(data, startingList, endingList)
+  def self.analyze(data, startingList, endingList, showArchived)
     return {} if data.nil? || data.empty?
 
     # open lists
-    lists = data["lists"].select { |x| !x["closed"]}
+    lists = data["lists"]
 
     startingListIndex = lists.index{ |l| startingList == l["id"]} || 0
     endingListIndex = lists.index{ |l| endingList == l["id"]} || lists.count - 1
@@ -29,9 +29,6 @@ class ProgressChartsAnalyzer
   def self.parse(data, lists)
     card_actions = data["actions"].reject {|action| action["type"] == "updateList"}
     list_actions = data["actions"].select {|action| action["type"] == "updateList"}
-
-    # open lists
-    lists = data["lists"].select { |x| !x["closed"]}
 
     build(card_actions, lists)
   end
