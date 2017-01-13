@@ -24,8 +24,9 @@ var ProgressChartBuilder = (function() {
     $.ajax({
       url: "/api/v1/progress/" + boardId,
       data: {
-        startingList: startingList,
-        endingList: endingList
+        starting_list: startingList,
+        ending_list: endingList,
+        show_archived: showArchived
       },
       headers: {"Authorization": token},
       success: displayData,

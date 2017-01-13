@@ -19,14 +19,20 @@ class Ollert
   end
 
   get '/api/v1/progress/:board_id' do |board_id|
+    param :starting_list, Array
+    param :ending_list, Array
+
     body ProgressChartsAnalyzer.analyze(ProgressChartsFetcher.fetch(@client, board_id),
-     params["startingList"], params["endingList"]).to_json
+     params[:starting_list], params[:ending_list]).to_json
     status 200
   end
 
   get '/api/v1/listchanges/:board_id' do |board_id|
+    param :show_archived, Boolean, default: true
     lists = Trello::List.from_response @client.get("/boards/#{board_id}/lists", filter: 'open')
-    cards = Trello::Card.from_response @client.get("/boards/#{board_id}/cards", fields: 'name,closed,idList,idBoard,shortUrl')
+    cards = Trello::Card.from_response @client.get("/boards/#{board_id}/cards",
+                                                   fields: 'name,closed,idList,idBoard,shortUrl',
+                                                   filter: params[:show_archived] ? 'all' : 'open')
     actions = Utils::Fetchers::ListActionFetcher.fetch(@client, board_id)
 
     {
