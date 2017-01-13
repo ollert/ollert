@@ -1,10 +1,13 @@
 require 'json'
 require 'require_all'
+require 'sinatra/param'
 
 require_rel '../utils'
 
 class Ollert
   ["/api/v1/*"].each do |path|
+    helpers Sinatra::Param
+
     before path do
       if env["HTTP_AUTHORIZATION"].nil?
         halt 400, "Missing token."
@@ -33,17 +36,20 @@ class Ollert
   end
 
   get '/api/v1/wip/:board_id' do |board_id|
-    body WipAnalyzer.analyze(WipFetcher.fetch(@client, board_id)).to_json
+    param :show_archived, Boolean, default: true
+    body WipAnalyzer.analyze(WipFetcher.fetch(@client, board_id, params[:show_archived])).to_json
     status 200
   end
 
   get '/api/v1/stats/:board_id' do |board_id|
-    body StatsAnalyzer.analyze(StatsFetcher.fetch(@client, board_id, params['show_archived'] == "true")).to_json
+    param :show_archived, Boolean, default: true
+    body StatsAnalyzer.analyze(StatsFetcher.fetch(@client, board_id, params[:show_archived])).to_json
     status 200
   end
 
   get '/api/v1/labels/:board_id' do |board_id|
-    body LabelCountAnalyzer.analyze(LabelCountFetcher.fetch(@client, board_id, params['show_archived'] == "true")).to_json
+    param :show_archived, Boolean, default: true
+    body LabelCountAnalyzer.analyze(LabelCountFetcher.fetch(@client, board_id, params[:show_archived])).to_json
     status 200
   end
 end

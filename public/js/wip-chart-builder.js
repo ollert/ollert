@@ -50,6 +50,9 @@ var WipChartBuilder = (function() {
     $.ajax({
       url: "/api/v1/wip/" + boardId,
       headers: {"Authorization": token},
+      data: {
+        show_archived: showArchived
+      },
       success: function(data) {
         $('#wip-spinner').hide();
 
