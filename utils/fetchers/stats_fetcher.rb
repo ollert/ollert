@@ -3,7 +3,7 @@ require_relative 'action_fetcher'
 class StatsFetcher
   include ActionFetcher
 
-  def self.fetch(client, board_id, show_archived)
+  def self.fetch(client, board_id, show_archived=false)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 
     options = {
