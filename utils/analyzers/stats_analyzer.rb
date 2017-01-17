@@ -9,9 +9,11 @@ class StatsAnalyzer
     creations = data["actions"]
     lists = data["lists"]
 
+    cards_in_open_lists = cards.select {|c| lists.any? {|l| l["id"] == c["idList"]}}
+
     analyze_members(cards, members)
           .merge(analyze_cards(cards, creations))
-          .merge(analyze_lists(cards, lists))
+          .merge(analyze_lists(cards_in_open_lists, lists))
   end
 
   private
@@ -98,7 +100,7 @@ class StatsAnalyzer
   end
 
   def self.get_newest_card(cards, actions)
-    oldest = actions.max_by { |action| action["date"].to_date }
-    return oldest["data"]["card"]["name"], DateTime.now.utc.mjd - oldest["date"].to_datetime.utc.mjd unless oldest.nil?
+    newest = actions.max_by { |action| action["date"].to_date }
+    return newest["data"]["card"]["name"], DateTime.now.utc.mjd - newest["date"].to_datetime.utc.mjd unless newest.nil?
   end
 end

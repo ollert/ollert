@@ -149,7 +149,7 @@ describe Utils::Analyzers::TimeTracker do
       @actions = []
       @cards = []
       @next_id = 0
-      next_action(list, date.to_time, 'createCard')
+      next_action(list, date.utc, 'createCard')
     end
 
     def self.create_card(list, date=Date.today)

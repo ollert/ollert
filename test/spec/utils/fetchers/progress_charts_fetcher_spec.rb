@@ -13,9 +13,9 @@ describe ProgressChartsFetcher do
         action_fields: "data,type,date",
         action_memberCreator: :false,
         action_member: false,
-        lists: :all,
-        list_fields: "name,closed",
-        fields: "name"
+        lists: :open,
+        list_fields: :name,
+        fields: :name
       }
       board = {'name' => 'DS9', 'lists' => {}, 'actions' => {}, 'id' => 'ori0kf34rf34jfjfrej'}
 
@@ -33,9 +33,9 @@ describe ProgressChartsFetcher do
         action_fields: "data,type,date",
         action_memberCreator: :false,
         action_member: false,
-        lists: :all,
-        list_fields: "name,closed",
-        fields: "name"
+        lists: :open,
+        list_fields: :name,
+        fields: :name
       }
 
       actions = Array.new(1000, "")

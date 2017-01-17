@@ -2,44 +2,41 @@ require 'date'
 require 'mongoid'
 
 class ProgressChartsAnalyzer
-  def self.analyze(data, startingList, endingList)
+  def self.analyze(data, starting_list, ending_list, show_archived)
     return {} if data.nil? || data.empty?
 
     # open lists
-    lists = data["lists"].select { |x| !x["closed"]}
+    lists = data["lists"]
 
-    startingListIndex = lists.index{ |l| startingList == l["id"]} || 0
-    endingListIndex = lists.index{ |l| endingList == l["id"]} || lists.count - 1
+    starting_list_index = lists.index{ |l| starting_list == l["id"]} || 0
+    ending_list_index = lists.index{ |l| ending_list == l["id"]} || lists.count - 1
 
-    cfdData = parse(data, lists)
+    cfdData = parse(data, lists, show_archived)
 
     cfdData.reject do |date|
       index = lists.index{ |l| cfdData[date]["name"] == l["name"]}
-      !index.nil? && index >= startingListIndex && index < endingListIndex
+      !index.nil? && index >= starting_list_index && index < ending_list_index
     end
 
     {
-      cfd: formatCFD(cfdData, lists[startingListIndex..endingListIndex]),
-      burnup: formatBurnUp(cfdData, lists[startingListIndex..endingListIndex-1], lists[endingListIndex, lists.count-1])
+      cfd: formatCFD(cfdData, lists[starting_list_index..ending_list_index]),
+      burnup: formatBurnUp(cfdData, lists[starting_list_index..ending_list_index-1], lists[ending_list_index, lists.count-1])
     }
   end
 
   private
 
-  def self.parse(data, lists)
+  def self.parse(data, lists, show_archived)
     card_actions = data["actions"].reject {|action| action["type"] == "updateList"}
-    list_actions = data["actions"].select {|action| action["type"] == "updateList"}
+    list_actions = data["actions"] - card_actions
 
-    # open lists
-    lists = data["lists"].select { |x| !x["closed"]}
-
-    build(card_actions, lists)
+    build(card_actions, lists, show_archived)
   end
 
-  def self.build(card_actions, open_lists)
+  def self.build(card_actions, lists, show_archived)
     now = Time.now
     cfd = Hash.new do |h, k|
-      h[k] = Hash[open_lists.collect { |list| [list["name"], []] }]
+      h[k] = Hash[lists.collect { |list| [list["name"], []] }]
     end
 
     isFirst = true
@@ -59,7 +56,7 @@ class ProgressChartsAnalyzer
         if action["type"] == "updateCard" && !data["listAfter"].nil? && !data["listBefore"].nil?
           list = data["listAfter"]
 
-          matching_list = open_lists.select {|l| l["id"] == data["listBefore"]["id"]}.first
+          matching_list = lists.select {|l| l["id"] == data["listBefore"]["id"]}.first
           unless matching_list.nil?
             cfd[date][matching_list["name"]].delete data["card"]["id"]
           end
@@ -68,13 +65,13 @@ class ProgressChartsAnalyzer
         else
           # card was closed
           list = cfd[date].select {|k,v| v.any? {|cid| cid == data["card"]["id"]}}
-          unless list.nil? || list.count != 1
+          unless show_archived || list.nil? || list.count != 1
             cfd[date][list.keys.first].delete data["card"]["id"]
           end
           next
         end
 
-        matching_list = open_lists.select {|l| l["id"] == list["id"]}.first
+        matching_list = lists.select {|l| l["id"] == list["id"]}.first
         next if matching_list.nil?
         next if cfd[date][matching_list["name"]].include? action["data"]["card"]["id"]
         cfd[date][matching_list["name"]] << action["data"]["card"]["id"]

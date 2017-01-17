@@ -12,9 +12,9 @@ class ProgressChartsFetcher
       action_fields: "data,type,date",
       action_memberCreator: :false,
       action_member: false,
-      lists: :all,
-      list_fields: "name,closed",
-      fields: "name"
+      lists: :open,
+      list_fields: :name,
+      fields: :name
     }
 
     include_all_actions(JSON.parse(client.get("/boards/#{board_id}", options)), client, board_id)
