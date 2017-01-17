@@ -44,7 +44,7 @@ class Ollert < Sinatra::Base
       if role == :connected
         if @user.nil?
           session[:user] = nil
-          flash[:warning] = "Hey! You should create an account to do that."
+          flash[:error] = "Hey! You should create an account to do that."
           redirect '/'
         end
       end

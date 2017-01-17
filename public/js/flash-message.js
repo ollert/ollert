@@ -7,14 +7,6 @@ var FlashMessage = function () {
     flash("alert-success", msg);
   }
 
-  function info(msg) {
-    flash("alert-info", msg);
-  }
-
-  function warning(msg) {
-    flash("alert-warning", msg);
-  }
-
   function flash(classes, msg) {
     $("#flash").remove();
 
