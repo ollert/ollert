@@ -26,7 +26,7 @@ describe StatsFetcher do
       client = double(Trello::Client)
       expect(client).to receive(:get).with("/boards/#{board_id}", options).and_return(board)
 
-      expect(StatsFetcher.fetch(client, board_id)).to eq JSON.parse(board)
+      expect(StatsFetcher.fetch(client, board_id, false)).to eq JSON.parse(board)
     end
 
     it 'fetches more actions after fetching 1000' do
@@ -65,7 +65,7 @@ describe StatsFetcher do
 
       board["actions"].concat Array.new(10, "")
 
-      expect(StatsFetcher.fetch(client, board_id)).to eq board
+      expect(StatsFetcher.fetch(client, board_id, false)).to eq board
     end
   end
 end

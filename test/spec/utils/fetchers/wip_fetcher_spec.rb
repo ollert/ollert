@@ -13,7 +13,7 @@ describe WipFetcher do
       client = double(Trello::Client)
       expect(client).to receive(:get).with("/boards/#{board_id}/lists", options).and_return(lists)
 
-      expect(WipFetcher.fetch(client, board_id)).to eq JSON.parse(lists)
+      expect(WipFetcher.fetch(client, board_id, false)).to eq JSON.parse(lists)
     end
   end
 end
