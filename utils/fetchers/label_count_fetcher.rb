@@ -20,7 +20,13 @@ class LabelCountFetcher
       newCards = JSON.parse(client.get(endpoint, options.merge({before: before})))
       cards.concat newCards
       break unless newCards.count == 1000
-      before = newCards.first['actions'][0]["date"]
+
+      before = [{'actions' => []}, {'actions' => []}, {}]&.first&.values_at('actions').first.index(0)&.values_at('date')&.first
+      if before.nil?
+        puts 'Issue #54'
+        puts newCards&.first
+        break
+      end
     end
     cards
   end
