@@ -1,6 +1,6 @@
 var AnalysisController = (function () {
-  var initialize = function (boardId, boardStates, startingList, endingList, token) {
-    setupConfigurationModal(boardId, boardStates, startingList, endingList, token);
+  var initialize = function (boardId, boardStates, startingList, endingList, showArchived, token) {
+    setupConfigurationModal(boardId, boardStates, startingList, endingList, showArchived, token);
     loadCharts(boardId, token);
   };
 
@@ -18,18 +18,20 @@ var AnalysisController = (function () {
 
   var loadCharts = function (boardId, token) {
     var startOfWork = getCurrentStartingList(),
-        endOfWork = getCurrentEndingList();
+        endOfWork = getCurrentEndingList(),
+        showArchived = $("#show-archived").get(0).checked;
 
-    WipChartBuilder.build(boardId, token);
-    StatsBuilder.build(boardId, token);
-    LabelCountChartBuilder.build(boardId, token);
-    ProgressChartBuilder.build(boardId, token, startOfWork, endOfWork);
-    ListChangesChartBuilder.build(boardId, token, startOfWork, endOfWork);
+    WipChartBuilder.build(boardId, token, showArchived);
+    StatsBuilder.build(boardId, token, showArchived);
+    LabelCountChartBuilder.build(boardId, token, showArchived);
+    ProgressChartBuilder.build(boardId, token, startOfWork, endOfWork, showArchived);
+    ListChangesChartBuilder.build(boardId, token, startOfWork, endOfWork, showArchived);
   };
 
-  var updateListRange = function (boardId, token) {
+  var updateConfiguration = function (boardId, token) {
     var startOfWork = getCurrentStartingList(),
-        endOfWork = getCurrentEndingList();
+        endOfWork = getCurrentEndingList(),
+        showArchived = $("#show-archived").get(0).checked;
 
     $("#configure-board-modal").modal('hide');
 
@@ -38,20 +40,21 @@ var AnalysisController = (function () {
       type: "put",
       data: {
         startingList: startOfWork,
-        endingList: endOfWork
+        endingList: endOfWork,
+        archived: showArchived
       }
     });
 
-    ProgressChartBuilder.build(boardId, token, startOfWork, endOfWork);
-    ListChangesChartBuilder.build(boardId, token, startOfWork, endOfWork);
+    loadCharts(boardId, token);
   };
 
-  var setupConfigurationModal = function (boardId, boardLists, startingList, endingList, token) {
+  var setupConfigurationModal = function (boardId, boardLists, startingList, endingList, showArchived, token) {
     populateDropdown($("#starting-list"), boardLists, startingList);
     populateDropdown($("#ending-list"), boardLists, endingList);
+    $("#show-archived").get(0).checked = showArchived;
 
     $("#submit-board-lists").on("click", function () {
-      updateListRange(boardId, token);
+      updateConfiguration(boardId, token);
     });
   };
 

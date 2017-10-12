@@ -17,6 +17,7 @@ gem 'mongoid'
 gem 'ruby-trello', '~> 1.4.2'
 gem 'business_time'
 gem 'require_all'
+gem "sinatra-param", require: "sinatra/param"
 
 group :development do
   gem 'pry'

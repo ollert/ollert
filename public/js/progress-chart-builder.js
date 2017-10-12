@@ -18,16 +18,17 @@ var ProgressChartBuilder = (function() {
     $('#cfd-container').empty();
   };
 
-  var build = function(boardId, token, startingList, endingList) {
+  var build = function(boardId, token, startingList, endingList, showArchived) {
     resetCharts();
 
     $.ajax({
       url: "/api/v1/progress/" + boardId,
       data: {
-        startingList: startingList,
-        endingList: endingList,
-        token: token
+        starting_list: startingList,
+        ending_list: endingList,
+        show_archived: showArchived
       },
+      headers: {"Authorization": token},
       success: displayData,
       error: function(xhr) {
         $("#cfd-spinner").hide();

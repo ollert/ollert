@@ -43,14 +43,15 @@ var ListChangesChartBuilder = (function() {
           series: options.data
         });
       },
-      load = function(boardId, token, startOfWork, endOfWork) {
+      load = function(boardId, token, startOfWork, endOfWork, showArchived) {
         var container = $("#list-changes-container");
         container.height(container.height() - 10);
 
         $.ajax({
           url: "/api/v1/listchanges/" + boardId,
+          headers: {"Authorization": token},
           data: {
-            token: token
+            show_archived: showArchived
           },
           success: function(data) {
             $('#list-changes-spinner').hide();

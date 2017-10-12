@@ -43,14 +43,15 @@ var WipChartBuilder = (function() {
     });
   }
 
-  var load = function(boardId, token) {
+  var load = function(boardId, token, showArchived) {
     var container = $("#wip-container")
     container.height(container.height() - 10);
 
     $.ajax({
       url: "/api/v1/wip/" + boardId,
+      headers: {"Authorization": token},
       data: {
-        token: token
+        show_archived: showArchived
       },
       success: function(data) {
         $('#wip-spinner').hide();

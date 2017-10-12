@@ -68,6 +68,7 @@ class Ollert
       @board_lists = @board_lists.to_json
       @starting_list = board_settings.starting_list
       @ending_list = board_settings.ending_list
+      @show_archived = board_settings.show_archived
       @token = @user.member_token
     rescue Trello::Error => e
       unless @user.nil?
@@ -96,6 +97,7 @@ class Ollert
     board_settings = @user.boards.find_or_create_by(board_id: board_id)
     board_settings.starting_list = params["startingList"] || board_settings.starting_list
     board_settings.ending_list = params["endingList"] || board_settings.ending_list
+    board_settings.show_archived = params["archived"] || board_settings.show_archived
     board_settings.save
   end
 

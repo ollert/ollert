@@ -49,14 +49,15 @@ var LabelCountChartBuilder = (function() {
     });
   }
 
-  var load = function(boardId, token) {
+  var load = function(boardId, token, showArchived) {
     var container = $("#label-count-container");
     container.height(container.height() - 10);
 
     $.ajax({
       url: "/api/v1/labels/" + boardId,
+      headers: {"Authorization": token},
       data: {
-        token: token
+        show_archived: showArchived
       },
       success: function(data) {
         $('#label-count-spinner').hide();
