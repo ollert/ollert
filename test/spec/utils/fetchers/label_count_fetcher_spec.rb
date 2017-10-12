@@ -7,7 +7,7 @@ describe LabelCountFetcher do
   describe '#fetch' do
     it 'uses client to get cards with labels' do
       board_id = "ori0kf34rf34jfjfrej"
-      options = {fields: "labels,idList", limit: 1000, before: nil}
+      options = {fields: "labels,idList", actions: :createCard, action_fields: "date", limit: 1000, before: nil}
       cards = [{"labels" => [{"id" => "1", "color" => "green"}, {"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-10-2016"}]},
                {"labels" => [{"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-13-2016"}]},
                {"labels" => [{"id" => "2", "color" => "blue"}], "actions" => [{"date" => "10-15-2016"}]}]
@@ -20,7 +20,7 @@ describe LabelCountFetcher do
 
     it 'updates options and endpoint to show archived cards' do
       board_id = "ori0kf34rf34jfjfrej"
-      options = {fields: "labels,idList", limit: 1000, before: nil, filter: :all}
+      options = {fields: "labels,idList", actions: :createCard, action_fields: "date", limit: 1000, before: nil, filter: :all}
       cards = [{"labels" => [{"id" => "1", "color" => "green"}, {"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-10-2016"}]},
                {"labels" => [{"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-13-2016"}]},
                {"labels" => [{"id" => "2", "color" => "blue"}], "actions" => [{"date" => "10-15-2016"}]}]
@@ -33,7 +33,7 @@ describe LabelCountFetcher do
 
     it 'tries to get additional cards if over limit' do
       board_id = "ori0kf34rf34jfjfrej"
-      options = {fields: "labels,idList", limit: 1000, before: nil}
+      options = {fields: "labels,idList", actions: :createCard, action_fields: "date", limit: 1000, before: nil}
       cards = [{"labels" => [{"id" => "1", "color" => "green"}, {"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-10-2016"}]},
                {"labels" => [{"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-13-2016"}]},
                {"labels" => [{"id" => "2", "color" => "blue"}], "actions" => [{"date" => "10-15-2016"}]}]
@@ -42,11 +42,10 @@ describe LabelCountFetcher do
       }
 
       client = double(Trello::Client)
-      expect(client).to receive(:get).with("/boards/#{board_id}/cards/open", {fields: "labels,idList", limit: 1000, before: nil}).and_return(cards.to_json)
-      options[:before] = "10-10-2016"
-      expect(client).to receive(:get).with("/boards/#{board_id}/cards/open", options).and_return("[]")
+      expect(client).to receive(:get).with("/boards/#{board_id}/cards/open", options).and_return(cards.to_json)
+      expect(client).to receive(:get).with("/boards/#{board_id}/cards/open", options.merge({before: "10-10-2016"})).and_return(cards[0..2].to_json)
 
-      expect(LabelCountFetcher.fetch(client, board_id, false)).to eq cards
+      expect(LabelCountFetcher.fetch(client, board_id, false)).to eq cards.concat(cards[0..2])
     end
   end
 end
