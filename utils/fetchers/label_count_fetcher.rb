@@ -7,7 +7,7 @@ class LabelCountFetcher
     options = {
       fields: "labels,idList",
       actions: :createCard,
-      action_fields: "date",
+      fields: "labels",
       limit: 1000
     }
     endpoint = "/boards/#{board_id}/cards/open"
@@ -23,7 +23,7 @@ class LabelCountFetcher
       cards.concat newCards
       break unless newCards.count == 1000
 
-      before = newCards.first['actions'][0]["date"]
+      before = newCards.first["actions"].first["date"]
     end
     cards
   end
