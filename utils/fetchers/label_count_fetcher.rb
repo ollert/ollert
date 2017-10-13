@@ -6,7 +6,7 @@ class LabelCountFetcher
 
     options = {
       fields: "labels",
-      actions: :createCard,
+      actions: 'createCard,convertToCardFromCheckItem',
       limit: 1000
     }
     endpoint = "/boards/#{board_id}/cards/open"
@@ -22,18 +22,7 @@ class LabelCountFetcher
       cards.concat newCards
       break unless newCards.count == 1000
 
-      begin
-        before = newCards&.first["actions"]&.first["date"]
-      rescue Exception => e  
-        puts "Issue #54 (still)"
-        puts newCards.count
-        puts newCards&.first
-        
-        puts e.message
-        puts e.backtrace.inspect
-        
-        break
-      end
+      before = newCards.first["actions"].first["date"]
     end
     cards
   end
