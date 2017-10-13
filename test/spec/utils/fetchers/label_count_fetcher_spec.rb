@@ -7,7 +7,7 @@ describe LabelCountFetcher do
   describe '#fetch' do
     it 'uses client to get cards with labels' do
       board_id = "ori0kf34rf34jfjfrej"
-      options = {fields: "labels,idList", actions: :createCard, fields: "labels", limit: 1000, before: nil}
+      options = {fields: "labels,idList", actions: 'createCard,convertToCardFromCheckItem', fields: "labels", limit: 1000, before: nil}
       cards = [{"labels" => [{"id" => "1", "color" => "green"}, {"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-10-2016"}]},
                {"labels" => [{"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-13-2016"}]},
                {"labels" => [{"id" => "2", "color" => "blue"}], "actions" => [{"date" => "10-15-2016"}]}]
@@ -20,7 +20,7 @@ describe LabelCountFetcher do
 
     it 'updates options and endpoint to show archived cards' do
       board_id = "ori0kf34rf34jfjfrej"
-      options = {fields: "labels,idList", actions: :createCard, fields: "labels", limit: 1000, before: nil, filter: :all}
+      options = {fields: "labels,idList", actions: 'createCard,convertToCardFromCheckItem', fields: "labels", limit: 1000, before: nil, filter: :all}
       cards = [{"labels" => [{"id" => "1", "color" => "green"}, {"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-10-2016"}]},
                {"labels" => [{"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-13-2016"}]},
                {"labels" => [{"id" => "2", "color" => "blue"}], "actions" => [{"date" => "10-15-2016"}]}]
@@ -33,7 +33,7 @@ describe LabelCountFetcher do
 
     it 'tries to get additional cards if over limit' do
       board_id = "ori0kf34rf34jfjfrej"
-      options = {fields: "labels,idList", actions: :createCard, fields: "labels", limit: 1000, before: nil}
+      options = {fields: "labels,idList", actions: 'createCard,convertToCardFromCheckItem', fields: "labels", limit: 1000, before: nil}
       cards = [{"labels" => [{"id" => "1", "color" => "green"}, {"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-10-2016"}]},
                {"labels" => [{"id" => "3", "color" => "yellow"}], "actions" => [{"date" => "10-13-2016"}]},
                {"labels" => [{"id" => "2", "color" => "blue"}], "actions" => [{"date" => "10-15-2016"}]}]
