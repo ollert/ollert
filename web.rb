@@ -3,6 +3,7 @@ require 'mongoid'
 require 'rack-flash'
 require 'rack/ssl'
 require 'rack/rewrite'
+require 'rack-timeout'
 require 'sinatra/base'
 require 'sinatra/respond_with'
 require 'trello'
@@ -16,11 +17,15 @@ class Ollert < Sinatra::Base
   configure :development do
     require 'sinatra/reloader'
     register Sinatra::Reloader
+
+    enable :logging
   end
 
   configure do
     use Rack::MethodOverride
     use Rack::Deflater
+    use Rack::Timeout, service_timeout: 30
+    Rack::Timeout::Logger.level  = Logger::ERROR
 
     I18n.enforce_available_locales = true
     Mongoid.load! "#{File.dirname(__FILE__)}/mongoid.yml"

@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.4.0'
 
 gem 'bundler'
 gem 'foreman'
 gem 'rake'
-gem 'unicorn'
+gem 'puma'
+gem 'rack-timeout'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'haml'
