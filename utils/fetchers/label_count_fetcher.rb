@@ -22,7 +22,13 @@ class LabelCountFetcher
       cards.concat newCards
       break unless newCards.count == 1000
 
-      before = newCards.first["actions"].first["date"]
+      before = newCards&.first["actions"]&.first["date"]
+      if before.nil?
+        puts "Issue #54 (still)"
+        puts newCards.count
+        puts newCards&.first
+        break
+      end
     end
     cards
   end
