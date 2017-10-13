@@ -5,9 +5,8 @@ class LabelCountFetcher
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 
     options = {
-      fields: "labels,idList",
-      actions: :createCard,
       fields: "labels",
+      actions: :createCard,
       limit: 1000
     }
     endpoint = "/boards/#{board_id}/cards/open"
