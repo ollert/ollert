@@ -6,7 +6,7 @@ class LabelCountFetcher
 
     options = {
       fields: "labels",
-      actions: 'createCard,convertToCardFromCheckItem',
+      actions: 'createCard,convertToCardFromCheckItem,moveCardToBoard',
       limit: 1000
     }
     endpoint = "/boards/#{board_id}/cards/open"
