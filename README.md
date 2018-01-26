@@ -1,18 +1,16 @@
-### Ollert
+### Ollert ###
 
-[![Build Status](https://travis-ci.org/sep/ollert.svg?branch=master)](https://travis-ci.org/sep/ollert)
-
+<!-- [![Build Status](https://travis-ci.org/ollert/ollert.svg?branch=master)](https://travis-ci.org/ollert/ollert) -->
 
 * Author: Larry Price <larry@larry-price.com>
-* Company: Software Engineering Professionals, Inc.
 * Website: [ollertapp.com](https://ollertapp.com)
 * License: [GNU Affero GPL v3.0](LICENSE)
 
-#### Description
+#### Description ####
 
 Ollert is a data analysis tool for Trello.
 
-#### Browser Support
+#### Browser Support ####
 
 Since Ollert depends entirely on Trello for users, Ollert will support only browsers supported by Trello. [Trello officially supports](//help.trello.com/customer/portal/articles/940690) the following browsers:
 
@@ -21,7 +19,7 @@ Since Ollert depends entirely on Trello for users, Ollert will support only brow
 * Firefox - Current stable release
 * Internet Explorer - Version 10.0 or higher
 
-#### Development
+#### Development ####
 
 You almost certainly want to be using a Unix-based operating system. Some dependencies will be necessary before you can run the application. On Ubuntu:
 
@@ -82,7 +80,7 @@ Run `rake` to start the application on `localhost:4000`. This will fork two proc
 
 All tests must pass before pushing to `origin/master`.
 
-#### Testing
+#### Testing ####
 
 All changes checked in to `origin/master` must be tested. There are two types of test: `spec` (unit tests) and cukes (acceptance tests).
 
@@ -92,7 +90,7 @@ To run the cukes, use `rake test:cukes`. Cukes are run using the `TRELLO_TEST_US
 
 To run all tests, use `rake test:all`.
 
-##### `testem`
+##### `testem` ####
 
 The JavaScript specs use [`testem`](https://github.com/airportyh/testem#installation) as the test runner. By default the tests will try to use [`PhantomJS`](http://phantomjs.org/) as the browser for the JavaScript specs. To install, PhantomJS needs to be part of your path. To install using Homebrew on OSX run the following command:
 
@@ -100,9 +98,10 @@ The JavaScript specs use [`testem`](https://github.com/airportyh/testem#installa
 brew install phantomjs
 ```
 
-#### CI
+#### CI ####
+
 Travis CI is being used for CI. For clones of this repository, builds will run in your `https://travis-ci.org/<your username>/ollert` environment. Since the tests depend on the environment variables mentioned above, those also need to be carried over in your individual Travis CI setup. Please look at the documentation for [environment variables](http://docs.travis-ci.com/user/environment-variables/#Using-Settings) for more information about setting up your environment variables.
 
-### Contributing
+### Contributing ####
 
 We want your help! Check out [CONTRIBUTING.md](/CONTRIBUTING.md) for advice on making contributions.
