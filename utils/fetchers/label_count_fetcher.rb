@@ -9,7 +9,7 @@ class LabelCountFetcher
       actions: "createCard,convertToCardFromCheckItem,moveCardToBoard",
       limit: 1000
     }
-    endpoint = "/boards/#{board_id}/cards/open"
+    endpoint = "/boards/#{board_id}/cards/visible"
     if show_archived
       endpoint = "/boards/#{board_id}/cards"
       options[:filter] = :all

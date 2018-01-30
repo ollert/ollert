@@ -13,7 +13,7 @@ describe LabelCountFetcher do
                {"labels" => [{"id" => "2", "color" => "blue"}], "actions" => [{"date" => "10-15-2016"}]}]
 
       client = double(Trello::Client)
-      expect(client).to receive(:get).with("/boards/#{board_id}/cards/open", options).and_return(cards.to_json)
+      expect(client).to receive(:get).with("/boards/#{board_id}/cards/visible", options).and_return(cards.to_json)
 
       expect(LabelCountFetcher.fetch(client, board_id, false)).to eq cards
     end
@@ -42,8 +42,8 @@ describe LabelCountFetcher do
       }
 
       client = double(Trello::Client)
-      expect(client).to receive(:get).with("/boards/#{board_id}/cards/open", options).and_return(cards.to_json)
-      expect(client).to receive(:get).with("/boards/#{board_id}/cards/open", options.merge({before: "10-10-2016"})).and_return(cards[0..2].to_json)
+      expect(client).to receive(:get).with("/boards/#{board_id}/cards/visible", options).and_return(cards.to_json)
+      expect(client).to receive(:get).with("/boards/#{board_id}/cards/visible", options.merge({before: "10-10-2016"})).and_return(cards[0..2].to_json)
 
       expect(LabelCountFetcher.fetch(client, board_id, false)).to eq cards.concat(cards[0..2])
     end
