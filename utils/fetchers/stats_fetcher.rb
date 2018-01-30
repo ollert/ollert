@@ -3,6 +3,8 @@ require_relative 'action_fetcher'
 class StatsFetcher
   include ActionFetcher
 
+  HARD_CAP = 20000
+
   def self.fetch(client, board_id, show_archived=false)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 
@@ -32,7 +34,7 @@ class StatsFetcher
 
   def self.include_all_actions(data, client, board_id)
     fetched = data["actions"].count
-    while fetched == 1000
+    while fetched == 1000 and data["actions"].count < HARD_CAP
       new_actions = JSON.parse(self.fetch_actions(client, board_id,
         {before: data["actions"].last["date"], filter: :createCard, fields: "data,date"}))
       fetched = new_actions.count

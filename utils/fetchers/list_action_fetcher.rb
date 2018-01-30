@@ -1,4 +1,5 @@
 require_relative 'fetcher'
+require_relative '../list_action'
 
 module Utils
   module Fetchers

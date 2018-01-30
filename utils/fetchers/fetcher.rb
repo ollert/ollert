@@ -1,5 +1,7 @@
 module Utils
   module Fetcher
+    HARD_CAP = 20000 # TODO: We will be replacing a hard fetch cap with a date-based cap eventually
+
     def all(client, path, overrides={})
       projection = overrides.delete(:result_to)
       options = {limit: 1000, before: nil}.merge(overrides)
@@ -15,7 +17,7 @@ module Utils
       loop do
         page = project(action.call, projection)
         results.concat page
-        break if page.count != options[:limit]
+        break if page.count != options[:limit] || results.count > HARD_CAP
         options[:before] = oldest_date_for page.last
       end
       results

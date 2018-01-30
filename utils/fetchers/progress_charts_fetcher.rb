@@ -3,6 +3,8 @@ require_relative 'action_fetcher'
 class ProgressChartsFetcher
   include ActionFetcher
 
+  HARD_CAP = 20000
+
   def self.fetch(client, board_id)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?
 
@@ -24,7 +26,7 @@ class ProgressChartsFetcher
 
   def self.include_all_actions(data, client, board_id)
     fetched = data["actions"].count
-    while fetched == 1000
+    while fetched == 1000 and data["actions"].count < HARD_CAP
       new_actions = JSON.parse(self.fetch_actions(client, board_id,
         {before: data["actions"].last["date"], filter: "createCard,updateCard:idList,updateCard:closed", fields: "data,type,date"}))
       fetched = new_actions.count
