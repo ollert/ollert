@@ -15,9 +15,6 @@ class Ollert < Sinatra::Base
 
   register Sinatra::RespondWith
   configure :development do
-    require 'sinatra/reloader'
-    register Sinatra::Reloader
-
     enable :logging
   end
 
