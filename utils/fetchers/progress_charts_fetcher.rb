@@ -3,7 +3,7 @@ require_relative 'action_fetcher'
 class ProgressChartsFetcher
   include ActionFetcher
 
-  HARD_CAP = 20000
+  HARD_CAP = 10000
 
   def self.fetch(client, board_id)
     raise Trello::Error if client.nil? || board_id.nil? || board_id.empty?

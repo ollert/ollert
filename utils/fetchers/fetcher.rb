@@ -1,6 +1,6 @@
 module Utils
   module Fetcher
-    HARD_CAP = 20000 # TODO: We will be replacing a hard fetch cap with a date-based cap eventually
+    HARD_CAP = 10000 # TODO: We will be replacing a hard fetch cap with a date-based cap eventually
 
     def all(client, path, overrides={})
       projection = overrides.delete(:result_to)

@@ -7,6 +7,7 @@ class LabelCountFetcher
     options = {
       fields: "labels",
       actions: "createCard,convertToCardFromCheckItem,moveCardToBoard",
+      actions_limit: 1000,
       limit: 1000
     }
 
