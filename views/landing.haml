@@ -88,16 +88,28 @@
   .container
     .row
       .col-xs-12.h1.text-center.landing-subtitle
-        Want more information?
-    .row.text-center
-      .col-xs-12.h4
-        %img{src: "/img/icon_email.png", alt: "Email"}
-        Contact <a href="mailto:connect@ollertapp.com">connect@ollertapp.com</a>.
-    .row.text-center
-      .col-xs-12.h4
-        %img{src: "/img/icon_twitter.png", alt: "Twitter"}
-        Follow us on Twitter <a href="https://twitter.com/OllertApp" target="blank">@OllertApp</a>.
-    .row.text-center
-      .col-xs-12.h4
-        %img{src: "/img/icon_github.png", alt: "Github"}
-        Contribute some code on <a href="https://github.com/ollert/ollert" target="blank">Github</a>.
+        Looking for more information?
+    .row
+      .col-xs-12#info-icons
+        %table
+          %tbody
+            %tr
+              %td
+                %img{src: "/img/icon_email.png", alt: "Email"}
+              %td
+                Email <a href="mailto:connect@ollertapp.com">connect@ollertapp.com</a>.
+            %tr
+              %td
+                %img{src: "/img/icon_patreon.png", alt: "Patreon"}
+              %td
+                Support Ollert on <a href="https://www.patreon.com/larryprice" target="blank">Patreon</a>.
+            %tr
+              %td
+                %img{src: "/img/icon_twitter.png", alt: "Twitter"}
+              %td
+                Follow us on Twitter <a href="https://twitter.com/OllertApp" target="blank">@OllertApp</a>.
+            %tr
+              %td
+                %img{src: "/img/icon_github.png", alt: "Github"}
+              %td
+                Contribute code on <a href="https://github.com/ollert/ollert" target="blank">Github</a>.

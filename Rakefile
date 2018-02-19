@@ -13,7 +13,7 @@ task :default => [:start]
 
 desc "Start application based on environment"
 task :start do
-  fork { exec "rerun --dir models,routes,utils,. -- foreman start -p 4000" }
+  fork { exec "rerun --dir models,routes,utils,. --pattern *.{rb,js,coffee,ru,yml} -- foreman start -p 4000" }
   fork { exec "grunt watch" }
   Process.waitall
 end
