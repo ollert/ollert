@@ -4,10 +4,13 @@ $medium-light: #A0A0A0;
 $light: #CCCCCC;
 $light-light: #F2F2F2;
 
-$bgDefault      : #e74c3c;
-$bgHighlight    : #a4251c;
-$colDefault     : #ecf0f1;
-$colHover       : #ffbbbc;
+$bgDefault   : #e74c3c;
+$bgHighlight : #a4251c;
+$colDefault  : #ecf0f1;
+$colHover    : #ffbbbc;
+
+$footerHeightDefault : 150px;
+$footerHeightXS      : 180px;
 
 @font-face {
   font-family: 'Muli';
@@ -25,19 +28,33 @@ html {
 
 body {
   font-family: 'Muli', sans-serif;
-  margin-bottom: 190px;
+  margin-bottom: $footerHeightDefault;
 }
 
 #footer {
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 190px;
+  height: $footerHeightDefault;
   width: 100%;
 
   .container {
     padding: 15px;
     padding-bottom: 0;
+  }
+}
+
+@media(max-height: 768px) {
+  body {
+    margin-bottom: $footerHeightXS;
+  }
+  #footer {
+    height: $footerHeightXS;
+
+    .footer-links:last-child {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
   }
 }
 
@@ -53,14 +70,14 @@ body {
     margin-top: 8em;
     &.shake {
       animation-name: shake;
-      animation-duration: 1500ms;
-      animation-iteration-count: 2;
+      animation-duration: 250ms;
+      animation-iteration-count: 5;
       animation-timing-function: linear;
       transform-origin: 50% 50%;
 
       -webkit-animation-name: shake;
-      -webkit-animation-duration: 1500ms;
-      -webkit-animation-iteration-count: 2;
+      -webkit-animation-duration: 250ms;
+      -webkit-animation-iteration-count: 5;
       -webkit-animation-timing-function: linear;
     }
   }
@@ -70,15 +87,19 @@ body {
 }
 
 @keyframes shake {
-  0% { transform: scale(1); }
-  50% {transform: scale(2); }
-  100% { transform: scale(1); }
+  0% { transform: rotate(0deg); }
+  25% {transform: rotate(45deg); }
+  50% { transform: rotate(0deg); }
+  75% {transform: rotate(-45deg); }
+  100% { transform: scale(0deg); }
 }
 
 @-webkit-keyframes shake {
-  0% { transform: scale(1); }
-  50% {transform: scale(2); }
-  100% { transform: scale(1); }
+  0% { transform: rotate(0deg); }
+  25% {transform: rotate(45deg); }
+  50% { transform: rotate(0deg); }
+  75% {transform: rotate(-45deg); }
+  100% { transform: scale(0deg); }
 }
 
 // end drawer customizations
@@ -498,12 +519,9 @@ a.btn {
 }
 
 .footer-links {
-   margin-top: 38px;
-}
+   margin-top: .5em;
 
-.footer-lab {
-   height: 60px;
-   margin-top: 53px;
+   list-style-type: none;
 }
 
 .img-full {
@@ -557,8 +575,34 @@ a.btn {
     padding-bottom: 0;
   }
 
-  img {
-    margin-right: 1em;
+  #info-icons {
+    text-align: center;
+    font-size: 1.4em;
+
+    table {
+      display: inline-block;
+      margin-top: 1em;
+
+      tr {
+        > td {
+          padding-bottom: .7em;
+        }
+
+        td:last-child {
+          text-align: left;
+        }
+
+        &:last-child {
+          > td {
+            padding-bottom: 0;
+          }
+        }
+      }
+    }
+
+    img {
+      margin-right: 1em;
+    }
   }
 }
 
