@@ -7,8 +7,7 @@ class LabelCountFetcher
     options = {
       fields: "labels",
       actions: "createCard,convertToCardFromCheckItem,moveCardToBoard",
-      actions_limit: 1000,
-      limit: 1000
+      limit: 300
     }
 
     endpoint = "/boards/#{board_id}/cards/visible"
@@ -22,10 +21,11 @@ class LabelCountFetcher
     loop do
       newCards = JSON.parse(client.get(endpoint, options.merge({before: before})))
       cards.concat newCards
-      break unless newCards.count == 1000
+      break unless newCards.count == 300
 
-      before = newCards.first["actions"].first["date"]
+      before = newCards.last["id"]
     end
+    cards.uniq!{|c| c["id"]}
     cards
   end
 end
