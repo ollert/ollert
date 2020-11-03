@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.0'
+ruby '2.4.10'
 
 gem 'bundler'
 gem 'foreman'
@@ -10,7 +10,7 @@ gem 'rack-timeout'
 gem 'sinatra', '~>2.0.0'
 gem 'sinatra-contrib'
 gem 'haml'
-gem 'sass'
+# gem 'sass'
 gem 'rack-flash3'
 gem 'rack-ssl'
 gem 'rack-rewrite'

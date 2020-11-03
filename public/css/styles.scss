@@ -312,8 +312,8 @@ hr {
 }
 
 .container {
-  .margin-left: auto;
-  .margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .spinner {
@@ -386,6 +386,7 @@ ul.boards-list {
   background-color: #f9f9f9;
   border-bottom: 1px solid #bbb;
   margin: 20px;
+  height: 100%;
 }
 
 .boards-list-item-link {

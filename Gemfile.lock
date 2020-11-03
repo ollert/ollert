@@ -132,11 +132,6 @@ GEM
       oauth (>= 0.4.5)
       rest-client (>= 1.8.0)
     ruby2_keywords (0.0.2)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -198,7 +193,6 @@ DEPENDENCIES
   rspec
   rspec-its
   ruby-trello
-  sass
   sinatra (~> 2.0.0)
   sinatra-contrib
   sinatra-reloader
@@ -206,7 +200,7 @@ DEPENDENCIES
   timecop
 
 RUBY VERSION
-   ruby 2.4.0p0
+   ruby 2.4.10p364
 
 BUNDLED WITH
    1.17.3
