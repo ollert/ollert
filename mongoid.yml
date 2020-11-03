@@ -19,6 +19,6 @@ test:
 production:
   clients:
     default:
-      uri: <%= ENV['MONGOLAB_URI'] %>
+      uri: <%= ENV['DB_URI'] %>
   options:
     raise_not_found_error: false
