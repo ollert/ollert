@@ -62,6 +62,10 @@
             .container
               #{flash[:success]}
 
+        .row{id: 'flash', class: 'alert alert-warning'}
+          .container.text-center
+            Ollert will be shutting down on May 1, 2021. Thanks for your support over the last 7 years. Any questions should be sent to <a href="mailto:larry@ollertapp.com">larry@ollertapp.com</a>.
+
         = yield
 
     %div#footer
