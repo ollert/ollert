@@ -10,7 +10,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    backports (3.18.2)
     bson (4.11.0)
     builder (3.2.4)
     business_time (0.9.3)
@@ -85,7 +84,7 @@ GEM
     rack (2.2.3)
     rack-flash3 (1.0.5)
       rack
-    rack-protection (2.0.8.1)
+    rack-protection (2.2.0)
       rack
     rack-rewrite (1.5.1)
     rack-ssl (1.4.1)
@@ -131,18 +130,17 @@ GEM
       json (>= 2.3.0)
       oauth (>= 0.4.5)
       rest-client (>= 1.8.0)
-    ruby2_keywords (0.0.2)
-    sinatra (2.0.8.1)
+    ruby2_keywords (0.0.5)
+    sinatra (2.2.0)
       mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.8.1)
+      rack (~> 2.2)
+      rack-protection (= 2.2.0)
       tilt (~> 2.0)
-    sinatra-contrib (2.0.8.1)
-      backports (>= 2.8.2)
+    sinatra-contrib (2.2.0)
       multi_json
       mustermann (~> 1.0)
-      rack-protection (= 2.0.8.1)
-      sinatra (= 2.0.8.1)
+      rack-protection (= 2.2.0)
+      sinatra (= 2.2.0)
       tilt (~> 2.0)
     sinatra-reloader (1.0)
       sinatra-contrib
@@ -193,7 +191,7 @@ DEPENDENCIES
   rspec
   rspec-its
   ruby-trello
-  sinatra (~> 2.0.0)
+  sinatra (~> 2.2.0)
   sinatra-contrib
   sinatra-reloader
   site_prism
